@@ -1,0 +1,21 @@
+.bgNav{
+//   background: $quaternary-colos;
+  
+}
+
+
+.flexDeskTop{
+  height: 90px;
+  @include media('lg'){
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.flexMobile{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}

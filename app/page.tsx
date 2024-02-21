@@ -1,4 +1,5 @@
+import '@/styles/sass/globals.scss'
+
 export default function Home() {
-  const app = 'teste'
-  return <main>{app}</main>
+  return <main>teste</main>
 }

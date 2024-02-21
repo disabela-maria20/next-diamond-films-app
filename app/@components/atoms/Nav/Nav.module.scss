@@ -1,0 +1,129 @@
+.navBar {
+    div {
+        transition: all 0.6s ease-out ;
+        // background-color: $quaternary-colos;
+        overflow: auto;
+        overflow: auto;
+        z-index: 2;
+        width: 100%;
+        position: absolute;
+        left: 0;
+
+        &.close {
+            height: 0;
+
+            @include media(lg) {
+                height: initial;
+                overflow: hidden;
+            }
+        }
+
+        &.open {
+            height: 100%;
+            height: 100%;
+            background: #9f417ab5;
+            backdrop-filter: blur(5px);
+
+            @include media(lg) {
+                height: initial;
+            }
+        }
+
+        @include media(lg) {
+            display: flex;
+            position: relative;
+            height: initial;
+        }
+    }
+
+    ul {
+        margin-block: 0;
+        padding-inline-start: 0;
+        width: 100%;
+        left: 0;
+        z-index: 999999;
+
+        @include media(lg) {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: initial;
+        }
+
+        li:not(.redes li) {
+            list-style-type: none;
+            text-align: center;
+            padding: 20px 0;
+
+            @include media(xl) {
+                margin-right: 10px;
+            }
+
+            &.cta a {
+                background-color: $primary-lingh-color;
+
+                &:hover {
+                    background-color: $primary-lingh-color;
+                }
+            }
+
+            &.active a {
+                background-color: rgba(255, 255, 255, 0.137);
+                padding: 10px 20px;
+            }
+
+            a {
+                font-family: Gantari, sans-serif;
+                text-transform: capitalize;
+                font-weight: 400;
+                font-size: 1.4rem;
+                color: $primary-lingh-color;
+                transition: color 200ms ease;
+                padding: 10px 20px;
+                border-radius: 50px;
+                transition:all 200ms ease;
+
+                @include media(xxl) {
+                    font-size: 1.6rem;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.137);
+                    padding: 10px 20px;
+                }
+            }
+        }
+    }
+
+    ul.redes {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        margin-top: 20px;
+
+        li {
+            list-style-type: none;
+            margin: 0 3.5px;
+
+            img {
+                width: 29px;
+                height: 29px;
+            }
+
+            a {
+
+                span {
+                    position: absolute;
+                    right: -9999px;
+                    visibility: hidden;
+
+                }
+            }
+        }
+
+        @include media(lg) {
+            margin-top: 0;
+            margin-left: 20px;
+        }
+    }
+}

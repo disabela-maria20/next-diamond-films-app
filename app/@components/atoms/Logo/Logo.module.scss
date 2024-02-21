@@ -1,0 +1,11 @@
+.logo{
+  max-width: 120px;
+  object-fit: contain;
+
+  @include media('sm'){
+    max-width: 100%;
+  }
+  @include media(xxl){
+    width: 140px;
+  }
+}
