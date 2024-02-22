@@ -1,12 +1,6 @@
 'use client'
 
-import { Header } from '../@components/organisms'
-
 function PageTimes() {
-  return (
-    <>
-      <Header />
-    </>
-  )
+  return <>sfww</>
 }
 export default PageTimes

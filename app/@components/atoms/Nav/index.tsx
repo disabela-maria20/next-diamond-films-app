@@ -5,12 +5,14 @@ import { usePathname } from 'next/navigation'
 
 import Style from './Nav.module.scss'
 
+import { Logo, RedesSociais } from '..'
+
 interface NavProps {
   open: boolean
   setOpen?: (value: boolean) => void
 }
 
-const Nav: React.FC<NavProps> = (open) => {
+const Nav: React.FC<NavProps> = ({ open }) => {
   const pathname = usePathname()
 
   const navLink = [
@@ -23,6 +25,12 @@ const Nav: React.FC<NavProps> = (open) => {
     <nav className={`${Style.navBar}`}>
       <div className={`${!open ? Style.open : Style.close}`}>
         <ul>
+          <li className={Style.NomeMenu}>
+            <span>Menu</span>
+          </li>
+          <li className={Style.comprarIngressos}>
+            <Link href="/comprar-ingressos">COMPRAR INGRESSOS</Link>
+          </li>
           {navLink.map((link) => (
             <li
               key={link.link}
@@ -31,7 +39,11 @@ const Nav: React.FC<NavProps> = (open) => {
               <Link href={link.link}>{link.nome}</Link>
             </li>
           ))}
+          <div className={Style.logo}>
+            <Logo logo="logo-BRANCO.png" />
+          </div>
         </ul>
+        <RedesSociais />
       </div>
     </nav>
   )

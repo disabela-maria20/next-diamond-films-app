@@ -1,0 +1,13 @@
+.btnPesquisar {
+	background-color: transparent !important;
+	border: 0;
+
+	svg {
+		color: $primary-lingh-color;
+		font-size: 31px;
+	}
+
+	@include media(lg) {
+		display: none;
+	}
+}

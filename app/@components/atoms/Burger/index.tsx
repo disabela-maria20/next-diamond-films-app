@@ -5,12 +5,12 @@ interface BurgerProps {
   setOpen(): void
 }
 
-const Burger: React.FC<BurgerProps> = ({ open, setOpen }) => {
+const Burger: React.FC<BurgerProps> = ({ setOpen }) => {
   return (
     <div className={Style.burger} onClick={setOpen}>
-      <span className={`${open ? Style.active : ''}`}></span>
-      <span className={`${open ? Style.active : ''}`}></span>
-      <span className={`${open ? Style.active : ''}`}></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   )
 }
