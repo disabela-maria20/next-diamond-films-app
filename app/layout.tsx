@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 
-import { Header } from './@components/organisms'
+import { Header } from '@/components/organisms'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
