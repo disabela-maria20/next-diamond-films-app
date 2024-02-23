@@ -6,7 +6,7 @@ import Style from './Nav.module.scss'
 
 import { Logo, RedesSociais, Search } from '..'
 
-import useIsMobile from '@/hooks/isMobile'
+import useIsMobile from '@/hooks/useIsMobile/isMobile'
 
 interface NavProps {
   open: boolean
@@ -17,9 +17,9 @@ const Nav: React.FC<NavProps> = ({ open }) => {
   const isMobile: boolean = useIsMobile()
   const navLink = [
     { nome: 'home', link: '/' },
-    { nome: 'catálogo', link: 'catalogo' },
-    { nome: 'Em Breve', link: 'em-breve' },
-    { nome: 'contato', link: 'contato' }
+    { nome: 'catálogo', link: '/catalogo' },
+    { nome: 'Em Breve', link: '/em-breve' },
+    { nome: 'contato', link: '/contato' }
   ]
 
   return (

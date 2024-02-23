@@ -5,7 +5,7 @@ import Style from './Menu.module.scss'
 
 import { Burger, Logo, Nav, Search } from '../../atoms'
 
-import useIsMobile from '@/hooks/isMobile'
+import useIsMobile from '@/hooks/useIsMobile/isMobile'
 
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState<boolean>(true)

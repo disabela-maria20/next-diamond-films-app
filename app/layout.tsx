@@ -3,6 +3,8 @@ import { Montserrat } from 'next/font/google'
 
 import { Header } from '@/components/organisms'
 
+import '@/styles/sass/globals.scss'
+
 const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -18,7 +20,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={montserrat.className}>
-        <Header />
+        <Header></Header>
+
         {children}
       </body>
     </html>

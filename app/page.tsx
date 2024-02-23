@@ -1,5 +1,7 @@
-import '@/styles/sass/globals.scss'
-
 export default function Home() {
-  return <main>teste</main>
+  return (
+    <main>
+      <img src="/img/hub/missão_de_sobrevivencia.jpg"></img>
+    </main>
+  )
 }
