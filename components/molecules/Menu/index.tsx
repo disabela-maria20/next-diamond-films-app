@@ -5,8 +5,11 @@ import Style from './Menu.module.scss'
 
 import { Burger, Logo, Nav, Search } from '../../atoms'
 
+import useIsMobile from '@/hooks/isMobile'
+
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState<boolean>(true)
+  const isMobile: boolean = useIsMobile()
 
   return (
     <>
@@ -17,7 +20,7 @@ const Menu = (): JSX.Element => {
             <div className={Style.flexMobile}>
               <Burger open={!open} setOpen={() => setOpen(!open)} />
               <Logo logo={'logo.webp'} />
-              <Search />
+              {isMobile && <Search />}
             </div>
           </div>
         </div>

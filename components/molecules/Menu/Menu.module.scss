@@ -1,9 +1,8 @@
 .flexDeskTop{
-  @include media('lg'){
+  @include media(xl){
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap-reverse;
     flex-direction: row-reverse;
   }
 }
@@ -15,4 +14,8 @@
   align-items: flex-start;
   height: 100%;
   padding-top: 20px;
+
+  @include media(xl){
+    padding: 0;
+  }
 }

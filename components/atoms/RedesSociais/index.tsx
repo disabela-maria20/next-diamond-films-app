@@ -9,7 +9,7 @@ import { FaXTwitter } from 'react-icons/fa6'
 
 import Style from './RedesSociais.module.scss'
 
-const Search: React.FC = () => {
+const RedesSociais: React.FC = () => {
   const navRedes = [
     { id: 0, name: 'facebook', icone: <FaFacebookF />, link: '' },
     { id: 1, name: 'Instagram', icone: <FaInstagram />, link: '' },
@@ -31,4 +31,4 @@ const Search: React.FC = () => {
   )
 }
 
-export default Search
+export default RedesSociais

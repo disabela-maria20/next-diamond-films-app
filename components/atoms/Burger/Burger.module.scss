@@ -27,7 +27,7 @@
     }
   }
 
-  @include media('lg'){
+  @include media(xl){
     display: none;
   }
 }
