@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/'
+  baseURL: 'https://api-diamond-gray.vercel.app/'
 })
 
 // Traz o filme da pagina "/catalogo/nome_do_filme"
