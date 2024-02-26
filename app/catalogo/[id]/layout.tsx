@@ -1,4 +1,6 @@
-import { IFilmeProps } from '@/server/types'
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Filme } from '@/components/templetes'
+import { getCatalogoFilme } from '@/server/requests'
 
 type Params = {
   params: {
@@ -7,11 +9,7 @@ type Params = {
 }
 
 export default async function layoutCatalogoFilme({ params: { id } }: Params) {
-  const filmeData = await fetch(
-    `http://localhost:3000/filmes?id_vibezz_movie=${id}`
-  )
+  const filme = await getCatalogoFilme(id)
 
-  const dadosFilmes: IFilmeProps = await filmeData.json()
-
-  return <>{dadosFilmes.banner_desktop}</>
+  return <Filme data={filme} />
 }

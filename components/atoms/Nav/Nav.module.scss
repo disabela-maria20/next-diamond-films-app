@@ -144,13 +144,13 @@
                 font-size: 1.8rem;
                 color: $primary-lingh-color;
                 transition: color 200ms ease;
-                padding: 10px 30px;
+                padding-right: 10px;
                 border-radius: 50px;
                 transition: all 200ms ease;
 
-                // @include media(xl) {
-                //     font-size: 2.1rem;
-                // }
+                @include media(xxl) {
+                    padding: 10px 30px;
+                }
 
                 @include media(xxl) {
                     font-size: 2.1rem;

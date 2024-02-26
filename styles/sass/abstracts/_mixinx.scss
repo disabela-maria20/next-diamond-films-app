@@ -60,3 +60,18 @@
   @include container();
 }
 
+@mixin btn-outline{
+  background: transparent;
+  border: 2px solid variable.$primary-lingh-color;
+  padding: 15px 25px;
+  color: variable.$primary-lingh-color;
+  border-radius: 15px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@mixin flex-center{
+  display: flex;
+  justify-content: center;
+}

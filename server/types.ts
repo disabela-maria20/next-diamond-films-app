@@ -1,6 +1,7 @@
-export interface IFilmeProps {
+export interface IFilmeResponse {
   banner_mobile: string
   banner_desktop: string
+  banner_logo: string
   sinopse: string
   poster_sinopse: string
   classificacao: string
