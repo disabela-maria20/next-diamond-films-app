@@ -1,18 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import Style from './Slide.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
-import { Swiper } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/scrollbar'
 
 interface ISlideContentProps {
-  children: React.ReactNode[]
+  url: Array<string>
+  isVideo: boolean
 }
 
-const SlideContent = ({ children }: ISlideContentProps) => {
+const SlideContent = ({ url, isVideo }: ISlideContentProps) => {
   return (
     <Swiper
+      className={Style.SlideContent}
       slidesPerView={1}
       spaceBetween={10}
       freeMode={true}
@@ -22,7 +25,6 @@ const SlideContent = ({ children }: ISlideContentProps) => {
       scrollbar={{
         hide: true
       }}
-      // centeredSlides={true}
       modules={[FreeMode, Scrollbar]}
       breakpoints={{
         640: {
@@ -35,7 +37,23 @@ const SlideContent = ({ children }: ISlideContentProps) => {
         }
       }}
     >
-      {children}
+      {url.map((url: string) => (
+        <SwiperSlide key={url}>
+          {!isVideo && <img src={url} />}
+          {isVideo && (
+            <iframe
+              width="560"
+              height="315"
+              src={`${url}`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className={Style.slideVideo}
+            ></iframe>
+          )}
+        </SwiperSlide>
+      ))}
     </Swiper>
   )
 }

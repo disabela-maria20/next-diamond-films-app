@@ -3,12 +3,11 @@
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 
 import Style from './Filme.module.scss'
-import { FreeMode, Scrollbar } from 'swiper/modules'
 
+import { Slide } from '@/components/molecules/Slide'
 import { useFormatarData } from '@/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/server/types'
-import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -194,35 +193,10 @@ const Filme = (data: IFilmeProps) => {
                   )}
                 </div>
               </div>
-              <Swiper
-                slidesPerView={1}
-                spaceBetween={10}
-                freeMode={true}
-                pagination={{
-                  clickable: true
-                }}
-                scrollbar={{
-                  hide: true
-                }}
-                // centeredSlides={true}
-                modules={[FreeMode, Scrollbar]}
-                breakpoints={{
-                  640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20
-                  },
-                  768: {
-                    slidesPerView: 3,
-                    spaceBetween: 10
-                  }
-                }}
-              >
-                {filme.galeria.map((fotos) => (
-                  <SwiperSlide key={fotos}>
-                    <img src={fotos} />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <Slide.Title>Vídeos</Slide.Title>
+              <Slide.Content url={filme.videos} isVideo={true} />
+              <Slide.Title>Galeria</Slide.Title>
+              <Slide.Content url={filme.galeria} isVideo={false} />
             </div>
           </div>
         )
