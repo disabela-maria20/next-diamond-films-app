@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  touch-action: pan-y !important;
 }
 
 html {
@@ -199,6 +200,7 @@ ul {
 .swiper-scrollbar{
   opacity: 1 !important;
   background-color: #fff !important;
+  
   touch-action: manipulation !important;
 }
 .overflow-slide{

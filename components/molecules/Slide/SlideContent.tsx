@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/scrollbar'
+import ReactPlayer from 'react-player'
 
 interface ISlideContentProps {
   url: Array<string>
@@ -40,18 +41,7 @@ const SlideContent = ({ url, isVideo }: ISlideContentProps) => {
         {url.map((url: string) => (
           <SwiperSlide key={url}>
             {!isVideo && <img src={url} />}
-            {isVideo && (
-              <iframe
-                width="560"
-                height="315"
-                src={`${url}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className={Style.slideVideo}
-              ></iframe>
-            )}
+            {isVideo && <ReactPlayer url={url} className={Style.slideVideo} />}
           </SwiperSlide>
         ))}
       </Swiper>
