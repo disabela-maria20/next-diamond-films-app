@@ -118,85 +118,87 @@ const Filme = (data: IFilmeProps) => {
                 )}
               </div>
             </div>
-            <div className="container">
-              {emExibicao && isMobile && (
-                <div className={Style.areaBtnCompra}>
-                  <button> COMPRAR INGRESSOS </button>
-                </div>
-              )}
-              {filme.status != 'ativo' && streaming !== null && (
-                <div className={Style.areaBtn}>
-                  {streaming.map((service, index) => (
-                    <button key={index}>
-                      ASSISTA AGORA NO
-                      <img
-                        src={`/img/streaming/${service.toLowerCase()}.png`}
-                        alt={service.toLowerCase()}
-                        width="100"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-              <div className={Style.areaPoster}>
-                <div className={Style.areaFlexPoster}>
-                  <img src={filme.poster_sinopse} alt="" />
-                  <div>
-                    <h2>Sinopse</h2>
-                    <p>{filme.sinopse}</p>
+            <div style={{ overflowX: 'hidden' }}>
+              <div className="container">
+                {emExibicao && isMobile && (
+                  <div className={Style.areaBtnCompra}>
+                    <button> COMPRAR INGRESSOS </button>
                   </div>
-                </div>
-
-                <div className={Style.areaFlexInformacoes}>
-                  <div>
-                    <h2>Informações</h2>
-                    <div className={Style.areaClassificaçãoIndicativa}>
-                      <span
-                        style={{
-                          background: `${setDefinirCorClassificacaoIndicativa(filme.classificacao)}`
-                        }}
-                      >
-                        {filme.classificacao}
-                      </span>
-                      <p>{filme.classificacao_desc}</p>
+                )}
+                {filme.status != 'ativo' && streaming !== null && (
+                  <div className={Style.areaBtn}>
+                    {streaming.map((service, index) => (
+                      <button key={index}>
+                        ASSISTA AGORA NO
+                        <img
+                          src={`/img/streaming/${service.toLowerCase()}.png`}
+                          alt={service.toLowerCase()}
+                          width="100"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <div className={Style.areaPoster}>
+                  <div className={Style.areaFlexPoster}>
+                    <img src={filme.poster_sinopse} alt="" />
+                    <div>
+                      <h2>Sinopse</h2>
+                      <p>{filme.sinopse}</p>
                     </div>
-                    <ul className={Style.areainformacaoFilme}>
-                      <li>
-                        <strong>Título Internacional:</strong>
-                        {filme.titulo_internacional}
-                      </li>
-                      <li>
-                        <strong>Duração:</strong>
-                        {filme.duracao}
-                      </li>
-                      <li>
-                        <strong>Gênero:</strong>
-                        {filme.genero}
-                      </li>
-                      <li>
-                        <strong>Elenco:</strong>
-                        {formatarLista(filme.elenco)}
-                      </li>
-                      <li>
-                        <strong>Direção:</strong>
-                        {filme.direcao}
-                      </li>
-                      <li>
-                        <strong>Data de Estreia:</strong>
-                        {formatarData(filme.data_estreia)}
-                      </li>
-                    </ul>
                   </div>
 
-                  {isMobile && (
-                    <Links youtube={filme.trailer_principal} insta="" />
-                  )}
+                  <div className={Style.areaFlexInformacoes}>
+                    <div>
+                      <h2>Informações</h2>
+                      <div className={Style.areaClassificaçãoIndicativa}>
+                        <span
+                          style={{
+                            background: `${setDefinirCorClassificacaoIndicativa(filme.classificacao)}`
+                          }}
+                        >
+                          {filme.classificacao}
+                        </span>
+                        <p>{filme.classificacao_desc}</p>
+                      </div>
+                      <ul className={Style.areainformacaoFilme}>
+                        <li>
+                          <strong>Título Internacional:</strong>
+                          {filme.titulo_internacional}
+                        </li>
+                        <li>
+                          <strong>Duração:</strong>
+                          {filme.duracao}
+                        </li>
+                        <li>
+                          <strong>Gênero:</strong>
+                          {filme.genero}
+                        </li>
+                        <li>
+                          <strong>Elenco:</strong>
+                          {formatarLista(filme.elenco)}
+                        </li>
+                        <li>
+                          <strong>Direção:</strong>
+                          {filme.direcao}
+                        </li>
+                        <li>
+                          <strong>Data de Estreia:</strong>
+                          {formatarData(filme.data_estreia)}
+                        </li>
+                      </ul>
+                    </div>
+
+                    {isMobile && (
+                      <Links youtube={filme.trailer_principal} insta="" />
+                    )}
+                  </div>
                 </div>
+                <Slide.Title>Vídeos</Slide.Title>
+                <Slide.Content url={filme.videos} isVideo={true} />
+                <Slide.Title>Galeria</Slide.Title>
+                <Slide.Content url={filme.galeria} isVideo={false} />
               </div>
-              <Slide.Title>Vídeos</Slide.Title>
-              <Slide.Content url={filme.videos} isVideo={true} />
-              <Slide.Title>Galeria</Slide.Title>
-              <Slide.Content url={filme.galeria} isVideo={false} />
             </div>
           </div>
         )

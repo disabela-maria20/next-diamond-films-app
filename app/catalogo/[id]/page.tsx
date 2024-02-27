@@ -1,7 +1,5 @@
-import React from 'react'
-
-const page = () => {
-  return <div></div>
+const PageCatalogo = () => {
+  return false
 }
 
-export default page
+export default PageCatalogo

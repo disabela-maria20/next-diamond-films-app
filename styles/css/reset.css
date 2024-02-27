@@ -1,13 +1,15 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   font-size: 62.5%;
 }
+
 body {
   margin: 0;
   background-color: #000;
@@ -186,6 +188,19 @@ template {
   display: none;
 }
 
-ul{
+ul {
   list-style-type: none;
+}
+
+.swiper {
+  overflow: visible !important;
+}
+
+.swiper-scrollbar{
+  opacity: 1 !important;
+  background-color: #fff !important;
+  touch-action: manipulation !important;
+}
+.overflow-slide{
+  overflow: hidden;
 }
