@@ -11,8 +11,8 @@ const PageCategoria = async () => {
     <>
       {res.map((data: any) => (
         <Link
-          key={data.id_vibezz_movie}
-          href={`/catalogo/${data?.id_vibezz_movie}`}
+          key={data.id}
+          href={`/catalogo/${data?.id}`}
           style={{
             color: '#fff',
             height: '300px',

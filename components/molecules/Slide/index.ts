@@ -1,3 +1,5 @@
+'use client'
+
 import SlideContent from './SlideContent'
 import SlideTitle from './SlideTitle'
 

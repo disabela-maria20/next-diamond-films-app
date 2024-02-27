@@ -1,17 +1,30 @@
 import axios from 'axios'
 
+// Configuração global do token para todas as solicitações Axios
+axios.defaults.headers.common['token'] = process.env.API_TOKEM
+
 const api = axios.create({
-  baseURL: 'https://api-diamond-gray.vercel.app/'
+  baseURL: process.env.API_URL
 })
 
-// Traz o filme da pagina "/catalogo/nome_do_filme"
 export async function getCatalogoFilme(id: string) {
-  const res = await api.get(`filmes?id_vibezz_movie=${id}`)
-  return res.data
+  try {
+    const { data } = await api.get(`movie/get/${id}`)
+    return data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
-// Lista os filmes na pagina de "/catalogo/"
+// Lista os filmes na página de "/catalogo/"
 export async function getCatalogoCategorias() {
-  const res = await api.get(`filmes`)
-  return res.data
+  try {
+    const { data, status } = await api.get(`movie/get`)
+
+    return { data, status }
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }

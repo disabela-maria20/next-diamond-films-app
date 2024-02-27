@@ -1,24 +1,35 @@
 export interface IFilmeResponse {
-  banner_mobile: string
-  banner_desktop: string
+  id: number
+  title: string
+  originalTitle: string
+  countryOrigin: string
+  contentRating: string
   banner_logo: string
-  sinopse: string
-  poster_sinopse: string
-  classificacao: string
-  classificacao_desc: string
-  titulo_internacional: string
-  duracao: string
-  genero: string
-  elenco: string[]
-  direcao: string
-  data_estreia: string
-  data_pre_estreia: string
-  trailer_principal: string
-  campanha_instagram: string
-  videos: string[]
-  galeria: string[]
-  cor_principal: string
-  id_vibezz_movie: string
+  duration: number
+  synopsis: string
+  shortSynopsis: string
+  cast: string
+  director: string
+  genre_id: number
+  genre: string
+  age: string
+  ageExplain: string
+  releasedate: string
+  premiereDate: string
+  partnerCode: string
   status: string
+  cover: string
+  bannerMobile: string
+  bannerDesktop: string
+  color: string
+  trailer: string
+  socialCampaign: string
+  videos: IFilmeResponseUrl[]
+  images: IFilmeResponseUrl[]
   streaming: string[]
+  created_at: string
+}
+
+export interface IFilmeResponseUrl {
+  url: string
 }

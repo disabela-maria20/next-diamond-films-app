@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 
 import '@/styles/sass/globals.scss'
+import { Footer } from '@/components/molecules'
 import { Header } from '@/components/organisms'
 import ReactQueryProvider from '@/server/providers/ReactQueryProvider'
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <Header></Header>
           {children}
+          <Footer />
         </ReactQueryProvider>
       </body>
     </html>

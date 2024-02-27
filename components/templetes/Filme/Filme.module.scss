@@ -124,7 +124,8 @@
 	padding: 35px 0;
 
 	@include media(lg) {
-		display: flex;
+		display: grid;
+		grid-template-columns:  2fr .7fr;
 		gap: 20px;
 		justify-content: space-between;
 		padding: 90px 0;

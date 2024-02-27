@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { Filme } from '@/components/templetes'
 import { getCatalogoFilme } from '@/server/requests'
 
@@ -10,6 +9,5 @@ type Params = {
 
 export default async function layoutCatalogoFilme({ params: { id } }: Params) {
   const filme = await getCatalogoFilme(id)
-
-  return <Filme data={filme} />
+  return <Filme movie={filme.movie} />
 }

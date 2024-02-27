@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+'use client'
+
+import { useState } from 'react'
 import { CgSearch } from 'react-icons/cg'
 
 import Style from './Search.module.scss'

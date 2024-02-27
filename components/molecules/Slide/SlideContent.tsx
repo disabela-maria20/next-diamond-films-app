@@ -1,19 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import ReactPlayer from 'react-player'
+
 import Style from './Slide.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
+import { IFilmeResponseUrl } from '@/server/types'
 import { Swiper, SwiperSlide } from 'swiper/react'
-
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/scrollbar'
-import ReactPlayer from 'react-player'
 
 interface ISlideContentProps {
-  url: Array<string>
+  url: Array<IFilmeResponseUrl>
   isVideo: boolean
 }
 
 const SlideContent = ({ url, isVideo }: ISlideContentProps) => {
+  console.log(url?.map((data) => data.url))
+
   return (
     <section className={Style.slideContent}>
       <Swiper
@@ -38,10 +42,12 @@ const SlideContent = ({ url, isVideo }: ISlideContentProps) => {
           }
         }}
       >
-        {url.map((url: string) => (
-          <SwiperSlide key={url}>
-            {!isVideo && <img src={url} />}
-            {isVideo && <ReactPlayer url={url} className={Style.slideVideo} />}
+        {url?.map((url, i) => (
+          <SwiperSlide key={i}>
+            {!isVideo && <img src={`${url.url}`} />}
+            {isVideo && (
+              <ReactPlayer url={`${url.url}`} className={Style.slideVideo} />
+            )}
           </SwiperSlide>
         ))}
       </Swiper>
