@@ -9,7 +9,7 @@ const api = axios.create({
 
 export async function getCatalogoFilme(id: string) {
   try {
-    const { data } = await api.get(`movie/get/${id}`)
+    const { data } = await api.get(`get/${id}`)
     return data
   } catch (error) {
     console.error(error)
@@ -17,12 +17,11 @@ export async function getCatalogoFilme(id: string) {
   }
 }
 
-// Lista os filmes na página de "/catalogo/"
-export async function getCatalogoCategorias() {
+// Lista os filmes na página de "/"
+export async function getHome() {
   try {
-    const { data, status } = await api.get(`movie/get`)
-
-    return { data, status }
+    const { data } = await api.get(`list-all`)
+    return data.releases
   } catch (error) {
     console.error(error)
     throw error

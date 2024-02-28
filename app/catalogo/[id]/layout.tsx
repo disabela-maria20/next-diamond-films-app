@@ -9,5 +9,5 @@ type Params = {
 
 export default async function layoutCatalogoFilme({ params: { id } }: Params) {
   const filme = await getCatalogoFilme(id)
-  return <Filme movie={filme.movie} />
+  return <Filme movie={filme} />
 }
