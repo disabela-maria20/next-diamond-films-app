@@ -1,29 +1,22 @@
 import axios from 'axios'
 
 // Configuração global do token para todas as solicitações Axios
-axios.defaults.headers.common['token'] = process.env.API_TOKEM
-
 const api = axios.create({
-  baseURL: process.env.API_URL
+  baseURL: process.env.API_URL,
+  headers: {
+    token: process.env.API_TOKEN
+  }
 })
 
 export async function getCatalogoFilme(id: string) {
-  try {
-    const { data } = await api.get(`get/${id}`)
-    return data
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+  const { data } = await api.get(`get/${id}`)
+  return data
 }
 
 // Lista os filmes na página de "/"
 export async function getHome() {
-  try {
-    const { data } = await api.get(`list-all`)
-    return data.releases
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+  const res = await api.get(`list-all`)
+  console.log(res)
+
+  return res.data
 }

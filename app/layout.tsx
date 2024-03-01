@@ -1,11 +1,10 @@
-'use client '
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 
 import '@/styles/sass/globals.scss'
 import { Footer } from '@/components/molecules'
 import { Header } from '@/components/organisms'
-import ReactQueryProvider from '@/server/providers/ReactQueryProvider'
+import Providers from '@/server/providers'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -22,11 +21,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={montserrat.className}>
-        <ReactQueryProvider>
-          <Header></Header>
-          {children}
-          <Footer />
-        </ReactQueryProvider>
+        <Header></Header>
+        {children}
+        <Footer />
       </body>
     </html>
   )

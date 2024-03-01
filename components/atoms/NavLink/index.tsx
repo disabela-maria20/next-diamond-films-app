@@ -29,13 +29,13 @@ const NavLink = ({ area = 'menu' }: NavLinkProps) => {
   })
 
   return (
-    <ul>
+    <>
       {filteredLinks.map((link) => (
         <li key={link.link}>
           <Link href={link.link}>{link.nome}</Link>
         </li>
       ))}
-    </ul>
+    </>
   )
 }
 

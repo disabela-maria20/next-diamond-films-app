@@ -1,5 +1,4 @@
 'use client'
-import { usePathname } from 'next/navigation'
 
 import Style from './Header.module.scss'
 
@@ -10,20 +9,12 @@ type Props = {
 }
 
 const Header = ({ children }: Props) => {
-  const pathname = usePathname()
-
-  const verificarHome = pathname != '/' ? true : false
-
   return (
     <>
-      <header
-        className={Style.bg_header}
-        style={{ backgroundPositionY: verificarHome ? 'center' : 'bottom' }}
-      >
+      <header className={Style.bg_header}>
         <Menu />
         {children}
       </header>
-      {verificarHome && <div className={Style.border}></div>}
     </>
   )
 }

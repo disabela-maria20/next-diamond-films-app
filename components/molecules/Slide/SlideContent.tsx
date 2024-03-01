@@ -1,21 +1,47 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactPlayer from 'react-player'
 
 import Style from './Slide.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
-import { IFilmeResponseUrl } from '@/server/types'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/scrollbar'
+import { SwiperOptions } from 'swiper/types'
+
+interface IFilmeResponseUrl {
+  url: string
+}
 
 interface ISlideContentProps {
   url: Array<IFilmeResponseUrl>
   isVideo: boolean
+  breakpoints?: IBreakpoints
+  scrollbar?: { hide?: boolean }
 }
 
-const SlideContent = ({ url, isVideo }: ISlideContentProps) => {
+interface IBreakpoints {
+  [width: number]: SwiperOptions
+  [ratio: string]: SwiperOptions
+}
+
+const defaultBreakpoints: IBreakpoints = {
+  640: {
+    slidesPerView: 2,
+    spaceBetween: 20
+  },
+  768: {
+    slidesPerView: 3,
+    spaceBetween: 10
+  }
+}
+
+const SlideContent = ({
+  url,
+  isVideo,
+  breakpoints = defaultBreakpoints,
+  scrollbar = { hide: true }
+}: ISlideContentProps) => {
   console.log(url?.map((data) => data.url))
 
   return (
@@ -27,24 +53,13 @@ const SlideContent = ({ url, isVideo }: ISlideContentProps) => {
         pagination={{
           clickable: true
         }}
-        scrollbar={{
-          hide: true
-        }}
+        scrollbar={scrollbar}
         modules={[FreeMode, Scrollbar]}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 10
-          }
-        }}
+        breakpoints={breakpoints}
       >
         {url?.map((url, i) => (
           <SwiperSlide key={i}>
-            {!isVideo && <img src={`${url.url}`} />}
+            {!isVideo && <img src={`${url.url}`} alt={`Slide ${i}`} />}
             {isVideo && (
               <ReactPlayer url={`${url.url}`} className={Style.slideVideo} />
             )}

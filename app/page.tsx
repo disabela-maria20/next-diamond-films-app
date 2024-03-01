@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <main>
-      <img src="/img/hub/missão_de_sobrevivencia.jpg"></img>
-    </main>
-  )
+import Home from '@/components/templetes/Home'
+
+export default async function PageHome() {
+  return <Home />
 }

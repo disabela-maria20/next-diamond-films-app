@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Style from './Menu.module.scss'
 
@@ -10,6 +10,15 @@ import useIsMobile from '@/hooks/useIsMobile/isMobile'
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState<boolean>(true)
   const isMobile: boolean = useIsMobile()
+
+  useEffect(() => {
+    if (!open) {
+      document.body.classList.add(Style.bgOpacity)
+    }
+    if (open) {
+      document.body.classList.remove(Style.bgOpacity)
+    }
+  }, [open])
 
   return (
     <>
