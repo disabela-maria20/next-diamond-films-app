@@ -1,11 +1,10 @@
-import Style from './Slide.module.scss'
-
 interface ISlideTitle {
   children: React.ReactNode
+  className: string
 }
 
-const SlideTitle = ({ children }: ISlideTitle) => {
-  return <h2 className={Style.slideTitle}>{children}</h2>
+const SlideTitle = ({ children, className }: ISlideTitle) => {
+  return <h2 className={className}>{children}</h2>
 }
 
 export default SlideTitle

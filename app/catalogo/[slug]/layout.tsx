@@ -3,11 +3,14 @@ import { getCatalogoFilme } from '@/server/requests'
 
 type Params = {
   params: {
-    id: string
+    slug: string
   }
 }
 
-export default async function layoutCatalogoFilme({ params: { id } }: Params) {
-  const filme = await getCatalogoFilme(id)
+export default async function layoutCatalogoFilme({
+  params: { slug }
+}: Params) {
+  const filme = await getCatalogoFilme(slug)
+
   return <Filme movie={filme} />
 }

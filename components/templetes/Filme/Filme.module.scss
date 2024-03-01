@@ -1,6 +1,7 @@
-.areaFilme{
+.areaFilme {
 	overflow-y: hidden;
 }
+
 .areaBanner {
 	position: relative;
 	z-index: -1;
@@ -125,7 +126,7 @@
 
 	@include media(lg) {
 		display: grid;
-		grid-template-columns:  2fr .7fr;
+		grid-template-columns: 2fr .7fr;
 		gap: 20px;
 		justify-content: space-between;
 		padding: 90px 0;
@@ -254,4 +255,26 @@
 			font-weight: 700;
 		}
 	}
+}
+
+.areaSlide {
+	overflow: visible !important;
+
+	.swiper-scrollbar {
+		opacity: 1 !important;
+		background-color: #fff !important;
+
+		touch-action: manipulation !important;
+	}
+
+	.overflow-slide {
+		overflow: hidden;
+	}
+}
+
+.slideTitle {
+	font-size: 3.1rem;
+	margin: 25px 0;
+	font-weight: 400;
+	color: $primary-lingh-color;
 }

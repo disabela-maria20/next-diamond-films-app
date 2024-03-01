@@ -8,15 +8,20 @@ const api = axios.create({
   }
 })
 
-export async function getCatalogoFilme(id: string) {
-  const { data } = await api.get(`get/${id}`)
+export async function getCatalogoFilme(slug: string) {
+  const { data } = await api.get(`get/${slug}`)
   return data
 }
 
 // Lista os filmes na página de "/"
 export async function getHome() {
   const res = await api.get(`list-all`)
-  console.log(res)
 
+  return res.data
+}
+
+// Lista os banners na página de "/"
+export async function getHomeBanner() {
+  const res = await api.get(`banner-home`)
   return res.data
 }

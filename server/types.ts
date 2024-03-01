@@ -1,6 +1,7 @@
 export interface IFilmeResponse {
   id: number
   title: string
+  slug: string
   originalTitle: string
   countryOrigin: string
   contentRating: string

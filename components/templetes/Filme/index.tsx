@@ -1,13 +1,16 @@
 'use client'
 
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
-
-import Style from './Filme.module.scss'
+import ReactPlayer from 'react-player'
 
 //import { useFormatarData } from '@/hooks/useFormatarData/formatarData'
+import Style from './Filme.module.scss'
+import { FreeMode, Scrollbar } from 'swiper/modules'
+
 import { Slide } from '@/components/molecules'
 import useIsMobile from '@/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/server/types'
+import { SwiperOptions } from 'swiper/types'
 
 interface IFilmeProps {
   movie: IFilmeResponse
@@ -73,11 +76,32 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
 
 const Filme = (data: IFilmeProps) => {
   const filme = data.movie
+
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()
   const emExibicao = new Date() >= new Date(filme?.releasedate)
   //const streaming = setStreaming(filme?.streaming)
 
+  const swiperOptions: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    freeMode: true,
+    pagination: {
+      clickable: true
+    },
+    scrollbar: { hide: true },
+    modules: [FreeMode, Scrollbar],
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 10
+      }
+    }
+  }
   return (
     <section>
       return (
@@ -175,10 +199,34 @@ const Filme = (data: IFilmeProps) => {
                 {isMobile && <Links youtube={filme?.trailer} insta="" />}
               </div>
             </div>
-            <Slide.Title>Vídeos</Slide.Title>
-            <Slide.Content url={filme?.videos} isVideo={true} />
-            <Slide.Title>Galeria</Slide.Title>
-            <Slide.Content url={filme?.images} isVideo={false} />
+            <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
+            <Slide.Content
+              swiperOptions={swiperOptions}
+              className={Style.areaSlide}
+            >
+              {filme?.videos?.map((data) => (
+                <div key={data.url}>
+                  <ReactPlayer
+                    url={`${data.url}`}
+                    className={Style.slideVideo}
+                  />
+                </div>
+              ))}
+            </Slide.Content>
+            <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
+            <Slide.Content
+              swiperOptions={swiperOptions}
+              className={Style.areaSlide}
+            >
+              {filme?.images?.map((data) => (
+                <div key={data.url}>
+                  <ReactPlayer
+                    url={`${data.url}`}
+                    className={Style.slideVideo}
+                  />
+                </div>
+              ))}
+            </Slide.Content>
           </div>
         </div>
       </div>
