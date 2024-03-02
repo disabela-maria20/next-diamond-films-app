@@ -1,12 +1,83 @@
 .newsletter {
 	background-color: $primary-color-gray;
+	color: $primary-lingh-color;
 	padding: 25px;
-
+	@include media(lg){
+		padding: 15px;
+	}
 	.gridNewsletter {
 		display: grid;
 		grid-template-columns: repeat(5, 1fr);
-		grid-template-rows: repeat(2, 1fr);
-		grid-column-gap: 0px;
-		grid-row-gap: 0px;
+		grid-template-rows: repeat(3, auto);
+		gap: 10px;
+
+		@include media(lg){
+			grid-template-columns: 2fr 1fr .6fr 1.6fr .3fr;
+			grid-template-rows: initial;
+		}
+	}
+
+	.text {
+		grid-area: 1 / 1 / 2 / 6;
+		font-size: 1.4rem;
+		line-height: 1.8rem;
+
+		@include media(lg){
+			grid-area: initial;
+			font-size: 1.3rem;
+			line-height: 1.6rem;
+		}
+	}
+
+	.inputNome {
+		grid-area: 2 / 1 / 3 / 4;
+		@include media(lg){
+			grid-area: initial;
+		}
+	}
+
+	.inputTelefone {
+		grid-area: 2 / 4 / 3 / 6;
+		@include media(lg){
+			grid-area: initial;
+		}
+	}
+
+	.inputEmail {
+		grid-area: 3 / 1 / 4 / 5; 
+		display: inline-flex;
+		background-color: $primary-lingh-color;
+		border-top-right-radius: 50px;
+		border-bottom-right-radius: 50px;
+		height: 36px;
+		@include media(lg){
+			grid-area: initial;
+		}
+
+		button{
+			background-color: $secondary-colors;
+			border: none;
+			color: $primary-lingh-color;
+			padding: 0 20px;
+			border-radius: 50px;
+			font-size: 1.6rem;
+			text-transform: uppercase;
+			position: relative;
+			left: 1px;
+		}
+	}
+	.icon{
+		grid-area: 3 / 5 / 4 / 6;
+
+		img{
+			height: 36px;
+		}
+		@include media(lg){
+			grid-area: initial;
+		}
+	}
+	input{
+		@include inputNewsletter();
 	}
 }
+

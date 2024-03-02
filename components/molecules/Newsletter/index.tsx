@@ -19,7 +19,9 @@ const Newsletter = () => {
             <input type="text" placeholder="E-mail" />
             <button>Enviar</button>
           </div>
-          <div className={Style.icon}>carta</div>
+          <div className={Style.icon}>
+            <img src="/img/carta.png" alt="" />
+          </div>
         </form>
       </section>
     </div>

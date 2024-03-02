@@ -87,3 +87,16 @@
   display: flex;
   justify-content: center;
 }
+
+@mixin inputNewsletter {
+	background-color: variable.$primary-lingh-color;;
+	height: 34px;
+	width: 100%;
+  border: 1px solid variable.$primary-lingh-color;
+  padding: 10px;
+  font-size: 1.2rem;
+  
+  ::placeholder{
+    
+  }
+}
