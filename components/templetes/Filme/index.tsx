@@ -7,7 +7,7 @@ import ReactPlayer from 'react-player'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
-import { Slide } from '@/components/molecules'
+import { Newsletter, Slide } from '@/components/molecules'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
@@ -109,7 +109,7 @@ const Filme = (data: IFilmeProps) => {
       <div className={Style.areaBanner}>
         <div className={Style.bannerFilme}>
           <img
-            src={isMobile ? filme?.banner_logo : filme?.bannerDesktop}
+            src={isMobile ? filme?.bannerMobile : filme.bannerDesktop}
             alt={filme?.title}
           />
         </div>
@@ -125,6 +125,10 @@ const Filme = (data: IFilmeProps) => {
           {!isMobile && <Links youtube={filme?.trailer} insta="" />}
         </div>
       </div>
+      <div className="container">
+        <Newsletter isHorrizontal={!isMobile} isBg={true} />
+      </div>
+
       <div style={{ overflowX: 'hidden' }}>
         <div className="container">
           {emExibicao && isMobile && (
