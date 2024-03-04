@@ -78,7 +78,6 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
 
 const Filme = (data: IFilmeProps) => {
   const filme = data.movie.movie
-  console.log(data.movie)
 
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()

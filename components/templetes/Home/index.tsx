@@ -26,8 +26,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const isMobile: boolean = useIsMobile()
 
-  console.log(listaFilmes)
-
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
     pagination: isMobile ? false : true,
