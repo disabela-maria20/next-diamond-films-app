@@ -11,7 +11,7 @@ axios.defaults.headers.common['token'] = process.env.API_TOKEM
 
 export async function getCatalogoFilme(slug: string) {
   try {
-    const { data } = await api.get(`/get/${slug}`)
+    const { data } = await api.get(`/movie/get/${slug}`)
     return data
   } catch (err) {
     console.log(err)

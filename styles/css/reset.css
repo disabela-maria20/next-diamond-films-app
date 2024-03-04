@@ -227,3 +227,10 @@ ul {
   opacity: 0 !important;
 }
 
+
+
+.slideVideo iframe {
+	position: relative !important;
+	z-index: -1 !important;
+}
+

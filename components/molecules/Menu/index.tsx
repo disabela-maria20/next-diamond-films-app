@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import Style from './Menu.module.scss'
@@ -29,7 +30,9 @@ const Menu = (): JSX.Element => {
             <Nav open={open} setOpen={setOpen} />
             <div className={Style.flexMobile}>
               <Burger open={!open} setOpen={() => setOpen(!open)} />
-              <Logo logo={'logo.webp'} />
+              <Link href="/">
+                <Logo logo={'logo.webp'} />
+              </Link>
               {isMobile && <Search />}
             </div>
           </div>

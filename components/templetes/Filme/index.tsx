@@ -13,7 +13,9 @@ import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
 interface IFilmeProps {
-  movie: IFilmeResponse
+  movie: {
+    movie: IFilmeResponse
+  }
 }
 
 // enum EStreaming {
@@ -75,7 +77,8 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
 }
 
 const Filme = (data: IFilmeProps) => {
-  const filme = data.movie
+  const filme = data.movie.movie
+  console.log(data.movie)
 
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()
@@ -104,35 +107,33 @@ const Filme = (data: IFilmeProps) => {
   }
   return (
     <section>
-      return (
-      <div key={filme?.id}>
-        <div className={Style.areaBanner}>
-          <div className={Style.bannerFilme}>
-            <img
-              src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
-              alt={filme?.title}
-            />
-          </div>
-          <div className="container" style={{ position: 'relative' }}>
-            <div className={Style.areaTituloBanner}>
-              <img src={filme?.banner_logo} />
-              {emExibicao && (
-                <h2 className={Style.emExibicao}>
-                  <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
-                </h2>
-              )}
-            </div>
-            {!isMobile && <Links youtube={filme?.trailer} insta="" />}
-          </div>
+      <div className={Style.areaBanner}>
+        <div className={Style.bannerFilme}>
+          <img
+            src={isMobile ? filme?.banner_logo : filme?.bannerDesktop}
+            alt={filme?.title}
+          />
         </div>
-        <div style={{ overflowX: 'hidden' }}>
-          <div className="container">
-            {emExibicao && isMobile && (
-              <div className={Style.areaBtnCompra}>
-                <button> COMPRAR INGRESSOS </button>
-              </div>
+        <div className="container" style={{ position: 'relative' }}>
+          <div className={Style.areaTituloBanner}>
+            {/* <img src={} /> */}
+            {emExibicao && (
+              <h2 className={Style.emExibicao}>
+                <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
+              </h2>
             )}
-            {/* {filme?.status != 'ativo' && streaming !== null && (
+          </div>
+          {!isMobile && <Links youtube={filme?.trailer} insta="" />}
+        </div>
+      </div>
+      <div style={{ overflowX: 'hidden' }}>
+        <div className="container">
+          {emExibicao && isMobile && (
+            <div className={Style.areaBtnCompra}>
+              <button> COMPRAR INGRESSOS </button>
+            </div>
+          )}
+          {/* {filme?.status != 'ativo' && streaming !== null && (
               <div className={Style.areaBtn}>
                 {streaming.map((service, index) => (
                   <button key={index}>
@@ -146,91 +147,88 @@ const Filme = (data: IFilmeProps) => {
                 ))}
               </div>
             )} */}
-            <div className={Style.areaPoster}>
-              <div className={Style.areaFlexPoster}>
-                <img src={filme?.cover} alt="" />
-                <div>
-                  <h2>Sinopse</h2>
-                  <p>{filme?.shortSynopsis}</p>
-                </div>
-              </div>
-
-              <div className={Style.areaFlexInformacoes}>
-                <div>
-                  <h2>Informações</h2>
-                  <div className={Style.areaClassificaçãoIndicativa}>
-                    <span
-                      style={{
-                        background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
-                      }}
-                    >
-                      {filme?.age}
-                    </span>
-                    <p>{filme?.ageExplain}</p>
-                  </div>
-                  <ul className={Style.areainformacaoFilme}>
-                    <li>
-                      <strong>Título Internacional:</strong>
-                      {filme?.originalTitle}
-                    </li>
-                    <li>
-                      <strong>Duração:</strong>
-                      {filme?.duration}
-                    </li>
-                    <li>
-                      <strong>Gênero:</strong>
-                      {filme?.genre}
-                    </li>
-                    <li>
-                      <strong>Elenco:</strong>
-                      {filme?.cast}
-                    </li>
-                    <li>
-                      <strong>Direção:</strong>
-                      {filme?.director}
-                    </li>
-                    <li>
-                      <strong>Data de Estreia:</strong>
-                      {filme?.releasedate}
-                    </li>
-                  </ul>
-                </div>
-
-                {isMobile && <Links youtube={filme?.trailer} insta="" />}
+          <div className={Style.areaPoster}>
+            <div className={Style.areaFlexPoster}>
+              <img src={filme?.cover} alt="" />
+              <div>
+                <h2>Sinopse</h2>
+                <p>{filme?.shortSynopsis}</p>
               </div>
             </div>
-            <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-            <Slide.Content
-              swiperOptions={swiperOptions}
-              className={Style.areaSlide}
-            >
-              {filme?.videos?.map((data) => (
-                <div key={data.url}>
-                  <ReactPlayer
-                    url={`${data.url}`}
-                    className={Style.slideVideo}
-                  />
+
+            <div className={Style.areaFlexInformacoes}>
+              <div>
+                <h2>Informações</h2>
+                <div className={Style.areaClassificaçãoIndicativa}>
+                  <span
+                    style={{
+                      background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                    }}
+                  >
+                    {filme?.age}
+                  </span>
+                  <p>{filme?.ageExplain}</p>
                 </div>
-              ))}
-            </Slide.Content>
-            <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
-            <Slide.Content
-              swiperOptions={swiperOptions}
-              className={Style.areaSlide}
-            >
-              {filme?.images?.map((data) => (
-                <div key={data.url}>
-                  <ReactPlayer
-                    url={`${data.url}`}
-                    className={Style.slideVideo}
-                  />
-                </div>
-              ))}
-            </Slide.Content>
+                <ul className={Style.areainformacaoFilme}>
+                  <li>
+                    <strong>Título Internacional:</strong>
+                    {filme?.originalTitle}
+                  </li>
+                  <li>
+                    <strong>Duração:</strong>
+                    {filme?.duration}
+                  </li>
+                  <li>
+                    <strong>Gênero:</strong>
+                    {filme?.genre}
+                  </li>
+                  <li>
+                    <strong>Elenco:</strong>
+                    {filme?.cast}
+                  </li>
+                  <li>
+                    <strong>Direção:</strong>
+                    {filme?.director}
+                  </li>
+                  <li>
+                    <strong>Data de Estreia:</strong>
+                    {filme?.releasedate}
+                  </li>
+                </ul>
+              </div>
+
+              {isMobile && <Links youtube={filme?.trailer} insta="" />}
+            </div>
           </div>
+          <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
+          <Slide.Content
+            swiperOptions={swiperOptions}
+            className={Style.areaSlide}
+          >
+            {filme?.videos?.map((data) => (
+              <div key={data.url} className="slideVideo">
+                <ReactPlayer
+                  url={data.url}
+                  width={'auto'}
+                  height={250}
+                  style={{ position: 'relative', zIndex: -1 }}
+                />
+              </div>
+            ))}
+          </Slide.Content>
+          <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
+          <Slide.Content
+            swiperOptions={swiperOptions}
+            className={Style.areaSlide}
+          >
+            {filme?.images?.map((data) => (
+              <div key={data.url}>
+                <img src={`${data.url}`} />
+              </div>
+            ))}
+          </Slide.Content>
         </div>
       </div>
-      )
     </section>
   )
 }

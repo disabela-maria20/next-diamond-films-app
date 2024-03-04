@@ -24,9 +24,6 @@ interface IHomeProps {
 
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const [open, setOpen] = useState<boolean>(false)
-
-  console.log(listaFilmes.releases)
-
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
