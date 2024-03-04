@@ -1,5 +1,5 @@
 import { Filme } from '@/components/templetes'
-import { getCatalogoFilme } from '@/server/requests'
+import { getCatalogoFilme } from '@/utils/server/requests'
 
 type Params = {
   params: {

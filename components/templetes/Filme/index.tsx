@@ -8,8 +8,8 @@ import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
 import { Slide } from '@/components/molecules'
-import useIsMobile from '@/hooks/useIsMobile/isMobile'
-import { IFilmeResponse } from '@/server/types'
+import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
+import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
 interface IFilmeProps {

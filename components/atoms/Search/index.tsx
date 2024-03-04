@@ -5,7 +5,7 @@ import { CgSearch } from 'react-icons/cg'
 
 import Style from './Search.module.scss'
 
-import useIsMobile from '@/hooks/useIsMobile/isMobile'
+import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 
 const Search: React.FC = () => {
   const [searchPopUp, setSearchPopUp] = useState<boolean>(false)

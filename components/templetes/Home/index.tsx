@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-
 import Link from 'next/link'
+import { useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
 import { Navigation, Pagination } from 'swiper/modules'
 
-import { Newsletter, Slide } from '@/components/molecules'
-import useIsMobile from '@/hooks/useIsMobile/isMobile'
-import { IFilmeResponse } from '@/server/types'
+import { Model, Newsletter, Slide } from '@/components/molecules'
+import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
+import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
 import 'swiper/css/navigation'
@@ -25,6 +24,8 @@ interface IHomeProps {
 }
 
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
+  const [open, setOpen] = useState<boolean>(false)
+
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -90,7 +91,10 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           </Link>
         ))}
       </Slide.Content>
-      <Newsletter />
+      <div className="container">
+        <Newsletter isBg={true} isHorrizontal={!isMobile && true} />
+      </div>
+
       <section className={Style.areaSlideFilmes}>
         <div className="container" style={{ overflow: 'hidden' }}>
           <Slide.Title className={Style.slideTitle}>
@@ -140,6 +144,17 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           </Slide.Content>
         </div>
       </section>
+      {!open && (
+        <Model.Root>
+          <Model.Body setOpen={() => setOpen(!open)}>
+            <Model.Title>VOCÊ AMA CINEMA?</Model.Title>
+            <Model.Content>
+              <Newsletter />
+            </Model.Content>
+            <Model.Footer />
+          </Model.Body>
+        </Model.Root>
+      )}
     </>
   )
 }

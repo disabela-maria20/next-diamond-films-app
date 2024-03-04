@@ -1,5 +1,5 @@
 import Home from '@/components/templetes/Home'
-import { getHome, getHomeBanner } from '@/server/requests'
+import { getHome, getHomeBanner } from '@/utils/server/requests'
 
 export default async function PageHome() {
   const banner = await getHomeBanner()

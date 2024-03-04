@@ -4,7 +4,7 @@ import Style from './Nav.module.scss'
 
 import { Logo, NavLink, RedesSociais, Search } from '..'
 
-import useIsMobile from '@/hooks/useIsMobile/isMobile'
+import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 
 interface NavProps {
   open: boolean
