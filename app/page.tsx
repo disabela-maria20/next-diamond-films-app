@@ -20,7 +20,5 @@ export default async function PageHome() {
     }
   ]
   const listaFilmes = await getHome()
-  console.log(listaFilmes)
-
   return <Home banner={banner} listaFilmes={listaFilmes} />
 }

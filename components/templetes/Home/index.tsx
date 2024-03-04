@@ -26,6 +26,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const isMobile: boolean = useIsMobile()
 
+  console.log(listaFilmes)
+
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
     pagination: isMobile ? false : true,
@@ -128,7 +130,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             swiperOptions={filmesStreaming}
             className={Style.slideFilmehomePromo}
           >
-            {listaFilmes?.['streaming '].map((data) => (
+            {listaFilmes?.streaming?.map((data) => (
               <div key={data.id} className={Style.filme}>
                 <Link href={`/catalogo/${data.slug}`}>
                   <img src={data.cover} />
