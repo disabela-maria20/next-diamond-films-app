@@ -1,9 +1,26 @@
 import Home from '@/components/templetes/Home'
-import { getHome, getHomeBanner } from '@/utils/server/requests'
+import { getHome } from '@/utils/server/requests'
 
 export default async function PageHome() {
-  const banner = await getHomeBanner()
+  const banner = [
+    {
+      bannerMobile: '/img/hub/Banner_mobile.png',
+      bannerDesktop: '/img/hub/Banner_desktop.jpg',
+      slug: 'guerra-civil'
+    },
+    {
+      bannerMobile: '/img/hub/Banner_mobile.png',
+      bannerDesktop: '/img/hub/Banner_desktop.jpg',
+      slug: 'guerra-civil'
+    },
+    {
+      bannerMobile: '/img/hub/Banner_mobile.png',
+      bannerDesktop: '/img/hub/Banner_desktop.jpg',
+      slug: 'guerra-civil'
+    }
+  ]
   const listaFilmes = await getHome()
+  console.log(listaFilmes)
 
   return <Home banner={banner} listaFilmes={listaFilmes} />
 }

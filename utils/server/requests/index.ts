@@ -4,20 +4,28 @@ import axios from 'axios'
 const api = axios.create({
   baseURL: process.env.API_URL,
   headers: {
-    token: process.env.API_TOKEN
+    token: process.env.API_TOKEM
   }
 })
+axios.defaults.headers.common['token'] = process.env.API_TOKEM
 
 export async function getCatalogoFilme(slug: string) {
-  const { data } = await api.get(`get/${slug}`)
-  return data
+  try {
+    const { data } = await api.get(`/get/${slug}`)
+    return data
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 // Lista os filmes na página de "/"
 export async function getHome() {
-  const res = await api.get(`list-all`)
-
-  return res.data
+  try {
+    const res = await api.get(`/movie/list-all`)
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 // Lista os banners na página de "/"

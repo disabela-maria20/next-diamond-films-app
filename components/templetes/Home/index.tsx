@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -14,17 +15,17 @@ import { SwiperOptions } from 'swiper/types'
 import 'swiper/css/navigation'
 
 interface IHomeProps {
-  banner: Array<IFilmeResponse>
-  listaFilmes: [
-    {
-      releases: Array<IFilmeResponse>
-      streaming: Array<IFilmeResponse>
-    }
-  ]
+  banner: Array<any>
+  listaFilmes: {
+    releases: Array<IFilmeResponse>
+    streaming: Array<IFilmeResponse>
+  }
 }
 
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const [open, setOpen] = useState<boolean>(false)
+
+  console.log(listaFilmes.releases)
 
   const isMobile: boolean = useIsMobile()
 
@@ -85,7 +86,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
         swiperOptions={bannerSwiperOptions}
         className={Style.slideBanner}
       >
-        {banner.map((data) => (
+        {banner?.map((data) => (
           <Link key={data.id} href={`/catalogo/${data.slug}`}>
             <img src={`${isMobile ? data.bannerMobile : data.bannerDesktop}`} />
           </Link>
@@ -108,7 +109,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             swiperOptions={filmesSwiperOptions}
             className={Style.slideFilmehomePromo}
           >
-            {listaFilmes[0].releases.map((data) => (
+            {listaFilmes?.releases.map((data) => (
               <div key={data.id} className={Style.filme}>
                 <Link href={`/catalogo/${data.slug}`}>
                   <img src={data.cover} />
@@ -130,7 +131,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             swiperOptions={filmesStreaming}
             className={Style.slideFilmehomePromo}
           >
-            {listaFilmes[0].streaming.map((data) => (
+            {listaFilmes?.['streaming '].map((data) => (
               <div key={data.id} className={Style.filme}>
                 <Link href={`/catalogo/${data.slug}`}>
                   <img src={data.cover} />
