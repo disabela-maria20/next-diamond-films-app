@@ -4,10 +4,10 @@ import Link from 'next/link'
 
 const LINK = [
   { nome: 'home', link: '/', menu: true, footer: true },
-  { nome: 'catálogo', link: '/catalogo', menu: false, footer: true },
-  { nome: 'Em Breve', link: '/em-breve', menu: false, footer: true },
-  { nome: 'contato', link: '/contato', menu: false, footer: true },
-  { nome: 'Termos de Uso', link: '/termos-de-uso', menu: false, footer: true },
+  { nome: 'catálogo', link: '/catalogo', menu: false, footer: false },
+  { nome: 'Em Breve', link: '/em-breve', menu: false, footer: false },
+  { nome: 'contato', link: '/contato', menu: false, footer: false },
+  { nome: 'Termos de Uso', link: '/termos-de-uso', menu: false, footer: false },
   {
     nome: 'Política de Privacidade',
     link: '/politica-de-privacidade',

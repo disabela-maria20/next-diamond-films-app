@@ -48,5 +48,17 @@
 .modelFooter{
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 	padding-top: 15px;
+	gap: 10px;
+
+	ul{
+		li{
+			a{
+				color: $primary-lingh-color;
+				text-decoration: underline;
+			}
+		}
+	}
 }

@@ -219,12 +219,14 @@
 		right: 0;
 		flex-direction: row;
 		gap: 20px;
-		margin: 0
+		margin: 0;
+		padding: 20px;
+		margin-right: 10px;
 	}
 
 	.instagram {
 		@include btn-outline;
-
+		padding: 5px !important;
 		@include media(lg) {
 			display: flex;
 			gap: 40px;
@@ -241,10 +243,13 @@
 		gap: 10px;
 		background-color: $primary-lingh-color;
 		width: 270px;
-		padding: 15px 25px;
+		padding: 10px 15px;
 		border-radius: 15px;
 		margin-bottom: 10px;
 
+		@include media(xl){
+			margin: 0;
+		}
 		svg {
 			color: #E52D27;
 			font-size: 3rem;

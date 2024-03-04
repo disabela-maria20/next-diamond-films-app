@@ -35,7 +35,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   }
 
   const filmesSwiperOptions: SwiperOptions = {
-    slidesPerView: 1,
+    slidesPerView: 2,
     pagination: false,
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination],
@@ -85,10 +85,9 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
         className={Style.slideBanner}
       >
         {banner?.map((data) => (
-          <img
-            key={data.id}
-            src={`${isMobile ? data.bannerMobile : data.bannerDesktop}`}
-          />
+          <Link href={data.slug} key={data.id}>
+            <img src={`${isMobile ? data.bannerMobile : data.bannerDesktop}`} />
+          </Link>
         ))}
       </Slide.Content>
       <div className="container">

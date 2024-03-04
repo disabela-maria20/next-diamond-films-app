@@ -11,11 +11,36 @@ import Style from './RedesSociais.module.scss'
 
 const RedesSociais: React.FC = () => {
   const navRedes = [
-    { id: 0, name: 'facebook', icone: <FaFacebookF />, link: '' },
-    { id: 1, name: 'Instagram', icone: <FaInstagram />, link: '' },
-    { id: 2, name: 'Youtube', icone: <FaYoutube />, link: '' },
-    { id: 3, name: 'Tiktok', icone: <FaTiktok />, link: '' },
-    { id: 4, name: 'Twitter', icone: <FaXTwitter />, link: '' }
+    {
+      id: 0,
+      name: 'facebook',
+      icone: <FaFacebookF />,
+      link: 'https://www.facebook.com/DiamondFilmsBR'
+    },
+    {
+      id: 1,
+      name: 'Instagram',
+      icone: <FaInstagram />,
+      link: 'https://www.instagram.com/diamondfilmsbr/'
+    },
+    {
+      id: 2,
+      name: 'Youtube',
+      icone: <FaYoutube />,
+      link: 'https://www.youtube.com/@DiamondFilmsBrasil'
+    },
+    {
+      id: 3,
+      name: 'Tiktok',
+      icone: <FaTiktok />,
+      link: 'https://www.tiktok.com/@diamondfilmsbr?lang=pt-BR'
+    },
+    {
+      id: 4,
+      name: 'Twitter',
+      icone: <FaXTwitter />,
+      link: 'https://twitter.com/DiamondFilmsBR'
+    }
   ]
 
   return (
