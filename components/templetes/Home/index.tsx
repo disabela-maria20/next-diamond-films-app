@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import Link from 'next/link'
@@ -121,6 +122,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               </div>
             ))}
           </Slide.Content>
+          {/* {listaFilmes?.streaming.}
           <Slide.Title className={Style.slideTitle}>
             ASSISTA ONDE E QUANDO QUISER
             <span>Nossos filmes disponíveis nos streamings.</span>
@@ -140,7 +142,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                 </a>
               </div>
             ))}
-          </Slide.Content>
+          </Slide.Content> */}
         </div>
       </section>
       {!open && (

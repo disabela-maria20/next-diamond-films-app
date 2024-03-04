@@ -4,9 +4,9 @@ import Link from 'next/link'
 
 const LINK = [
   { nome: 'home', link: '/', menu: true, footer: true },
-  { nome: 'catálogo', link: '/catalogo', menu: true, footer: true },
-  { nome: 'Em Breve', link: '/em-breve', menu: true, footer: true },
-  { nome: 'contato', link: '/contato', menu: true, footer: true },
+  { nome: 'catálogo', link: '/catalogo', menu: false, footer: true },
+  { nome: 'Em Breve', link: '/em-breve', menu: false, footer: true },
+  { nome: 'contato', link: '/contato', menu: false, footer: true },
   { nome: 'Termos de Uso', link: '/termos-de-uso', menu: false, footer: true },
   {
     nome: 'Política de Privacidade',
