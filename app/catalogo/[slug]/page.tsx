@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
-type Props = {
+type PageCatalogoProps = {
   children?: React.ReactNode
 }
 
-const PageCatalogo = ({ children }: Props) => {
+const PageCatalogo = ({ children }: PageCatalogoProps) => {
   return <Suspense fallback="Carregando">{children}</Suspense>
 }
 
