@@ -1,10 +1,7 @@
 import { Suspense } from 'react'
-type PageCatalogoProps = {
-  children?: React.ReactNode
-}
 
-const PageCatalogo = ({ children }: PageCatalogoProps) => {
-  return <Suspense fallback="Carregando">{children}</Suspense>
+const PageCatalogo = () => {
+  return <Suspense fallback="Carregando"></Suspense>
 }
 
 export default PageCatalogo
