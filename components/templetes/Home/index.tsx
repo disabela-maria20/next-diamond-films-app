@@ -84,9 +84,10 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
         className={Style.slideBanner}
       >
         {banner?.map((data) => (
-          <Link key={data.id} href={`/catalogo/${data.slug}`}>
-            <img src={`${isMobile ? data.bannerMobile : data.bannerDesktop}`} />
-          </Link>
+          <img
+            key={data.id}
+            src={`${isMobile ? data.bannerMobile : data.bannerDesktop}`}
+          />
         ))}
       </Slide.Content>
       <div className="container">
