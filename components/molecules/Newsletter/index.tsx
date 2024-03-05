@@ -105,6 +105,9 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
                   ))
                 }
               />
+              {errors.n_phone && (
+                <small className="text-error">{errors.n_phone.message}</small>
+              )}
             </label>
           </div>
           <div className={Style.inputEmail}>
@@ -115,6 +118,9 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
                 placeholder="E-mail"
                 {...register('n_email')}
               />
+              {errors.n_email && (
+                <small className="text-error">{errors.n_email.message}</small>
+              )}
               <button type="submit">Enviar</button>
             </label>
           </div>

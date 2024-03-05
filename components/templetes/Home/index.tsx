@@ -1,15 +1,14 @@
-'use client'
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
 import { Navigation, Pagination } from 'swiper/modules'
 
-import { Newsletter, Slide } from '@/components/molecules'
+import { Model, Newsletter, Slide } from '@/components/molecules'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
@@ -25,6 +24,7 @@ interface IHomeProps {
 }
 
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
+  const [open, setOpen] = useState<boolean>(false)
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -144,6 +144,17 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           </Slide.Content> */}
         </div>
       </section>
+      {!open && (
+        <Model.Root>
+          <Model.Body setOpen={() => setOpen(!open)}>
+            <Model.Title>VOCÊ ADORA UM BOM FILME?</Model.Title>
+            <Model.Content>
+              <Newsletter />
+            </Model.Content>
+            <Model.Footer />
+          </Model.Body>
+        </Model.Root>
+      )}
     </>
   )
 }

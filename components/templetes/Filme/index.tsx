@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 import ReactPlayer from 'react-player'
 
@@ -8,7 +7,7 @@ import ReactPlayer from 'react-player'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
-import { Model, Newsletter, Slide } from '@/components/molecules'
+import { Newsletter, Slide } from '@/components/molecules'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
@@ -88,7 +87,6 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
 }
 
 const Filme = (data: IFilmeProps) => {
-  const [open, setOpen] = useState<boolean>(false)
   const filme = data.movie?.movie
 
   const isMobile: boolean = useIsMobile()
@@ -236,17 +234,6 @@ const Filme = (data: IFilmeProps) => {
           </Slide.Content>
         </div>
       </div>
-      {!open && (
-        <Model.Root>
-          <Model.Body setOpen={() => setOpen(!open)}>
-            <Model.Title>VOCÊ AMA CINEMA?</Model.Title>
-            <Model.Content>
-              <Newsletter />
-            </Model.Content>
-            <Model.Footer />
-          </Model.Body>
-        </Model.Root>
-      )}
     </>
   )
 }
