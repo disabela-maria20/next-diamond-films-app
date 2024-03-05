@@ -67,11 +67,16 @@ function setDefinirCorClassificacaoIndicativa(idade: string) {
 const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
   return (
     <div className={Style.AreaLinksSociais}>
-      {!!insta && (
-        <a className={Style.instagram} href={insta}>
-          <FaInstagram />
-        </a>
-      )}
+      <a
+        className={Style.instagram}
+        href={
+          insta == '' ? ' https://www.instagram.com/diamondfilmsbr/' : insta
+        }
+        target="_blank"
+        rel="noreferrer"
+      >
+        <FaInstagram />
+      </a>
       {!!youtube && (
         <a className={Style.areaAssitirTrailer} href={youtube}>
           <FaYoutube />

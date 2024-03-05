@@ -296,5 +296,9 @@
 
 	>div {
 		width: 100% !important;
+		height: 100% !important;
+		@include media(sm) {
+			height: 360px !important;
+		}
 	}
 }
