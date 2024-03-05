@@ -89,7 +89,7 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
 
 const Filme = (data: IFilmeProps) => {
   const [open, setOpen] = useState<boolean>(false)
-  const filme = data.movie.movie
+  const filme = data.movie?.movie
 
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()
@@ -123,7 +123,7 @@ const Filme = (data: IFilmeProps) => {
       <section className={Style.areaBanner}>
         <div className={Style.bannerFilme}>
           <img
-            src={isMobile ? filme?.bannerMobile : filme.bannerDesktop}
+            src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
             alt={filme?.title}
           />
         </div>

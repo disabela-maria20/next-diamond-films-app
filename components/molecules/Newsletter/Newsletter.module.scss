@@ -24,22 +24,27 @@
 
 	.inputEmail {
 		grid-area: 3 / 1 / 4 / 5;
-		display: inline-flex;
-		background-color: $primary-lingh-color;
-		border-top-right-radius: 50px;
-		border-bottom-right-radius: 50px;
-		height: 30px;
-		button {
-			background-color: $secondary-colors;
-			border: none;
-			color: $primary-lingh-color;
-			padding: 0 20px;
-			border-radius: 50px;
-			font-size: 1.4rem;
-			text-transform: uppercase;
-			position: relative;
-			left: 1px;
+
+		label {
+			display: inline-flex;
+			background-color: $primary-lingh-color;
+			border-top-right-radius: 50px;
+			border-bottom-right-radius: 50px;
+			height: 30px;
+			width: 100%;
+			button {
+				background-color: $secondary-colors;
+				border: none;
+				color: $primary-lingh-color;
+				padding: 0 20px;
+				border-radius: 50px;
+				font-size: 1.4rem;
+				text-transform: uppercase;
+				position: relative;
+				left: 1px;
+			}
 		}
+
 	}
 
 	.icon {
@@ -63,7 +68,7 @@
 
 .gridNewsletterHorrizontal {
 	display: grid;
-	grid-template-columns: 2fr 1fr .6fr 1.6fr .3fr !important;
+	grid-template-columns: 2fr 1fr .7fr 1.5fr .3fr !important;
 	grid-template-rows: auto !important;
 
 	.text {
@@ -84,5 +89,36 @@
 
 	.icon {
 		grid-area: initial
+	}
+}
+
+.newsletterPopUpTermos{
+	label, a{
+		font-size: 1.4rem;
+		color: $primary-lingh-color;
+	}
+	a{
+		text-decoration: underline;
+	}
+	label{
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.newsletterPopUpTermosFlex{
+		display: flex;
+		justify-content: flex-end;
+
+		button{
+			background-color: $secondary-colors;
+			border: none;
+			color: $primary-lingh-color;
+			padding:  10px 20px;
+			border-radius: 50px;
+			font-size: 1.4rem;
+			text-transform: uppercase;
+			position: relative;
+			left: 1px;
+		}
 	}
 }

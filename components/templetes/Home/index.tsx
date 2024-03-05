@@ -1,14 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Link from 'next/link'
-import { useState } from 'react'
+import React from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
 import { Navigation, Pagination } from 'swiper/modules'
 
-import { Model, Newsletter, Slide } from '@/components/molecules'
+import { Newsletter, Slide } from '@/components/molecules'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
@@ -24,7 +25,6 @@ interface IHomeProps {
 }
 
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
-  const [open, setOpen] = useState<boolean>(false)
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -86,7 +86,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
       >
         {banner?.map((data) => (
           <Link href={data.slug} key={data.id}>
-            <img src={`${isMobile ? data.bannerMobile : data.bannerDesktop}`} />
+            <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} />
           </Link>
         ))}
       </Slide.Content>
@@ -121,8 +121,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               </div>
             ))}
           </Slide.Content>
-          {/* {listaFilmes?.streaming.}
-          <Slide.Title className={Style.slideTitle}>
+
+          {/* <Slide.Title className={Style.slideTitle}>
             ASSISTA ONDE E QUANDO QUISER
             <span>Nossos filmes disponíveis nos streamings.</span>
           </Slide.Title>
@@ -144,17 +144,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           </Slide.Content> */}
         </div>
       </section>
-      {!open && (
-        <Model.Root>
-          <Model.Body setOpen={() => setOpen(!open)}>
-            <Model.Title>VOCÊ AMA CINEMA?</Model.Title>
-            <Model.Content>
-              <Newsletter />
-            </Model.Content>
-            <Model.Footer />
-          </Model.Body>
-        </Model.Root>
-      )}
     </>
   )
 }
