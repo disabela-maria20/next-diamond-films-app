@@ -29,7 +29,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
   const [modal, setModal] = useState<boolean>(false)
   const [checkbox, setCheckbox] = useState<boolean>(false)
   const [dataEvent, setdataEvent] = useState<INewsletterForm>()
-
+  const [viewSuccess, setViewSuccess] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
@@ -56,8 +56,10 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
         dataEvent.n_email,
         dataEvent.n_phone
       )
-      console.log(res.data.done)
-      reset()
+      if (res.data.done) {
+        setViewSuccess(true)
+        reset()
+      }
     } catch (error) {
       console.error(error)
     } finally {
@@ -124,29 +126,45 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
       {modal && (
         <Model.Root>
           <Model.Body setOpen={() => setModal(!modal)}>
-            <Model.Title>VOCÊ ACEITA OS TEMOS E CONDIÇÕES?</Model.Title>
+            <Model.Title>
+              {!viewSuccess && 'VOCÊ ACEITA OS TEMOS E CONDIÇÕES?'}
+              {viewSuccess && 'ENVIADO COM SUCESSO'}
+            </Model.Title>
             <Model.Content>
-              <div className={Style.newsletterPopUpTermos}>
-                <label htmlFor="">
-                  <input
-                    type="checkbox"
-                    name="termos"
-                    id="termos"
-                    checked={checkbox}
-                    onChange={handleChange}
-                  />
-                  <p>
-                    Li, e aceito as&nbsp;
-                    <Link href="">politicas de provacidade</Link> e&nbsp;
-                    <Link href="">Termos e consdições</Link>
-                  </p>
-                </label>
-                <div className={Style.newsletterPopUpTermosFlex}>
-                  <button onClick={handleClick}>
-                    {loaging ? <span>carregando...</span> : 'Enviar'}
-                  </button>
+              {!viewSuccess && (
+                <div className={Style.newsletterPopUpTermos}>
+                  <label htmlFor="">
+                    <input
+                      type="checkbox"
+                      name="termos"
+                      id="termos"
+                      checked={checkbox}
+                      onChange={handleChange}
+                    />
+                    <p>
+                      Li, e aceito as&nbsp;
+                      <Link href="">politicas de provacidade</Link> e&nbsp;
+                      <Link href="">Termos e consdições</Link>
+                    </p>
+                  </label>
+                  <div className={Style.newsletterPopUpTermosFlex}>
+                    <button onClick={handleClick} disabled={!checkbox}>
+                      {loaging ? <span>carregando...</span> : 'Enviar'}
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
+              {viewSuccess && (
+                <div className={Style.newsletterPopUpTermos}>
+                  <p>
+                    Agradeçemos seu interesse. Logo entraremos em contato com
+                    novidades sobre nossos filmes.
+                  </p>
+                  <div className={Style.newsletterPopUpTermosFlex}>
+                    <button onClick={() => setModal(!modal)}>Fechar</button>
+                  </div>
+                </div>
+              )}
             </Model.Content>
           </Model.Body>
         </Model.Root>

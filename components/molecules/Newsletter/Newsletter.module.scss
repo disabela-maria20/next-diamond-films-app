@@ -93,7 +93,7 @@
 }
 
 .newsletterPopUpTermos{
-	label, a{
+	label, a, p{
 		font-size: 1.4rem;
 		color: $primary-lingh-color;
 	}
@@ -119,6 +119,11 @@
 			text-transform: uppercase;
 			position: relative;
 			left: 1px;
+			cursor: pointer;
+
+			&:disabled{
+				background-color: #749dbc;
+			}
 		}
 	}
 }
