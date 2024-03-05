@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 import ReactPlayer from 'react-player'
 
@@ -7,7 +8,8 @@ import ReactPlayer from 'react-player'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
-import { Newsletter, Slide } from '@/components/molecules'
+import { Model, Newsletter, Slide } from '@/components/molecules'
+import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
@@ -65,24 +67,31 @@ function setDefinirCorClassificacaoIndicativa(idade: string) {
 const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
   return (
     <div className={Style.AreaLinksSociais}>
-      <a className={Style.instagram} href={insta}>
-        <FaInstagram />
-      </a>
-      <a className={Style.areaAssitirTrailer} href={youtube}>
-        <FaYoutube />
-        <span>ASSISTA AO TRAILER</span>
-      </a>
+      {!!insta && (
+        <a className={Style.instagram} href={insta}>
+          <FaInstagram />
+        </a>
+      )}
+      {!!youtube && (
+        <a className={Style.areaAssitirTrailer} href={youtube}>
+          <FaYoutube />
+          <span>ASSISTA AO TRAILER</span>
+        </a>
+      )}
     </div>
   )
 }
 
 const Filme = (data: IFilmeProps) => {
+  const [open, setOpen] = useState<boolean>(false)
   const filme = data.movie.movie
 
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()
   const emExibicao = new Date() >= new Date(filme?.releasedate)
   //const streaming = setStreaming(filme?.streaming)
+
+  const formatarData = useFormatarData()
 
   const swiperOptions: SwiperOptions = {
     slidesPerView: 1,
@@ -105,8 +114,8 @@ const Filme = (data: IFilmeProps) => {
     }
   }
   return (
-    <section>
-      <div className={Style.areaBanner}>
+    <>
+      <section className={Style.areaBanner}>
         <div className={Style.bannerFilme}>
           <img
             src={isMobile ? filme?.bannerMobile : filme.bannerDesktop}
@@ -124,7 +133,7 @@ const Filme = (data: IFilmeProps) => {
           </div>
           {!isMobile && <Links youtube={filme?.trailer} insta="" />}
         </div>
-      </div>
+      </section>
       <div className="container">
         <Newsletter isHorrizontal={!isMobile} isBg={true} />
       </div>
@@ -195,7 +204,7 @@ const Filme = (data: IFilmeProps) => {
                   </li>
                   <li>
                     <strong>Data de Estreia:</strong>
-                    {filme?.releasedate}
+                    {formatarData(filme?.releasedate)}
                   </li>
                 </ul>
               </div>
@@ -204,21 +213,11 @@ const Filme = (data: IFilmeProps) => {
             </div>
           </div>
           <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-          <Slide.Content
-            swiperOptions={swiperOptions}
-            className={Style.areaSlide}
-          >
+          <div className={Style.GridFilmes}>
             {filme?.videos?.map((data) => (
-              <div key={data.url} className="slideVideo">
-                <ReactPlayer
-                  url={data.url}
-                  width={'auto'}
-                  height={250}
-                  style={{ position: 'relative', zIndex: -1 }}
-                />
-              </div>
+              <ReactPlayer url={data.url} key={data.url} />
             ))}
-          </Slide.Content>
+          </div>
           <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
           <Slide.Content
             swiperOptions={swiperOptions}
@@ -232,7 +231,18 @@ const Filme = (data: IFilmeProps) => {
           </Slide.Content>
         </div>
       </div>
-    </section>
+      {!open && (
+        <Model.Root>
+          <Model.Body setOpen={() => setOpen(!open)}>
+            <Model.Title>VOCÊ AMA CINEMA?</Model.Title>
+            <Model.Content>
+              <Newsletter />
+            </Model.Content>
+            <Model.Footer />
+          </Model.Body>
+        </Model.Root>
+      )}
+    </>
   )
 }
 

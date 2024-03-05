@@ -3,9 +3,6 @@
 }
 
 .areaBanner {
-	position: relative;
-	z-index: -1;
-
 	.bannerFilme {
 		position: relative;
 		z-index: -1;
@@ -227,6 +224,7 @@
 	.instagram {
 		@include btn-outline;
 		padding: 5px !important;
+
 		@include media(lg) {
 			display: flex;
 			gap: 40px;
@@ -247,9 +245,10 @@
 		border-radius: 15px;
 		margin-bottom: 10px;
 
-		@include media(xl){
+		@include media(xl) {
 			margin: 0;
 		}
+
 		svg {
 			color: #E52D27;
 			font-size: 3rem;
@@ -283,4 +282,19 @@
 	margin: 25px 0;
 	font-weight: 400;
 	color: $primary-lingh-color;
+}
+
+.GridFilmes {
+	display: grid;
+	gap: 20px;
+	justify-content: center;
+
+	@include media(sm) {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: 1fr;
+	}
+
+	>div {
+		width: 100% !important;
+	}
 }

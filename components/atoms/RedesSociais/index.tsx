@@ -47,7 +47,7 @@ const RedesSociais: React.FC = () => {
     <ul className={Style.redesSociais}>
       {navRedes.map((redes) => (
         <li key={redes.id}>
-          <Link href={redes.link} aria-label={redes.name}>
+          <Link href={redes.link} aria-label={redes.name} target="_blank">
             <i>{redes.icone}</i>
           </Link>
         </li>
