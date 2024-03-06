@@ -4,76 +4,70 @@ const TermosCondicoes = () => {
   return (
     <section className={Style.termosCondicoes}>
       <div className="container">
-        <h1>Términos y Condiciones de Uso</h1>
-
+        <h1>Termos e Condições de Uso</h1>
         <p>
-          Estos Términos y Condiciones de Uso tienen por objeto regular el uso
-          que realicen las personas que ingresen al sitio
-          <a href="www.diamondfilms.com">www.diamondfilms.com</a> y/o los sitios
-          vinculados a éste (en adelante, el “Sitio Web”). El solo ingreso al
-          Sitio Web, por parte de un usuario implica la aceptación completa de
-          los Términos y Condiciones de Uso que se detallan a continuación. Si
-          Ud. no está de acuerdo con estos Términos y Condiciones de Uso, le
-          pedimos que por favor abandone de inmediato el Sitio Web, y no utilice
-          el mismo.
+          Estes Termos e Condições de Uso têm por objetivo regular o uso
+          realizado pelas pessoas que acessam o site
+          <a href="www.diamondfilms.com">&nbsp;www.diamondfilms.com&nbsp;</a>
+          e/ou os sites vinculados a este (doravante, o &quot;Site&quot;). O
+          simples acesso ao Site por parte de um usuário implica na aceitação
+          completa dos Termos e Condições de Uso detalhados abaixo. Se você não
+          concorda com estes Termos e Condições de Uso, pedimos que por favor
+          abandone imediatamente o Site e não o utilize.
         </p>
 
-        <h2>Objeto del Sitio Web</h2>
+        <h2>Objeto do Site</h2>
         <p>
-          El Sitio Web está orientado a difundir información relacionada con las
-          películas lanzadas o a lanzarse en el futuro por DIAMOND FILMS, en
-          Argentina, Brasil, Chile, Perú, Bolivia, Colombia y/o México, por sí o
-          por terceros; incluyendo, pero no limitándose a noticias de la
-          industria del cine; premieres y promociones.
+          O Site tem como objetivo divulgar informações relacionadas aos filmes
+          lançados ou a serem lançados no futuro pela DIAMOND FILMS, na
+          Argentina, Brasil, Chile, Peru, Bolívia, Colômbia e/ou México, por si
+          só ou por terceiros; incluindo, mas não se limitando a notícias da
+          indústria cinematográfica; estreias e promoções.
         </p>
 
-        <h2>Usos del Sitio Web</h2>
+        <h2>Usos do Site</h2>
         <p>
-          El uso del Sitio Web es exclusiva responsabilidad del usuario, quien
-          en todo caso deberá servirse del mismo de acuerdo a las
-          funcionalidades permitidas en el propio Sitio Web y a los usos
-          autorizados en los presentes Términos y Condiciones de Uso, por lo que
-          el usuario se obliga a utilizarlos de modo tal que no atente contra
-          las normas de uso y convivencia en Internet, la legislación vigente en
-          el país en que el usuario se encuentre al usarlos, las buenas
-          costumbres, la dignidad de la persona y los derechos de terceros.
+          O uso do Site é de responsabilidade exclusiva do usuário, que em todo
+          caso deverá utilizá-lo de acordo com as funcionalidades permitidas no
+          próprio Site e os usos autorizados nestes Termos e Condições de Uso,
+          de modo que não viole as normas de uso e convivência na Internet, a
+          legislação vigente no país em que o usuário estiver utilizando, os
+          bons costumes, a dignidade da pessoa e os direitos de terceiros.
         </p>
 
         <p>
-          DIAMOND FILMS no otorga garantía alguna, tácita o expresa, respecto de
-          la veracidad, integridad, ni adecuación a un fin genérico o
-          determinado, respecto de los materiales, información, textos,
-          gráficos, links u otros ítems que se proporcionan en este Sitio Web.
-          En ningún caso, DIAMOND FILMS ni sus colaboradores, serán responsables
-          por daño alguno, ni por ningún concepto, que resulten del uso o de la
-          imposibilidad de utilizar los materiales del Sitio Web.
+          A DIAMOND FILMS não concede garantia alguma, tácita ou expressa,
+          quanto à veracidade, integridade ou adequação a uma finalidade
+          genérica ou específica, em relação aos materiais, informações, textos,
+          gráficos, links ou outros itens fornecidos neste Site. Em nenhum caso,
+          a DIAMOND FILMS ou seus colaboradores serão responsáveis por qualquer
+          dano, sob qualquer conceito, decorrente do uso ou da impossibilidade
+          de utilizar os materiais do Site.
         </p>
 
         <p>
-          DIAMOND FILMS se reserva el derecho de modificar en forma unilateral,
-          sin mediar previo aviso, ni comunicación a los usuarios, estos
-          Términos y Condiciones de Uso, como así el diseño, la presentación o
-          configuración del Sitio Web, así como limitar, cancelar, o suspender
-          su uso o acceso, sin que ello genere derecho a reclamo o indemnización
-          alguna en favor de los usuarios. Los Términos y Condiciones de Uso
-          entrarán siempre en vigencia a partir del día de su publicación en el
-          Sitio Web, por lo que recomendamos al usuario que lea atentamente los
-          Términos y Condiciones de Uso cada vez que pretenda utilizar el Sitio
-          Web.
+          A DIAMOND FILMS reserva-se o direito de modificar unilateralmente, sem
+          aviso prévio ou comunicação aos usuários, estes Termos e Condições de
+          Uso, bem como o design, a apresentação ou a configuração do Site,
+          assim como limitar, cancelar ou suspender seu uso ou acesso, sem que
+          isso gere direito a reclamação ou indenização alguma em favor dos
+          usuários. Os Termos e Condições de Uso entrarão sempre em vigor a
+          partir do dia de sua publicação no Site, portanto, recomendamos ao
+          usuário que leia atentamente os Termos e Condições de Uso sempre que
+          pretender utilizar o Site.
         </p>
 
-        <h2>Ley aplicable</h2>
+        <h2>Lei Aplicável</h2>
         <p>
-          El Sitio Web será controlado y operado por DIAMOND FILMS, y no se
-          garantiza que el contenido o los materiales estén disponibles para el
-          uso en otros territorios distintos de Argentina, Brasil, Chile, Perú,
-          Bolivia, Colombia y/o México. El usuario acepta cumplir de antemano
-          con cualquier legislación local del lugar en el que se encuentre, en
-          relación a las normas de conducta o de delitos realizados en el ámbito
-          de Internet.
+          O Site será controlado e operado pela DIAMOND FILMS, e não se garante
+          que o conteúdo ou os materiais estejam disponíveis para uso em outros
+          territórios além da Argentina, Brasil, Chile, Peru, Bolívia, Colômbia
+          e/ou México. O usuário concorda em cumprir antecipadamente qualquer
+          legislação local do local em que se encontrar, em relação às normas de
+          conduta ou de crimes cometidos no âmbito da Internet.
         </p>
 
-        <h3>En Vigencia: 13 de febrero de 2017</h3>
+        <h3>Em Vigor: 13 de fevereiro de 2017</h3>
       </div>
     </section>
   )

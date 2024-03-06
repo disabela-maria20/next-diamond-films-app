@@ -6,7 +6,7 @@ const LINK = [
   { nome: 'home', link: '/', menu: false, footer: false },
   {
     nome: 'catálogo',
-    link: '/catalogo/guerra-civil',
+    link: '/guerra-civil',
     menu: true,
     footer: true
   },

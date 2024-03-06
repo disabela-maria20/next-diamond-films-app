@@ -8,12 +8,13 @@ import { FaYoutube } from 'react-icons/fa'
 import Style from './Home.module.scss'
 import { Navigation, Pagination } from 'swiper/modules'
 
-import { Model, Newsletter, Slide } from '@/components/molecules'
+import 'swiper/css/navigation'
+
+import { Newsletter, Slide } from '@/components/molecules'
+import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
-
-import 'swiper/css/navigation'
 
 interface IHomeProps {
   banner: Array<any>
@@ -24,7 +25,8 @@ interface IHomeProps {
 }
 
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
-  const [open, setOpen] = useState<boolean>(false)
+  const formatarData = useFormatarData()
+
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -109,11 +111,13 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           >
             {listaFilmes?.releases.map((data) => (
               <div key={data.id} className={Style.filme}>
-                <Link href={`/catalogo/${data.slug}`}>
+                <Link href={`/${data.slug}`}>
                   <img src={data.cover} />
                 </Link>
-                <h2>{data.title}</h2>
-                <p>Em exibição nos cinemas</p>
+                <h2>
+                  {data.title} - {formatarData(data?.releasedate)}
+                </h2>
+                <p>Em breve nos Cinemas</p>
                 <a href={data.trailer} className={Style.tralher}>
                   <FaYoutube />
                   <span>Assista ao Trailer</span>
@@ -144,17 +148,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           </Slide.Content> */}
         </div>
       </section>
-      {!open && (
-        <Model.Root>
-          <Model.Body setOpen={() => setOpen(!open)}>
-            <Model.Title>VOCÊ ADORA UM BOM FILME?</Model.Title>
-            <Model.Content>
-              <Newsletter />
-            </Model.Content>
-            <Model.Footer />
-          </Model.Body>
-        </Model.Root>
-      )}
     </>
   )
 }

@@ -224,11 +224,14 @@ const Filme = (data: IFilmeProps) => {
             </div>
           </div>
           <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-          <div className={Style.GridFilmes}>
+          <Slide.Content
+            swiperOptions={swiperOptions}
+            className={Style.areaSlide}
+          >
             {filme?.videos?.map((data) => (
               <ReactPlayer url={data.url} key={data.url} />
             ))}
-          </div>
+          </Slide.Content>
           <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
           <Slide.Content
             swiperOptions={swiperOptions}
