@@ -44,11 +44,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
   const onSubmit = async (data: INewsletterForm) => {
     setModal(true)
     setdataEvent(data)
-  }
-  function handleChange({ target }: ChangeEvent<HTMLInputElement>) {
-    setCheckbox(target.checked)
-  }
-  async function handleClick() {
+
     if (!dataEvent) return
     if (!checkbox) return
     setLoaging(true)
@@ -64,11 +60,19 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
       }
     } catch (error) {
       const err = error as AxiosError
-      if (err.response?.status != 200) setError(true)
+      if (err.response?.status != 200) {
+        setError(true)
+        setViewSuccess(false)
+      }
     } finally {
+      setError(false)
       setLoaging(false)
     }
   }
+  function handleChange({ target }: ChangeEvent<HTMLInputElement>) {
+    setCheckbox(target.checked)
+  }
+
   return (
     <>
       <section
@@ -124,43 +128,35 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
               {errors.n_email && (
                 <small className="text-error">{errors.n_email.message}</small>
               )}
-              <button type="submit">Enviar</button>
+              <button type="submit" disabled={!checkbox}>
+                {loaging ? 'Carregando' : 'Enviar'}
+              </button>
             </label>
           </div>
         </form>
+        <label htmlFor="" className={Style.newsletterPopUpTermosFlex}>
+          <input
+            type="checkbox"
+            name="termos"
+            id="termos"
+            checked={checkbox}
+            onChange={handleChange}
+          />
+          <p>
+            Li, e aceito as&nbsp;
+            <Link href="">politicas de provacidade</Link> e&nbsp;
+            <Link href="">Termos e consdições</Link>
+          </p>
+        </label>
       </section>
       {modal && (
         <Model.Root>
           <Model.Body setOpen={() => setModal(!modal)}>
             <Model.Title>
-              {!viewSuccess && 'VOCÊ ACEITA OS TEMOS E CONDIÇÕES?'}
               {viewSuccess && 'ENVIADO COM SUCESSO'}
               {error && 'PREENCHA AS INFORMAÇÕES CORRETAMENTE'}
             </Model.Title>
             <Model.Content>
-              {!viewSuccess && (
-                <div className={Style.newsletterPopUpTermos}>
-                  <label htmlFor="">
-                    <input
-                      type="checkbox"
-                      name="termos"
-                      id="termos"
-                      checked={checkbox}
-                      onChange={handleChange}
-                    />
-                    <p>
-                      Li, e aceito as&nbsp;
-                      <Link href="">politicas de provacidade</Link> e&nbsp;
-                      <Link href="">Termos e consdições</Link>
-                    </p>
-                  </label>
-                  <div className={Style.newsletterPopUpTermosFlex}>
-                    <button onClick={handleClick} disabled={!checkbox}>
-                      {loaging ? <span>carregando...</span> : 'Enviar'}
-                    </button>
-                  </div>
-                </div>
-              )}
               {viewSuccess && (
                 <div className={Style.newsletterPopUpTermos}>
                   <p>

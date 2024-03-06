@@ -27,11 +27,16 @@
 
 		label {
 			display: inline-flex;
+			justify-content: space-between;
 			background-color: $primary-lingh-color;
 			border-top-right-radius: 50px;
 			border-bottom-right-radius: 50px;
 			height: 36px;
 			width: 100%;
+			input{
+
+				@include inputNewsletter();
+			}
 			button {
 				background-color: $secondary-colors;
 				border: none;
@@ -47,7 +52,7 @@
 
 	}
 
-	input {
+	input[type="text"] {
 		@include inputNewsletter();
 	}
 }
@@ -96,25 +101,23 @@
 		align-items: center;
 		gap: 10px;
 	}
-	.newsletterPopUpTermosFlex{
-		display: flex;
-		justify-content: flex-end;
+}
 
-		button{
-			background-color: $secondary-colors;
-			border: none;
-			color: $primary-lingh-color;
-			padding:  10px 20px;
-			border-radius: 50px;
-			font-size: 1.4rem;
-			text-transform: uppercase;
-			position: relative;
-			left: 1px;
-			cursor: pointer;
+.newsletterPopUpTermosFlex{
+	display: flex;
+	
+	gap: 5px;
+	margin-top: 20px;
+	p{
+		font-size: 1.2rem;
+	}
+	a{
+		text-decoration: underline;
+		color: $primary-lingh-color;
 
-			&:disabled{
-				background-color: #749dbc;
-			}
+
+		&:disabled{
+			background-color: #749dbc;
 		}
 	}
 }
