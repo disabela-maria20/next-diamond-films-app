@@ -29,8 +29,7 @@ export default async function pageCatalogoFilme({ params: { slug } }: Params) {
       </Suspense>
       <GoogleTagManager
         gtmId="GTM-ND454GP5"
-        dataLayerName={`${filme.movie.title}`}
-        dataLayer={filme.movie.title}
+        dataLayerName={filme.movie.title}
       />
       <GoogleAnalytics gaId="G-DRBHT7HM35" />
     </>
