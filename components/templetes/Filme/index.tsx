@@ -126,6 +126,23 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
+
+  const swiperOptionsVideo = {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    freeMode: true,
+    pagination: {
+      clickable: true
+    },
+    scrollbar: { hide: true },
+    modules: [FreeMode, Scrollbar],
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      }
+    }
+  }
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
     setImage(data)
@@ -235,11 +252,20 @@ const Filme = (data: IFilmeProps) => {
           </div>
           <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
           <Slide.Content
-            swiperOptions={swiperOptions}
+            swiperOptions={swiperOptionsVideo}
             className={Style.areaSlide}
           >
             {filme?.videos?.map((data) => (
-              <ReactPlayer url={data.url} key={data.url} />
+              <div className={Style.iframeVideoYoutube} key={data.url}>
+                <iframe
+                  className={Style.embedResponsiveItem}
+                  src={data.url}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
             ))}
           </Slide.Content>
           <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
