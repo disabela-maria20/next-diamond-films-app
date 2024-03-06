@@ -5,11 +5,16 @@ import Style from './Model.module.scss'
 interface IModelBodyProps {
   children: React.ReactNode
   setOpen(): void
+  className?: string
 }
 
-const ModelBody: React.FC<IModelBodyProps> = ({ children, setOpen }) => {
+const ModelBody: React.FC<IModelBodyProps> = ({
+  children,
+  setOpen,
+  className
+}) => {
   return (
-    <div className={Style.modelBody}>
+    <div className={`${Style.modelBody} ${className}`}>
       {children}
       <button className={Style.modelBodyIconClose} onClick={setOpen}>
         <AiOutlineClose />

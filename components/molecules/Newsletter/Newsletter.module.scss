@@ -10,7 +10,7 @@
 
 	.text {
 		grid-area: 1 / 1 / 2 / 6;
-		font-size: 1.1rem;
+		font-size: 1.2rem;
 		line-height: 1.5rem;
 	}
 
@@ -23,7 +23,7 @@
 	}
 
 	.inputEmail {
-		grid-area: 3 / 1 / 4 / 5;
+		grid-area: 3 / 1 / 4 / 6;
 
 		label {
 			display: inline-flex;
@@ -47,15 +47,6 @@
 
 	}
 
-	.icon {
-		grid-area: 3 / 5 / 4 / 6;
-
-		img {
-			height: 30px;
-			object-fit: contain
-		}
-	}
-
 	input {
 		@include inputNewsletter();
 	}
@@ -68,7 +59,7 @@
 
 .gridNewsletterHorrizontal {
 	display: grid;
-	grid-template-columns: 2fr 1fr .7fr 1.5fr .3fr !important;
+	grid-template-columns: 1.5fr 1fr .7fr 1.5fr !important;
 	grid-template-rows: auto !important;
 
 	.text {

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 import ReactPlayer from 'react-player'
 
@@ -7,10 +8,10 @@ import ReactPlayer from 'react-player'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
-import { Newsletter, Slide } from '@/components/molecules'
+import { Model, Newsletter, Slide } from '@/components/molecules'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
-import { IFilmeResponse } from '@/utils/server/types'
+import { IFilmeResponse, IFilmeResponseUrl } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
 interface IFilmeProps {
@@ -87,6 +88,8 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
 }
 
 const Filme = (data: IFilmeProps) => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [image, setImage] = useState<IFilmeResponseUrl>()
   const filme = data.movie?.movie
 
   const isMobile: boolean = useIsMobile()
@@ -116,6 +119,11 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
+  function handleVerImagem(data: IFilmeResponseUrl) {
+    setOpen(true)
+    setImage(data)
+  }
+
   return (
     <>
       <section className={Style.areaBanner}>
@@ -228,10 +236,24 @@ const Filme = (data: IFilmeProps) => {
           >
             {filme?.images?.map((data) => (
               <div key={data.url}>
-                <img src={`${data.url}`} />
+                <img
+                  src={`${data.url}`}
+                  onClick={() => handleVerImagem(data)}
+                  style={{ cursor: 'pointer' }}
+                />
               </div>
             ))}
           </Slide.Content>
+          {open && (
+            <Model.Root>
+              <Model.Body
+                setOpen={() => setOpen(!open)}
+                className={Style.modalImageFilme}
+              >
+                <img src={image?.url} />
+              </Model.Body>
+            </Model.Root>
+          )}
         </div>
       </div>
     </>
