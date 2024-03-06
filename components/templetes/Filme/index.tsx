@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
-import { useState } from 'react'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import { useEffect, useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
-import ReactPlayer from 'react-player'
 
 //import { useFormatarData } from '@/hooks/useFormatarData/formatarData'
 import Style from './Filme.module.scss'
@@ -143,6 +143,16 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
+
+  useEffect(() => {
+    window.dataLayer?.push({
+      content_type: 'Microsite',
+      page_title: filme.title,
+      property_title: filme.title,
+      site_country: 'BR'
+    })
+  }, [])
+
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
     setImage(data)
@@ -295,6 +305,8 @@ const Filme = (data: IFilmeProps) => {
           )}
         </div>
       </div>
+      <GoogleTagManager gtmId="GTM-ND454GP5" />
+      <GoogleAnalytics gaId="G-DRBHT7HM35" />
     </>
   )
 }

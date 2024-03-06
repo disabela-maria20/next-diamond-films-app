@@ -24,10 +24,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
-      <GoogleTagManager
-        gtmId="GTM-ND454GP5"
-        dataLayerName={`${metadata.title}`}
-      />
+      <GoogleTagManager gtmId="GTM-ND454GP5" />
       <GoogleAnalytics gaId="G-DRBHT7HM35" />
     </html>
   )
