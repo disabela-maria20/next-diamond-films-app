@@ -144,17 +144,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           </Slide.Content> */}
         </div>
       </section>
-      {!open && (
-        <Model.Root>
-          <Model.Body setOpen={() => setOpen(!open)}>
-            <Model.Title>VOCÊ ADORA UM BOM FILME?</Model.Title>
-            <Model.Content>
-              <Newsletter />
-            </Model.Content>
-            <Model.Footer />
-          </Model.Body>
-        </Model.Root>
-      )}
     </>
   )
 }

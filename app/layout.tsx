@@ -4,7 +4,7 @@ import { Montserrat } from 'next/font/google'
 
 import '@/styles/sass/globals.scss'
 import { Footer } from '@/components/molecules'
-import { Header } from '@/components/organisms'
+import { Header, Modal } from '@/components/organisms'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -23,6 +23,7 @@ export default function RootLayout({
       <body className={montserrat.className}>
         <Header></Header>
         {children}
+        <Modal />
         <Footer />
       </body>
       <GoogleTagManager
