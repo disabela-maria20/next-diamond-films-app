@@ -1,4 +1,4 @@
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 
@@ -24,6 +24,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
+      <GoogleTagManager gtmId="GTM-ND454GP5" />
       <GoogleAnalytics gaId="G-DRBHT7HM35" />
     </html>
   )
