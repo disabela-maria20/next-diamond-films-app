@@ -3,15 +3,15 @@ import Style from './Footer.module.scss'
 import { Logo, NavLink, RedesSociais } from '@/components/atoms'
 
 const Footer = () => {
-  const BANDEIRAS = [
-    { id: 0, img: 'argentina', link: '' },
-    { id: 1, img: 'chile', link: '' },
-    { id: 2, img: 'colombia', link: '' },
-    { id: 3, img: 'bolivia', link: '' },
-    { id: 4, img: 'mexico', link: '' },
-    { id: 5, img: 'espanha', link: '' },
-    { id: 6, img: 'peru', link: '' }
-  ]
+  // const BANDEIRAS = [
+  //   { id: 0, img: 'argentina', link: '' },
+  //   { id: 1, img: 'chile', link: '' },
+  //   { id: 2, img: 'colombia', link: '' },
+  //   { id: 3, img: 'bolivia', link: '' },
+  //   { id: 4, img: 'mexico', link: '' },
+  //   { id: 5, img: 'espanha', link: '' },
+  //   { id: 6, img: 'peru', link: '' }
+  // ]
   return (
     <footer className={Style.footer}>
       <div className="container">
@@ -33,7 +33,7 @@ const Footer = () => {
             <h3>Redes Sociais</h3>
             <RedesSociais />
           </div>
-          <div className={Style.areaFiliais}>
+          {/* <div className={Style.areaFiliais}>
             <h3>Filiais</h3>
             <ul>
               {BANDEIRAS.map((data) => (
@@ -47,7 +47,7 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

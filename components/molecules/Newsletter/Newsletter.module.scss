@@ -10,8 +10,8 @@
 
 	.text {
 		grid-area: 1 / 1 / 2 / 6;
-		font-size: 1.2rem;
-		line-height: 1.5rem;
+		font-size: 1.4rem;
+		line-height: 1.6rem;
 	}
 
 	.inputNome {
@@ -30,7 +30,7 @@
 			background-color: $primary-lingh-color;
 			border-top-right-radius: 50px;
 			border-bottom-right-radius: 50px;
-			height: 30px;
+			height: 36px;
 			width: 100%;
 			button {
 				background-color: $secondary-colors;

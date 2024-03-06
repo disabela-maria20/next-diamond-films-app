@@ -204,18 +204,16 @@
 
 .AreaLinksSociais {
 	display: flex;
-	flex-direction: column-reverse;
-	justify-content: center;
 	align-items: center;
-	margin: 30px 0;
-	gap: 50px;
+	margin:35px 0;
+	gap: 20px;
 
 	@include media(lg) {
 		position: absolute;
 		bottom: 0;
 		right: 0;
 		flex-direction: row;
-		gap: 20px;
+		gap: 15px;
 		margin: 0;
 		padding: 20px;
 		margin-right: 10px;
@@ -224,6 +222,7 @@
 	.instagram {
 		@include btn-outline;
 		padding: 5px !important;
+		border-radius: 10px !important;
 
 		@include media(lg) {
 			display: flex;
@@ -231,7 +230,7 @@
 		}
 
 		svg {
-			font-size: 3rem;
+			font-size: 2rem;
 		}
 	}
 
@@ -240,10 +239,8 @@
 		align-items: center;
 		gap: 10px;
 		background-color: $primary-lingh-color;
-		width: 270px;
-		padding: 10px 15px;
-		border-radius: 15px;
-		margin-bottom: 10px;
+		padding: 7px 10px;
+		border-radius: 10px;
 
 		@include media(xl) {
 			margin: 0;
@@ -251,11 +248,11 @@
 
 		svg {
 			color: #E52D27;
-			font-size: 3rem;
+			font-size: 2rem;
 		}
 
 		span {
-			font-size: 1.6rem;
+			font-size: 1.4rem;
 			color: $primary-dark-color;
 			font-weight: 700;
 		}

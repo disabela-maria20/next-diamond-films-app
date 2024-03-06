@@ -13,6 +13,7 @@ import { NewsletterFormSchema } from './Newsletter.schema'
 import { Phone } from '@/utils/hooks/useMask'
 import { postNewsletter } from '@/utils/server/requests'
 import { zodResolver as ResolverZod } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { z } from 'zod'
 
 import { Model } from '..'
@@ -30,6 +31,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
   const [checkbox, setCheckbox] = useState<boolean>(false)
   const [dataEvent, setdataEvent] = useState<INewsletterForm>()
   const [viewSuccess, setViewSuccess] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
@@ -61,7 +63,8 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
         reset()
       }
     } catch (error) {
-      console.error(error)
+      const err = error as AxiosError
+      if (err.response?.status != 200) setError(true)
     } finally {
       setLoaging(false)
     }
@@ -76,8 +79,8 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
           className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}
         >
           <div className={Style.text}>
-            Preencha seus dados e fique no radar de ações e convites exclusivos
-            da Diamond
+            Preencha seus dados e fique por dentro das nossas novidades, ações
+            promocionais dos filmes e descontos exclusivos!
           </div>
           <div className={Style.inputNome}>
             <label htmlFor="">
@@ -132,6 +135,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
             <Model.Title>
               {!viewSuccess && 'VOCÊ ACEITA OS TEMOS E CONDIÇÕES?'}
               {viewSuccess && 'ENVIADO COM SUCESSO'}
+              {error && 'PREENCHA AS INFORMAÇÕES CORRETAMENTE'}
             </Model.Title>
             <Model.Content>
               {!viewSuccess && (
@@ -163,6 +167,14 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
                     Agradeçemos seu interesse. Logo entraremos em contato com
                     novidades sobre nossos filmes.
                   </p>
+                  <div className={Style.newsletterPopUpTermosFlex}>
+                    <button onClick={() => setModal(!modal)}>Fechar</button>
+                  </div>
+                </div>
+              )}
+              {error && (
+                <div className={Style.newsletterPopUpTermos}>
+                  <p>Preencha corretamnte as infomações</p>
                   <div className={Style.newsletterPopUpTermosFlex}>
                     <button onClick={() => setModal(!modal)}>Fechar</button>
                   </div>
