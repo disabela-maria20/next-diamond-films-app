@@ -151,7 +151,7 @@ const Filme = (data: IFilmeProps) => {
       property_title: filme.title,
       site_country: 'BR'
     })
-  }, [])
+  }, [filme.title])
 
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
