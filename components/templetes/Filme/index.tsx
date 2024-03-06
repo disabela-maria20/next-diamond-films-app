@@ -105,6 +105,8 @@ const Filme = (data: IFilmeProps) => {
   //const streaming = setStreaming(filme?.streaming)
 
   useEffect(() => {
+    console.log(window.dataLayer)
+
     window.dataLayer?.push({
       content_type: 'Microsite',
       page_title: filme.title,
