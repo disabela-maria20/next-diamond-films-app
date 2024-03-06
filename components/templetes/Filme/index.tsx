@@ -104,6 +104,15 @@ const Filme = (data: IFilmeProps) => {
   const emExibicao = new Date() >= new Date(filme?.releasedate)
   //const streaming = setStreaming(filme?.streaming)
 
+  useEffect(() => {
+    window.dataLayer?.push({
+      content_type: 'Microsite',
+      page_title: filme.title,
+      property_title: filme.title,
+      site_country: 'BR'
+    })
+  }, [filme.title])
+
   const formatarData = useFormatarData()
 
   const swiperOptions: SwiperOptions = {
@@ -143,15 +152,6 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
-
-  useEffect(() => {
-    window.dataLayer?.push({
-      content_type: 'Microsite',
-      page_title: filme.title,
-      property_title: filme.title,
-      site_country: 'BR'
-    })
-  }, [filme.title])
 
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
