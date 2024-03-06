@@ -29,7 +29,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
   const [loaging, setLoaging] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
   const [checkbox, setCheckbox] = useState<boolean>(false)
-  const [dataEvent, setdataEvent] = useState<INewsletterForm>()
+
   const [viewSuccess, setViewSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const {
@@ -42,19 +42,12 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
   })
 
   const onSubmit = async (data: INewsletterForm) => {
-    setModal(true)
-    setdataEvent(data)
-
-    if (!dataEvent) return
     if (!checkbox) return
     setLoaging(true)
     try {
-      const res = await postNewsletter(
-        dataEvent.n_name,
-        dataEvent.n_email,
-        dataEvent.n_phone
-      )
+      const res = await postNewsletter(data.n_name, data.n_email, data.n_phone)
       if (res.data.done) {
+        setModal(true)
         setViewSuccess(true)
         reset()
       }

@@ -25,9 +25,11 @@ type Area = 'menu' | 'footer'
 
 interface NavLinkProps {
   area: Area
+  open?: boolean
+  setOpen?: (value: boolean) => void
 }
 
-const NavLink = ({ area = 'menu' }: NavLinkProps) => {
+const NavLink = ({ area = 'menu', setOpen }: NavLinkProps) => {
   const filteredLinks = LINK.filter((link) => {
     if (area == 'menu') return link.menu
     if (area == 'footer') return link.footer
@@ -37,7 +39,9 @@ const NavLink = ({ area = 'menu' }: NavLinkProps) => {
     <>
       {filteredLinks.map((link) => (
         <li key={link.link}>
-          <Link href={link.link}>{link.nome}</Link>
+          <Link href={link.link} onClick={() => setOpen}>
+            {link.nome}
+          </Link>
         </li>
       ))}
     </>

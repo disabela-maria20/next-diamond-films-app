@@ -11,7 +11,7 @@ interface NavProps {
   setOpen?: (value: boolean) => void
 }
 
-const Nav: React.FC<NavProps> = ({ open }) => {
+const Nav: React.FC<NavProps> = ({ open, setOpen }) => {
   const isMobile: boolean = useIsMobile()
   return (
     <nav className={`${Style.navBar}`}>
@@ -23,7 +23,7 @@ const Nav: React.FC<NavProps> = ({ open }) => {
           {/* <li className={Style.comprarIngressos}>
             <Link href="/comprar-ingressos">COMPRAR INGRESSOS</Link>
           </li> */}
-          <NavLink area="menu" />
+          <NavLink area="menu" setOpen={setOpen} />
           <li className={Style.logo}>
             <Logo logo="logo-BRANCO.png" />
           </li>

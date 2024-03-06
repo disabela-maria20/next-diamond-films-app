@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { useState } from 'react'
@@ -86,6 +87,12 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
     </div>
   )
 }
+function converterParaHorasEMinutos(totalMinutos: number) {
+  const horas = Math.floor(totalMinutos / 60)
+  const minutos = totalMinutos % 60
+
+  return `${horas}h e ${minutos}min`
+}
 
 const Filme = (data: IFilmeProps) => {
   const [open, setOpen] = useState<boolean>(false)
@@ -116,6 +123,23 @@ const Filme = (data: IFilmeProps) => {
       768: {
         slidesPerView: 3,
         spaceBetween: 10
+      }
+    }
+  }
+
+  const swiperOptionsVideo = {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    freeMode: true,
+    pagination: {
+      clickable: true
+    },
+    scrollbar: { hide: true },
+    modules: [FreeMode, Scrollbar],
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20
       }
     }
   }
@@ -183,13 +207,16 @@ const Filme = (data: IFilmeProps) => {
               <div>
                 <h2>Informações</h2>
                 <div className={Style.areaClassificaçãoIndicativa}>
-                  <span
-                    style={{
-                      background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
-                    }}
-                  >
-                    {filme?.age}
-                  </span>
+                  {filme?.age && (
+                    <span
+                      style={{
+                        background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                      }}
+                    >
+                      {filme?.age}
+                    </span>
+                  )}
+
                   <p>{filme?.ageExplain}</p>
                 </div>
                 <ul className={Style.areainformacaoFilme}>
@@ -199,7 +226,7 @@ const Filme = (data: IFilmeProps) => {
                   </li>
                   <li>
                     <strong>Duração:</strong>
-                    {filme?.duration}
+                    {converterParaHorasEMinutos(filme?.duration)}
                   </li>
                   <li>
                     <strong>Gênero:</strong>
@@ -225,11 +252,20 @@ const Filme = (data: IFilmeProps) => {
           </div>
           <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
           <Slide.Content
-            swiperOptions={swiperOptions}
+            swiperOptions={swiperOptionsVideo}
             className={Style.areaSlide}
           >
             {filme?.videos?.map((data) => (
-              <ReactPlayer url={data.url} key={data.url} />
+              <div className={Style.iframeVideoYoutube} key={data.url}>
+                <iframe
+                  className={Style.embedResponsiveItem}
+                  src={data.url}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
             ))}
           </Slide.Content>
           <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>

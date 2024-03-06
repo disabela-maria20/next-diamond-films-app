@@ -281,26 +281,17 @@
 	color: $primary-lingh-color;
 }
 
-.GridFilmes {
-	display: grid;
-	gap: 20px;
-	justify-content: center;
-
-	@include media(sm) {
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: 1fr;
-	}
-
-	>div {
-		width: 100% !important;
-		height: 100% !important;
-		@include media(sm) {
-			height: 360px !important;
-		}
-	}
+.modalImageFilme{
+	max-width: initial !important;	
 }
 
-.modalImageFilme{
-	max-width: initial !important;
-	
+.iframeVideoYoutube{
+	position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;
+	:before {
+		content: '';
+		padding-top: 56.25%;
+	}
+	.embedResponsiveItem{
+		position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+	}
 }

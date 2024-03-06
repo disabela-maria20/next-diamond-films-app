@@ -33,10 +33,12 @@
 			border-bottom-right-radius: 50px;
 			height: 36px;
 			width: 100%;
-			input{
+
+			input {
 
 				@include inputNewsletter();
 			}
+
 			button {
 				background-color: $secondary-colors;
 				border: none;
@@ -47,6 +49,16 @@
 				text-transform: uppercase;
 				position: relative;
 				left: 1px;
+				transition: all 0.5s;
+				cursor: pointer;
+
+				&:disabled {
+					background-color: #749dbc;
+				}
+
+				&:hover {
+					background-color: darken($secondary-colors, 10%);
+				}
 			}
 		}
 
@@ -88,36 +100,55 @@
 	}
 }
 
-.newsletterPopUpTermos{
-	label, a, p{
+.newsletterPopUpTermos {
+
+	label,
+	a,
+	p {
 		font-size: 1.4rem;
 		color: $primary-lingh-color;
 	}
-	a{
+
+	a {
 		text-decoration: underline;
 	}
-	label{
+
+	label {
 		display: inline-flex;
 		align-items: center;
 		gap: 10px;
 	}
 }
 
-.newsletterPopUpTermosFlex{
+.newsletterPopUpTermosFlex {
 	display: flex;
-	
 	gap: 5px;
 	margin-top: 20px;
-	p{
+
+	p {
 		font-size: 1.2rem;
 	}
-	a{
+
+	a {
 		text-decoration: underline;
 		color: $primary-lingh-color;
+	}
 
+	button {
+		background-color: $secondary-colors;
+		border: none;
+		color: $primary-lingh-color;
+		padding: 10px 20px;
+		border-radius: 50px;
+		font-size: 1.4rem;
+		text-transform: uppercase;
+		position: relative;
+		left: 1px;
+		cursor: pointer;
+		transition: all 0.5s;
 
-		&:disabled{
-			background-color: #749dbc;
+		&:hover {
+			background-color: darken($secondary-colors, 10%);
 		}
 	}
 }
