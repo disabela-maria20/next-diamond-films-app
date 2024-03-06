@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { useState } from 'react'
@@ -85,6 +86,12 @@ const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
       )}
     </div>
   )
+}
+function converterParaHorasEMinutos(totalMinutos: number) {
+  const horas = Math.floor(totalMinutos / 60)
+  const minutos = totalMinutos % 60
+
+  return `${horas}h e ${minutos}min`
 }
 
 const Filme = (data: IFilmeProps) => {
@@ -183,13 +190,16 @@ const Filme = (data: IFilmeProps) => {
               <div>
                 <h2>Informações</h2>
                 <div className={Style.areaClassificaçãoIndicativa}>
-                  <span
-                    style={{
-                      background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
-                    }}
-                  >
-                    {filme?.age}
-                  </span>
+                  {filme?.age && (
+                    <span
+                      style={{
+                        background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                      }}
+                    >
+                      {filme?.age}
+                    </span>
+                  )}
+
                   <p>{filme?.ageExplain}</p>
                 </div>
                 <ul className={Style.areainformacaoFilme}>
@@ -199,7 +209,7 @@ const Filme = (data: IFilmeProps) => {
                   </li>
                   <li>
                     <strong>Duração:</strong>
-                    {filme?.duration}
+                    {converterParaHorasEMinutos(filme?.duration)}
                   </li>
                   <li>
                     <strong>Gênero:</strong>
