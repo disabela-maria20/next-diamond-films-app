@@ -144,8 +144,10 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
           />
           <p>
             Li, e aceito as&nbsp;
-            <Link href="">politicas de provacidade</Link> e&nbsp;
-            <Link href="">Termos e consdições</Link>
+            <Link href="/politica-de-privacidade">
+              politicas de provacidade
+            </Link>
+            e<Link href="/termos-e-condicoes">Termos e condições</Link>
           </p>
         </label>
       </section>
