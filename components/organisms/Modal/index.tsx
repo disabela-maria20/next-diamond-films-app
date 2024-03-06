@@ -9,23 +9,28 @@ const Modal = () => {
   const [showModal, setShowModal] = useState<boolean>(false)
 
   useEffect(() => {
-    const modalAlreadyShown = Cookies.get('modalShown')
+    const modalShown = Cookies.get('modalShown')
     const modalClosed = Cookies.get('modalClosed')
 
-    if (!modalAlreadyShown && !modalClosed) {
+    if (modalClosed == 'true') {
+      setShowModal(false)
+      return
+    }
+    if (!modalShown) {
       setShowModal(true)
       Cookies.set('modalShown', 'true', { expires: 7 })
+      return
     }
   }, [])
 
   const closeModal = () => {
-    setShowModal(!false)
-    // Defina uma cookie para indicar que o modal foi fechado manualmente
+    setShowModal(false)
+    // Defina uma cookie para indicar quando o modal foi fechado
     Cookies.set('modalClosed', 'true', { expires: 7 })
   }
   return (
     <>
-      {!showModal && (
+      {showModal && (
         <Model.Root>
           <Model.Body setOpen={closeModal}>
             <Model.Title>VOCÊ ADORA UM BOM FILME?</Model.Title>
