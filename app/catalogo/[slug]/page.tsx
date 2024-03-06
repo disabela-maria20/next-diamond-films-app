@@ -1,3 +1,4 @@
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
@@ -22,8 +23,16 @@ export default async function pageCatalogoFilme({ params: { slug } }: Params) {
   const filme = await getCatalogoFilme(slug)
 
   return (
-    <Suspense fallback="Carregando">
-      <Filme movie={filme} />
-    </Suspense>
+    <>
+      <Suspense fallback="Carregando">
+        <Filme movie={filme} />
+      </Suspense>
+      <GoogleTagManager
+        gtmId="GTM-ND454GP5"
+        dataLayerName={`${filme.movie.title}`}
+        dataLayer={filme.movie.title}
+      />
+      <GoogleAnalytics gaId="G-DRBHT7HM35" />
+    </>
   )
 }
