@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
-=======
+
 /* eslint-disable prettier/prettier */
-import { GoogleAnalytics } from '@next/third-parties/google'
->>>>>>> 21bb6e3ca79656f60f28a426126775e0fab473a9
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 
