@@ -1,13 +1,14 @@
 .areaFilme {
 	overflow-y: hidden;
 
-	h1{
-		position: absolute;
-		left: 99999999999;
-	}
+	
 }
 
 .areaBanner {
+	h1{
+		position: absolute;
+		left: 99999999999px;
+	}
 	.bannerFilme {
 		position: relative;
 		z-index: -1;
