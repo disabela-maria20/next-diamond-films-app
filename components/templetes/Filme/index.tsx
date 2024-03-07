@@ -316,7 +316,7 @@ const Filme = (data: IFilmeProps) => {
           {openModal && (
             <Model.Root>
               <Model.Body
-                setOpen={() => setOpenModal(!open)}
+                setOpen={() => setOpenModal(!openModal)}
                 className={Style.ModaliframeVideoYoutube}
               >
                 <div className={Style.iframeVideoYoutube} key={iframe}>
