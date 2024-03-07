@@ -1,4 +1,3 @@
-
 /* eslint-disable prettier/prettier */
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
