@@ -65,28 +65,6 @@ function setDefinirCorClassificacaoIndicativa(idade: string) {
 //   return availableStreamings
 // }
 
-const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
-  return (
-    <div className={Style.AreaLinksSociais}>
-      {!!insta && (
-        <a
-          className={Style.instagram}
-          href={insta}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <FaInstagram />
-        </a>
-      )}
-      {!!youtube && (
-        <a className={Style.areaAssitirTrailer} href={youtube}>
-          <FaYoutube />
-          <span>ASSISTA AO TRAILER</span>
-        </a>
-      )}
-    </div>
-  )
-}
 function converterParaHorasEMinutos(totalMinutos: number) {
   const horas = Math.floor(totalMinutos / 60)
   const minutos = totalMinutos % 60
@@ -96,6 +74,8 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 
 const Filme = (data: IFilmeProps) => {
   const [open, setOpen] = useState<boolean>(false)
+  const [iframe, setIframe] = useState<string>()
+  const [openModal, setOpenModal] = useState<boolean>(false)
   const [image, setImage] = useState<IFilmeResponseUrl>()
   const filme = data.movie?.movie
 
@@ -154,12 +134,40 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
-
+  const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
+    return (
+      <div className={Style.AreaLinksSociais}>
+        {!!insta && (
+          <a
+            className={Style.instagram}
+            href={insta}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FaInstagram />
+          </a>
+        )}
+        {!!youtube && (
+          <span
+            className={Style.areaAssitirTrailer}
+            onClick={() => handleVerVideo(youtube)}
+          >
+            <FaYoutube />
+            <span>ASSISTA AO TRAILER</span>
+          </span>
+        )}
+      </div>
+    )
+  }
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
     setImage(data)
   }
 
+  function handleVerVideo(data: string) {
+    setOpenModal(true)
+    setIframe(data)
+  }
   return (
     <>
       <section className={Style.areaBanner}>
@@ -302,6 +310,25 @@ const Filme = (data: IFilmeProps) => {
                 className={Style.modalImageFilme}
               >
                 <img src={image?.url} />
+              </Model.Body>
+            </Model.Root>
+          )}
+          {openModal && (
+            <Model.Root>
+              <Model.Body
+                setOpen={() => setOpenModal(!open)}
+                className={Style.ModaliframeVideoYoutube}
+              >
+                <div className={Style.iframeVideoYoutube} key={iframe}>
+                  <iframe
+                    className={Style.embedResponsiveItem}
+                    src={iframe}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               </Model.Body>
             </Model.Root>
           )}
