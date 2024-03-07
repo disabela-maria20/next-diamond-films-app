@@ -68,16 +68,16 @@ function setDefinirCorClassificacaoIndicativa(idade: string) {
 const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
   return (
     <div className={Style.AreaLinksSociais}>
-      <a
-        className={Style.instagram}
-        href={
-          insta == '' ? ' https://www.instagram.com/diamondfilmsbr/' : insta
-        }
-        target="_blank"
-        rel="noreferrer"
-      >
-        <FaInstagram />
-      </a>
+      {!!insta && (
+        <a
+          className={Style.instagram}
+          href={insta}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <FaInstagram />
+        </a>
+      )}
       {!!youtube && (
         <a className={Style.areaAssitirTrailer} href={youtube}>
           <FaYoutube />
@@ -141,9 +141,10 @@ const Filme = (data: IFilmeProps) => {
     spaceBetween: 10,
     freeMode: true,
     grabCursor: true,
-    pagination: {
-      clickable: true
-    },
+    // pagination: {
+    //   clickable: true
+    // },
+    pagination: false,
     scrollbar: { hide: true },
     modules: [FreeMode, Scrollbar],
     breakpoints: {
@@ -212,7 +213,7 @@ const Filme = (data: IFilmeProps) => {
               <div>
                 <h2>Sinopse</h2>
                 <p>{filme?.shortSynopsis}</p>
-                {isMobile && <Links youtube={filme?.trailer} insta="" />}
+                <Links youtube={filme?.trailer} insta=""></Links>
               </div>
             </div>
 

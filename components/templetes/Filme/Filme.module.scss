@@ -7,7 +7,7 @@
 .areaBanner {
 	h1{
 		position: absolute;
-		left: 99999999999px;
+		color: transparent;
 	}
 	.bannerFilme {
 		position: relative;
@@ -216,14 +216,11 @@
 	gap: 20px;
 
 	@include media(lg) {
-		position: absolute;
-		bottom: 0;
-		right: 0;
 		flex-direction: row;
 		gap: 15px;
 		margin: 0;
-		padding: 20px;
-		margin-right: 10px;
+		padding: 20px 0;
+	
 	}
 
 	.instagram {
@@ -300,9 +297,11 @@
 		max-width: 600px;
 		overflow-x: auto;
 		touch-action: pan-y;
-	
+		@include media(lg){
+			max-width: initial;
+		}
 		&::-webkit-scrollbar {
-			width: 0;
+			width: 120px;
 	
 		}
 	

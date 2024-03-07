@@ -62,7 +62,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     slidesPerView: 2,
     pagination: false,
     spaceBetween: 20,
-    navigation: isMobile ? false : true,
+    //navigation: isMobile ? false : true,
+    navigation: false,
     modules: [Navigation, Pagination],
     breakpoints: {
       640: {
@@ -140,7 +141,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             <Model.Root>
               <Model.Body
                 setOpen={() => setOpen(!open)}
-                className={Style.modalImageFilme}
+                className={Style.ModaliframeVideoYoutube}
               >
                 <div className={Style.iframeVideoYoutube} key={iframe?.trailer}>
                   <iframe
