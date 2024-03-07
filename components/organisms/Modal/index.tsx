@@ -3,13 +3,10 @@
 import { useState, useEffect } from 'react'
 
 import { Model, Newsletter } from '@/components/molecules'
-import { useGlobalContext } from '@/utils/context/GlobalContext'
 import Cookies from 'js-cookie'
 
 const Modal = () => {
   const [showModal, setShowModal] = useState<boolean>(false)
-
-  const { preencher, setPreencher } = useGlobalContext()
 
   const formNewsletter = Cookies.get('formNewsletter')
 
@@ -26,12 +23,7 @@ const Modal = () => {
       Cookies.set('modalShown', 'true', { expires: 7 })
       return
     }
-
-    if (formNewsletter == 'true') {
-      setPreencher(false)
-      return
-    }
-  }, [formNewsletter, preencher, setPreencher])
+  }, [formNewsletter])
 
   const closeModal = () => {
     setShowModal(false)
