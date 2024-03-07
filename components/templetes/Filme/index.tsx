@@ -162,6 +162,7 @@ const Filme = (data: IFilmeProps) => {
   return (
     <>
       <section className={Style.areaBanner}>
+        <h1>{filme.title}</h1>
         <div className={Style.bannerFilme}>
           <img
             src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
@@ -211,6 +212,7 @@ const Filme = (data: IFilmeProps) => {
               <div>
                 <h2>Sinopse</h2>
                 <p>{filme?.shortSynopsis}</p>
+                {isMobile && <Links youtube={filme?.trailer} insta="" />}
               </div>
             </div>
 
@@ -257,28 +259,26 @@ const Filme = (data: IFilmeProps) => {
                   </li>
                 </ul>
               </div>
-
-              {/* {isMobile && <Links youtube={filme?.trailer} insta="" />} */}
             </div>
           </div>
           <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-          <Slide.Content
-            swiperOptions={swiperOptionsVideo}
-            className={Style.areaSlide}
-          >
-            {filme?.videos?.map((data) => (
-              <div className={Style.iframeVideoYoutube} key={data.url}>
-                <iframe
-                  className={Style.embedResponsiveItem}
-                  src={data.url}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ))}
-          </Slide.Content>
+          <section className={Style.areaIframeVideoYoutube}>
+            <section className={Style.gridIframeVideoYoutube}>
+              {filme?.videos?.map((data) => (
+                <div className={Style.iframeVideoYoutube} key={data.url}>
+                  <iframe
+                    className={Style.embedResponsiveItem}
+                    src={data.url}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              ))}
+            </section>
+          </section>
+
           <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
           <Slide.Content
             swiperOptions={swiperOptions}

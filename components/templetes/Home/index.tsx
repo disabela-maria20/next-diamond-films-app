@@ -10,7 +10,7 @@ import { Navigation, Pagination } from 'swiper/modules'
 
 import 'swiper/css/navigation'
 
-import { Newsletter, Slide } from '@/components/molecules'
+import { Model, Newsletter, Slide } from '@/components/molecules'
 import { GlobalContext } from '@/utils/context/GlobalContext'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
@@ -26,6 +26,9 @@ interface IHomeProps {
 }
 
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [iframe, setIframe] = useState<IFilmeResponse>()
+
   const formatarData = useFormatarData()
 
   const isMobile: boolean = useIsMobile()
@@ -81,6 +84,10 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     }
   }
 
+  function handleVerImagem(data: IFilmeResponse) {
+    setOpen(true)
+    setIframe(data)
+  }
   return (
     <>
       <Slide.Content
@@ -119,14 +126,35 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                   {data.title} - {formatarData(data?.releasedate)}
                 </h2>
                 <p>Em breve nos Cinemas</p>
-                <a href={data.trailer} className={Style.tralher}>
+                <span
+                  onClick={() => handleVerImagem(data)}
+                  className={Style.tralher}
+                >
                   <FaYoutube />
                   <span>Assista ao Trailer</span>
-                </a>
+                </span>
               </div>
             ))}
           </Slide.Content>
-
+          {open && (
+            <Model.Root>
+              <Model.Body
+                setOpen={() => setOpen(!open)}
+                className={Style.modalImageFilme}
+              >
+                <div className={Style.iframeVideoYoutube} key={iframe?.trailer}>
+                  <iframe
+                    className={Style.embedResponsiveItem}
+                    src={iframe?.trailer}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </Model.Body>
+            </Model.Root>
+          )}
           {/* <Slide.Title className={Style.slideTitle}>
             ASSISTA ONDE E QUANDO QUISER
             <span>Nossos filmes disponíveis nos streamings.</span>

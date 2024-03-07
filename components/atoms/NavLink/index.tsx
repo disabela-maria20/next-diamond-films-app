@@ -5,7 +5,7 @@ import Link from 'next/link'
 const LINK = [
   { nome: 'home', link: '/', menu: false, footer: false },
   {
-    nome: 'catálogo',
+    nome: 'Filmes',
     link: '/guerra-civil',
     menu: true,
     footer: true
@@ -26,10 +26,10 @@ type Area = 'menu' | 'footer'
 interface NavLinkProps {
   area: Area
   open?: boolean
-  setOpen?: (value: boolean) => void
+  setOpen?: (value: boolean) => void | undefined
 }
 
-const NavLink = ({ area = 'menu', setOpen }: NavLinkProps) => {
+const NavLink = ({ area = 'menu', setOpen, open }: NavLinkProps) => {
   const filteredLinks = LINK.filter((link) => {
     if (area == 'menu') return link.menu
     if (area == 'footer') return link.footer
@@ -39,7 +39,7 @@ const NavLink = ({ area = 'menu', setOpen }: NavLinkProps) => {
     <>
       {filteredLinks.map((link) => (
         <li key={link.link}>
-          <Link href={link.link} onClick={() => setOpen}>
+          <Link href={link.link} onClick={() => setOpen && setOpen(!open)}>
             {link.nome}
           </Link>
         </li>

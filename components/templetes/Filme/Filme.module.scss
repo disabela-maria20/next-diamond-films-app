@@ -1,5 +1,10 @@
 .areaFilme {
 	overflow-y: hidden;
+
+	h1{
+		position: absolute;
+		left: 99999999999;
+	}
 }
 
 .areaBanner {
@@ -206,7 +211,7 @@
 .AreaLinksSociais {
 	display: flex;
 	align-items: center;
-	margin:35px 0;
+	margin: 35px 0;
 	gap: 20px;
 
 	@include media(lg) {
@@ -282,17 +287,46 @@
 	color: $primary-lingh-color;
 }
 
-.modalImageFilme{
-	max-width: initial !important;	
+.modalImageFilme {
+	max-width: initial !important;
 }
-
-.iframeVideoYoutube{
-	position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;
-	:before {
-		content: '';
-		padding-top: 56.25%;
-	}
-	.embedResponsiveItem{
-		position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+.areaIframeVideoYoutube{
+	overflow: visible;
+	.gridIframeVideoYoutube {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+		max-width: 600px;
+		overflow-x: auto;
+		touch-action: pan-y;
+	
+		&::-webkit-scrollbar {
+			width: 0;
+	
+		}
+	
+		.iframeVideoYoutube {
+			@include media(lg) {
+				position: relative;
+				padding-bottom: 56.25%;
+				padding-top: 30px;
+				height: 0;
+			}
+			:before {
+				content: '';
+				padding-top: 56.25%;
+			}
+	
+			.embedResponsiveItem {
+				@include media(lg) {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width:  100%;
+					height: 100%;
+				}
+	
+			}
+		}
 	}
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import Link from 'next/link'
@@ -33,7 +34,7 @@ const Menu = (): JSX.Element => {
               <Link href="/">
                 <Logo logo={'logo.webp'} />
               </Link>
-              {isMobile && <Search />}
+              {/* {isMobile && <Search />} */}
             </div>
           </div>
         </div>
