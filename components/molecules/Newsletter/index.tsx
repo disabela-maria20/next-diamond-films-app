@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
+import Cookies from 'js-cookie'
 
 import Link from 'next/link'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import Style from './Newsletter.module.scss'
@@ -28,27 +27,26 @@ interface INewsletterProps {
 const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
   const [loaging, setLoaging] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
-  const [checkbox, setCheckbox] = useState<boolean>(false)
-
   const [viewSuccess, setViewSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors }
+    formState: { errors, disabled }
   } = useForm<INewsletterForm>({
     resolver: ResolverZod(NewsletterFormSchema)
   })
 
   const onSubmit = async (data: INewsletterForm) => {
-    if (!checkbox) return
+    if (!data.n_termos) return
     setLoaging(true)
     try {
       const res = await postNewsletter(data.n_name, data.n_email, data.n_phone)
       if (res.data.done) {
         setModal(true)
         setViewSuccess(true)
+        Cookies.set('formNewsletter', 'true')
         reset()
       }
     } catch (error) {
@@ -61,9 +59,6 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
       setError(false)
       setLoaging(false)
     }
-  }
-  function handleChange({ target }: ChangeEvent<HTMLInputElement>) {
-    setCheckbox(target.checked)
   }
 
   return (
@@ -118,31 +113,30 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
                 placeholder="E-mail"
                 {...register('n_email')}
               />
-              {errors.n_email && (
-                <small className="text-error">{errors.n_email.message}</small>
-              )}
-              <button type="submit" disabled={!checkbox}>
+
+              <button type="submit" disabled={disabled}>
                 {loaging ? 'Carregando' : 'Enviar'}
               </button>
             </label>
+            {errors.n_email && (
+              <small className="text-error">{errors.n_email.message}</small>
+            )}
           </div>
         </form>
-        <label htmlFor="" className={Style.newsletterPopUpTermosFlex}>
-          <input
-            type="checkbox"
-            name="termos"
-            id="termos"
-            checked={checkbox}
-            onChange={handleChange}
-          />
+        <label htmlFor="termos" className={Style.newsletterPopUpTermosFlex}>
+          <input type="checkbox" id="termos" {...register('n_termos')} />
           <p>
             Li, e aceito as&nbsp;
             <Link href="/politica-de-privacidade">
               politicas de provacidade
             </Link>
-            e<Link href="/termos-e-condicoes">Termos e condições</Link>
+            &nbsp;e&nbsp;
+            <Link href="/termos-e-condicoes">Termos e condições</Link>
           </p>
         </label>
+        {errors.n_termos && (
+          <small className="text-error">{errors.n_termos.message}</small>
+        )}
       </section>
       {modal && (
         <Model.Root>

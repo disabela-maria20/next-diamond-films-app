@@ -105,8 +105,6 @@ const Filme = (data: IFilmeProps) => {
   //const streaming = setStreaming(filme?.streaming)
 
   useEffect(() => {
-    console.log(window.dataLayer)
-
     window.dataLayer?.push({
       content_type: 'Microsite',
       page_title: filme.title,
@@ -118,7 +116,7 @@ const Filme = (data: IFilmeProps) => {
   const formatarData = useFormatarData()
 
   const swiperOptions: SwiperOptions = {
-    slidesPerView: 1,
+    slidesPerView: 2,
     spaceBetween: 10,
     freeMode: true,
     pagination: {
@@ -128,20 +126,21 @@ const Filme = (data: IFilmeProps) => {
     modules: [FreeMode, Scrollbar],
     breakpoints: {
       640: {
-        slidesPerView: 2,
+        slidesPerView: 3,
         spaceBetween: 20
       },
       768: {
-        slidesPerView: 3,
+        slidesPerView: 4,
         spaceBetween: 10
       }
     }
   }
 
-  const swiperOptionsVideo = {
+  const swiperOptionsVideo: SwiperOptions = {
     slidesPerView: 1,
     spaceBetween: 10,
     freeMode: true,
+    grabCursor: true,
     pagination: {
       clickable: true
     },
@@ -178,7 +177,7 @@ const Filme = (data: IFilmeProps) => {
               </h2>
             )}
           </div>
-          {!isMobile && <Links youtube={filme?.trailer} insta="" />}
+          {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
         </div>
       </section>
       <div className="container">
@@ -259,7 +258,7 @@ const Filme = (data: IFilmeProps) => {
                 </ul>
               </div>
 
-              {isMobile && <Links youtube={filme?.trailer} insta="" />}
+              {/* {isMobile && <Links youtube={filme?.trailer} insta="" />} */}
             </div>
           </div>
           <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>

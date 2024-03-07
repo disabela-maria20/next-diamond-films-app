@@ -28,5 +28,8 @@ export const NewsletterFormSchema = z.object({
   n_phone: z
     .string()
     .min(11, { message: 'Número de telefone invalido' })
-    .nonempty('Telefone é obrigatorio')
+    .nonempty('Telefone é obrigatorio'),
+  n_termos: z.boolean().refine((val) => val === true, {
+    message: 'Você deve concordar com os termos e condições.'
+  })
 })

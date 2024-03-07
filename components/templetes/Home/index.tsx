@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
@@ -11,6 +11,7 @@ import { Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css/navigation'
 
 import { Newsletter, Slide } from '@/components/molecules'
+import { GlobalContext } from '@/utils/context/GlobalContext'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
