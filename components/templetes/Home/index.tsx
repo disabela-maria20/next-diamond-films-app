@@ -11,7 +11,7 @@ import { Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css/navigation'
 
 import { Model, Newsletter, Slide } from '@/components/molecules'
-import { GlobalContext } from '@/utils/context/GlobalContext'
+import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { IFilmeResponse } from '@/utils/server/types'
@@ -30,6 +30,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const [iframe, setIframe] = useState<IFilmeResponse>()
 
   const formatarData = useFormatarData()
+  const statusTextData = useFilmeTextStatus()
 
   const isMobile: boolean = useIsMobile()
 
@@ -126,7 +127,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                 <h2>
                   {data.title} - {formatarData(data?.releasedate)}
                 </h2>
-                <p>Em breve nos Cinemas</p>
+                <p>{statusTextData(data?.releasedate)}</p>
                 <span
                   onClick={() => handleVerImagem(data)}
                   className={Style.tralher}

@@ -171,23 +171,22 @@ const Filme = (data: IFilmeProps) => {
   return (
     <>
       <section className={Style.areaBanner}>
-        <h1>{filme.title}</h1>
         <div className={Style.bannerFilme}>
           <img
             src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
             alt={filme?.title}
           />
-        </div>
-        <div className="container" style={{ position: 'relative' }}>
-          <div className={Style.areaTituloBanner}>
-            {/* <img src={} /> */}
-            {emExibicao && (
-              <h2 className={Style.emExibicao}>
-                <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
-              </h2>
-            )}
+          <div className="container">
+            <div className={Style.areaTituloBanner}>
+              <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>
+              {emExibicao && (
+                <h2 className={Style.emExibicao}>
+                  <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
+                </h2>
+              )}
+            </div>
+            {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
           </div>
-          {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
         </div>
       </section>
       <div className="container">
