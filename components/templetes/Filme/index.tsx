@@ -171,11 +171,11 @@ const Filme = (data: IFilmeProps) => {
   return (
     <>
       <section className={Style.areaBanner}>
+        <img
+          src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
+          alt={filme?.title}
+        />
         <div className={Style.bannerFilme}>
-          <img
-            src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
-            alt={filme?.title}
-          />
           <div className="container">
             <div className={Style.areaTituloBanner}>
               <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>

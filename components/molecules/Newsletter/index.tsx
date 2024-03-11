@@ -71,8 +71,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
           className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}
         >
           <div className={Style.text}>
-            Preencha seus dados e fique no radar de ações e convites exclusivos
-            da Diamond
+            Preencha abaixo e concorra a brindes e convites exclusivos Diamond
           </div>
           <div className={Style.inputNome}>
             <label htmlFor="">
