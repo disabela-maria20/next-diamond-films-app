@@ -13,7 +13,7 @@
 			text-transform: uppercase;
 			margin-bottom: 10px;
 		}
-		text-align: center;
+		text-align: left;
 		grid-area: 1 / 1 / 2 / 6;
 		font-size: 1.3rem;
 		line-height: 1.5rem;
@@ -90,7 +90,7 @@
 	display: grid;
 	grid-template-columns: 1.5fr 1fr .7fr 1.5fr !important;
 	grid-template-rows: auto !important;
-
+	align-items: center;
 	.text {
 		grid-area: initial;
 	}
