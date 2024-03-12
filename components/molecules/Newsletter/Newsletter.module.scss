@@ -9,6 +9,16 @@
 	}
 
 	.text {
+		h2{
+			font-size: 2.5rem;
+			
+			@include media(lg){
+				font-size: 2rem;
+			}
+			text-transform: uppercase;
+			margin-bottom: 10px;
+		}
+		font-weight: 700;
 		grid-area: 1 / 1 / 2 / 6;
 		font-size: 1.4rem;
 		line-height: 1.6rem;

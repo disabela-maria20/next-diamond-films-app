@@ -10,9 +10,15 @@ import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
 import { Model, Newsletter, Slide } from '@/components/molecules'
+import { Sessoes } from '@/components/organisms'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
-import { IFilmeResponse, IFilmeResponseUrl } from '@/utils/server/types'
+import { getCheckProgEstado } from '@/utils/server/requests'
+import {
+  IFilmeResponse,
+  IFilmeResponseUrl,
+  IFilmesEstadosResponse
+} from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
 interface IFilmeProps {
@@ -77,6 +83,7 @@ const Filme = (data: IFilmeProps) => {
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [image, setImage] = useState<IFilmeResponseUrl>()
+  const [estados, setEstados] = useState<IFilmesEstadosResponse | undefined>()
   const filme = data.movie?.movie
 
   const isMobile: boolean = useIsMobile()
@@ -94,6 +101,16 @@ const Filme = (data: IFilmeProps) => {
   }, [filme.title])
 
   const formatarData = useFormatarData()
+
+  function handleVerImagem(data: IFilmeResponseUrl) {
+    setOpen(true)
+    setImage(data)
+  }
+
+  function handleVerVideo(data: string) {
+    setOpenModal(true)
+    setIframe(data)
+  }
 
   const swiperOptions: SwiperOptions = {
     slidesPerView: 2,
@@ -134,6 +151,7 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
+
   const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
     return (
       <div className={Style.AreaLinksSociais}>
@@ -159,15 +177,15 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
-  function handleVerImagem(data: IFilmeResponseUrl) {
-    setOpen(true)
-    setImage(data)
-  }
 
-  function handleVerVideo(data: string) {
-    setOpenModal(true)
-    setIframe(data)
-  }
+  useEffect(() => {
+    const headleFetch = async () => {
+      const res = await getCheckProgEstado(20899)
+      setEstados(res)
+    }
+    headleFetch()
+  }, [])
+
   return (
     <>
       <section className={Style.areaBanner}>
@@ -302,6 +320,12 @@ const Filme = (data: IFilmeProps) => {
               </div>
             ))}
           </Slide.Content>
+          <h2 className={Style.slideTitle}>Comprar ingressos</h2>
+          <Sessoes
+            estados={estados}
+            poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
+          ></Sessoes>
+
           {open && (
             <Model.Root>
               <Model.Body

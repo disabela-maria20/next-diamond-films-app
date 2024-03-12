@@ -34,3 +34,11 @@ export interface IFilmeResponse {
 export interface IFilmeResponseUrl {
   url: string
 }
+
+export interface IFilmesEstadosResponse {
+  estados: IFilmesEstado[]
+}
+export interface IFilmesEstado {
+  CIDADE: string
+  ESTADO: string
+}
