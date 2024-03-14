@@ -91,6 +91,8 @@ const Filme = (data: IFilmeProps) => {
   const emExibicao = new Date() >= new Date(filme?.releasedate)
   //const streaming = setStreaming(filme?.streaming)
 
+  const { formatarData } = useFormatarData()
+
   useEffect(() => {
     window.dataLayer?.push({
       content_type: 'Microsite',
@@ -99,8 +101,6 @@ const Filme = (data: IFilmeProps) => {
       site_country: 'BR'
     })
   }, [filme.title])
-
-  const formatarData = useFormatarData()
 
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
@@ -323,8 +323,9 @@ const Filme = (data: IFilmeProps) => {
           <h2 className={Style.slideTitle}>Comprar ingressos</h2>
           <Sessoes
             estados={estados}
+            color={filme.color}
             poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
-          ></Sessoes>
+          />
 
           {open && (
             <Model.Root>

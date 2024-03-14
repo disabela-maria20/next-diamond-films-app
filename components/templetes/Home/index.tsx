@@ -29,7 +29,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<IFilmeResponse>()
 
-  const formatarData = useFormatarData()
+  const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
 
   const isMobile: boolean = useIsMobile()

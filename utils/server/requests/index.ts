@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IFilmesEstadosResponse } from '../types'
+import { Filme, IFilmesEstadosResponse } from '../types'
 
 import axios from 'axios'
 
@@ -63,15 +63,32 @@ export async function getCheckProgEstado(
   }
 }
 
-const SESSOES = process.env.ENDPOINT_SESSOES
+const SESSOES_ESTADOS = process.env.ENDPOINT_SESSOES
 export async function getProgSessoes(
   cidade: string,
   estado: string
 ): Promise<any | undefined> {
   try {
-    const res = await axios.get(`${SESSOES}/${estado}/${cidade}`)
+    const res = await axios.get(`${SESSOES_ESTADOS}/${estado}/${cidade}`)
     return res.data
   } catch (err) {
     console.log(err)
+  }
+}
+
+const SESSOES_FILME = process.env.ENDPOINT_SESSOES
+export const getSessaoFilmes = async (
+  cidade: string,
+  estados: string,
+  idMovie: string
+): Promise<Filme> => {
+  try {
+    const response = await axios.get<Filme>(
+      `${SESSOES_FILME}/${estados}/${cidade}/${idMovie}`
+    )
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar dados do filme:', error)
+    throw error
   }
 }

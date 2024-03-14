@@ -1,6 +1,65 @@
-.areaSessao{
-    background-color: var(--my-cool-background);
-    .gridSessoes{
-        display: grid;
-    }
+.areaSessao {
+	background-color: var(--my-cool-background);
+
+	.gridSessoes {
+		display: grid;
+	}
+
+	.areaPesquisa {
+		display: flex;
+		align-items: center;
+		background-color: $primary-lingh-color;
+		
+		select {
+			width: 100%;
+			@include inputNewsletter;
+		}
+
+		svg{
+			font-size: 5rem;
+			padding-left: 15px;
+		}
+	}
+
+	.areaSessao {
+		display: block;
+		padding: 5px 20px;
+		font-size: 1.1rem;
+		color: $primary-lingh-color;
+		background-color: #6B6B6B;
+	}
+
+	ul {
+		background: $primary-lingh-color;
+	}
+}
+
+.flexData {
+	display: flex;
+
+	.areaData {
+		padding: 5px 20px;
+		display: flex;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
+		background: $primary-lingh-color;
+		border-radius: 10px;
+
+		.mes {
+			text-transform: capitalize;
+			font-size: 1.2rem;
+		}
+
+		.dia {
+			font-weight: 700;
+			font-size: 1.9rem;
+		}
+
+		.diaSemana {
+			text-transform: capitalize;
+			font-size: 1.2rem;
+		}
+	}
 }
