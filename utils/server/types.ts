@@ -34,3 +34,26 @@ export interface IFilmeResponse {
 export interface IFilmeResponseUrl {
   url: string
 }
+
+export interface IFilmesEstadosResponse {
+  estados: IFilmesEstado[]
+}
+export interface IFilmesEstado {
+  CIDADE: string
+  ESTADO: string
+}
+export interface Session {
+  date: string
+  hour: string
+  theaterName: string
+  link: string
+  technology: string
+  isImax: boolean
+  postalCode: string
+  address: string
+  lat: string
+  lng: string
+  addressComplement?: string
+  number?: string
+  sessions: Session[]
+}

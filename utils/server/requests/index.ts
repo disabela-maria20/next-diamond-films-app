@@ -1,14 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Filme, IFilmesEstadosResponse } from '../types'
+
 import axios from 'axios'
 
 // Configuração global do token para todas as solicitações Axios
-axios.defaults.baseURL = process.env.API_URL
-
-axios.defaults.headers.common['token'] = process.env.API_TOKEM
+const api = axios.create({
+  baseURL: process.env.API_URL,
+  headers: {
+    token: process.env.API_TOKEN
+  }
+})
 
 export async function getCatalogoFilme(slug: string) {
   try {
-    const { data } = await axios.get(`/movie/get/${slug}`)
-    return data
+    const res = await api.get(`/movie/get/${slug}`)
+    return res.data
   } catch (err) {
     console.log(err)
   }
@@ -17,7 +24,7 @@ export async function getCatalogoFilme(slug: string) {
 // Lista os filmes na página de "/"
 export async function getHome() {
   try {
-    const res = await axios.get(`/movie/list-all`)
+    const res = await api.get(`/movie/list-all`)
     return res.data
   } catch (err) {
     console.log(err)
@@ -26,7 +33,7 @@ export async function getHome() {
 
 // Lista os banners na página de "/"
 export async function getHomeBanner() {
-  const res = await axios.get(`banner-home`)
+  const res = await api.get(`banner-home`)
   return res.data
 }
 
@@ -36,9 +43,52 @@ export async function postNewsletter(
   email: string,
   phone: string
 ) {
-  return axios.post(`/save/optin?name=${name}&email=${email}&phone=${phone}`, {
+  return api.post(`/save/optin?name=${name}&email=${email}&phone=${phone}`, {
     name: name,
     email: email,
     phone: phone
   })
+}
+
+// Lista os estados pela seção dos filmes
+const CIDADES = process.env.ENDPOINT_ESTADOS_CIDADES
+export async function getCheckProgEstado(
+  id: number
+): Promise<IFilmesEstadosResponse | undefined> {
+  try {
+    const res = await axios.get(`${CIDADES}/${id}`)
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const SESSOES_ESTADOS = process.env.ENDPOINT_SESSOES
+export async function getProgSessoes(
+  cidade: string,
+  estado: string
+): Promise<any | undefined> {
+  try {
+    const res = await axios.get(`${SESSOES_ESTADOS}/${estado}/${cidade}`)
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const SESSOES_FILME = process.env.ENDPOINT_SESSOES
+export const getSessaoFilmes = async (
+  cidade: string,
+  estados: string,
+  idMovie: string
+): Promise<Filme> => {
+  try {
+    const response = await axios.get<Filme>(
+      `${SESSOES_FILME}/${estados}/${cidade}/${idMovie}`
+    )
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar dados do filme:', error)
+    throw error
+  }
 }
