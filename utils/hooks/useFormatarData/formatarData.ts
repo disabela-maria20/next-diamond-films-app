@@ -20,7 +20,8 @@ export const SEMANA: string[] = [
   'qua',
   'qui',
   'sex',
-  'sab'
+  'sab',
+  'dom'
 ]
 
 export const useFormatarData = () => {
@@ -48,8 +49,7 @@ export const useFormatarData = () => {
   const formatDiaDaSemana = (text: string) => {
     const data = new Date(text)
     const mes = data.getDay()
-
-    return SEMANA[mes]
+    return SEMANA[mes + 1]
   }
 
   return {

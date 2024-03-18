@@ -1,6 +1,5 @@
 'use client'
-import { useState, useMemo } from 'react'
-import React from 'react'
+import React, { useState, useMemo, ChangeEvent, useRef } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import Style from './Sessoes.module.scss'
@@ -21,8 +20,9 @@ const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
+  const originalSessao = useRef(sessao)
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
 
@@ -31,14 +31,31 @@ const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
   }
 
   const filteredSessions = useMemo(() => {
-    return sessao.filter((data) =>
-      data.sessions.some(
-        (session) =>
-          session.address.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          (selectedDate ? data.date === selectedDate : true)
-      )
+    if (!searchTerm && !selectedDate) return originalSessao.current
+
+    return originalSessao.current.filter(
+      (data) =>
+        data.sessions.some(
+          (session) =>
+            session.theaterName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            session.address.toLowerCase().includes(searchTerm.toLowerCase())
+        ) &&
+        (!selectedDate || data.date === selectedDate)
     )
-  }, [sessao, searchTerm, selectedDate])
+  }, [searchTerm, selectedDate])
+
+  const noResultsMessage = useMemo(() => {
+    if (searchTerm.trim() !== '' || selectedDate) {
+      if (filteredSessions.length === 0) {
+        return (
+          <div className={Style.noResults}>Nenhum resultado encontrado.</div>
+        )
+      }
+    }
+    return null
+  }, [filteredSessions, searchTerm, selectedDate])
 
   return (
     <section className={Style.areaSessao}>
@@ -61,11 +78,10 @@ const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
           </div>
           <div className={Style.flexData} style={{ background: `${color}` }}>
             {sessao.map((data) => (
-              <div
+              <S.ButtonHora
                 key={data.link}
-                className={`${Style.areaData} ${
-                  selectedDate === data.date ? Style.selected : ''
-                }`}
+                $bg={` ${selectedDate === data.date && darken(0.2, color)}`}
+                className={`${Style.areaData}`}
                 onClick={() => handleDataClick(data.date)}
               >
                 <span className={Style.mes}>{formatMes(data.date)}</span>
@@ -73,18 +89,23 @@ const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
                 <span className={Style.diaSemana}>
                   {formatDiaDaSemana(data.date)}
                 </span>
-              </div>
+              </S.ButtonHora>
             ))}
           </div>
           <div className={Style.areaSessao}>Escolha uma sessão:</div>
           <div className={Style.areaCinema}>
+            {noResultsMessage}
             {filteredSessions.map((data) => (
               <div key={data.link}>
                 {data.sessions
-                  .filter((session) =>
-                    session.address
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase())
+                  .filter(
+                    (session) =>
+                      session.theaterName
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) ||
+                      session.address
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
                   )
                   .map((session: Session) => (
                     <>

@@ -2,6 +2,13 @@
 
 import styled from 'styled-components'
 
+export const ButtonHora = styled.div.attrs<{ $bg?: string }>((props) => ({
+  type: 'text',
+  $bg: props.$bg || '#fff'
+}))`
+  background-color: ${(props) => props.$bg};
+`
+
 export const LinkHora = styled.a.attrs<{ $color?: string }>((props) => ({
   type: 'text',
   $color: props.$color || '#000'
