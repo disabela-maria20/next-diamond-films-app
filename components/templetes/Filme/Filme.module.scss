@@ -223,6 +223,12 @@
 	max-width: initial !important;
 }
 
+.modalSlideImg {
+	@include media(xl) {
+		max-width: 1000px !important;
+	}
+}
+
 .areaIframeVideoYoutube {
 	overflow: visible;
 
@@ -320,7 +326,7 @@
 		width: 100%;
 		margin: 0 auto;
 
-		@include media(lg){
+		@include media(lg) {
 			left: initial;
 		}
 
@@ -356,4 +362,11 @@
 		}
 
 	}
+}
+
+.SlideImgFilme{
+	width: 100%;
+	height: 160px;
+	object-fit: cover;
+	object-position: center center;
 }

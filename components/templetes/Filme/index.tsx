@@ -305,6 +305,7 @@ const Filme = (data: IFilmeProps) => {
             {filme?.images?.map((data) => (
               <div key={data.url}>
                 <img
+                  className={Style.SlideImgFilme}
                   src={`${data.url}`}
                   onClick={() => handleVerImagem(data)}
                   style={{ cursor: 'pointer' }}
@@ -330,7 +331,7 @@ const Filme = (data: IFilmeProps) => {
                 setOpen={() => setOpen(!open)}
                 className={Style.modalImageFilme}
               >
-                <img src={image?.url} />
+                <img src={image?.url} className={Style.modalSlideImg} />
               </Model.Body>
             </Model.Root>
           )}

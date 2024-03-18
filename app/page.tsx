@@ -9,7 +9,13 @@ export default async function PageHome() {
       bannerMobile: '/img/poster/Banner_mobile_1180x1025.jpg',
       bannerDesktop: '/img/poster/Banner_desktop_1440x540.jpg',
       slug: '/guerracivil',
-      id: 0
+      id: 1
+    },
+    {
+      bannerMobile: '/img/poster/Banner_mobile_1180x1025.jpg',
+      bannerDesktop: '/img/poster/Banner_desktop_1440x540.jpg',
+      slug: '/guerracivil',
+      id: 1
     }
   ]
   const listaFilmes = await getHome()
