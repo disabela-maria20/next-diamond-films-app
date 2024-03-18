@@ -6,13 +6,13 @@ const LINK = [
   { nome: 'home', link: '/', menu: false, footer: false },
   {
     nome: 'Filmes',
-    link: '/guerracivil',
+    link: '/filmes',
     menu: true,
     footer: true
   },
   { nome: 'Em Breve', link: '/em-breve', menu: false, footer: false },
   { nome: 'contato', link: '/contato', menu: false, footer: false },
-  { nome: 'Termos de Uso', link: '/termos-de-uso', menu: false, footer: false },
+  { nome: 'Termos de Uso', link: '/termos-de-uso', menu: false, footer: true },
   {
     nome: 'Política de Privacidade',
     link: '/politica-de-privacidade',

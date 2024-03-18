@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { useEffect, useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 
-//import { useFormatarData } from '@/hooks/useFormatarData/formatarData'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
@@ -13,11 +11,9 @@ import { Model, Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
-import { getCheckProgEstado } from '@/utils/server/requests'
 import {
   IFilmeResponse,
   IFilmeResponseUrl,
-  IFilmesEstadosResponse,
   Session
 } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
@@ -136,6 +132,7 @@ const Filme = (data: IFilmeProps) => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const swiperOptionsVideo: SwiperOptions = {
     slidesPerView: 1,
     spaceBetween: 10,

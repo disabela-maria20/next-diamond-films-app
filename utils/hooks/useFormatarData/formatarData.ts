@@ -46,6 +46,13 @@ export const useFormatarData = () => {
     return MESES[mes]
   }
 
+  const formatAno = (text: string) => {
+    const data = new Date(text)
+    const ano = data.getFullYear()
+
+    return ano
+  }
+
   const formatDiaDaSemana = (text: string) => {
     const data = new Date(text)
     const mes = data.getDay()
@@ -56,6 +63,7 @@ export const useFormatarData = () => {
     formatarData,
     formatDia,
     formatMes,
+    formatAno,
     formatDiaDaSemana
   }
 }

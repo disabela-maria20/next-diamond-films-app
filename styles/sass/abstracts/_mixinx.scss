@@ -95,8 +95,19 @@
   border: 1px solid variable.$primary-lingh-color;
   padding: 10px;
   font-size: 1.2rem;
-  
-  ::placeholder{
-    
+}
+
+@mixin inputCaralogo {
+  background-color: variable.$primary-color-gray;
+	height: 36px;
+	width: 100%;
+  border: 1px solid variable.$primary-lingh-color;
+  padding: 10px;
+  font-size: 1.2rem;
+  color: $primary-lingh-color;
+
+  &::placeholder{
+    color:  $primary-lingh-color;
+    font-weight: 700;
   }
 }
