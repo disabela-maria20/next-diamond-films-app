@@ -6,7 +6,7 @@ export const ButtonHora = styled.div.attrs<{ $bg?: string }>((props) => ({
   type: 'text',
   $bg: props.$bg || '#fff'
 }))`
-  background-color: ${(props) => props.$bg};
+  background-color: ${(props) => props.$bg} !important;
 `
 
 export const LinkHora = styled.a.attrs<{ $color?: string }>((props) => ({

@@ -80,7 +80,7 @@ const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
             {sessao.map((data) => (
               <S.ButtonHora
                 key={data.link}
-                $bg={` ${selectedDate === data.date && darken(0.2, color)}`}
+                $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
                 className={`${Style.areaData}`}
                 onClick={() => handleDataClick(data.date)}
               >
