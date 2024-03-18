@@ -6,7 +6,7 @@ import { getHome } from '@/utils/server/requests'
 export default async function PageHome() {
   const banner = [
     {
-      bannerMobile: '/img/poster/Banner_mobile_1180x1025.jpg',
+      bannerMobile: '/img/poster/DMND_Banner-Mobile_800x1000.png',
       bannerDesktop: '/img/poster/DMND_Banner-Desktop-Título_1450x540.webp',
       slug: '/osabordavida',
       id: 1
