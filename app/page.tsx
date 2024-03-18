@@ -7,15 +7,15 @@ export default async function PageHome() {
   const banner = [
     {
       bannerMobile: '/img/poster/Banner_mobile_1180x1025.jpg',
-      bannerDesktop: '/img/poster/Banner_desktop_1440x540.jpg',
-      slug: '/guerracivil',
+      bannerDesktop: '/img/poster/DMND_Banner-Desktop-Título_1450x540.webp',
+      slug: '/osabordavida',
       id: 1
     },
     {
-      bannerMobile: '/img/poster/Banner_mobile_1180x1025.jpg',
-      bannerDesktop: '/img/poster/Banner_desktop_1440x540.jpg',
+      bannerMobile: '/img/poster/guerraCivilBanner_mobile_1180x1025.jpg',
+      bannerDesktop: '/img/poster/guerraCivilBanner_desktop_1440x540.jpg',
       slug: '/guerracivil',
-      id: 1
+      id: 2
     }
   ]
   const listaFilmes = await getHome()

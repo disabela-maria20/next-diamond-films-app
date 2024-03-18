@@ -120,19 +120,27 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
             </button>
           ))}
         </div>
-        <div className={Style.areaTitleCatalogoFilmeAno}>
-          <h2>2024</h2> <span>Até o momento e em ordem de lançamento.</span>
-        </div>
-        <div className={Style.gridFilmesCatalogo}>
-          {listaFilmes?.releases.filter(filtrarFilmes).map((data) => (
-            <div key={data.id}>
-              <Link href={`/${data.slug}`}>
-                <img src={data.cover} alt={data.title} />
-                <h2>{data.title}</h2>
-              </Link>
+        {listaFilmes?.releases.filter(filtrarFilmes).length > 0 && (
+          <>
+            <div className={Style.areaTitleCatalogoFilmeAno}>
+              <h2>2024</h2> <span>Até o momento e em ordem de lançamento.</span>
             </div>
-          ))}
-        </div>
+            <div className={Style.gridFilmesCatalogo}>
+              {listaFilmes?.releases.filter(filtrarFilmes).map((data) => (
+                <div key={data.id}>
+                  <Link href={`/${data.slug}`}>
+                    <img src={data.cover} alt={data.title} />
+                    <h2>{data.title}</h2>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {listaFilmes?.releases.filter(filtrarFilmes).length == 0 && (
+          <p className={Style.CatalogoVazio}>Nenhum filme encontrado</p>
+        )}
       </div>
     </section>
   )
