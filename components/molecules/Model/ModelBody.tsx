@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 
 import Style from './Model.module.scss'
@@ -13,6 +14,20 @@ const ModelBody: React.FC<IModelBodyProps> = ({
   setOpen,
   className
 }) => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [setOpen])
+
   return (
     <div className={`${Style.modelBody} ${className}`}>
       {children}

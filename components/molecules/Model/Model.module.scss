@@ -17,7 +17,7 @@
 .modelBody {
 	background-color: rgba(84, 84, 84, 0.2);
 	border: 1px solid rgba(255, 255, 255, 0.3);
-	padding: 20px;
+	padding: 30px;
 	backdrop-filter: blur(2px);
 	position: relative;
 	max-width: 440px;
@@ -30,6 +30,7 @@
 		cursor: pointer;
 		@include media(lg){
 			top: 0;
+			padding: 5px;
 		}
 		svg{
 			color: #4C4C4C;
