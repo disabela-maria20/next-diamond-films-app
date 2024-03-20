@@ -43,6 +43,8 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
     setLoaging(true)
     try {
       const res = await postNewsletter(data.n_name, data.n_email, data.n_phone)
+      console.log(res)
+
       if (res.data.done) {
         setModal(true)
         setViewSuccess(true)
