@@ -137,7 +137,8 @@
 
 .newsletterPopUpTermosFlex {
 	display: flex;
-	gap: 5px;
+	align-items: center;
+	gap: 10px;
 	margin-top: 20px;
 
 	p {
@@ -147,6 +148,11 @@
 	a {
 		text-decoration: underline;
 		color: $primary-lingh-color;
+	}
+
+	input[type="checkbox"] {
+		width: 25px;
+		height: 25px;
 	}
 
 	position: relative;
@@ -185,17 +191,20 @@
 	position: relative;
 	margin: 20px 0 10px 0;
 
-	@include media(xl){
+	@include media(xl) {
 		margin: 0;
 	}
+
 	small {
 		position: absolute;
 		left: 0;
 		bottom: -26px;
 		font-size: 1.1rem;
-		@include media(xl){
+
+		@include media(xl) {
 			bottom: -20px;
 		}
+
 		color: #E52D27;
 	}
 }
