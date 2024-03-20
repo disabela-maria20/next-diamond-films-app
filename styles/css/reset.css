@@ -195,7 +195,7 @@ ul {
 input:focus,
 textarea:focus,
 button:focus {
-  outline: nones;
+  outline: none;
 }
 
 input[type="checkbox"] {
