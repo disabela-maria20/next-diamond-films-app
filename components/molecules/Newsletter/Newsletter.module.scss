@@ -79,13 +79,6 @@
 	input[type="text"] {
 		@include inputNewsletter();
 	}
-
-	small {
-		font-size: 1.1rem;
-		position: relative;
-		top: 5px;
-		color: #E52D27;
-	}
 }
 
 .newsletterBg {
@@ -95,6 +88,7 @@
 
 .gridNewsletterHorrizontal {
 	display: grid;
+	grid-row-gap: 30px;
 	grid-template-columns: 1.5fr 1fr .7fr 1.5fr !important;
 	grid-template-rows: auto !important;
 	align-items: center;
@@ -138,6 +132,7 @@
 		align-items: center;
 		gap: 10px;
 	}
+
 }
 
 .newsletterPopUpTermosFlex {
@@ -152,6 +147,17 @@
 	a {
 		text-decoration: underline;
 		color: $primary-lingh-color;
+	}
+
+	position: relative;
+
+	small {
+		position: absolute;
+		left: 0;
+		bottom: -20px;
+		font-size: 1.1rem;
+
+		color: #E52D27;
 	}
 
 	button {
@@ -170,5 +176,26 @@
 		&:hover {
 			background-color: darken($secondary-colors, 10%);
 		}
+	}
+}
+
+.inputEmail,
+.inputNome,
+.inputTelefone {
+	position: relative;
+	margin: 20px 0 10px 0;
+
+	@include media(xl){
+		margin: 0;
+	}
+	small {
+		position: absolute;
+		left: 0;
+		bottom: -26px;
+		font-size: 1.1rem;
+		@include media(xl){
+			bottom: -20px;
+		}
+		color: #E52D27;
 	}
 }

@@ -43,8 +43,6 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
     setLoaging(true)
     try {
       const res = await postNewsletter(data.n_name, data.n_email, data.n_phone)
-      console.log(res)
-
       if (res.data.done) {
         setModal(true)
         setViewSuccess(true)
@@ -85,10 +83,10 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
                 id="n_name"
                 {...register('n_name')}
               />
-              {errors.n_name && (
-                <small className="text-error">{errors.n_name.message}</small>
-              )}
             </label>
+            {errors.n_name && (
+              <small className="text-error">{errors.n_name.message}</small>
+            )}
           </div>
           <div className={Style.inputTelefone}>
             <label htmlFor="n_phone">
@@ -103,10 +101,10 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
                   ))
                 }
               />
-              {errors.n_phone && (
-                <small className="text-error">{errors.n_phone.message}</small>
-              )}
             </label>
+            {errors.n_phone && (
+              <small className="text-error">{errors.n_phone.message}</small>
+            )}
           </div>
           <div className={Style.inputEmail}>
             <label htmlFor="n_email">
@@ -136,10 +134,10 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
             &nbsp;e&nbsp;
             <Link href="/termos-e-condicoes">Termos e condições</Link>
           </p>
+          {errors.n_termos && (
+            <small className="text-error">{errors.n_termos.message}</small>
+          )}
         </label>
-        {errors.n_termos && (
-          <small className="text-error">{errors.n_termos.message}</small>
-        )}
       </section>
       {modal && (
         <Model.Root>
