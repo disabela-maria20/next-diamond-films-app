@@ -12,6 +12,8 @@ const api = axios.create({
   }
 })
 
+console.log(process.env.API_TOKEN)
+
 export async function getCatalogoFilme(slug: string) {
   try {
     const res = await api.get(`/movie/get/${slug}`)

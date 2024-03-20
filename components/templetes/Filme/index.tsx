@@ -1,6 +1,5 @@
 'use client'
 
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { useEffect, useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 
@@ -11,6 +10,7 @@ import { Model, Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
+import { useGtag } from '@/utils/lib/gtag'
 import {
   IFilmeResponse,
   IFilmeResponseUrl,
@@ -91,15 +91,11 @@ const Filme = (data: IFilmeProps) => {
   //const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
+  const pageViews = useGtag()
 
   useEffect(() => {
-    window.dataLayer?.push({
-      content_type: 'Microsite',
-      page_title: filme.title,
-      property_title: filme.title,
-      site_country: 'BR'
-    })
-  }, [filme.title])
+    pageViews(filme.title)
+  }, [filme.title, pageViews])
 
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
@@ -356,8 +352,6 @@ const Filme = (data: IFilmeProps) => {
           )}
         </div>
       </div>
-      <GoogleTagManager gtmId="GTM-ND454GP5" />
-      <GoogleAnalytics gaId="G-DRBHT7HM35" />
     </>
   )
 }

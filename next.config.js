@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 /** @type {import('next').NextConfig} */
 
 const path = require('path')
@@ -7,12 +9,8 @@ const nextConfig = {
     prependData: `@import 'abstracts/_index.scss';`
   },
   env: {
-    API_TOKEM:
-      '983e50cc3915038c63b8539fd3d30054dd80cba0ec573fac9952233301cdd4a3',
-    API_URL: 'https://api-partner.vibezz.com/',
-    ENDPOINT_SESSOES: 'https://api.vibezz.com/progDiamond/movie',
-    ENDPOINT_ESTADOS_CIDADES:
-      'https://api.vibezz.com/progDiamond/getEstadosFilme'
+    API_TOKEM: process.env.API_TOKEN,
+    API_URL: process.env.API_URL
   }
 }
 

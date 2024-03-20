@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
 import 'swiper/css/navigation'
 
@@ -36,9 +36,13 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false
+    },
     pagination: isMobile ? false : true,
     navigation: isMobile ? false : true,
-    modules: [Navigation, Pagination]
+    modules: [Navigation, Pagination, Autoplay]
   }
 
   const filmesSwiperOptions: SwiperOptions = {
@@ -119,24 +123,30 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             swiperOptions={filmesSwiperOptions}
             className={Style.slideFilmehomePromo}
           >
-            {listaFilmes?.releases.map((data) => (
-              <div key={data.id} className={Style.filme}>
-                <Link href={`/${data.slug}`}>
-                  <img src={data.cover} />
-                </Link>
-                <h2>
-                  {data.title} - {formatarData(data?.releasedate)}
-                </h2>
-                <p>{statusTextData(data?.releasedate)}</p>
-                <span
-                  onClick={() => handleVerImagem(data)}
-                  className={Style.tralher}
-                >
-                  <FaYoutube />
-                  <span>Assista ao Trailer</span>
-                </span>
-              </div>
-            ))}
+            {listaFilmes?.releases
+              .sort(
+                (a, b) =>
+                  new Date(a.releasedate).getTime() -
+                  new Date(b.releasedate).getTime()
+              )
+              .map((data) => (
+                <div key={data.id} className={Style.filme}>
+                  <Link href={`/${data.slug}`}>
+                    <img src={data.cover} />
+                  </Link>
+                  <h2>
+                    {data.title} - {formatarData(data?.releasedate)}
+                  </h2>
+                  <p>{statusTextData(data?.releasedate)}</p>
+                  <span
+                    onClick={() => handleVerImagem(data)}
+                    className={Style.tralher}
+                  >
+                    <FaYoutube />
+                    <span>Assista ao Trailer</span>
+                  </span>
+                </div>
+              ))}
           </Slide.Content>
           {open && (
             <Model.Root>
