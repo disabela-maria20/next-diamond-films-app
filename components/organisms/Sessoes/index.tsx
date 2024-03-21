@@ -7,21 +7,24 @@ import Style from './Sessoes.module.scss'
 import * as S from './styles'
 
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
-import { Session } from '@/utils/server/types'
+import { useGtag } from '@/utils/lib/gtag'
+import { IFilmeResponse, Session } from '@/utils/server/types'
 import { darken } from 'polished'
 
 interface ISessoesProps {
+  filme: IFilmeResponse
   poster: string
   color: string
   sessao: Session[]
 }
 
-const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
+const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const originalSessao = useRef(sessao)
 
+  const { dataLayerMovieTicket } = useGtag()
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
@@ -57,6 +60,17 @@ const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
     return null
   }, [filteredSessions, searchTerm, selectedDate])
 
+  function handleClickBanner(data: Session) {
+    dataLayerMovieTicket(
+      filme.title,
+      filme.slug,
+      filme.originalTitle,
+      filme.genre,
+      data.theaterName,
+      data.address,
+      data.hour
+    )
+  }
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
@@ -129,7 +143,11 @@ const Sessoes = ({ poster, color, sessao }: ISessoesProps) => {
                         <span>{session.technology}</span>
                         <ul>
                           <li>
-                            <S.LinkHora href={session.link} $color={color}>
+                            <S.LinkHora
+                              href={session.link}
+                              $color={color}
+                              onClick={() => handleClickBanner(session)}
+                            >
                               {session.hour}
                             </S.LinkHora>
                           </li>

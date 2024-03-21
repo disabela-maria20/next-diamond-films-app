@@ -55,8 +55,6 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
         sessoes.sessions.sessions.length === 0)
   )
 
-  console.log(allSessionsEmpty)
-
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
     autoplay: {
@@ -108,6 +106,7 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
                   </h1>
                   {sessoes.movies && sessoes.sessions && (
                     <Sessoes
+                      filme={sessoes.movies}
                       key={sessoes?.movies?.id}
                       poster={
                         !isMobile

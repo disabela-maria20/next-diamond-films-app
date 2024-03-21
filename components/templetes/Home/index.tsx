@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
@@ -97,13 +97,14 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     setIframe(data)
   }
   const router = usePathname()
-
+  const routerPush = useRouter()
   useEffect(() => {
     dataLayerHome('Diamond Films', router)
   }, [dataLayerHome, router])
 
   function handleClickBanner(e: React.MouseEvent<HTMLImageElement>, data: any) {
     dataLayerBannerClick(data.title, data.slug, { x: e.clientX, y: e.clientY })
+    routerPush.push(`${data.slug}`)
   }
 
   return (

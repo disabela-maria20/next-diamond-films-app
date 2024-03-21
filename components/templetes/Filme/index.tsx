@@ -325,6 +325,7 @@ const Filme = (data: IFilmeProps) => {
             <>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
               <Sessoes
+                filme={filme}
                 sessao={sessoes}
                 color={filme.color}
                 poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
