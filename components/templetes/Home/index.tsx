@@ -3,7 +3,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
@@ -16,7 +16,6 @@ import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { useGtag } from '@/utils/lib/gtag'
-import { getLocalizacao } from '@/utils/server/requests'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
@@ -34,7 +33,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
-  const dataLayerHome = useGtag()
+  const { dataLayerHome, dataLayerBannerClick } = useGtag()
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -100,19 +99,12 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const router = usePathname()
 
   useEffect(() => {
-    const getLocal = async () => {
-      try {
-        const cidade = await getLocal()
-        if (cidade !== null && cidade !== undefined) {
-          dataLayerHome(window.title, cidade, '', router)
-        } else {
-          console.error('Falha ao obter a cidade.')
-        }
-      } catch (error) {
-        console.error('Erro ao obter a cidade:', error)
-      }
-    }
+    dataLayerHome('Diamond Films', router)
   }, [dataLayerHome, router])
+
+  function handleClickBanner(e: React.MouseEvent<HTMLImageElement>, data: any) {
+    dataLayerBannerClick(data.title, data.slug, { x: e.clientX, y: e.clientY })
+  }
 
   return (
     <>
@@ -121,9 +113,15 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
         className={Style.slideBanner}
       >
         {banner?.map((data) => (
-          <Link href={data.slug} key={data.id}>
-            <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} />
-          </Link>
+          // <Link href={data.slug} key={data.id}>
+          //   <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} onClick={} />
+          // </Link>
+          <span key={data.id}>
+            <img
+              src={isMobile ? data.bannerMobile : data?.bannerDesktop}
+              onClick={(e) => handleClickBanner(e, data)}
+            />
+          </span>
         ))}
       </Slide.Content>
       <div className="container">

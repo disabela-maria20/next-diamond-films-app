@@ -91,11 +91,22 @@ const Filme = (data: IFilmeProps) => {
   //const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
-  const pageViews = useGtag()
+  const { dataLayerFichafilme } = useGtag()
 
   useEffect(() => {
-    pageViews(filme.title)
-  }, [filme.title, pageViews])
+    dataLayerFichafilme(
+      filme.title,
+      filme.slug,
+      filme.originalTitle,
+      filme.genre
+    )
+  }, [
+    dataLayerFichafilme,
+    filme.genre,
+    filme.originalTitle,
+    filme.slug,
+    filme.title
+  ])
 
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
