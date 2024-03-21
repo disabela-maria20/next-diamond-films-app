@@ -1,5 +1,3 @@
-import { IFilmesEstadosResponse } from '../types'
-
 import axios from 'axios'
 
 // Configuração global do token para todas as solicitações Axios
