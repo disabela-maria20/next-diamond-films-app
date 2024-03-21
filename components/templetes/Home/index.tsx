@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import Link from 'next/link'
-import React, { useContext, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
@@ -14,6 +15,8 @@ import { Model, Newsletter, Slide } from '@/components/molecules'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
+import { useGtag } from '@/utils/lib/gtag'
+import { getLocalizacao } from '@/utils/server/requests'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
@@ -31,7 +34,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
-
+  const dataLayerHome = useGtag()
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -94,6 +97,23 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     setOpen(true)
     setIframe(data)
   }
+  const router = usePathname()
+
+  useEffect(() => {
+    const getLocal = async () => {
+      try {
+        const cidade = await getLocal()
+        if (cidade !== null && cidade !== undefined) {
+          dataLayerHome(window.title, cidade, '', router)
+        } else {
+          console.error('Falha ao obter a cidade.')
+        }
+      } catch (error) {
+        console.error('Erro ao obter a cidade:', error)
+      }
+    }
+  }, [dataLayerHome, router])
+
   return (
     <>
       <Slide.Content

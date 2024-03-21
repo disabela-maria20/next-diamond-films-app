@@ -1,13 +1,19 @@
 export const useGtag = () => {
-  const pageViews = (title: string) => {
-    window.google_tag_manager['G-DRBHT7HM35'].dataLayer.reset()
+  const dataLayerHome = (
+    title: string,
+    local: string,
+    user_id_anonymous: string,
+    page_url: string
+  ) => {
     window.dataLayer?.push({
-      content_type: 'Microsite',
+      event: 'home',
+      city_id: local,
+      user_id_anonymous: user_id_anonymous,
+      page_url: page_url,
       page_title: title,
-      property_title: title,
-      site_country: 'BR'
+      property_title: 'Site'
     })
   }
 
-  return pageViews
+  return dataLayerHome
 }

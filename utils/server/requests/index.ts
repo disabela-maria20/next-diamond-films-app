@@ -1,5 +1,3 @@
-import { IFilmesEstadosResponse } from '../types'
-
 import axios from 'axios'
 
 // Configuração global do token para todas as solicitações Axios
@@ -42,4 +40,28 @@ export async function postNewsletter(
     email: email,
     phone: phone
   })
+}
+
+export async function getLocalizacao() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+        )
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data')
+        }
+        const data = await response.json()
+
+        return data.address.city
+      } catch (err) {
+        console.log(err)
+      }
+    })
+  } else {
+    console.log('Geolocation is not supported by this browser.')
+  }
 }
