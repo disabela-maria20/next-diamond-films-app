@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import Style from './ComprarIngresso.module.scss'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
+import { Loading } from '@/components/atoms'
 import { Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
@@ -22,12 +23,17 @@ interface IComprarIngressoProps {
 }
 
 interface IComprarIngressoSessoesResponse {
-  movies?: IFilmeResponse
-  sessions?: Session
+  movie?: IFilmeResponse
+  sessions?: Session[]
 }
 
 const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
   const isMobile: boolean = useIsMobile()
+  const [filmesComSessoes, setFilmesComSessoes] = useState<
+    IComprarIngressoSessoesResponse[]
+  >([])
+  const [semFilmes, setSemFilmes] = useState<number>(0)
+
   const [loading, setLoading] = useState<boolean>(false)
   const [sessoesArray, setSessoesArray] = useState<
     IComprarIngressoSessoesResponse[]
@@ -35,25 +41,31 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
 
   useEffect(() => {
     const fetchSessoes = async () => {
-      setLoading(true)
-      const sessoesArray = await Promise.all(
-        listaFilmes.releases.map(async (data) => {
-          const res = await axios.get(`/movie/get/${data.slug}`)
-          return res.data
-        })
-      )
-      setSessoesArray(sessoesArray)
-      setLoading(false)
+      try {
+        setLoading(true)
+        const sessoesArray = await Promise.all(
+          listaFilmes.releases.map(async (data) => {
+            const res = await axios.get(`/movie/get/${data.slug}`)
+            return res.data
+          })
+        )
+        setSessoesArray(sessoesArray)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+        setSemFilmes(sessoesArray.length)
+      }
     }
     fetchSessoes()
-  }, [listaFilmes.releases])
-  const allSessionsEmpty = sessoesArray.every(
-    (sessoes) =>
-      !sessoes.movies &&
-      (!sessoes.sessions ||
-        !sessoes.sessions.sessions ||
-        sessoes.sessions.sessions.length === 0)
-  )
+  }, [listaFilmes.releases, sessoesArray.length])
+
+  useEffect(() => {
+    const filmesComSessoes = sessoesArray.filter((data) => {
+      return data.sessions && data.sessions.length > 0
+    })
+    setFilmesComSessoes(filmesComSessoes)
+  }, [sessoesArray])
 
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
@@ -85,44 +97,47 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
           </div>
         </>
       )}
-
-      {loading && 'Carregando'}
-      {!loading && (
-        <section className={Style.ComprarIngresso}>
-          <div className="container">
-            {allSessionsEmpty ? (
-              <p className={Style.CompraIgressoSessaoIndisponivel}>
-                Nenhuma sessão disponível no momento.
-              </p>
-            ) : (
-              sessoesArray.map((sessoes) => (
-                <>
-                  <h1>
-                    EM EXIBIÇÃO
-                    <span>
-                      Confira os horários das sessões dos filmes da Diamond em
-                      exibição nos cinemas e garanta seus ingressos.
-                    </span>
-                  </h1>
-                  {sessoes.movies && sessoes.sessions && (
-                    <Sessoes
-                      filme={sessoes.movies}
-                      key={sessoes?.movies?.id}
-                      poster={
-                        !isMobile
-                          ? sessoes?.movies.bannerMobile
-                          : sessoes?.movies.bannerDesktop
-                      }
-                      color={sessoes?.movies.color}
-                      sessao={sessoes?.sessions.sessions}
-                    />
-                  )}
-                </>
-              ))
-            )}
-          </div>
-        </section>
-      )}
+      <section className={Style.ComprarIngresso}>
+        <div className="container">
+          <h1>
+            EM EXIBIÇÃO
+            <span>
+              Confira os horários das sessões dos filmes da Diamond em exibição
+              nos cinemas e garanta seus ingressos.
+            </span>
+          </h1>
+          {loading && <Loading />}
+          {!loading && (
+            <>
+              {loading && semFilmes == 0 && (
+                <p className={Style.CompraIgressoSessaoIndisponivel}>
+                  Nenhuma sessão disponível no momento.
+                </p>
+              )}
+              {filmesComSessoes.map((sessoes) => {
+                return (
+                  <div key={sessoes.movie?.id}>
+                    {sessoes.movie && sessoes.sessions && (
+                      <>
+                        <Sessoes
+                          filme={sessoes?.movie}
+                          poster={
+                            !isMobile
+                              ? sessoes?.movie.bannerMobile
+                              : sessoes?.movie.bannerDesktop
+                          }
+                          color={sessoes?.movie.color}
+                          sessao={sessoes?.sessions}
+                        />
+                      </>
+                    )}
+                  </div>
+                )
+              })}
+            </>
+          )}
+        </div>
+      </section>
     </>
   )
 }

@@ -147,6 +147,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                               href={session.link}
                               $color={color}
                               onClick={() => handleClickBanner(session)}
+                              target="_blank"
                             >
                               {session.hour}
                             </S.LinkHora>

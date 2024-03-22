@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 
+import { Loading } from '@/components/atoms'
 import { Filme } from '@/components/templetes'
 import { getCatalogoFilme } from '@/utils/server/requests'
 
@@ -30,7 +31,7 @@ export default async function pageCatalogoFilme({ params: { slug } }: Params) {
 
   return (
     <>
-      <Suspense fallback="Carregando">
+      <Suspense fallback={<Loading altura={true} />}>
         <Filme movie={filme} />
       </Suspense>
     </>
