@@ -1,5 +1,4 @@
 'use client'
-import Cookies from 'js-cookie'
 
 import Link from 'next/link'
 import { useState } from 'react'
@@ -10,25 +9,39 @@ import Style from './Newsletter.module.scss'
 import { NewsletterFormSchema } from './Newsletter.schema'
 
 import { Phone } from '@/utils/hooks/useMask'
+import { useGtag } from '@/utils/lib/gtag'
 import { postNewsletter } from '@/utils/server/requests'
+import { IFilmeResponse } from '@/utils/server/types'
 import { zodResolver as ResolverZod } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
+import Cookies from 'js-cookie'
 import { z } from 'zod'
 
 import { Model } from '..'
 
 export type INewsletterForm = z.infer<typeof NewsletterFormSchema>
+type TypeArea = 'filme' | 'modal' | 'sessões' | 'home'
 
 interface INewsletterProps {
   isBg?: boolean
   isHorrizontal?: boolean
+  filmes?: IFilmeResponse
+  type?: TypeArea
 }
 
-const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
+const Newsletter = ({
+  isBg,
+  isHorrizontal,
+  filmes,
+  type
+}: INewsletterProps) => {
   const [loaging, setLoaging] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
   const [viewSuccess, setViewSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
+
+  const { dataLayerNewsletter, dataLayerMovieSubscribe } = useGtag()
+
   const {
     register,
     handleSubmit,
@@ -48,6 +61,27 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
         setViewSuccess(true)
         Cookies.set('formNewsletter', 'true')
         reset()
+
+        if (type == 'filme' && filmes) {
+          dataLayerNewsletter(
+            filmes?.title,
+            filmes?.slug,
+            filmes?.originalTitle,
+            filmes?.genre,
+            type,
+            'Hub do Filme'
+          )
+        }
+        if (type == 'modal' && filmes) {
+          dataLayerMovieSubscribe(
+            filmes?.title,
+            filmes?.slug,
+            filmes?.originalTitle,
+            filmes?.genre,
+            type,
+            'Hub do Filme'
+          )
+        }
       }
     } catch (error) {
       const err = error as AxiosError

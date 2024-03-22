@@ -207,7 +207,7 @@ const Filme = (data: IFilmeProps) => {
         </div>
       </section>
       <div className="container">
-        <Newsletter isHorrizontal={!isMobile} isBg={true} />
+        <Newsletter isHorrizontal={!isMobile} isBg={true} filmes={filme} />
       </div>
 
       <div style={{ overflowX: 'hidden' }}>

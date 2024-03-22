@@ -11,9 +11,11 @@
   .gridContato {
     @include media(lg) {
       display: grid;
-      gap: 35px;
+      gap: 90px;
       grid-template-columns: repeat(2, 1fr);
     }
+
+
 
     h1,
     h2 {

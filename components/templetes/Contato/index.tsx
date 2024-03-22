@@ -11,6 +11,7 @@ import { ContatoFormSchema } from './Contato.schema'
 
 import { Model } from '@/components/molecules'
 import { Phone } from '@/utils/hooks/useMask'
+import { useGtag } from '@/utils/lib/gtag'
 import { zodResolver as ResolverZod } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
 import { z } from 'zod'
@@ -31,6 +32,8 @@ const Contato = () => {
     resolver: ResolverZod(ContatoFormSchema)
   })
 
+  const { dataLayerContato } = useGtag()
+
   const onSubmit = async (data: IContatoForm) => {
     if (!data.c_termos) return
     setLoaging(true)
@@ -38,7 +41,7 @@ const Contato = () => {
       if (true) {
         setModal(true)
         setViewSuccess(true)
-
+        dataLayerContato('Contato', 'Contato')
         reset()
       }
     } catch (error) {
