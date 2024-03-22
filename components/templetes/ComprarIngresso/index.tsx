@@ -32,7 +32,6 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
   const [filmesComSessoes, setFilmesComSessoes] = useState<
     IComprarIngressoSessoesResponse[]
   >([])
-  const [semFilmes, setSemFilmes] = useState<number>(0)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [sessoesArray, setSessoesArray] = useState<
@@ -54,7 +53,6 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
         console.log(error)
       } finally {
         setLoading(false)
-        setSemFilmes(sessoesArray.length)
       }
     }
     fetchSessoes()
@@ -106,14 +104,14 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
               nos cinemas e garanta seus ingressos.
             </span>
           </h1>
+          {filmesComSessoes.length === 0 && !loading && (
+            <p className={Style.CompraIgressoSessaoIndisponivel}>
+              Nenhuma sessão disponível no momento.
+            </p>
+          )}
           {loading && <Loading />}
           {!loading && (
             <>
-              {loading && semFilmes == 0 && (
-                <p className={Style.CompraIgressoSessaoIndisponivel}>
-                  Nenhuma sessão disponível no momento.
-                </p>
-              )}
               {filmesComSessoes.map((sessoes) => {
                 return (
                   <div key={sessoes.movie?.id}>
