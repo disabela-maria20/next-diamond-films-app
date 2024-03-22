@@ -204,6 +204,27 @@ export const useGtag = () => {
     })
   }
 
+  const dataLayerMovieFilter = (
+    title: string,
+    page_url: string,
+    moviename_original: string,
+    moviegenre: string,
+    movieposition: number
+  ) => {
+    window.dataLayer?.push({
+      event: 'movie_filter',
+      city_id: cidade,
+      user_id_anonymous: 'anonymous',
+      page_url: 'https://diamondfilms.com.br/' + page_url,
+      page_title: 'Diamond Films - ' + 'Buscar',
+      property_title: 'Site',
+      moviename: title,
+      moviename_original: moviename_original,
+      movieid: '',
+      moviegenre: moviegenre,
+      movieposition: movieposition
+    })
+  }
   const dataLayerPlayTrailer = (
     title: string,
     page_url: string,
@@ -236,6 +257,7 @@ export const useGtag = () => {
     dataLayerMovieSubscribe,
     dataLayerContato,
     dataLayerMovieSelect,
-    dataLayerPlayTrailer
+    dataLayerPlayTrailer,
+    dataLayerMovieFilter
   }
 }

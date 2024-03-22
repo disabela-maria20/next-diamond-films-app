@@ -24,7 +24,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   const [filtroPesquisa, setFiltroPesquisa] = useState<IFilmeResponse[]>([])
   const { formatAno } = useFormatarData()
 
-  const { dataLayerMovieSelect } = useGtag()
+  const { dataLayerMovieSelect, dataLayerMovieFilter } = useGtag()
 
   const handleGeneroChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFiltroAno('')
@@ -61,7 +61,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   }
 
   const ItemPesquisados = (filme: IFilmeResponse) => {
-    dataLayerMovieSelect(
+    dataLayerMovieFilter(
       filme.title,
       filme.slug,
       filme.originalTitle,
@@ -171,7 +171,18 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                   listaFilmes?.releases.filter(filtrarFilmes)
               ).map((data) => (
                 <div key={data.id}>
-                  <Link href={`/${data.slug}`}>
+                  <Link
+                    href={`/${data.slug}`}
+                    onClick={() =>
+                      dataLayerMovieSelect(
+                        data.title,
+                        data.slug,
+                        data.originalTitle,
+                        data.genre,
+                        data.genre_id
+                      )
+                    }
+                  >
                     <img src={data.cover} alt={data.title} />
                     <h2>{data.title}</h2>
                   </Link>

@@ -91,7 +91,7 @@ const Filme = (data: IFilmeProps) => {
   //const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
-  const { dataLayerFichafilme } = useGtag()
+  const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
 
   useEffect(() => {
     dataLayerFichafilme(
@@ -290,7 +290,19 @@ const Filme = (data: IFilmeProps) => {
           <section className={Style.areaIframeVideoYoutube}>
             <section className={Style.gridIframeVideoYoutube}>
               {filme?.videos?.map((data) => (
-                <div className={Style.iframeVideoYoutube} key={data.url}>
+                <div
+                  className={Style.iframeVideoYoutube}
+                  key={data.url}
+                  onClick={() =>
+                    dataLayerPlayTrailer(
+                      filme.title,
+                      filme.slug,
+                      filme.originalTitle,
+                      filme.genre,
+                      'HUB'
+                    )
+                  }
+                >
                   <iframe
                     className={Style.embedResponsiveItem}
                     src={data.url}
