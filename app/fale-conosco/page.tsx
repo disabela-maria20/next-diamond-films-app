@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 export default function Page() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading altura={true} />}>
       <Contato />
     </Suspense>
   )

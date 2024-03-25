@@ -11,6 +11,12 @@ const LINK = [
     footer: true
   },
   { nome: 'contato', link: '/fale-conosco', menu: true, footer: true },
+  {
+    nome: 'comprar ingresso',
+    link: '/comprar-ingressos',
+    menu: true,
+    footer: true
+  },
   { nome: 'Em Breve', link: '/em-breve', menu: false, footer: false },
   { nome: 'contato', link: '/contato', menu: false, footer: false },
   { nome: 'Termos de Uso', link: '/termos-de-uso', menu: false, footer: true },

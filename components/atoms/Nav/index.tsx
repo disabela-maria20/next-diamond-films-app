@@ -23,9 +23,9 @@ const Nav: React.FC<NavProps> = ({ open, setOpen }) => {
           <li className={Style.NomeMenu}>
             <span>Menu</span>
           </li>
-          <li className={Style.comprarIngressos}>
+          {/* <li className={Style.comprarIngressos}>
             <Link href="/comprar-ingressos">COMPRAR INGRESSOS</Link>
-          </li>
+          </li> */}
           <NavLink area="menu" setOpen={setOpen} open={open} />
           {/* <li className={Style.logo}>
             <Logo logo="logo-BRANCO.png" />
