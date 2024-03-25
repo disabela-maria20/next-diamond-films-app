@@ -86,7 +86,10 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
           >
             {banner?.map((data) => (
               <Link href={data.slug} key={data.id}>
-                <img src={isMobile ? data.bannerMobile : data.bannerDesktop} />
+                <img
+                  src={isMobile ? data.bannerMobile : data.bannerDesktop}
+                  alt="Banner"
+                />
               </Link>
             ))}
           </Slide.Content>

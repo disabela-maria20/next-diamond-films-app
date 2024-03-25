@@ -75,7 +75,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
         <div>
-          <img src={poster} alt="" />
+          <img src={poster} alt="Poster Filme" />
         </div>
         <div
           className={Style.areaPesquisa}
@@ -126,7 +126,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                       <div className={Style.flexTitle}>
                         <img
                           src="/img/icon _ticket_.png"
-                          alt=""
+                          alt={session.theaterName}
                           width={50}
                           height={50}
                         />

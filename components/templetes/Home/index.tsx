@@ -119,6 +119,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           // </Link>
           <span key={data.id}>
             <img
+              alt="banner"
               src={isMobile ? data.bannerMobile : data?.bannerDesktop}
               onClick={(e) => handleClickBanner(e, data)}
             />
@@ -151,7 +152,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               .map((data) => (
                 <div key={data.id} className={Style.filme}>
                   <Link href={`/${data.slug}`}>
-                    <img src={data.cover} />
+                    <img src={data.cover} alt={data.title} />
                   </Link>
                   <h2>
                     {data.title} - {formatarData(data?.releasedate)}

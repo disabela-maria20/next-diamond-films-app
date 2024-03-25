@@ -233,7 +233,7 @@ const Filme = (data: IFilmeProps) => {
             )} */}
           <div className={Style.areaPoster}>
             <div className={Style.areaFlexPoster}>
-              <img src={filme?.cover} alt="" />
+              <img src={filme?.cover} alt={filme.title} />
               <div>
                 <h2>Sinopse</h2>
                 <p>{filme?.shortSynopsis}</p>
@@ -324,6 +324,7 @@ const Filme = (data: IFilmeProps) => {
             {filme?.images?.map((data) => (
               <div key={data.url}>
                 <img
+                  alt="Filme"
                   className={Style.SlideImgFilme}
                   src={`${data.url}`}
                   onClick={() => handleVerImagem(data)}
@@ -351,7 +352,11 @@ const Filme = (data: IFilmeProps) => {
                 setOpen={() => setOpen(!open)}
                 className={Style.modalImageFilme}
               >
-                <img src={image?.url} className={Style.modalSlideImg} />
+                <img
+                  src={image?.url}
+                  className={Style.modalSlideImg}
+                  alt="Imagem filmes"
+                />
               </Model.Body>
             </Model.Root>
           )}
