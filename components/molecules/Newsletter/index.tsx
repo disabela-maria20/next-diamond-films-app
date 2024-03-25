@@ -27,13 +27,15 @@ interface INewsletterProps {
   isHorrizontal?: boolean
   filmes?: IFilmeResponse
   type?: TypeArea
+  title?: boolean
 }
 
 const Newsletter = ({
   isBg,
   isHorrizontal,
   filmes,
-  type
+  type,
+  title = true
 }: INewsletterProps) => {
   const [loaging, setLoaging] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
@@ -105,7 +107,7 @@ const Newsletter = ({
           className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}
         >
           <div className={Style.text}>
-            <h2>Você ama cinema?</h2>
+            {title && <h2>Você ama cinema?</h2>}
             Preencha seus dados e concorra a brindes e convites exclusivos
             Diamond
           </div>
