@@ -1,36 +1,17 @@
-import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export const useGtag = () => {
-  const [cidade, setCidade] = useState<string>('')
-  async function getLocalizacao() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const { latitude, longitude } = position.coords
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
-          )
+  const id = uuidv4()
 
-          if (!response.ok) {
-            throw new Error('Failed to fetch data')
-          }
-          const data = await response.json()
-
-          setCidade(data.address.city)
-        } catch (err) {
-          console.log(err)
-        }
-      })
-    } else {
-      console.log('Geolocation is not supported by this browser.')
-    }
-  }
-  getLocalizacao()
+  const cidade =
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('userCity')
+      : null
 
   const dataLayerHome = (title: string, page_url: string) => {
     window.dataLayer?.push({
       event: 'home',
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       city_id: cidade,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
@@ -46,7 +27,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'ficha_filme',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: 'Diamond Films - ' + title,
       property_title: 'Site',
@@ -66,7 +47,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'banner_click',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: 'Diamond Films - ' + title,
       property_title: 'Site',
@@ -88,7 +69,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'movie_tickets',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
       property_title: 'Site',
@@ -112,7 +93,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'movie_stream',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
       property_title: 'Site',
@@ -135,7 +116,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'newsletter_subscribe',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
       property_title: 'Site',
@@ -158,7 +139,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'movie_subscribe',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
       property_title: 'Site',
@@ -175,7 +156,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'contato',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
       property_title: 'Site'
@@ -192,7 +173,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'movie_select',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: 'Diamond Films - ' + 'Buscar',
       property_title: 'Site',
@@ -214,7 +195,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'movie_filter',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: 'Diamond Films - ' + 'Buscar',
       property_title: 'Site',
@@ -235,7 +216,7 @@ export const useGtag = () => {
     window.dataLayer?.push({
       event: 'play_trailer',
       city_id: cidade,
-      user_id_anonymous: 'anonymous',
+      user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
       property_title: 'Site',

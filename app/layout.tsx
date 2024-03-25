@@ -4,7 +4,8 @@ import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 
 import '@/styles/sass/globals.scss'
-import { Footer } from '@/components/molecules'
+
+import { Footer, Location } from '@/components/molecules'
 import { Header } from '@/components/organisms'
 import Providers from '@/utils/providers'
 const montserrat = Montserrat({ subsets: ['latin'] })
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Providers>
           {children}
         </Providers>
+        <Location />
         <Footer />
       </body>
       <GoogleTagManager gtmId="GTM-ND454GP5" />
