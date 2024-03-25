@@ -3,10 +3,11 @@ import { v4 as uuidv4 } from 'uuid'
 export const useGtag = () => {
   const id = uuidv4()
 
-  const cidade =
+  const getCidade =
     typeof window !== 'undefined'
-      ? window.localStorage.getItem('userCity')
+      ? window.localStorage.getItem('locationData')
       : null
+  const cidade = getCidade?.replace(/"/g, '')
 
   const dataLayerHome = (title: string, page_url: string) => {
     window.dataLayer?.push({

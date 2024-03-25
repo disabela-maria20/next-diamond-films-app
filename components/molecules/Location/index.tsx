@@ -18,11 +18,18 @@ const Location = () => {
 
   useEffect(() => {
     const savedLocationData = localStorage.getItem('locationData')
+    const lastDeniedTime = window?.localStorage.getItem('lastDeniedTime')
+
     if (savedLocationData) {
       const parsedLocationData = JSON.parse(savedLocationData) as LocationData
       setLocationData(parsedLocationData)
     } else {
-      setShowModal(true)
+      if (
+        !lastDeniedTime ||
+        Date.now() - parseInt(lastDeniedTime, 10) > 7 * 24 * 60 * 60 * 1000
+      ) {
+        setShowModal(true)
+      }
     }
   }, [])
 
@@ -42,7 +49,28 @@ const Location = () => {
     }
     if (location) {
       setLocationData(location)
-      window?.localStorage.setItem('locationData', JSON.stringify(location))
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const { latitude, longitude } = position.coords
+          try {
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+            )
+            if (!response.ok) {
+              throw new Error('Failed to fetch data')
+            }
+            const data = await response.json()
+            window?.localStorage.setItem(
+              'locationData',
+              JSON.stringify(data.address.city)
+            )
+          } catch (err) {
+            console.log(err)
+          }
+        })
+      } else {
+        console.log('Geolocation is not supported by this browser.')
+      }
     }
     setShowModal(false)
   }
