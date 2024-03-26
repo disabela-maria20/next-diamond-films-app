@@ -94,17 +94,6 @@ const Filme = (data: IFilmeProps) => {
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
 
-  const [carregando, setCarregando] = useState<boolean>(true)
-  useEffect(() => {
-    const handleResize = () => {
-      setCarregando(true)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => {
-      setCarregando(false)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [carregando])
   useEffect(() => {
     dataLayerFichafilme(
       filme.title,
@@ -196,9 +185,7 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
-  if (carregando) {
-    return <Loading altura={true} />
-  }
+
   return (
     <>
       <section className={Style.areaBanner}>

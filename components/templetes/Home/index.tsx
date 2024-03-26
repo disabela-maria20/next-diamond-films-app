@@ -93,18 +93,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     }
   }
 
-  const [carregando, setCarregando] = useState<boolean>(true)
-  useEffect(() => {
-    const handleResize = () => {
-      setCarregando(true)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => {
-      setCarregando(false)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [carregando])
-
   function handleVerImagem(data: IFilmeResponse) {
     setOpen(true)
     setIframe(data)
@@ -120,9 +108,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     routerPush.push(`${data.slug}`)
   }
 
-  if (carregando) {
-    return <Loading altura={true} />
-  }
   return (
     <>
       <Slide.Content
