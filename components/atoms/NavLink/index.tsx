@@ -3,6 +3,12 @@
 import Link from 'next/link'
 
 const LINK = [
+  {
+    nome: 'comprar ingresso',
+    link: '/comprar-ingressos',
+    menu: true,
+    footer: true
+  },
   { nome: 'home', link: '/', menu: false, footer: false },
   {
     nome: 'Filmes',
@@ -11,16 +17,11 @@ const LINK = [
     footer: true
   },
   { nome: 'contato', link: '/fale-conosco', menu: true, footer: true },
-  {
-    nome: 'comprar ingresso',
-    link: '/comprar-ingressos',
-    menu: true,
-    footer: true
-  },
+
   {
     nome: 'sobre nos',
     link: '/sobre-nos',
-    menu: true,
+    menu: false,
     footer: true
   },
   { nome: 'Em Breve', link: '/em-breve', menu: false, footer: false },
