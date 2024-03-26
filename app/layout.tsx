@@ -1,10 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
-
 import '@/styles/sass/globals.scss'
-
+import { Montserrat } from 'next/font/google'
 import Script from 'next/script'
 
 import { Footer, Location } from '@/components/molecules'
