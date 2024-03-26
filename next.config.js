@@ -11,7 +11,8 @@ const nextConfig = {
   env: {
     API_TOKEM: process.env.API_TOKEN,
     API_URL: process.env.API_URL
-  }
+  },
+  compress: true
 }
 
 module.exports = nextConfig
