@@ -6,7 +6,6 @@ import { FaInstagram, FaYoutube } from 'react-icons/fa'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
-import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
