@@ -162,7 +162,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
           listaFilmes?.releases.filter(filtrarFilmes).length > 0) && (
           <>
             <div className={Style.areaTitleCatalogoFilmeAno}>
-              <h2>2024</h2> <span>Até o momento e em ordem de lançamento.</span>
+              <h2>2024</h2> <span></span>
             </div>
             <div className={Style.gridFilmesCatalogo}>
               {(filtroPesquisa.length > 0
