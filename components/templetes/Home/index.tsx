@@ -155,13 +155,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                 .map((data) => (
                   <div key={data.id} className={Style.filme}>
                     <Link href={`/${data.slug}`}>
-                      <img
-                        src={data.cover}
-                        alt={data.title}
-                        loading="lazy"
-                        width={300}
-                        height={300}
-                      />
+                      <img src={data.cover} alt={data.title} />
                     </Link>
                     <h2>
                       {data.title} - {formatarData(data?.releasedate)}
