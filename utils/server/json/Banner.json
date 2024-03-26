@@ -12,5 +12,12 @@
     "slug": "/osabordavida",
     "title": "O sabor da vida",
     "id": 2
+  },
+  {
+    "bannerMobile": "/img/poster/DMND_BannerMobileTítulo_800x1000-ferrari.png",
+    "bannerDesktop": "/img/poster/DMND_BannerDesktopTitulo_1450x540ferrari.png",
+    "slug": "/ferrari",
+    "title": "Ferrari",
+    "id": 3
   }
 ]
