@@ -16,12 +16,12 @@ export async function generateMetadata({
 }: Params): Promise<Metadata> {
   const filme = await getCatalogoFilme(slug)
   return {
-    title: `Diamond Films - ${filme.movie.title}`,
-    description: filme.movie.shortSynopsis,
+    title: `Diamond Films - ${filme?.movie.title}`,
+    description: filme?.movie.shortSynopsis,
     openGraph: {
-      title: filme.movie.title,
-      description: filme.movie.shortSynopsis,
-      images: filme.movie.bannerDesktop
+      title: filme?.movie.title,
+      description: filme?.movie.shortSynopsis,
+      images: filme?.movie.bannerDesktop
     }
   }
 }

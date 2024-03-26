@@ -18,9 +18,10 @@ const Location = () => {
 
   useEffect(() => {
     const savedLocationData = localStorage.getItem('locationData')
+    const savedLocationCoords = localStorage.getItem('locationCoords')
     const lastDeniedTime = window?.localStorage.getItem('lastDeniedTime')
 
-    if (savedLocationData) {
+    if (savedLocationData && savedLocationCoords) {
       const parsedLocationData = JSON.parse(savedLocationData) as LocationData
       setLocationData(parsedLocationData)
     } else {
@@ -49,9 +50,14 @@ const Location = () => {
     }
     if (location) {
       setLocationData(location)
+
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(async (position) => {
           const { latitude, longitude } = position.coords
+          window?.localStorage.setItem(
+            'locationCoords',
+            JSON.stringify(location)
+          )
           try {
             const response = await fetch(
               `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`

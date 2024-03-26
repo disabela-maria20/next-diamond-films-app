@@ -7,7 +7,6 @@ import '@/styles/sass/globals.scss'
 
 import { Footer, Location } from '@/components/molecules'
 import { Header } from '@/components/organisms'
-import { FilmesLancamentosProvider } from '@/utils/context/FilmesLancamentos'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -24,9 +23,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={montserrat.className}>
         <Header />
-        <FilmesLancamentosProvider>
          {children} 
-        </FilmesLancamentosProvider>
         <Location />
         <Footer />
       </body>

@@ -83,7 +83,7 @@ const Filme = (data: IFilmeProps) => {
   const [image, setImage] = useState<IFilmeResponseUrl>()
 
   const filme = data.movie?.movie
-  const sessoes = data.movie.sessions
+  const sessoes = data.movie?.sessions
 
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()

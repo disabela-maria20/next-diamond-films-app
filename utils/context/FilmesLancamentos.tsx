@@ -7,7 +7,6 @@ import axios from 'axios'
 
 interface ContextValue {
   data: IFilmeResponse | undefined
-  setSlug: (slug: string) => void
 }
 
 const FilmesLancamentosContext = createContext<ContextValue | null>(null)
@@ -17,18 +16,16 @@ export const FilmesLancamentosProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [data, setData] = useState<IFilmeResponse>()
 
-  const setSlug = (slug: string) => {
-    axios
-      .get<IFilmeResponse>(`/movie/get/${slug}`)
-      .then((response) => {
-        setData(response.data)
-      })
-      .catch((error) => {
-        console.error('Erro na requisição:', error)
-      })
-  }
+  axios
+    .get<IFilmeResponse>(`/movie/list-all`)
+    .then((response) => {
+      setData(response.data)
+    })
+    .catch((error) => {
+      console.error('Erro na requisição:', error)
+    })
 
-  const contextValue: ContextValue = { data, setSlug }
+  const contextValue: ContextValue = { data }
 
   return (
     <FilmesLancamentosContext.Provider value={contextValue}>

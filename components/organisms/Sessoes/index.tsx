@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import React, { useState, useMemo, ChangeEvent, useRef } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
@@ -18,19 +19,56 @@ interface ISessoesProps {
   sessao: Session[]
 }
 
+interface LocationData {
+  latitude: number
+  longitude: number
+}
+
 const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const originalSessao = useRef(sessao)
 
+  const getLocal =
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('locationCoords')
+      : null
+
+  const localizacao: LocationData = getLocal
+    ? JSON.parse(getLocal)
+    : { latitude: 0, longitude: 0 }
+
   const { dataLayerMovieTicket } = useGtag()
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate('')
     setSearchTerm(event.target.value)
   }
 
   const handleDataClick = (date: string) => {
+    setSearchTerm('')
     setSelectedDate(date)
+  }
+
+  const calculateDistance = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ) => {
+    const R = 6371
+    const dLat = ((lat2 - lat1) * Math.PI) / 180
+    const dLon = ((lon2 - lon1) * Math.PI) / 180
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    const distance = R * c
+
+    return distance
   }
 
   const filteredSessions = useMemo(() => {
@@ -48,6 +86,33 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
         (!selectedDate || data.date === selectedDate)
     )
   }, [searchTerm, selectedDate])
+
+  const sortedSessions = useMemo(() => {
+    return filteredSessions
+      .map((data) => ({
+        ...data,
+        sessions: data.sessions.map((session) => ({
+          ...session,
+          distance: calculateDistance(
+            parseFloat(session.lat),
+            parseFloat(session.lng),
+            localizacao.latitude,
+            localizacao.longitude
+          )
+        }))
+      }))
+      .sort((a, b) => {
+        const distanciaA = a.sessions.reduce(
+          (acc, session) => Math.min(acc, session.distance),
+          Infinity
+        )
+        const distanciaB = b.sessions.reduce(
+          (acc, session) => Math.min(acc, session.distance),
+          Infinity
+        )
+        return distanciaA - distanciaB
+      })
+  }, [filteredSessions, localizacao])
 
   const noResultsMessage = useMemo(() => {
     if (searchTerm.trim() !== '' || selectedDate) {
@@ -91,9 +156,9 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
             />
           </div>
           <div className={Style.flexData} style={{ background: `${color}` }}>
-            {sessao.map((data) => (
+            {sessao.map((data, i) => (
               <S.ButtonHora
-                key={data.link}
+                key={i}
                 $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
                 className={`${Style.areaData}`}
                 onClick={() => handleDataClick(data.date)}
@@ -109,8 +174,8 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
           <div className={Style.areaSessao}>Escolha uma sessão:</div>
           <div className={Style.areaCinema}>
             {noResultsMessage}
-            {filteredSessions.map((data) => (
-              <div key={data.link}>
+            {sortedSessions.map((data, i) => (
+              <div key={i}>
                 {data.sessions
                   .filter(
                     (session) =>
@@ -119,7 +184,10 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                         .includes(searchTerm.toLowerCase()) ||
                       session.address
                         .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
+                        .includes(searchTerm.toLowerCase()) ||
+                      (localizacao.latitude !== 0 && localizacao.longitude !== 0
+                        ? session.distance <= 2
+                        : true)
                   )
                   .map((session: Session) => (
                     <>
