@@ -6,6 +6,7 @@ import { FaInstagram, FaYoutube } from 'react-icons/fa'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
+import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
@@ -93,6 +94,17 @@ const Filme = (data: IFilmeProps) => {
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
 
+  const [carregando, setCarregando] = useState<boolean>(true)
+  useEffect(() => {
+    const handleResize = () => {
+      setCarregando(true)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      setCarregando(false)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [carregando])
   useEffect(() => {
     dataLayerFichafilme(
       filme.title,
@@ -184,205 +196,209 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
-
-  return (
-    <>
-      <section className={Style.areaBanner}>
-        <img
-          src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
-          alt={filme?.title}
-        />
-        <div className={Style.bannerFilme}>
-          <div className="container">
-            <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>
-              {emExibicao && (
-                <h2 className={Style.emExibicao}>
-                  <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
-                </h2>
-              )}
+  if (carregando) {
+    return <Loading altura={true} />
+  }
+  if (!carregando) {
+    return (
+      <>
+        <section className={Style.areaBanner}>
+          <img
+            src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
+            alt={filme?.title}
+          />
+          <div className={Style.bannerFilme}>
+            <div className="container">
+              <div className={Style.areaTituloBanner}>
+                <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>
+                {emExibicao && (
+                  <h2 className={Style.emExibicao}>
+                    <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
+                  </h2>
+                )}
+              </div>
+              {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
             </div>
-            {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
           </div>
-        </div>
-      </section>
-      <div className="container">
-        <Newsletter isHorrizontal={!isMobile} isBg={true} filmes={filme} />
-      </div>
-
-      <div style={{ overflowX: 'hidden' }}>
+        </section>
         <div className="container">
-          {emExibicao && isMobile && (
-            <div className={Style.areaBtnCompra}>
-              <button> COMPRAR INGRESSOS </button>
-            </div>
-          )}
-          {/* {filme?.status != 'ativo' && streaming !== null && (
-              <div className={Style.areaBtn}>
-                {streaming.map((service, index) => (
-                  <button key={index}>
-                    ASSISTA AGORA NO
-                    <img
-                      src={`/img/streaming/${service.toLowerCase()}.png`}
-                      alt={service.toLowerCase()}
-                      width="100"
-                    />
-                  </button>
-                ))}
-              </div>
-            )} */}
-          <div className={Style.areaPoster}>
-            <div className={Style.areaFlexPoster}>
-              <img src={filme?.cover} alt={filme.title} />
-              <div>
-                <h2>Sinopse</h2>
-                <p>{filme?.shortSynopsis}</p>
-                <Links youtube={filme?.trailer} insta=""></Links>
-              </div>
-            </div>
+          <Newsletter isHorrizontal={!isMobile} isBg={true} filmes={filme} />
+        </div>
 
-            <div className={Style.areaFlexInformacoes}>
-              <div>
-                <h2>Informações</h2>
-                <div className={Style.areaClassificaçãoIndicativa}>
-                  {filme?.age && (
-                    <span
-                      style={{
-                        background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
-                      }}
-                    >
-                      {filme?.age}
-                    </span>
-                  )}
-
-                  <p>{filme?.ageExplain}</p>
+        <div style={{ overflowX: 'hidden' }}>
+          <div className="container">
+            {emExibicao && isMobile && (
+              <div className={Style.areaBtnCompra}>
+                <button> COMPRAR INGRESSOS </button>
+              </div>
+            )}
+            {/* {filme?.status != 'ativo' && streaming !== null && (
+                <div className={Style.areaBtn}>
+                  {streaming.map((service, index) => (
+                    <button key={index}>
+                      ASSISTA AGORA NO
+                      <img
+                        src={`/img/streaming/${service.toLowerCase()}.png`}
+                        alt={service.toLowerCase()}
+                        width="100"
+                      />
+                    </button>
+                  ))}
                 </div>
-                <ul className={Style.areainformacaoFilme}>
-                  <li>
-                    <strong>Título Internacional:</strong>
-                    {filme?.originalTitle}
-                  </li>
-                  <li>
-                    <strong>Duração:</strong>
-                    {converterParaHorasEMinutos(filme?.duration)}
-                  </li>
-                  <li>
-                    <strong>Gênero:</strong>
-                    {filme?.genre}
-                  </li>
-                  <li>
-                    <strong>Elenco:</strong>
-                    {filme?.cast}
-                  </li>
-                  <li>
-                    <strong>Direção:</strong>
-                    {filme?.director}
-                  </li>
-                  <li>
-                    <strong>Data de Estreia:</strong>
-                    {formatarData(filme?.releasedate)}
-                  </li>
-                </ul>
+              )} */}
+            <div className={Style.areaPoster}>
+              <div className={Style.areaFlexPoster}>
+                <img src={filme?.cover} alt={filme.title} />
+                <div>
+                  <h2>Sinopse</h2>
+                  <p>{filme?.shortSynopsis}</p>
+                  <Links youtube={filme?.trailer} insta=""></Links>
+                </div>
+              </div>
+
+              <div className={Style.areaFlexInformacoes}>
+                <div>
+                  <h2>Informações</h2>
+                  <div className={Style.areaClassificaçãoIndicativa}>
+                    {filme?.age && (
+                      <span
+                        style={{
+                          background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                        }}
+                      >
+                        {filme?.age}
+                      </span>
+                    )}
+
+                    <p>{filme?.ageExplain}</p>
+                  </div>
+                  <ul className={Style.areainformacaoFilme}>
+                    <li>
+                      <strong>Título Internacional:</strong>
+                      {filme?.originalTitle}
+                    </li>
+                    <li>
+                      <strong>Duração:</strong>
+                      {converterParaHorasEMinutos(filme?.duration)}
+                    </li>
+                    <li>
+                      <strong>Gênero:</strong>
+                      {filme?.genre}
+                    </li>
+                    <li>
+                      <strong>Elenco:</strong>
+                      {filme?.cast}
+                    </li>
+                    <li>
+                      <strong>Direção:</strong>
+                      {filme?.director}
+                    </li>
+                    <li>
+                      <strong>Data de Estreia:</strong>
+                      {formatarData(filme?.releasedate)}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-          <section className={Style.areaIframeVideoYoutube}>
-            <section className={Style.gridIframeVideoYoutube}>
-              {filme?.videos?.map((data) => (
-                <div
-                  className={Style.iframeVideoYoutube}
-                  key={data.url}
-                  onClick={() =>
-                    dataLayerPlayTrailer(
-                      filme.title,
-                      filme.slug,
-                      filme.originalTitle,
-                      filme.genre,
-                      'HUB'
-                    )
-                  }
-                >
-                  <iframe
-                    className={Style.embedResponsiveItem}
-                    src={data.url}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
+            <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
+            <section className={Style.areaIframeVideoYoutube}>
+              <section className={Style.gridIframeVideoYoutube}>
+                {filme?.videos?.map((data) => (
+                  <div
+                    className={Style.iframeVideoYoutube}
+                    key={data.url}
+                    onClick={() =>
+                      dataLayerPlayTrailer(
+                        filme.title,
+                        filme.slug,
+                        filme.originalTitle,
+                        filme.genre,
+                        'HUB'
+                      )
+                    }
+                  >
+                    <iframe
+                      className={Style.embedResponsiveItem}
+                      src={data.url}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                ))}
+              </section>
+            </section>
+
+            <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
+            <Slide.Content
+              swiperOptions={swiperOptions}
+              className={Style.areaSlide}
+            >
+              {filme?.images?.map((data) => (
+                <div key={data.url}>
+                  <img
+                    alt="Filme"
+                    className={Style.SlideImgFilme}
+                    src={`${data.url}`}
+                    onClick={() => handleVerImagem(data)}
+                    style={{ cursor: 'pointer' }}
+                  />
                 </div>
               ))}
-            </section>
-          </section>
+            </Slide.Content>
 
-          <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
-          <Slide.Content
-            swiperOptions={swiperOptions}
-            className={Style.areaSlide}
-          >
-            {filme?.images?.map((data) => (
-              <div key={data.url}>
-                <img
-                  alt="Filme"
-                  className={Style.SlideImgFilme}
-                  src={`${data.url}`}
-                  onClick={() => handleVerImagem(data)}
-                  style={{ cursor: 'pointer' }}
+            {sessoes.length > 0 && (
+              <>
+                <h2 className={Style.slideTitle}>Comprar ingressos</h2>
+                <Sessoes
+                  filme={filme}
+                  sessao={sessoes}
+                  color={filme.color}
+                  poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
                 />
-              </div>
-            ))}
-          </Slide.Content>
+              </>
+            )}
 
-          {sessoes.length > 0 && (
-            <>
-              <h2 className={Style.slideTitle}>Comprar ingressos</h2>
-              <Sessoes
-                filme={filme}
-                sessao={sessoes}
-                color={filme.color}
-                poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
-              />
-            </>
-          )}
-
-          {open && (
-            <Model.Root>
-              <Model.Body
-                setOpen={() => setOpen(!open)}
-                className={Style.modalImageFilme}
-              >
-                <img
-                  src={image?.url}
-                  className={Style.modalSlideImg}
-                  alt="Imagem filmes"
-                />
-              </Model.Body>
-            </Model.Root>
-          )}
-          {openModal && (
-            <Model.Root>
-              <Model.Body
-                setOpen={() => setOpenModal(!openModal)}
-                className={Style.ModaliframeVideoYoutube}
-              >
-                <div className={Style.iframeVideoYoutube} key={iframe}>
-                  <iframe
-                    className={Style.embedResponsiveItem}
-                    src={iframe}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              </Model.Body>
-            </Model.Root>
-          )}
+            {open && (
+              <Model.Root>
+                <Model.Body
+                  setOpen={() => setOpen(!open)}
+                  className={Style.modalImageFilme}
+                >
+                  <img
+                    src={image?.url}
+                    className={Style.modalSlideImg}
+                    alt="Imagem filmes"
+                  />
+                </Model.Body>
+              </Model.Root>
+            )}
+            {openModal && (
+              <Model.Root>
+                <Model.Body
+                  setOpen={() => setOpenModal(!openModal)}
+                  className={Style.ModaliframeVideoYoutube}
+                >
+                  <div className={Style.iframeVideoYoutube} key={iframe}>
+                    <iframe
+                      className={Style.embedResponsiveItem}
+                      src={iframe}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </Model.Body>
+              </Model.Root>
+            )}
+          </div>
         </div>
-      </div>
-    </>
-  )
+      </>
+    )
+  }
 }
 
 export default Filme

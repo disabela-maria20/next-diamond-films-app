@@ -11,6 +11,7 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
 import 'swiper/css/navigation'
 
+import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
@@ -92,6 +93,18 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     }
   }
 
+  const [carregando, setCarregando] = useState<boolean>(true)
+  useEffect(() => {
+    const handleResize = () => {
+      setCarregando(true)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      setCarregando(false)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [carregando])
+
   function handleVerImagem(data: IFilmeResponse) {
     setOpen(true)
     setIframe(data)
@@ -107,87 +120,94 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     routerPush.push(`${data.slug}`)
   }
 
-  return (
-    <>
-      <Slide.Content
-        swiperOptions={bannerSwiperOptions}
-        className={Style.slideBanner}
-      >
-        {banner?.map((data) => (
-          // <Link href={data.slug} key={data.id}>
-          //   <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} onClick={} />
-          // </Link>
-          <span key={data.id}>
-            <img
-              alt="banner"
-              src={isMobile ? data.bannerMobile : data?.bannerDesktop}
-              onClick={(e) => handleClickBanner(e, data)}
-            />
-          </span>
-        ))}
-      </Slide.Content>
-      <div className="container">
-        <Newsletter isBg={true} isHorrizontal={!isMobile && true} />
-      </div>
-
-      <section className={Style.areaSlideFilmes}>
-        <div className="container" style={{ overflow: 'hidden' }}>
-          <Slide.Title className={Style.slideTitle}>
-            LANÇAMENTOS
-            <span>
-              Confira os filmes em exibição e os que serão lançados em breve
-              somente nos cinemas.
+  if (carregando) {
+    return <Loading altura={true} />
+  }
+  if (!carregando) {
+    return (
+      <>
+        <Slide.Content
+          swiperOptions={bannerSwiperOptions}
+          className={Style.slideBanner}
+        >
+          {banner?.map((data) => (
+            // <Link href={data.slug} key={data.id}>
+            //   <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} onClick={} />
+            // </Link>
+            <span key={data.id}>
+              <img
+                alt="banner"
+                src={isMobile ? data.bannerMobile : data?.bannerDesktop}
+                onClick={(e) => handleClickBanner(e, data)}
+              />
             </span>
-          </Slide.Title>
-          <Slide.Content
-            swiperOptions={filmesSwiperOptions}
-            className={Style.slideFilmehomePromo}
-          >
-            {listaFilmes?.releases
-              .sort(
-                (a, b) =>
-                  new Date(a.releasedate).getTime() -
-                  new Date(b.releasedate).getTime()
-              )
-              .map((data) => (
-                <div key={data.id} className={Style.filme}>
-                  <Link href={`/${data.slug}`}>
-                    <img src={data.cover} alt={data.title} />
-                  </Link>
-                  <h2>
-                    {data.title} - {formatarData(data?.releasedate)}
-                  </h2>
-                  <p>{statusTextData(data)}</p>
-                  <span
-                    onClick={() => handleVerImagem(data)}
-                    className={Style.tralher}
+          ))}
+        </Slide.Content>
+        <div className="container">
+          <Newsletter isBg={true} isHorrizontal={!isMobile && true} />
+        </div>
+
+        <section className={Style.areaSlideFilmes}>
+          <div className="container" style={{ overflow: 'hidden' }}>
+            <Slide.Title className={Style.slideTitle}>
+              LANÇAMENTOS
+              <span>
+                Confira os filmes em exibição e os que serão lançados em breve
+                somente nos cinemas.
+              </span>
+            </Slide.Title>
+            <Slide.Content
+              swiperOptions={filmesSwiperOptions}
+              className={Style.slideFilmehomePromo}
+            >
+              {listaFilmes?.releases
+                .sort(
+                  (a, b) =>
+                    new Date(a.releasedate).getTime() -
+                    new Date(b.releasedate).getTime()
+                )
+                .map((data) => (
+                  <div key={data.id} className={Style.filme}>
+                    <Link href={`/${data.slug}`}>
+                      <img src={data.cover} alt={data.title} />
+                    </Link>
+                    <h2>
+                      {data.title} - {formatarData(data?.releasedate)}
+                    </h2>
+                    <p>{statusTextData(data)}</p>
+                    <span
+                      onClick={() => handleVerImagem(data)}
+                      className={Style.tralher}
+                    >
+                      <FaYoutube />
+                      <span>Assista ao Trailer</span>
+                    </span>
+                  </div>
+                ))}
+            </Slide.Content>
+            {open && (
+              <Model.Root>
+                <Model.Body
+                  setOpen={() => setOpen(!open)}
+                  className={Style.ModaliframeVideoYoutube}
+                >
+                  <div
+                    className={Style.iframeVideoYoutube}
+                    key={iframe?.trailer}
                   >
-                    <FaYoutube />
-                    <span>Assista ao Trailer</span>
-                  </span>
-                </div>
-              ))}
-          </Slide.Content>
-          {open && (
-            <Model.Root>
-              <Model.Body
-                setOpen={() => setOpen(!open)}
-                className={Style.ModaliframeVideoYoutube}
-              >
-                <div className={Style.iframeVideoYoutube} key={iframe?.trailer}>
-                  <iframe
-                    className={Style.embedResponsiveItem}
-                    src={iframe?.trailer}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              </Model.Body>
-            </Model.Root>
-          )}
-          {/* <Slide.Title className={Style.slideTitle}>
+                    <iframe
+                      className={Style.embedResponsiveItem}
+                      src={iframe?.trailer}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </Model.Body>
+              </Model.Root>
+            )}
+            {/* <Slide.Title className={Style.slideTitle}>
             ASSISTA ONDE E QUANDO QUISER
             <span>Nossos filmes disponíveis nos streamings.</span>
           </Slide.Title>
@@ -207,10 +227,11 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               </div>
             ))}
           </Slide.Content> */}
-        </div>
-      </section>
-    </>
-  )
+          </div>
+        </section>
+      </>
+    )
+  }
 }
 
 export default Home
