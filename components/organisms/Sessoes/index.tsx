@@ -25,6 +25,8 @@ interface LocationData {
 }
 
 const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
+  console.log(sessao)
+
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
@@ -140,7 +142,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
         <div>
-          <img src={poster} alt="Poster Filme" />
+          <img src={poster} alt="Poster Filme" width={1000} height={500} />
         </div>
         <div
           className={Style.areaPesquisa}

@@ -191,6 +191,8 @@ const Filme = (data: IFilmeProps) => {
         <img
           src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
           alt={filme?.title}
+          width={1440}
+          height={440}
         />
         <div className={Style.bannerFilme}>
           <div className="container">
@@ -233,7 +235,12 @@ const Filme = (data: IFilmeProps) => {
             )} */}
           <div className={Style.areaPoster}>
             <div className={Style.areaFlexPoster}>
-              <img src={filme?.cover} alt={filme.title} />
+              <img
+                src={filme?.cover}
+                alt={filme.title}
+                width={300}
+                height={200}
+              />
               <div>
                 <h2>Sinopse</h2>
                 <p>{filme?.shortSynopsis}</p>
@@ -329,6 +336,8 @@ const Filme = (data: IFilmeProps) => {
                   src={`${data.url}`}
                   onClick={() => handleVerImagem(data)}
                   style={{ cursor: 'pointer' }}
+                  width={300}
+                  height={200}
                 />
               </div>
             ))}
@@ -356,6 +365,8 @@ const Filme = (data: IFilmeProps) => {
                   src={image?.url}
                   className={Style.modalSlideImg}
                   alt="Imagem filmes"
+                  width={700}
+                  height={500}
                 />
               </Model.Body>
             </Model.Root>

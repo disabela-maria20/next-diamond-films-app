@@ -183,7 +183,12 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                       )
                     }
                   >
-                    <img src={data.cover} alt={data.title} />
+                    <img
+                      src={data.cover}
+                      alt={data.title}
+                      width={700}
+                      height={320}
+                    />
                     <h2>{data.title}</h2>
                   </Link>
                 </div>

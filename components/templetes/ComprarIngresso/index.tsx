@@ -89,6 +89,8 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
                 <img
                   src={isMobile ? data.bannerMobile : data.bannerDesktop}
                   alt="Banner"
+                  width={1400}
+                  height={440}
                 />
               </Link>
             ))}

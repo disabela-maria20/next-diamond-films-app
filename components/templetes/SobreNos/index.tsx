@@ -49,7 +49,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
   return (
     <section className={Style.SobreNos}>
       <div className="container">
-        <img src="/img/logo.webp" />
+        <img src="/img/logo.webp" alt="logo" width={300} height={200} />
         <h1>SOBRE NÓS</h1>
         <p>
           A Diamond Films é uma distribuidora de cinema fundada em 2010, que se
@@ -112,7 +112,12 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
             .map((data) => (
               <div key={data.id} className={Style.filme}>
                 <Link href={`/${data.slug}`}>
-                  <img src={data.cover} alt={data.title} />
+                  <img
+                    src={data.cover}
+                    alt={data.title}
+                    width={300}
+                    height={200}
+                  />
                 </Link>
                 <h3>
                   {data.title} - {formatarData(data?.releasedate)}
