@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React, { useState, useMemo, ChangeEvent, useRef } from 'react'
+import React, { useState, useMemo, ChangeEvent, useRef, useEffect } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import Style from './Sessoes.module.scss'
@@ -50,6 +50,11 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     setSearchTerm('')
     setSelectedDate(date)
   }
+
+  useEffect(() => {
+    setSelectedDate(new Date().toISOString().split('T')[0])
+  }, [])
+
   function handleClickBanner(data: Session) {
     dataLayerMovieTicket(
       filme.title,
@@ -105,12 +110,12 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
         distance: calculateDistance(Number(session.lat), Number(session.lng))
       }))
     }))
+
     sessionsWithDistance.map((data) =>
       data.sessions.sort((a, b) => a.distance - b.distance)
     )
-
     return sessionsWithDistance
-  }, [filteredSessions, localizacao])
+  }, [localizacao])
 
   const theaterGroups: Session[] = []
 
@@ -193,8 +198,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                     .includes(searchTerm.toLowerCase()) ||
                   session.address
                     .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  (localizacao.latitude !== 0 && localizacao.longitude !== 0)
+                    .includes(searchTerm.toLowerCase())
               )
               .map((session, i) => (
                 <div key={1 + i}>

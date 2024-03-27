@@ -95,8 +95,6 @@ const Filme = (data: IFilmeProps) => {
     formatPassouUmaSemanaDesdeData(filme.releasedate)
   //const streaming = setStreaming(filme?.streaming)
 
-  console.log(emExibicao)
-
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
 

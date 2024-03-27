@@ -47,6 +47,7 @@ export interface IFilmesEstado {
   ESTADO: string
 }
 export interface Session {
+  distance: number
   date: string
   sessionHour: string // renomeado de 'hour' para 'sessionHour'
   theaterName: string
