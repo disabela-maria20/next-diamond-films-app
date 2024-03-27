@@ -162,6 +162,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
       data.hour
     )
   }
+
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
