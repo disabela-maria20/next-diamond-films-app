@@ -48,9 +48,8 @@
 
 .areaBtnCompra {
 	@include flex-center();
-	padding: 31px;
 	gap: 20px;
-
+	margin-top: 35px;
 	button {
 		@include btn-outline();
 	}
@@ -299,74 +298,90 @@
 	z-index: -1;
 	height: auto;
 	overflow: hidden;
-
-	img {
-		width: 1920px;
-		max-width: 100%;
-		margin: 0 auto;
-		display: block;
-	}
-
-	&::before {
-		content: '';
-		position: absolute;
-		background-image: url('/img/gradient-rodape.png');
-		background-position: bottom;
-		background-size: contain;
-		background-repeat: no-repeat;
-		width: 100%;
-		height: 100%;
-		bottom: 0px;
-	}
-
-	.areaTituloBanner {
+	
+	.bannerFilme{
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		width: 100%;
 		margin: 0 auto;
-
-		@include media(lg) {
-			left: initial;
+		z-index: 999;
+		img {
+			width: 1920px;
+			max-width: 100%;
+			margin: 0 auto;
+			display: block;
 		}
-
-		.emExibicao {
-			padding: 5px 25px 10px;
-			font-size: 1.6rem;
-			color: $primary-lingh-color;
-			font-weight: 400;
-			text-align: center;
-
+	
+		&::before {
+			content: '';
+			position: absolute;
+			background-image: url('/img/gradient-rodape.png');
+			background-position: bottom;
+			background-size: contain;
+			background-repeat: no-repeat;
+			width: 100%;
+			height: 100%;
+			bottom: 0px;
+			z-index: -1;
+		}
+	
+		.areaTituloBanner {
 			@include media(lg) {
-				font-size: 2.2rem;
-				text-align: left;
-				padding: 0 0 25px 0;
+				left: initial;
 			}
+	
+			.subTitle {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-bottom: 35px;
+				flex-direction: column;
 
-			strong {
+				@include media(lg) {
+					flex-direction: row;
+				}
+				.emExibicao {
+					padding: 5px 25px 10px;
+					font-size: 1.6rem;
+					color: $primary-lingh-color;
+					font-weight: 400;
+					text-align: center;
+					
+					@include media(lg) {
+						font-size: 2.2rem;
+						text-align: left;
+						padding: 0;
+					}
+	
+					strong {
+						font-weight: 700;
+					}
+				}
+			}
+	
+	
+			h1 {
+				color: $primary-lingh-color;
+				text-align: center;
+				font-size: 3.5rem;
+				text-transform: uppercase;
 				font-weight: 700;
+				padding: 25px;
+	
+				@include media(lg) {
+					text-align: left;
+					font-size: 5.5rem;
+					padding: 0px;
+				}
 			}
+	
 		}
-
-		h1 {
-			color: $primary-lingh-color;
-			text-align: center;
-			font-size: 3.5rem;
-			text-transform: uppercase;
-			font-weight: 700;
-			padding: 25px;
-
-			@include media(lg) {
-				text-align: left;
-				font-size: 5.5rem;
-				padding: 0px;
-			}
-		}
-
 	}
+	
 }
 
-.SlideImgFilme{
+.SlideImgFilme {
 	width: 100%;
 	height: 160px;
 	object-fit: cover;

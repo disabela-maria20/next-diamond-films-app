@@ -85,10 +85,17 @@ const Filme = (data: IFilmeProps) => {
   const filme = data.movie?.movie
   const sessoes = data.movie?.sessions
 
+  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
+    useFormatarData()
+
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()
-  const emExibicao = new Date() >= new Date(filme?.releasedate)
+  const emExibicao =
+    formatMesmaSemana(filme.releasedate) ||
+    formatPassouUmaSemanaDesdeData(filme.releasedate)
   //const streaming = setStreaming(filme?.streaming)
+
+  console.log(emExibicao)
 
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
@@ -188,25 +195,32 @@ const Filme = (data: IFilmeProps) => {
   return (
     <>
       <section className={Style.areaBanner}>
+        <div className={Style.bannerFilme}>
+          <div className="container">
+            <div className={Style.areaTituloBanner}>
+              <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>
+              <div className={Style.subTitle}>
+                {emExibicao && (
+                  <h2 className={Style.emExibicao}>
+                    <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
+                  </h2>
+                )}
+                {emExibicao && (
+                  <div className={Style.areaBtnCompra}>
+                    <button> COMPRAR INGRESSOS </button>
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
+          </div>
+        </div>
         <img
           src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
           alt={filme?.title}
           width={1440}
           height={440}
         />
-        <div className={Style.bannerFilme}>
-          <div className="container">
-            <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>
-              {emExibicao && (
-                <h2 className={Style.emExibicao}>
-                  <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
-                </h2>
-              )}
-            </div>
-            {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
-          </div>
-        </div>
       </section>
       <div className="container">
         <Newsletter isHorrizontal={!isMobile} isBg={true} filmes={filme} />
