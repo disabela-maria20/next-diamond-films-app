@@ -40,6 +40,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     : { latitude: 0, longitude: 0 }
 
   const { dataLayerMovieTicket } = useGtag()
+
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate('')
     setSearchTerm(event.target.value)
@@ -49,13 +50,21 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     setSearchTerm('')
     setSelectedDate(date)
   }
+  function handleClickBanner(data: Session) {
+    dataLayerMovieTicket(
+      filme.title,
+      filme.slug,
+      filme.originalTitle,
+      filme.genre,
+      data.theaterName,
+      data.address,
+      data.hour
+    )
+  }
+  const calculateDistance = (lat2: number, lon2: number) => {
+    const lat1 = localizacao.latitude
+    const lon1 = localizacao.longitude
 
-  const calculateDistance = (
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ) => {
     const R = 6371
     const dLat = ((lat2 - lat1) * Math.PI) / 180
     const dLon = ((lon2 - lon1) * Math.PI) / 180
@@ -66,16 +75,16 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
         Math.sin(dLon / 2) *
         Math.sin(dLon / 2)
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    const distance = R * c
+    const distanceInKilometers = R * c
 
-    return distance
+    return distanceInKilometers
   }
 
   const filteredSessions = useMemo(() => {
     if (!searchTerm && !selectedDate) return originalSessao.current
 
-    return originalSessao.current.filter(
-      (data) =>
+    return originalSessao.current.filter((data) => {
+      return (
         data.sessions.some(
           (session) =>
             session.theaterName
@@ -84,37 +93,25 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
             session.address.toLowerCase().includes(searchTerm.toLowerCase())
         ) &&
         (!selectedDate || data.date === selectedDate)
-    )
+      )
+    })
   }, [searchTerm, selectedDate])
 
   const sortedSessions = useMemo(() => {
-    return filteredSessions
-      .map((data) => ({
-        ...data,
-        sessions: data.sessions.map((session) => ({
-          ...session,
-          distance: calculateDistance(
-            parseFloat(session.lat),
-            parseFloat(session.lng),
-            localizacao.latitude,
-            localizacao.longitude
-          )
-        }))
+    const sessionsWithDistance = filteredSessions.map((data) => ({
+      ...data,
+      sessions: data.sessions.map((session) => ({
+        ...session,
+        distance: calculateDistance(Number(session.lat), Number(session.lng))
       }))
-      .sort((a, b) => {
-        const distanciaA = a.sessions.reduce(
-          (acc, session) => Math.min(acc, session.distance),
-          Infinity
-        )
-        const distanciaB = b.sessions.reduce(
-          (acc, session) => Math.min(acc, session.distance),
-          Infinity
-        )
-        return distanciaA - distanciaB
-      })
+    }))
+    sessionsWithDistance.map((data) =>
+      data.sessions.sort((a, b) => a.distance - b.distance)
+    )
+
+    return sessionsWithDistance
   }, [filteredSessions, localizacao])
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const theaterGroups: Session[] = []
 
   sortedSessions.forEach(({ sessions }) => {
@@ -149,18 +146,6 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     }
     return null
   }, [filteredSessions, searchTerm, selectedDate])
-
-  function handleClickBanner(data: Session) {
-    dataLayerMovieTicket(
-      filme.title,
-      filme.slug,
-      filme.originalTitle,
-      filme.genre,
-      data.theaterName,
-      data.address,
-      data.hour
-    )
-  }
 
   return (
     <section className={Style.areaSessao}>

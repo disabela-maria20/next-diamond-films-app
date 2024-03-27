@@ -18,7 +18,6 @@ import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { useGtag } from '@/utils/lib/gtag'
 import { IFilmeResponse } from '@/utils/server/types'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import { SwiperOptions } from 'swiper/types'
 
 interface IHomeProps {
