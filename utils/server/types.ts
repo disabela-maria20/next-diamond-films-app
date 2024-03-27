@@ -48,7 +48,7 @@ export interface IFilmesEstado {
 }
 export interface Session {
   date: string
-  hour: string
+  sessionHour: string // renomeado de 'hour' para 'sessionHour'
   theaterName: string
   link: string
   technology: string
@@ -61,4 +61,5 @@ export interface Session {
   number?: string
   sessions: Session[]
   hours: string[]
+  hour: string
 }

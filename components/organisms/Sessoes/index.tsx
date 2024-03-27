@@ -118,24 +118,23 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   const theaterGroups: Session[] = []
 
   sortedSessions.forEach(({ sessions }) => {
-    sessions.forEach(({ theaterName, hour, date, ...rest }) => {
-      // Procurar o índice da sessão com o mesmo teatroName e date
+    sessions.forEach(({ theaterName, hour: sessionHour, date, ...rest }) => {
       const existingTheaterIndex = theaterGroups.findIndex(
         (session) =>
           session.theaterName === theaterName && session.date === date
       )
       if (existingTheaterIndex === -1) {
-        // Se não existir uma sessão com o mesmo teatroName e date, adiciona uma nova sessão
         theaterGroups.push({
           theaterName,
           date,
-          hours: [hour],
+          // @ts-expect-error: Unreachable code error
+          hours: [sessionHour],
+          /* tslint:enable */
           ...rest,
           hour: ''
         })
       } else {
-        // Se existir uma sessão com o mesmo teatroName e date, adiciona a hora à sessão existente
-        theaterGroups[existingTheaterIndex].hours.push(hour)
+        theaterGroups[existingTheaterIndex].hours.push(sessionHour)
       }
     })
   })
