@@ -12,6 +12,7 @@ import { ContatoFormSchema } from './Contato.schema'
 import { Model } from '@/components/molecules'
 import { Phone } from '@/utils/hooks/useMask'
 import { useGtag } from '@/utils/lib/gtag'
+import { postContact } from '@/utils/server/requests'
 import { zodResolver as ResolverZod } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
 import { z } from 'zod'
@@ -38,7 +39,13 @@ const Contato = () => {
     if (!data.c_termos) return
     setLoaging(true)
     try {
-      if (true) {
+      const res = await postContact(
+        data.c_name,
+        data.c_email,
+        data.c_phone,
+        data.c_message
+      )
+      if (res.data.done) {
         setModal(true)
         setViewSuccess(true)
         dataLayerContato('Contato', 'Contato')
@@ -183,10 +190,7 @@ const Contato = () => {
             <Model.Content>
               {viewSuccess && (
                 <div className={Style.newsletterPopUpTermos}>
-                  <p>
-                    Agradeçemos seu interesse. Logo entraremos em contato com
-                    novidades sobre nossos filmes.
-                  </p>
+                  <p>Logo entraremos em contato.</p>
                   <div className={Style.newsletterPopUpTermosFlex}>
                     <button onClick={() => setModal(!modal)}>Fechar</button>
                   </div>
