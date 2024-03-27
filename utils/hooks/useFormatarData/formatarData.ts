@@ -113,6 +113,15 @@ export const useFormatarData = () => {
 
     return numeroSemanaAtual - numeroSemanaData === 1
   }
+  function formatPassouUmaSemanaDesdeData(dataString: string): boolean {
+    const data = new Date(dataString)
+    const hoje = new Date()
+
+    const umaSemanaDepois = new Date(data)
+    umaSemanaDepois.setDate(umaSemanaDepois.getDate() + 7)
+
+    return hoje >= umaSemanaDepois
+  }
   return {
     formatarData,
     formatDia,
@@ -120,6 +129,7 @@ export const useFormatarData = () => {
     formatAno,
     formatDiaDaSemana,
     formatMesmaSemana,
-    formatfaltaUmaSemanaParaDataMarcada
+    formatfaltaUmaSemanaParaDataMarcada,
+    formatPassouUmaSemanaDesdeData
   }
 }

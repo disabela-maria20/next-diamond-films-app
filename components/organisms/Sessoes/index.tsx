@@ -25,8 +25,6 @@ interface LocationData {
 }
 
 const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
-  console.log(sessao)
-
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
@@ -116,6 +114,32 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
       })
   }, [filteredSessions, localizacao])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const theaterGroups: Session[] = []
+
+  sortedSessions.forEach(({ sessions }) => {
+    sessions.forEach(({ theaterName, hour, date, ...rest }) => {
+      // Procurar o índice da sessão com o mesmo teatroName e date
+      const existingTheaterIndex = theaterGroups.findIndex(
+        (session) =>
+          session.theaterName === theaterName && session.date === date
+      )
+      if (existingTheaterIndex === -1) {
+        // Se não existir uma sessão com o mesmo teatroName e date, adiciona uma nova sessão
+        theaterGroups.push({
+          theaterName,
+          date,
+          hours: [hour],
+          ...rest,
+          hour: ''
+        })
+      } else {
+        // Se existir uma sessão com o mesmo teatroName e date, adiciona a hora à sessão existente
+        theaterGroups[existingTheaterIndex].hours.push(hour)
+      }
+    })
+  })
+
   const noResultsMessage = useMemo(() => {
     if (searchTerm.trim() !== '' || selectedDate) {
       if (filteredSessions.length === 0) {
@@ -176,58 +200,54 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
           <div className={Style.areaSessao}>Escolha uma sessão:</div>
           <div className={Style.areaCinema}>
             {noResultsMessage}
-            {sortedSessions.map((data, i) => (
-              <div key={i}>
-                {data.sessions
-                  .filter(
-                    (session) =>
-                      session.theaterName
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()) ||
-                      session.address
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()) ||
-                      (localizacao.latitude !== 0 && localizacao.longitude !== 0
-                        ? session.distance <= 2
-                        : true)
-                  )
-                  .map((session: Session) => (
-                    <>
-                      <div className={Style.flexTitle}>
-                        <img
-                          src="/img/icon _ticket_.png"
-                          alt={session.theaterName}
-                          width={50}
-                          height={50}
-                        />
-                        <div className={Style.areaTitle}>
-                          <h3>{session.theaterName}</h3>
-                          <h4>
-                            {session.address}, {session.number}
-                            {session.addressComplement && '-'}
-                            {session.addressComplement}
-                          </h4>
-                        </div>
-                      </div>
-                      <div className={Style.areaSalaHorario}>
-                        <span>{session.technology}</span>
-                        <ul>
-                          <li>
-                            <S.LinkHora
-                              href={session.link}
-                              $color={color}
-                              onClick={() => handleClickBanner(session)}
-                              target="_blank"
-                            >
-                              {session.hour}
-                            </S.LinkHora>
-                          </li>
-                        </ul>
-                      </div>
-                    </>
-                  ))}
-              </div>
-            ))}
+            {Object.values(theaterGroups)
+              .filter(
+                (session) =>
+                  session.theaterName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  session.address
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  (localizacao.latitude !== 0 && localizacao.longitude !== 0)
+              )
+              .map((session, i) => (
+                <div key={1 + i}>
+                  <div className={Style.flexTitle}>
+                    <img
+                      src="/img/icon _ticket_.png"
+                      alt={session.theaterName}
+                      width={50}
+                      height={50}
+                    />
+                    <div className={Style.areaTitle}>
+                      <h3>{session.theaterName}</h3>
+                      <h4>
+                        {session.address}, {session.number}
+                        {session.addressComplement && '-'}
+                        {session.addressComplement}
+                      </h4>
+                    </div>
+                  </div>
+                  <div className={Style.areaSalaHorario}>
+                    <span>{session.technology}</span>
+                    <ul>
+                      {session.hours.map((hour, i) => (
+                        <li key={1 + i}>
+                          <S.LinkHora
+                            href={session.link}
+                            $color={color}
+                            onClick={() => handleClickBanner(session)}
+                            target="_blank"
+                          >
+                            {hour}
+                          </S.LinkHora>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>

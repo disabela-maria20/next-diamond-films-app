@@ -60,4 +60,5 @@ export interface Session {
   addressComplement?: string
   number?: string
   sessions: Session[]
+  hours: string[]
 }
