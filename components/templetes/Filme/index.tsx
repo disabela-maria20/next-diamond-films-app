@@ -238,8 +238,8 @@ const Filme = (data: IFilmeProps) => {
               <img
                 src={filme?.cover}
                 alt={filme.title}
-                width={300}
-                height={200}
+                width={270}
+                height={400}
               />
               <div>
                 <h2>Sinopse</h2>

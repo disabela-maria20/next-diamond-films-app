@@ -159,8 +159,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                     <img
                       src={data.cover}
                       alt={data.title}
-                      width={300}
-                      height={200}
+                      width={270}
+                      height={400}
                     />
                   </Link>
                   <h2>

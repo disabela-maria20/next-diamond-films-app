@@ -1,21 +1,21 @@
 [
   {
-    "bannerMobile": "/img/poster/guerraCivilBanner_mobile_1180x1025.jpg",
-    "bannerDesktop": "/img/poster/guerraCivilBanner_desktop_1440x540.jpg",
+    "bannerMobile": "/img/poster/guerra-civil-mobile.webp",
+    "bannerDesktop": "/img/poster/guerra-civil-desktop.webp",
     "slug": "/guerracivil",
     "title": "Gerra Civil",
     "id": 1
   },
   {
-    "bannerMobile": "/img/poster/DMND_Banner-Mobile_800x1000.png",
-    "bannerDesktop": "/img/poster/DMND_Banner-Desktop-Título_1450x540.webp",
+    "bannerMobile": "/img/poster/osabordavida-mobile.webp",
+    "bannerDesktop": "/img/poster/osabordavida-decktop.webp",
     "slug": "/osabordavida",
     "title": "O sabor da vida",
     "id": 2
   },
   {
-    "bannerMobile": "/img/poster/DMND_BannerMobileTítulo_800x1000-ferrari.png",
-    "bannerDesktop": "/img/poster/DMND_BannerDesktopTitulo_1450x540ferrari.png",
+    "bannerMobile": "/img/poster/ferrari-mobile.webp",
+    "bannerDesktop": "/img/poster/ferrari-desktop.webp",
     "slug": "/ferrari",
     "title": "Ferrari",
     "id": 3
