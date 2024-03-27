@@ -36,13 +36,18 @@ export const useFormatarData = () => {
 
   const formatDia = (text: string) => {
     const data = new Date(text)
+    if (data.getDate() + 1 === 32) {
+      return 1
+    }
     return data.getDate() + 1
   }
 
   const formatMes = (text: string) => {
     const data = new Date(text)
     const mes = data.getMonth()
-
+    if (data.getDate() + 1 === 32) {
+      return MESES[mes + 1]
+    }
     return MESES[mes]
   }
 
