@@ -64,23 +64,23 @@ const Newsletter = ({
         Cookies.set('formNewsletter', 'true')
         reset()
 
-        if (type == 'filme' && filmes) {
+        if (filmes && type == 'filme') {
           dataLayerNewsletter(
             filmes?.title,
             filmes?.slug,
             filmes?.originalTitle,
             filmes?.genre,
-            type,
+            'hub',
             'Hub do Filme'
           )
         }
-        if (type == 'modal' && filmes) {
+        if (filmes && type == 'modal') {
           dataLayerMovieSubscribe(
             filmes?.title,
             filmes?.slug,
             filmes?.originalTitle,
             filmes?.genre,
-            type,
+            'modal',
             'Hub do Filme'
           )
         }
