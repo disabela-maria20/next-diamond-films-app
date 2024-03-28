@@ -326,7 +326,8 @@ const Filme = (data: IFilmeProps) => {
                 <div
                   className={Style.iframeVideoYoutube}
                   key={data.url}
-                  onClick={() =>
+                  onClick={() => {
+                    console.log(data.url)
                     dataLayerPlayTrailer(
                       filme.title,
                       filme.slug,
@@ -334,7 +335,7 @@ const Filme = (data: IFilmeProps) => {
                       filme.genre,
                       'HUB'
                     )
-                  }
+                  }}
                 >
                   <iframe
                     className={Style.embedResponsiveItem}

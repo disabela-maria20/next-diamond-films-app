@@ -1,5 +1,5 @@
 'use client'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 
@@ -25,6 +25,8 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   const { formatAno } = useFormatarData()
 
   const { dataLayerMovieSelect, dataLayerMovieFilter } = useGtag()
+
+  const router = useRouter()
 
   const handleGeneroChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     // setFiltroAno('')
@@ -61,17 +63,16 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   }
 
   const ItemPesquisados = (filme: IFilmeResponse) => {
-    dataLayerMovieFilter(
-      filme.title,
-      filme.slug,
-      filme.originalTitle,
-      filme.genre,
-      filme.genre_id
-    )
-    if (pesquisa) {
+    if (filme.title.toLowerCase().includes(pesquisa.toLowerCase())) {
+      dataLayerMovieFilter(
+        filme.title,
+        filme.slug,
+        filme.originalTitle,
+        filme.genre,
+        filme.genre_id
+      )
       return filme.title.toLowerCase().includes(pesquisa.toLowerCase())
     }
-    return true
   }
 
   const filtrarFilmes = (filme: IFilmeResponse) => {
@@ -171,9 +172,11 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                   listaFilmes?.releases.filter(filtrarFilmes)
               ).map((data) => (
                 <div key={data.id}>
-                  <Link
-                    href={`/${data.slug}`}
-                    onClick={() =>
+                  <span
+                    onClick={() => {
+                      console.log(data.title)
+
+                      router.push(`/${data.slug}`)
                       dataLayerMovieSelect(
                         data.title,
                         data.slug,
@@ -181,7 +184,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                         data.genre,
                         data.genre_id
                       )
-                    }
+                    }}
                   >
                     <img
                       src={data.cover}
@@ -190,7 +193,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                       height={320}
                     />
                     <h2>{data.title}</h2>
-                  </Link>
+                  </span>
                 </div>
               ))}
             </div>
