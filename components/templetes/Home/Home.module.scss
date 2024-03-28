@@ -58,7 +58,11 @@
 		h2 {
 			margin: 5px 0;
 			font-size: 1.4rem;
-			height: 50px;
+			height: 70px;
+
+			@include media(md){
+				height: 50px;
+			}
 		}
 
 
