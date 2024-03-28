@@ -92,8 +92,8 @@ const Filme = (data: IFilmeProps) => {
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()
   const emExibicao =
-    formatMesmaSemana(filme.releasedate) ||
-    formatPassouUmaSemanaDesdeData(filme.releasedate)
+    formatMesmaSemana(filme?.releasedate) ||
+    formatPassouUmaSemanaDesdeData(filme?.releasedate)
   //const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
@@ -103,17 +103,17 @@ const Filme = (data: IFilmeProps) => {
 
   useEffect(() => {
     dataLayerFichafilme(
-      filme.title,
-      filme.slug,
-      filme.originalTitle,
-      filme.genre
+      filme?.title,
+      filme?.slug,
+      filme?.originalTitle,
+      filme?.genre
     )
   }, [
     dataLayerFichafilme,
-    filme.genre,
-    filme.originalTitle,
-    filme.slug,
-    filme.title
+    filme?.genre,
+    filme?.originalTitle,
+    filme?.slug,
+    filme?.title
   ])
 
   function handleVerImagem(data: IFilmeResponseUrl) {
@@ -205,7 +205,7 @@ const Filme = (data: IFilmeProps) => {
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>
+              <h1 style={{ color: `${filme?.color}` }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
                 {emExibicao && (
                   <h2 className={Style.emExibicao}>
@@ -258,7 +258,7 @@ const Filme = (data: IFilmeProps) => {
             <div className={Style.areaFlexPoster}>
               <img
                 src={filme?.cover}
-                alt={filme.title}
+                alt={filme?.title}
                 width={270}
                 height={400}
               />

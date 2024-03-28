@@ -168,7 +168,7 @@ const Newsletter = ({
               politicas de provacidade
             </Link>
             &nbsp;e&nbsp;
-            <Link href="/termos-e-condicoes">Termos e condições</Link>
+            <Link href="/termos-de-uso">Termos e condições</Link>
           </p>
           {errors.n_termos && (
             <small className="text-error">{errors.n_termos.message}</small>
