@@ -12,12 +12,5 @@
     "slug": "/osabordavida",
     "title": "O sabor da vida",
     "id": 2
-  },
-  {
-    "bannerMobile": "/img/poster/ferrari-mobile.webp",
-    "bannerDesktop": "/img/poster/ferrari-desktop.webp",
-    "slug": "/ferrari",
-    "title": "Ferrari",
-    "id": 3
   }
 ]
