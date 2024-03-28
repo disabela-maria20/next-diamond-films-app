@@ -27,34 +27,34 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   const { dataLayerMovieSelect, dataLayerMovieFilter } = useGtag()
 
   const handleGeneroChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFiltroAno('')
-    setPesquisa('')
-    setFiltroAlfabeto('')
-    setFiltroPesquisa([])
+    // setFiltroAno('')
+    // setPesquisa('')
+    // setFiltroAlfabeto('')
+    // setFiltroPesquisa([])
     const novoGenero = event.target.value
     setFiltroGenero(novoGenero)
   }
 
   const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFiltroGenero('')
-    setPesquisa('')
-    setFiltroAlfabeto('')
-    setFiltroPesquisa([])
+    // setFiltroGenero('')
+    // setPesquisa('')
+    // setFiltroAlfabeto('')
+    // setFiltroPesquisa([])
     const novoAno = event.target.value
     setFiltroAno(novoAno)
   }
 
   const handleFiltroAlfabeto = (letra: string) => {
-    setFiltroGenero('')
-    setFiltroAno('')
+    // setFiltroGenero('')
+    // setFiltroAno('')
     setPesquisa('')
     setFiltroPesquisa([])
     setFiltroAlfabeto(letra)
   }
 
   const handlePesquisa = () => {
-    setFiltroGenero('')
-    setFiltroAno('')
+    // setFiltroGenero('')
+    // setFiltroAno('')
     setFiltroAlfabeto('')
     const filmesPesquisados = listaFilmes.releases.filter(ItemPesquisados)
     setFiltroPesquisa(filmesPesquisados)
