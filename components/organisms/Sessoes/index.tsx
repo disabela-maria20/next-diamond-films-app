@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React, { useState, useMemo, ChangeEvent, useRef, useEffect } from 'react'
+import React, { useState, useMemo, ChangeEvent, useEffect } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import Style from './Sessoes.module.scss'
@@ -28,7 +28,9 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
-  const originalSessao = useRef(sessao)
+  const [sessoesData, setSessoesData] = useState<Session[]>()
+
+  const DISTANCIA = 20
 
   const getLocal =
     typeof window !== 'undefined'
@@ -66,9 +68,14 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
       data.hour
     )
   }
+
   const calculateDistance = (lat2: number, lon2: number) => {
     const lat1 = localizacao.latitude
     const lon1 = localizacao.longitude
+
+    if (lat1 === 0 && lon1 === 0) {
+      return 0
+    }
 
     const R = 6371
     const dLat = ((lat2 - lat1) * Math.PI) / 180
@@ -85,10 +92,39 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     return distanceInKilometers
   }
 
-  const filteredSessions = useMemo(() => {
-    if (!searchTerm && !selectedDate) return originalSessao.current
+  useEffect(() => {
+    const sessionsWithDistance = filteredSessions.map((data) => ({
+      ...data,
+      sessions: data.sessions.map((session) => ({
+        ...session,
+        distance: calculateDistance(Number(session.lat), Number(session.lng))
+      }))
+    }))
 
-    return originalSessao.current.filter((data) => {
+    sessionsWithDistance.map((data) =>
+      data.sessions
+        .sort((a, b) => a.distance - b.distance)
+        .some(
+          (session) =>
+            session.theaterName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            session.address.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    )
+    setSessoesData(sessionsWithDistance)
+  }, [selectedDate, selectedDate, localizacao.latitude, localizacao.longitude])
+
+  console.log(
+    sessoesData?.filter((data) => {
+      if (!(localizacao.latitude === 0 && localizacao.longitude === 0)) {
+        return data.distance <= DISTANCIA
+      }
+    })
+  )
+
+  const filteredSessions = useMemo(() => {
+    return sessao.filter((data) => {
       return (
         data.sessions.some(
           (session) =>
@@ -201,7 +237,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                     .includes(searchTerm.toLowerCase())
               )
               .map((session, i) => (
-                <div key={1 + i}>
+                <div key={1 + i} className={Style.ItemSessao}>
                   <div className={Style.flexTitle}>
                     <img
                       src="/img/icon _ticket_.png"

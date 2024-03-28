@@ -119,7 +119,7 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
             <>
               {filmesComSessoes.map((sessoes) => {
                 return (
-                  <div key={sessoes.movie?.id}>
+                  <div key={sessoes.movie?.id} className={Style.itemSessao}>
                     {sessoes.movie && sessoes.sessions && (
                       <>
                         <Sessoes

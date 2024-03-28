@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 
@@ -98,6 +99,8 @@ const Filme = (data: IFilmeProps) => {
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
 
+  const router = useRouter()
+
   useEffect(() => {
     dataLayerFichafilme(
       filme.title,
@@ -193,6 +196,12 @@ const Filme = (data: IFilmeProps) => {
   return (
     <>
       <section className={Style.areaBanner}>
+        <img
+          src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
+          alt={filme?.title}
+          width={1440}
+          height={440}
+        />
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
@@ -203,9 +212,13 @@ const Filme = (data: IFilmeProps) => {
                     <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
                   </h2>
                 )}
-                {emExibicao && (
+                {emExibicao && !isMobile && (
                   <div className={Style.areaBtnCompra}>
-                    <button> COMPRAR INGRESSOS </button>
+                    <button
+                      onClick={() => router.push('#sessao', { scroll: true })}
+                    >
+                      COMPRAR INGRESSOS
+                    </button>
                   </div>
                 )}
               </div>
@@ -213,12 +226,6 @@ const Filme = (data: IFilmeProps) => {
             {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
           </div>
         </div>
-        <img
-          src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
-          alt={filme?.title}
-          width={1440}
-          height={440}
-        />
       </section>
       <div className="container">
         <Newsletter isHorrizontal={!isMobile} isBg={true} filmes={filme} />
@@ -228,7 +235,9 @@ const Filme = (data: IFilmeProps) => {
         <div className="container">
           {emExibicao && isMobile && (
             <div className={Style.areaBtnCompra}>
-              <button> COMPRAR INGRESSOS </button>
+              <button onClick={() => router.push('#sessao', { scroll: true })}>
+                COMPRAR INGRESSOS
+              </button>
             </div>
           )}
           {/* {filme?.status != 'ativo' && streaming !== null && (
@@ -356,7 +365,7 @@ const Filme = (data: IFilmeProps) => {
           </Slide.Content>
 
           {sessoes.length > 0 && (
-            <>
+            <section id="sessao">
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
               <Sessoes
                 filme={filme}
@@ -364,7 +373,7 @@ const Filme = (data: IFilmeProps) => {
                 color={filme.color}
                 poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
               />
-            </>
+            </section>
           )}
 
           {open && (
