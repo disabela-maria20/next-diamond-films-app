@@ -12,8 +12,8 @@
 		
 		&.close {
 			transform: translate(-110%);
-
 			@include media(xl) {
+				transform: initial;
 				height: initial;
 				overflow: hidden;
 			}
@@ -22,6 +22,7 @@
 		&.open {
 			transform: translate(0);
 			@include media(xl) {
+				transition: initial;
 				height: initial;
 			}
 		}
@@ -45,6 +46,9 @@
 		svg{
 			color: rgb(255, 255, 255);
 			font-size: 3.5rem;
+		}
+		@include media(xl) {
+			display: none;
 		}
 	}
 	ul {
