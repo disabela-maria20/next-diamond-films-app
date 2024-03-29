@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React, { useState, useMemo, ChangeEvent, useRef, useEffect } from 'react'
+import React, { useState, useMemo, ChangeEvent, useEffect } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import Style from './Sessoes.module.scss'
@@ -28,7 +29,9 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
-  const originalSessao = useRef(sessao)
+  const [sessoesData, setSessoesData] = useState<Session[]>([])
+
+  const DISTANCIA = 20
 
   const getLocal =
     typeof window !== 'undefined'
@@ -40,6 +43,94 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     : { latitude: 0, longitude: 0 }
 
   const { dataLayerMovieTicket } = useGtag()
+
+  const calculateDistance = (lat2: number, lon2: number) => {
+    const lat1 = localizacao.latitude
+    const lon1 = localizacao.longitude
+
+    if (lat1 === 0 && lon1 === 0) {
+      return 0
+    }
+
+    const R = 6371
+    const dLat = ((lat2 - lat1) * Math.PI) / 180
+    const dLon = ((lon2 - lon1) * Math.PI) / 180
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    const distanceInKilometers = R * c
+
+    return distanceInKilometers
+  }
+
+  useEffect(() => {
+    const sessionsWithDistance = sessao
+      .map((data) => ({
+        ...data,
+        sessions: data.sessions.map((session) => ({
+          ...session,
+          distance: calculateDistance(Number(session.lat), Number(session.lng))
+        }))
+      }))
+      .filter((data) => {
+        return (
+          data.sessions.some(
+            (session) =>
+              session.theaterName
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+              session.address.toLowerCase().includes(searchTerm.toLowerCase())
+          ) &&
+          (!selectedDate || data.date === selectedDate)
+        )
+      })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const groupedSessions: { [key: string]: Session } = {}
+
+    sessionsWithDistance.forEach(({ sessions }) => {
+      sessions.forEach(({ theaterName, hour: sessionHour, date, ...rest }) => {
+        const key = `${theaterName}`
+        if (!groupedSessions[key]) {
+          groupedSessions[key] = {
+            theaterName,
+            date,
+            hour: sessionHour,
+            // @ts-ignore: Unreachable code error
+            hours: [sessionHour],
+            // @ts-ignore: Unreachable code error
+            sessions: [],
+            ...rest
+          }
+        }
+        // @ts-ignore: Unreachable code error
+        groupedSessions[key].sessions.push(sessionHour)
+      })
+    })
+
+    const groupedSessionsArray = Object.values(groupedSessions)
+
+    const sortedSessionsByDistance = groupedSessionsArray.map((group) => ({
+      ...group,
+      sessions: group.sessions.sort(
+        (a: { distance: number }, b: { distance: number }) =>
+          a.distance - b.distance
+      )
+    }))
+    const permissaoSim = sortedSessionsByDistance.filter((data) => {
+      return data.distance <= DISTANCIA
+    })
+
+    const permissaoNao = sortedSessionsByDistance.filter((data) => {
+      return data.distance === 0
+    })
+
+    setSessoesData(permissaoSim.length > 0 ? permissaoSim : permissaoNao)
+  }, [searchTerm, selectedDate, sessoesData])
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate('')
@@ -66,89 +157,28 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
       data.hour
     )
   }
-  const calculateDistance = (lat2: number, lon2: number) => {
-    const lat1 = localizacao.latitude
-    const lon1 = localizacao.longitude
-
-    const R = 6371
-    const dLat = ((lat2 - lat1) * Math.PI) / 180
-    const dLon = ((lon2 - lon1) * Math.PI) / 180
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    const distanceInKilometers = R * c
-
-    return distanceInKilometers
-  }
 
   const filteredSessions = useMemo(() => {
-    return originalSessao.current.filter((data) => {
-      return (
-        data.sessions.some(
-          (session) =>
-            session.theaterName
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) ||
-            session.address.toLowerCase().includes(searchTerm.toLowerCase())
-        ) &&
-        (!selectedDate || data.date === selectedDate)
-      )
-    })
+    return
   }, [searchTerm, selectedDate])
-
-  const sortedSessions = useMemo(() => {
-    const sessionsWithDistance = filteredSessions.map((data) => ({
-      ...data,
-      sessions: data.sessions.map((session) => ({
-        ...session,
-        distance: calculateDistance(Number(session.lat), Number(session.lng))
-      }))
-    }))
-
-    sessionsWithDistance.map((data) =>
-      data.sessions.sort((a, b) => a.distance - b.distance)
-    )
-    return sessionsWithDistance
-  }, [localizacao])
-
-  const theaterGroups: Session[] = []
-
-  sortedSessions.forEach(({ sessions }) => {
-    sessions.forEach(({ theaterName, hour: sessionHour, date, ...rest }) => {
-      const existingTheaterIndex = theaterGroups.findIndex(
-        (session) =>
-          session.theaterName === theaterName && session.date === date
-      )
-      if (existingTheaterIndex === -1) {
-        theaterGroups.push({
-          theaterName,
-          date,
-          // @ts-expect-error: Unreachable code error
-          hours: [sessionHour],
-          /* tslint:enable */
-          ...rest,
-          hour: ''
-        })
-      } else {
-        theaterGroups[existingTheaterIndex].hours.push(sessionHour)
-      }
-    })
-  })
 
   const noResultsMessage = useMemo(() => {
     if (searchTerm.trim() !== '' || selectedDate) {
-      if (filteredSessions.length === 0) {
+      if (sessao?.length === 0) {
         return (
           <div className={Style.noResults}>Nenhum resultado encontrado.</div>
         )
       }
     }
     return null
-  }, [filteredSessions, searchTerm, selectedDate])
+  }, [
+    filteredSessions,
+    searchTerm,
+    selectedDate,
+    DISTANCIA,
+    localizacao.latitude,
+    localizacao.latitude
+  ])
 
   return (
     <section className={Style.areaSessao}>
@@ -188,7 +218,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
           <div className={Style.areaSessao}>Escolha uma sessão:</div>
           <div className={Style.areaCinema}>
             {noResultsMessage}
-            {Object.values(theaterGroups)
+            {sessoesData
               .filter(
                 (session) =>
                   session.theaterName
