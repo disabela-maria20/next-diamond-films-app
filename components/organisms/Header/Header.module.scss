@@ -4,9 +4,17 @@
 	// background-size: cover;
 	// background-position-x: center;
 	// background-position-y: top;
+	transition: all 400ms;
 	position: absolute;
 	width: 100%;
 	margin: 0 auto;
 	z-index: 99;
 	
+	&.active{
+		position: fixed;
+		background-color: $primary-dark-color;
+		img{
+			padding: 20px;
+		}
+	}
 }
