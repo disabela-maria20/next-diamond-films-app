@@ -23,6 +23,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={montserrat.className}>
         <Header>
+          <link rel="stylesheet" href="reset.css" />
           <Script dangerouslySetInnerHTML={{
             __html: `(function(h,o,t,j,a,r){
               h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
