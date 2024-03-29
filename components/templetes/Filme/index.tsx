@@ -195,13 +195,12 @@ const Filme = (data: IFilmeProps) => {
 
   return (
     <>
-      <section className={Style.areaBanner}>
-        <img
-          src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
-          alt={filme?.title}
-          width={1440}
-          height={440}
-        />
+      <section
+        className={Style.areaBanner}
+        style={{
+          backgroundImage: `url(${isMobile ? filme?.bannerMobile : filme?.bannerDesktop})`
+        }}
+      >
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
@@ -215,7 +214,9 @@ const Filme = (data: IFilmeProps) => {
                 {emExibicao && !isMobile && (
                   <div className={Style.areaBtnCompra}>
                     <button
-                      onClick={() => router.push('#sessao', { scroll: true })}
+                      onClick={() => {
+                        router.push('#sessao', { scroll: true })
+                      }}
                     >
                       COMPRAR INGRESSOS
                     </button>

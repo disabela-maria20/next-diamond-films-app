@@ -1,18 +1,17 @@
 .navBar {
+	position: relative;
 	.NavArea {
-		transition: all 0.6s ease-out;
+		transition: all 0.4s ease-out;
 		// background-color: $quaternary-colos;
-		overflow: auto;
 		z-index: 2;
 		width: 100%;
 		margin: auto;
 		position: absolute;
 		left: 0;
 		top: 90px;
-		padding: 0 20px;
-
+		
 		&.close {
-			height: 0;
+			transform: translate(-110%);
 
 			@include media(xl) {
 				height: initial;
@@ -21,7 +20,7 @@
 		}
 
 		&.open {
-
+			transform: translate(0);
 			@include media(xl) {
 				height: initial;
 			}
@@ -36,7 +35,18 @@
 			backdrop-filter: none;
 		}
 	}
-
+	.navFechar{
+		background: transparent;
+		border: none;
+		position: absolute;
+		right: 0;
+		top: -15px;
+    z-index: 9;
+		svg{
+			color: rgb(255, 255, 255);
+			font-size: 3.5rem;
+		}
+	}
 	ul {
 		margin-block: 0;
 		padding-inline-start: 0;

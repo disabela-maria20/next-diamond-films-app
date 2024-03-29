@@ -8,7 +8,8 @@ html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   font-size: 62.5%;
-  font-display: optional
+  font-display: optional;
+  scroll-behavior: smooth;
 }
 
 body {

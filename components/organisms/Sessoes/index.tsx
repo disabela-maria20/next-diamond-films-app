@@ -126,11 +126,11 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     })
 
     const permissaoNao = sortedSessionsByDistance.filter((data) => {
-      return data.distance === 0
+      return data.distance === 0 || data.distance
     })
 
     setSessoesData(permissaoSim.length > 0 ? permissaoSim : permissaoNao)
-  }, [searchTerm, selectedDate, sessoesData])
+  }, [searchTerm, selectedDate, selectedDate])
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate('')
