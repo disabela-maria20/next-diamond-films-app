@@ -4,23 +4,22 @@ import { IFilmeResponse } from '@/utils/server/types'
 
 const useFilmeTextStatus = () => {
   const {
-    formatMesmaSemana,
     formatfaltaUmaSemanaParaDataMarcada,
     formatPassouUmaSemanaDesdeData
   } = useFormatarData()
 
   const statusTextData = (filmeLista: IFilmeResponse) => {
     if (
-      formatMesmaSemana(filmeLista.releasedate) ||
+      filmeLista.hasSession &&
+      formatfaltaUmaSemanaParaDataMarcada(filmeLista.releasedate)
+    )
+      return 'Em pré-venda'
+    if (filmeLista.streaming.length > 0) return 'Em streaming'
+    if (
+      filmeLista.hasSession &&
       formatPassouUmaSemanaDesdeData(filmeLista.releasedate)
     )
-      return 'Hoje nos Cinemas'
-    if (formatfaltaUmaSemanaParaDataMarcada(filmeLista.releasedate)) {
-      return 'Em pré-venda'
-    }
-    if (filmeLista.streaming.length > 0) {
-      return 'Em streaming'
-    }
+      return 'Hoje nos cinemas'
     return 'Em breve nos cinemas'
   }
 

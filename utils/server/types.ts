@@ -33,6 +33,7 @@ export interface IFilmeResponse extends IFilmeTextStatusProps {
   images: IFilmeResponseUrl[]
   streaming: string[]
   created_at: string
+  hasSession: boolean
 }
 
 export interface IFilmeResponseUrl {
