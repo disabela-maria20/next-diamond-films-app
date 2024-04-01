@@ -192,6 +192,7 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
+  console.log(data)
 
   return (
     <>
