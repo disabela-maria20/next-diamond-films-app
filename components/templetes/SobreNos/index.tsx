@@ -52,20 +52,19 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
         <img src="/img/logo.webp" alt="logo" width={300} height={200} />
         <h1>SOBRE NÓS</h1>
         <p>
-          A Diamond Films é uma distribuidora de cinema fundada em 2010, que se
-          se destaca por ser responsável pela distribuição dos melhores filmes
-          independentes da indústria cinematográfica. Atualmente, conta com uma
-          rede de distribuição em sete países da América Latina: Argentina,
-          Bolívia, Brasil, Chile, Colômbia, Peru e México. E, em 2016 entrou no
-          mercado europeu, através de sua nova filial na Espanha.
+          A Diamond Films é a maior distribuidora independente da América
+          Latina. Fundada em 2010, se destaca por distribuir os melhores filmes
+          independentes da indústria cinematográfica. Atualmente, a empresa atua
+          em sete países da América Latina: Argentina, Bolívia, Brasil, Chile,
+          Colômbia, Peru e México. No ano de 2016 começou a atuar no mercado
+          europeu, por meio da sua filial na Espanha. No Brasil desde 2013, a
+          Diamond Films distribuiu títulos como 'Os Oito Odiados'; 'Lion - Uma
+          Jornada para Casa', ‘Moonlight - Sob a Luz do Luar', 'Green Book - O
+          Guia', ‘Moonfall – Ameaça Lunar’, ‘No Ritmo do Coração’, ‘Spencer’, ‘A
+          Pior Pessoa do Mundo’, ‘Órfã 2: A Origem’, ‘One Piece Film Red’, ‘Tudo
+          em Todo o Lugar ao Mesmo Tempo’ e ‘Fale Comigo’.
         </p>
-        <p>
-          No Brasil, desde 2013, a Diamond distribuiu filmes como Antes da
-          Meia-Noite, Bling Ring, Dragon Ball Z  A Batalha dos Deuses, O Mordomo
-          da Casa Branca, Hércules 3D, O Jogo da Imitação, Para Sempre Alice, A
-          Incrível História de Adaline, A Dama Dourada, Os Oito Odiados,
-          Macbeth, Invasão a Londres e Memórias Secretas.
-        </p>
+
         <hr />
         <h2 className={Style.titleOutline}>MISSÃO</h2>
         <p>

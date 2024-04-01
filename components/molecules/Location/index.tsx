@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 
 import Cookies from 'js-cookie'
@@ -87,7 +88,18 @@ const Location = () => {
         <Model.Root>
           <Model.Body setOpen={() => setShowModal(false)}>
             <div className={Style.locationModal}>
-              <h2>Você permite usarmos sua localização?</h2>
+              <p>
+                Este site utiliza cookies para melhorar a sua experiência de
+                navegação. Ao continuar, você concorda com o uso de cookies,
+                conforme detalhado em nossa
+                <Link href="/politica-de-privacidade">
+                  Política de Privacidade
+                </Link>
+                e concede autorização para o uso de geolocalização de acordo com
+                nossos termos. Para mais informações ou para ajustar suas
+                configurações, por favor, consulte nossa política de
+                privacidade.
+              </p>
               <div className={Style.modalButton}>
                 <button onClick={() => handleGetLocation(true)}>Sim</button>
                 <button onClick={() => handleGetLocation(false)}>Não</button>

@@ -244,10 +244,16 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                       <h3>{session.theaterName}</h3>
                       <h4>
                         {session.distance !== 0 && (
-                          <strong className={Style.areaDistancia}>
-                            <FaMapMarkerAlt />
-                            <span>{session.distance.toFixed(1)}</span>KM -
-                          </strong>
+                          <a
+                            href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <strong className={Style.areaDistancia}>
+                              <FaMapMarkerAlt />
+                              <span>{session.distance.toFixed(1)}</span>KM -
+                            </strong>
+                          </a>
                         )}
                         {session.address}, {session.number}
                         {session.addressComplement && '-'}
