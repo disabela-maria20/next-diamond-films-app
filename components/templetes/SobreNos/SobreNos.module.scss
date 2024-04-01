@@ -28,7 +28,8 @@
 
 	.titleOutline {
 		color: $primary-dark-color;
-		text-shadow: 0 0 1px $primary-lingh-color;
+		text-shadow: 2px 2px 0 $primary-lingh-color, 2px -2px 0 $primary-lingh-color, -2px 2px 0 $primary-lingh-color, -2px -2px 0 $primary-lingh-color, 2px 0px 0 $primary-lingh-color, 0px 2px 0 $primary-lingh-color, -2px 0px 0 $primary-lingh-color, 0px -2px 0 $primary-lingh-color;
+		letter-spacing: 5px;
 	}
 
 	a {
