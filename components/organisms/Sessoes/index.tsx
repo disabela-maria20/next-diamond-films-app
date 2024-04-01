@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import React, { useState, useMemo, ChangeEvent, useEffect } from 'react'
+import { FaMapMarkerAlt } from 'react-icons/fa'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import Style from './Sessoes.module.scss'
@@ -116,11 +117,9 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
 
     const sortedSessionsByDistance = groupedSessionsArray.map((group) => ({
       ...group,
-      sessions: group.sessions.sort(
-        (a: { distance: number }, b: { distance: number }) =>
-          a.distance - b.distance
-      )
+      sessions: group.sessions
     }))
+
     const permissaoSim = sortedSessionsByDistance.filter((data) => {
       return data.distance <= DISTANCIA
     })
@@ -228,6 +227,10 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                     .toLowerCase()
                     .includes(searchTerm.toLowerCase())
               )
+              .sort(
+                (a: { distance: number }, b: { distance: number }) =>
+                  a.distance - b.distance
+              )
               .map((session, i) => (
                 <div key={1 + i}>
                   <div className={Style.flexTitle}>
@@ -240,6 +243,12 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                     <div className={Style.areaTitle}>
                       <h3>{session.theaterName}</h3>
                       <h4>
+                        {session.distance !== 0 && (
+                          <strong className={Style.areaDistancia}>
+                            <FaMapMarkerAlt />
+                            <span>{session.distance.toFixed(1)}</span>
+                          </strong>
+                        )}
                         {session.address}, {session.number}
                         {session.addressComplement && '-'}
                         {session.addressComplement}
