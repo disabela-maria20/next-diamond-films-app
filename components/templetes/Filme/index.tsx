@@ -78,13 +78,14 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
+  const filme = data.movie?.movie
+  const sessoes = data.movie?.sessions
+
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [image, setImage] = useState<IFilmeResponseUrl>()
-
-  const filme = data.movie?.movie
-  const sessoes = data.movie?.sessions
+  const [saibaMais, setSaibaMais] = useState<boolean>(sessoes?.length === 0)
 
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData()
@@ -192,7 +193,6 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
-  console.log(data)
 
   return (
     <>
@@ -207,13 +207,15 @@ const Filme = (data: IFilmeProps) => {
             <div className={Style.areaTituloBanner}>
               <h1 style={{ color: `${filme?.color}` }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
-                {emExibicao && (
-                  <h2 className={Style.emExibicao}>
-                    <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
-                  </h2>
-                )}
-                {emExibicao && !isMobile && (
-                  <div className={Style.areaBtnCompra}>
+                <h2 className={Style.emExibicao}>
+                  {emExibicao && (
+                    <>
+                      <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
+                    </>
+                  )}
+                </h2>
+                <div className={Style.areaBtnCompra}>
+                  {emExibicao && !isMobile && (
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -221,8 +223,11 @@ const Filme = (data: IFilmeProps) => {
                     >
                       COMPRAR INGRESSOS
                     </button>
-                  </div>
-                )}
+                  )}
+                  <button onClick={() => setSaibaMais(!saibaMais)}>
+                    Saiba +
+                  </button>
+                </div>
               </div>
             </div>
             {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
@@ -261,116 +266,120 @@ const Filme = (data: IFilmeProps) => {
                 ))}
               </div>
             )} */}
-          <div className={Style.areaPoster}>
-            <div className={Style.areaFlexPoster}>
-              <img
-                src={filme?.cover}
-                alt={filme?.title}
-                width={270}
-                height={400}
-              />
-              <div>
-                <h2>Sinopse</h2>
-                <p>{filme?.shortSynopsis}</p>
-                <Links youtube={filme?.trailer} insta=""></Links>
-              </div>
-            </div>
+          {saibaMais && (
+            <section className={Style.filmeSaibaMais}>
+              <div className={Style.areaPoster}>
+                <div className={Style.areaFlexPoster}>
+                  <img
+                    src={filme?.cover}
+                    alt={filme?.title}
+                    width={270}
+                    height={400}
+                  />
+                  <div>
+                    <h2>Sinopse</h2>
+                    <p>{filme?.shortSynopsis}</p>
+                    <Links youtube={filme?.trailer} insta=""></Links>
+                  </div>
+                </div>
 
-            <div className={Style.areaFlexInformacoes}>
-              <div>
-                <h2>Informações</h2>
-                <div className={Style.areaClassificaçãoIndicativa}>
-                  {filme?.age && (
-                    <span
-                      style={{
-                        background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                <div className={Style.areaFlexInformacoes}>
+                  <div>
+                    <h2>Informações</h2>
+                    <div className={Style.areaClassificaçãoIndicativa}>
+                      {filme?.age && (
+                        <span
+                          style={{
+                            background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                          }}
+                        >
+                          {filme?.age}
+                        </span>
+                      )}
+
+                      <p>{filme?.ageExplain}</p>
+                    </div>
+                    <ul className={Style.areainformacaoFilme}>
+                      <li>
+                        <strong>Título Internacional:</strong>
+                        {filme?.originalTitle}
+                      </li>
+                      <li>
+                        <strong>Duração:</strong>
+                        {converterParaHorasEMinutos(filme?.duration)}
+                      </li>
+                      <li>
+                        <strong>Gênero:</strong>
+                        {filme?.genre}
+                      </li>
+                      <li>
+                        <strong>Elenco:</strong>
+                        {filme?.cast}
+                      </li>
+                      <li>
+                        <strong>Direção:</strong>
+                        {filme?.director}
+                      </li>
+                      <li>
+                        <strong>Data de Estreia:</strong>
+                        {formatarData(filme?.releasedate)}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
+              <section className={Style.areaIframeVideoYoutube}>
+                <section className={Style.gridIframeVideoYoutube}>
+                  {filme?.videos?.map((data) => (
+                    <div
+                      className={Style.iframeVideoYoutube}
+                      key={data.url}
+                      onClick={() => {
+                        console.log(data.url)
+                        dataLayerPlayTrailer(
+                          filme.title,
+                          filme.slug,
+                          filme.originalTitle,
+                          filme.genre,
+                          'HUB'
+                        )
                       }}
                     >
-                      {filme?.age}
-                    </span>
-                  )}
+                      <iframe
+                        className={Style.embedResponsiveItem}
+                        src={data.url}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  ))}
+                </section>
+              </section>
 
-                  <p>{filme?.ageExplain}</p>
-                </div>
-                <ul className={Style.areainformacaoFilme}>
-                  <li>
-                    <strong>Título Internacional:</strong>
-                    {filme?.originalTitle}
-                  </li>
-                  <li>
-                    <strong>Duração:</strong>
-                    {converterParaHorasEMinutos(filme?.duration)}
-                  </li>
-                  <li>
-                    <strong>Gênero:</strong>
-                    {filme?.genre}
-                  </li>
-                  <li>
-                    <strong>Elenco:</strong>
-                    {filme?.cast}
-                  </li>
-                  <li>
-                    <strong>Direção:</strong>
-                    {filme?.director}
-                  </li>
-                  <li>
-                    <strong>Data de Estreia:</strong>
-                    {formatarData(filme?.releasedate)}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-          <section className={Style.areaIframeVideoYoutube}>
-            <section className={Style.gridIframeVideoYoutube}>
-              {filme?.videos?.map((data) => (
-                <div
-                  className={Style.iframeVideoYoutube}
-                  key={data.url}
-                  onClick={() => {
-                    console.log(data.url)
-                    dataLayerPlayTrailer(
-                      filme.title,
-                      filme.slug,
-                      filme.originalTitle,
-                      filme.genre,
-                      'HUB'
-                    )
-                  }}
-                >
-                  <iframe
-                    className={Style.embedResponsiveItem}
-                    src={data.url}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              ))}
+              <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
+              <Slide.Content
+                swiperOptions={swiperOptions}
+                className={Style.areaSlide}
+              >
+                {filme?.images?.map((data) => (
+                  <div key={data.url}>
+                    <img
+                      alt="Filme"
+                      className={Style.SlideImgFilme}
+                      src={`${data.url}`}
+                      onClick={() => handleVerImagem(data)}
+                      style={{ cursor: 'pointer' }}
+                      width={300}
+                      height={200}
+                    />
+                  </div>
+                ))}
+              </Slide.Content>
             </section>
-          </section>
-
-          <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
-          <Slide.Content
-            swiperOptions={swiperOptions}
-            className={Style.areaSlide}
-          >
-            {filme?.images?.map((data) => (
-              <div key={data.url}>
-                <img
-                  alt="Filme"
-                  className={Style.SlideImgFilme}
-                  src={`${data.url}`}
-                  onClick={() => handleVerImagem(data)}
-                  style={{ cursor: 'pointer' }}
-                  width={300}
-                  height={200}
-                />
-              </div>
-            ))}
-          </Slide.Content>
+          )}
 
           {sessoes.length > 0 && (
             <section id="sessao">

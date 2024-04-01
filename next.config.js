@@ -14,7 +14,7 @@ const nextConfig = {
   },
   compiler: {
     styledComponents: true,
-    removeConsole: true
+    removeConsole: false
   },
   compress: true
 }
