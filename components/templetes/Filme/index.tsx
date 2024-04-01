@@ -41,7 +41,7 @@ const classificacoesIndicativas = [
   { idade: '12', cor: '#f5d218' },
   { idade: '14', cor: '#f0850c' },
   { idade: '16', cor: '#d40011' },
-  { idade: '18', cor: '#000000' }
+  { idade: '18', cor: '#161616' }
 ]
 
 function setDefinirCorClassificacaoIndicativa(idade: string) {
