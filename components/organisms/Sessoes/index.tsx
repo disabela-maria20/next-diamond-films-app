@@ -246,7 +246,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                         {session.distance !== 0 && (
                           <strong className={Style.areaDistancia}>
                             <FaMapMarkerAlt />
-                            <span>{session.distance.toFixed(1)}</span>
+                            <span>{session.distance.toFixed(1)}</span>KM -
                           </strong>
                         )}
                         {session.address}, {session.number}

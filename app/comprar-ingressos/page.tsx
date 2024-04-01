@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const pageComprarIngresso = async () => {
   const listaFilmes = await getHome()
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading altura={true} />}>
       <ComprarIngresso banner={banner} listaFilmes={listaFilmes} />
     </Suspense>
   )
