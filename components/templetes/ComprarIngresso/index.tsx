@@ -124,11 +124,7 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
                       <>
                         <Sessoes
                           filme={sessoes?.movie}
-                          poster={
-                            !isMobile
-                              ? sessoes?.movie.bannerMobile
-                              : sessoes?.movie.bannerDesktop
-                          }
+                          poster={sessoes.movie.cover}
                           color={sessoes?.movie.color}
                           sessao={sessoes?.sessions}
                         />

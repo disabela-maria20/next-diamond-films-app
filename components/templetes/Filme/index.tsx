@@ -388,7 +388,7 @@ const Filme = (data: IFilmeProps) => {
                 filme={filme}
                 sessao={sessoes}
                 color={filme.color}
-                poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
+                poster={filme.cover}
               />
             </section>
           )}
