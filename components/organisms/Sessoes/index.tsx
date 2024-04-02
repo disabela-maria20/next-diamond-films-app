@@ -93,27 +93,29 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const groupedSessions: { [key: string]: Session } = {}
 
-    sessionsWithDistance.forEach(({ sessions }) => {
-      sessions.forEach(({ theaterName, hour: sessionHour, date, ...rest }) => {
-        const key = `${theaterName}`
-        if (!groupedSessions[key]) {
-          groupedSessions[key] = {
-            theaterName,
-            date,
-            hour: sessionHour,
-            // @ts-ignore: Unreachable code error
-            hours: [sessionHour],
-            // @ts-ignore: Unreachable code error
-            sessions: [],
-            ...rest
+    sessionsWithDistance.map(({ sessions }) => {
+      sessions.map(
+        ({ theaterName, hour: sessionHour, link: links, date, ...rest }) => {
+          const key = `${theaterName}`
+          if (!groupedSessions[key]) {
+            groupedSessions[key] = {
+              theaterName,
+              date,
+              hour: sessionHour,
+              // @ts-ignore: Unreachable code error
+              hours: [],
+              ...rest
+            }
           }
+          // @ts-ignore: Unreachable code error
+          groupedSessions[key].hours.push({ hour: sessionHour, link: links })
         }
-        // @ts-ignore: Unreachable code error
-        groupedSessions[key].sessions.push(sessionHour)
-      })
+      )
     })
 
     const groupedSessionsArray = Object.values(groupedSessions)
+
+    console.log(groupedSessionsArray)
 
     const sortedSessionsByDistance = groupedSessionsArray.map((group) => ({
       ...group,
@@ -129,7 +131,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     })
 
     setSessoesData(permissaoSim.length > 0 ? permissaoSim : permissaoNao)
-  }, [searchTerm, selectedDate, selectedDate])
+  }, [searchTerm, selectedDate])
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate('')
@@ -143,6 +145,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
 
   useEffect(() => {
     setSelectedDate(new Date().toISOString().split('T')[0])
+    console.log(selectedDate)
   }, [])
 
   function handleClickBanner(data: Session) {
@@ -157,10 +160,6 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     )
   }
 
-  const filteredSessions = useMemo(() => {
-    return
-  }, [searchTerm, selectedDate])
-
   const noResultsMessage = useMemo(() => {
     if (searchTerm.trim() !== '' || selectedDate) {
       if (sessao?.length === 0) {
@@ -171,7 +170,6 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     }
     return null
   }, [
-    filteredSessions,
     searchTerm,
     selectedDate,
     DISTANCIA,
@@ -267,12 +265,12 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                       {session.hours.map((hour, i) => (
                         <li key={1 + i}>
                           <S.LinkHora
-                            href={session.link}
+                            href={hour.link}
                             $color={color}
                             onClick={() => handleClickBanner(session)}
                             target="_blank"
                           >
-                            {hour}
+                            {hour.hour}
                           </S.LinkHora>
                         </li>
                       ))}

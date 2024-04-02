@@ -50,9 +50,9 @@ export interface IFilmesEstado {
 export interface Session {
   distance: number
   date: string
-  sessionHour: string // renomeado de 'hour' para 'sessionHour'
+  sessionHour: string
   theaterName: string
-  link: string
+  link?: string
   technology: string
   isImax: boolean
   postalCode: string
@@ -62,6 +62,11 @@ export interface Session {
   addressComplement?: string
   number?: string
   sessions: Session[]
-  hours: string[]
+  hours: SessionHours[]
   hour: string
+}
+
+export interface SessionHours {
+  hour: string
+  link: string
 }
