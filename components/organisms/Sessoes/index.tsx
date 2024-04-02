@@ -132,7 +132,6 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   }, [searchTerm, selectedDate])
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate('')
     setSearchTerm(event.target.value)
   }
 

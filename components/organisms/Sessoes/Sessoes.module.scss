@@ -4,10 +4,14 @@
 	.gridSessoes {
 		@include media(lg) {
 			display: grid;
-			grid-template-columns: 0.5fr 1fr;
+			grid-template-columns: 1fr 2fr;
 			grid-auto-rows: 550px;
 		}
-
+		img{
+			object-fit: contain;
+			object-position: right;
+			height: 100%;
+		}
 	}
 
 	.areaSessao {
