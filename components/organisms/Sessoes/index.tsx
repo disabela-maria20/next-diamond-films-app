@@ -115,8 +115,6 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
 
     const groupedSessionsArray = Object.values(groupedSessions)
 
-    console.log(groupedSessionsArray)
-
     const sortedSessionsByDistance = groupedSessionsArray.map((group) => ({
       ...group,
       sessions: group.sessions
@@ -145,8 +143,13 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
 
   useEffect(() => {
     setSelectedDate(new Date().toISOString().split('T')[0])
-    console.log(selectedDate)
   }, [])
+
+  useEffect(() => {
+    if (!selectedDate && sessao.length > 0) {
+      setSelectedDate(sessao[0].date)
+    }
+  }, [selectedDate, sessao])
 
   function handleClickBanner(data: Session) {
     dataLayerMovieTicket(
