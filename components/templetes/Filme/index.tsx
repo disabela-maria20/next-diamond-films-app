@@ -26,14 +26,14 @@ interface IFilmeProps {
   }
 }
 
-// enum EStreaming {
-//   Netflix = 'Netflix',
-//   AmazonPrime = 'Amazon Prime',
-//   DisneyPlus = 'Disney+',
-//   Hulu = 'Hulu',
-//   HBO = 'HBO',
-//   AppleTVPlus = 'Apple TV+'
-// }
+enum EStreaming {
+  Netflix = 'Netflix',
+  AmazonPrime = 'Amazon Prime',
+  DisneyPlus = 'Disney+',
+  Hulu = 'Hulu',
+  HBO = 'HBO',
+  AppleTVPlus = 'Apple TV+'
+}
 
 const classificacoesIndicativas = [
   { idade: 'Livre', cor: '#048f16' },
@@ -52,23 +52,23 @@ function setDefinirCorClassificacaoIndicativa(idade: string) {
   return classificacao ? classificacao.cor : ''
 }
 
-// const setStreaming = (streaming: string[]): string[] => {
-//   const availableStreamings: string[] = []
-//   const enumKeys = Object.keys(EStreaming)
+const setStreaming = (streaming: string[]): string[] => {
+  const availableStreamings: string[] = []
+  const enumKeys = Object.keys(EStreaming)
 
-//   streaming.forEach((stream: string) => {
-//     const matchingKey = enumKeys.find(
-//       (key) =>
-//         EStreaming[key as keyof typeof EStreaming].toLowerCase() ===
-//         stream.toLowerCase()
-//     )
-//     if (matchingKey) {
-//       availableStreamings.push(matchingKey)
-//     }
-//   })
+  streaming.forEach((stream: string) => {
+    const matchingKey = enumKeys.find(
+      (key) =>
+        EStreaming[key as keyof typeof EStreaming].toLowerCase() ===
+        stream.toLowerCase()
+    )
+    if (matchingKey) {
+      availableStreamings.push(matchingKey)
+    }
+  })
 
-//   return availableStreamings
-// }
+  return availableStreamings
+}
 
 function converterParaHorasEMinutos(totalMinutos: number) {
   const horas = Math.floor(totalMinutos / 60)
@@ -95,7 +95,7 @@ const Filme = (data: IFilmeProps) => {
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
     formatPassouUmaSemanaDesdeData(filme?.releasedate)
-  //const streaming = setStreaming(filme?.streaming)
+  const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
@@ -224,9 +224,11 @@ const Filme = (data: IFilmeProps) => {
                       COMPRAR INGRESSOS
                     </button>
                   )}
-                  <button onClick={() => setSaibaMais(!saibaMais)}>
-                    Saiba +
-                  </button>
+                  {sessoes?.length > 0 && (
+                    <button onClick={() => setSaibaMais(!saibaMais)}>
+                      Saiba +
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -252,20 +254,20 @@ const Filme = (data: IFilmeProps) => {
               </button>
             </div>
           )}
-          {/* {filme?.status != 'ativo' && streaming !== null && (
-              <div className={Style.areaBtn}>
-                {streaming.map((service, index) => (
-                  <button key={index}>
-                    ASSISTA AGORA NO
-                    <img
-                      src={`/img/streaming/${service.toLowerCase()}.png`}
-                      alt={service.toLowerCase()}
-                      width="100"
-                    />
-                  </button>
-                ))}
-              </div>
-            )} */}
+          {filme?.status != 'ativo' && streaming !== null && (
+            <div className={Style.areaBtn}>
+              {streaming.map((service, index) => (
+                <button key={index}>
+                  ASSISTA AGORA NO
+                  <img
+                    src={`/img/streaming/${service.toLowerCase()}.png`}
+                    alt={service.toLowerCase()}
+                    width="100"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
           {saibaMais && (
             <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
