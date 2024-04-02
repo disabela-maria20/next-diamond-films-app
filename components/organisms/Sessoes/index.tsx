@@ -183,9 +183,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
-        <div>
-          <img src={poster} alt="Poster Filme" width={1000} height={500} />
-        </div>
+        <img src={poster} alt="Poster Filme" width={1000} height={500} />
         <div
           className={Style.areaPesquisa}
           style={{ background: `${darken(0.2, color)}` }}
@@ -233,7 +231,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                   a.distance - b.distance
               )
               .map((session, i) => (
-                <div key={1 + i}>
+                <div key={1 + i} className={Style.ItemSessao}>
                   <div className={Style.flexTitle}>
                     <img
                       src="/img/icon _ticket_.png"

@@ -245,7 +245,7 @@ const Filme = (data: IFilmeProps) => {
         />
       </div>
 
-      <div style={{ overflowX: 'hidden' }}>
+      <div style={{ overflow: 'hidden' }}>
         <div className="container">
           {emExibicao && isMobile && (
             <div className={Style.areaBtnCompra}>
