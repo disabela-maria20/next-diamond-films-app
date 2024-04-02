@@ -1,7 +1,17 @@
-import React from 'react'
+import { PropagateLoader } from 'react-spinners'
 
-const Loading = () => {
-  return <div></div>
+import Style from './Loading.module.scss'
+
+interface ILoadingProps {
+  altura?: boolean
+}
+
+const Loading = ({ altura = false }: ILoadingProps) => {
+  return (
+    <section className={`${Style.loading} ${altura && Style.loadingHeight}`}>
+      <PropagateLoader color="#fff" size={8} />
+    </section>
+  )
 }
 
 export default Loading

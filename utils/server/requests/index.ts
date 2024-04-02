@@ -41,3 +41,20 @@ export async function postNewsletter(
     phone: phone
   })
 }
+
+export async function postContact(
+  name: string,
+  email: string,
+  phone: string,
+  message: string
+) {
+  return axios.post(
+    `/save/optin?name=${name}&email=${email}&phone=${phone}&message=${message}`,
+    {
+      name: name,
+      email: email,
+      phone: phone,
+      message: message
+    }
+  )
+}

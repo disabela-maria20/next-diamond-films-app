@@ -1,26 +1,26 @@
-import { useState } from 'react'
+import { useFormatarData } from '../useFormatarData/formatarData'
+
+import { IFilmeResponse } from '@/utils/server/types'
 
 const useFilmeTextStatus = () => {
-  const [status, setStatus] = useState<string>('Em breve nos cinemas.')
+  const {
+    formatfaltaUmaSemanaParaDataMarcada,
+    formatPassouUmaSemanaDesdeData
+  } = useFormatarData()
 
-  const statusTextData = (releasedate: string) => {
-    const preVenda = !new Date() && !new Date(releasedate)
-    const nosCinemas = new Date() == new Date(releasedate)
-    const emBreve = !new Date() && !new Date(releasedate)
-
-    if (preVenda) {
-      setStatus('Em pré-venda')
-    }
-    if (nosCinemas) {
-      setStatus('Nos cinemas')
-    }
-    if (emBreve) {
-      setStatus('Em breve nos cinemas')
-    }
-    if (preVenda) {
-      setStatus('Em pré-venda')
-    }
-    return status
+  const statusTextData = (filmeLista: IFilmeResponse) => {
+    if (
+      filmeLista.hasSession &&
+      formatfaltaUmaSemanaParaDataMarcada(filmeLista.releasedate)
+    )
+      return 'Em pré-venda'
+    if (filmeLista.streaming.length > 0) return 'Em streaming'
+    if (
+      filmeLista.hasSession &&
+      formatPassouUmaSemanaDesdeData(filmeLista.releasedate)
+    )
+      return 'Hoje nos cinemas'
+    return 'Em breve nos cinemas'
   }
 
   return statusTextData

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 
@@ -25,14 +27,14 @@ interface IFilmeProps {
   }
 }
 
-// enum EStreaming {
-//   Netflix = 'Netflix',
-//   AmazonPrime = 'Amazon Prime',
-//   DisneyPlus = 'Disney+',
-//   Hulu = 'Hulu',
-//   HBO = 'HBO',
-//   AppleTVPlus = 'Apple TV+'
-// }
+enum EStreaming {
+  Netflix = 'Netflix',
+  AmazonPrime = 'Amazon Prime',
+  DisneyPlus = 'Disney+',
+  Hulu = 'Hulu',
+  HBO = 'HBO',
+  AppleTVPlus = 'Apple TV+'
+}
 
 const classificacoesIndicativas = [
   { idade: 'Livre', cor: '#048f16' },
@@ -40,7 +42,7 @@ const classificacoesIndicativas = [
   { idade: '12', cor: '#f5d218' },
   { idade: '14', cor: '#f0850c' },
   { idade: '16', cor: '#d40011' },
-  { idade: '18', cor: '#000000' }
+  { idade: '18', cor: '#161616' }
 ]
 
 function setDefinirCorClassificacaoIndicativa(idade: string) {
@@ -51,23 +53,23 @@ function setDefinirCorClassificacaoIndicativa(idade: string) {
   return classificacao ? classificacao.cor : ''
 }
 
-// const setStreaming = (streaming: string[]): string[] => {
-//   const availableStreamings: string[] = []
-//   const enumKeys = Object.keys(EStreaming)
+const setStreaming = (streaming: string[]): string[] => {
+  const availableStreamings: string[] = []
+  const enumKeys = Object.keys(EStreaming)
 
-//   streaming.forEach((stream: string) => {
-//     const matchingKey = enumKeys.find(
-//       (key) =>
-//         EStreaming[key as keyof typeof EStreaming].toLowerCase() ===
-//         stream.toLowerCase()
-//     )
-//     if (matchingKey) {
-//       availableStreamings.push(matchingKey)
-//     }
-//   })
+  streaming.forEach((stream: string) => {
+    const matchingKey = enumKeys.find(
+      (key) =>
+        EStreaming[key as keyof typeof EStreaming].toLowerCase() ===
+        stream.toLowerCase()
+    )
+    if (matchingKey) {
+      availableStreamings.push(matchingKey)
+    }
+  })
 
-//   return availableStreamings
-// }
+  return availableStreamings
+}
 
 function converterParaHorasEMinutos(totalMinutos: number) {
   const horas = Math.floor(totalMinutos / 60)
@@ -77,25 +79,45 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
+  const filme = data.movie?.movie
+  const sessoes = data.movie?.sessions
+
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [image, setImage] = useState<IFilmeResponseUrl>()
+  const [saibaMais, setSaibaMais] = useState<boolean>(sessoes?.length === 0)
 
-  const filme = data.movie?.movie
-  const sessoes = data.movie.sessions
+  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
+    useFormatarData()
 
   const isMobile: boolean = useIsMobile()
   //const formatarData = useFormatarData()
-  const emExibicao = new Date() >= new Date(filme?.releasedate)
-  //const streaming = setStreaming(filme?.streaming)
+  const emExibicao =
+    formatMesmaSemana(filme?.releasedate) ||
+    formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
+    filme.hasSession
+  const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
-  const pageViews = useGtag()
+  const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
+
+  const router = useRouter()
 
   useEffect(() => {
-    pageViews(filme.title)
-  }, [filme.title, pageViews])
+    dataLayerFichafilme(
+      filme?.title,
+      filme?.slug,
+      filme?.originalTitle,
+      filme?.genre
+    )
+  }, [
+    dataLayerFichafilme,
+    filme?.genre,
+    filme?.originalTitle,
+    filme?.slug,
+    filme?.title
+  ])
 
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
@@ -173,152 +195,236 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
+  const URL = [
+    {
+      umaprovadecoragem: 'https://diamondfilms.com.br/uma-prova-de-coragem/'
+    },
+    {
+      umavida: 'https://diamondfilms.com.br/uma-prova-de-coragem/'
+    }
+  ]
+
+  const HubFilme = () => {
+    let urlEncontrada = null
+
+    URL.map((objeto) => {
+      const chave = Object.keys(objeto)[0]
+      if (chave === filme.slug) {
+        // @ts-ignore: Unreachable code error
+        urlEncontrada = objeto[chave]
+      }
+    })
+
+    return urlEncontrada
+  }
+
+  const hub = HubFilme()
 
   return (
     <>
-      <section className={Style.areaBanner}>
-        <img
-          src={isMobile ? filme?.bannerMobile : filme?.bannerDesktop}
-          alt={filme?.title}
-        />
+      <section
+        className={Style.areaBanner}
+        style={{
+          backgroundImage: `url(${isMobile ? filme?.bannerMobile : filme?.bannerDesktop})`
+        }}
+      >
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: `${filme.color}` }}>{filme.title}</h1>
-              {emExibicao && (
+              <h1 style={{ color: `${filme?.color}` }}>{filme?.title}</h1>
+              <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>
-                  <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
+                  {emExibicao && (
+                    <>
+                      <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
+                    </>
+                  )}
                 </h2>
-              )}
+                <div className={Style.areaBtnCompra}>
+                  {emExibicao && !isMobile && !hub && (
+                    <button
+                      onClick={() => {
+                        router.push('#sessao', { scroll: true })
+                      }}
+                    >
+                      COMPRAR INGRESSOS
+                    </button>
+                  )}
+                  {!!hub && (
+                    <a href={hub} target="_blank" rel="noopener noreferrer">
+                      Comprar ingresso
+                    </a>
+                  )}
+
+                  {sessoes?.length > 0 && (
+                    <button onClick={() => setSaibaMais(!saibaMais)}>
+                      Saiba +
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
             {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
           </div>
         </div>
       </section>
       <div className="container">
-        <Newsletter isHorrizontal={!isMobile} isBg={true} />
+        <Newsletter
+          isHorrizontal={!isMobile}
+          isBg={true}
+          filmes={filme}
+          type="filme"
+        />
       </div>
 
-      <div style={{ overflowX: 'hidden' }}>
+      <div style={{ overflow: 'hidden' }}>
         <div className="container">
           {emExibicao && isMobile && (
             <div className={Style.areaBtnCompra}>
-              <button> COMPRAR INGRESSOS </button>
+              <button onClick={() => router.push('#sessao', { scroll: true })}>
+                COMPRAR INGRESSOS
+              </button>
             </div>
           )}
-          {/* {filme?.status != 'ativo' && streaming !== null && (
-              <div className={Style.areaBtn}>
-                {streaming.map((service, index) => (
-                  <button key={index}>
-                    ASSISTA AGORA NO
-                    <img
-                      src={`/img/streaming/${service.toLowerCase()}.png`}
-                      alt={service.toLowerCase()}
-                      width="100"
-                    />
-                  </button>
-                ))}
-              </div>
-            )} */}
-          <div className={Style.areaPoster}>
-            <div className={Style.areaFlexPoster}>
-              <img src={filme?.cover} alt="" />
-              <div>
-                <h2>Sinopse</h2>
-                <p>{filme?.shortSynopsis}</p>
-                <Links youtube={filme?.trailer} insta=""></Links>
-              </div>
+          {filme?.status != 'ativo' && streaming !== null && (
+            <div className={Style.areaBtn}>
+              {streaming.map((service, index) => (
+                <button key={index}>
+                  ASSISTA AGORA NO
+                  <img
+                    src={`/img/streaming/${service.toLowerCase()}.png`}
+                    alt={service.toLowerCase()}
+                    width="100"
+                  />
+                </button>
+              ))}
             </div>
+          )}
+          {saibaMais && (
+            <section className={Style.filmeSaibaMais}>
+              <div className={Style.areaPoster}>
+                <div className={Style.areaFlexPoster}>
+                  <img
+                    src={filme?.cover}
+                    alt={filme?.title}
+                    width={270}
+                    height={400}
+                  />
+                  <div>
+                    <h2>Sinopse</h2>
+                    <p>{filme?.shortSynopsis}</p>
+                    <Links youtube={filme?.trailer} insta=""></Links>
+                  </div>
+                </div>
 
-            <div className={Style.areaFlexInformacoes}>
-              <div>
-                <h2>Informações</h2>
-                <div className={Style.areaClassificaçãoIndicativa}>
-                  {filme?.age && (
-                    <span
-                      style={{
-                        background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                <div className={Style.areaFlexInformacoes}>
+                  <div>
+                    <h2>Informações</h2>
+                    <div className={Style.areaClassificaçãoIndicativa}>
+                      {filme?.age && (
+                        <span
+                          style={{
+                            background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                          }}
+                        >
+                          {filme?.age}
+                        </span>
+                      )}
+
+                      <p>{filme?.ageExplain}</p>
+                    </div>
+                    <ul className={Style.areainformacaoFilme}>
+                      <li>
+                        <strong>Título Internacional:</strong>
+                        {filme?.originalTitle}
+                      </li>
+                      <li>
+                        <strong>Duração:</strong>
+                        {converterParaHorasEMinutos(filme?.duration)}
+                      </li>
+                      <li>
+                        <strong>Gênero:</strong>
+                        {filme?.genre}
+                      </li>
+                      <li>
+                        <strong>Elenco:</strong>
+                        {filme?.cast}
+                      </li>
+                      <li>
+                        <strong>Direção:</strong>
+                        {filme?.director}
+                      </li>
+                      <li>
+                        <strong>Data de Estreia:</strong>
+                        {formatarData(filme?.releasedate)}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
+              <section className={Style.areaIframeVideoYoutube}>
+                <section className={Style.gridIframeVideoYoutube}>
+                  {filme?.videos?.map((data) => (
+                    <div
+                      className={Style.iframeVideoYoutube}
+                      key={data.url}
+                      onClick={() => {
+                        console.log(data.url)
+                        dataLayerPlayTrailer(
+                          filme.title,
+                          filme.slug,
+                          filme.originalTitle,
+                          filme.genre,
+                          'HUB'
+                        )
                       }}
                     >
-                      {filme?.age}
-                    </span>
-                  )}
+                      <iframe
+                        className={Style.embedResponsiveItem}
+                        src={data.url}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  ))}
+                </section>
+              </section>
 
-                  <p>{filme?.ageExplain}</p>
-                </div>
-                <ul className={Style.areainformacaoFilme}>
-                  <li>
-                    <strong>Título Internacional:</strong>
-                    {filme?.originalTitle}
-                  </li>
-                  <li>
-                    <strong>Duração:</strong>
-                    {converterParaHorasEMinutos(filme?.duration)}
-                  </li>
-                  <li>
-                    <strong>Gênero:</strong>
-                    {filme?.genre}
-                  </li>
-                  <li>
-                    <strong>Elenco:</strong>
-                    {filme?.cast}
-                  </li>
-                  <li>
-                    <strong>Direção:</strong>
-                    {filme?.director}
-                  </li>
-                  <li>
-                    <strong>Data de Estreia:</strong>
-                    {formatarData(filme?.releasedate)}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-          <section className={Style.areaIframeVideoYoutube}>
-            <section className={Style.gridIframeVideoYoutube}>
-              {filme?.videos?.map((data) => (
-                <div className={Style.iframeVideoYoutube} key={data.url}>
-                  <iframe
-                    className={Style.embedResponsiveItem}
-                    src={data.url}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              ))}
+              <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
+              <Slide.Content
+                swiperOptions={swiperOptions}
+                className={Style.areaSlide}
+              >
+                {filme?.images?.map((data) => (
+                  <div key={data.url}>
+                    <img
+                      alt="Filme"
+                      className={Style.SlideImgFilme}
+                      src={`${data.url}`}
+                      onClick={() => handleVerImagem(data)}
+                      style={{ cursor: 'pointer' }}
+                      width={300}
+                      height={200}
+                    />
+                  </div>
+                ))}
+              </Slide.Content>
             </section>
-          </section>
-
-          <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
-          <Slide.Content
-            swiperOptions={swiperOptions}
-            className={Style.areaSlide}
-          >
-            {filme?.images?.map((data) => (
-              <div key={data.url}>
-                <img
-                  className={Style.SlideImgFilme}
-                  src={`${data.url}`}
-                  onClick={() => handleVerImagem(data)}
-                  style={{ cursor: 'pointer' }}
-                />
-              </div>
-            ))}
-          </Slide.Content>
+          )}
 
           {sessoes.length > 0 && (
-            <>
+            <section id="sessao">
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
               <Sessoes
+                filme={filme}
                 sessao={sessoes}
                 color={filme.color}
-                poster={!isMobile ? filme.bannerMobile : filme.bannerDesktop}
+                poster={filme.cover}
               />
-            </>
+            </section>
           )}
 
           {open && (
@@ -327,7 +433,13 @@ const Filme = (data: IFilmeProps) => {
                 setOpen={() => setOpen(!open)}
                 className={Style.modalImageFilme}
               >
-                <img src={image?.url} className={Style.modalSlideImg} />
+                <img
+                  src={image?.url}
+                  className={Style.modalSlideImg}
+                  alt="Imagem filmes"
+                  width={700}
+                  height={500}
+                />
               </Model.Body>
             </Model.Root>
           )}

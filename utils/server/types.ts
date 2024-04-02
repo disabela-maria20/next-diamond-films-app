@@ -1,4 +1,8 @@
-export interface IFilmeResponse {
+export interface IFilmeTextStatusProps {
+  movie: IFilmeResponse
+  sessions: Session[]
+}
+export interface IFilmeResponse extends IFilmeTextStatusProps {
   id: number
   title: string
   slug: string
@@ -29,6 +33,7 @@ export interface IFilmeResponse {
   images: IFilmeResponseUrl[]
   streaming: string[]
   created_at: string
+  hasSession: boolean
 }
 
 export interface IFilmeResponseUrl {
@@ -43,10 +48,11 @@ export interface IFilmesEstado {
   ESTADO: string
 }
 export interface Session {
+  distance: number
   date: string
-  hour: string
+  sessionHour: string
   theaterName: string
-  link: string
+  link?: string
   technology: string
   isImax: boolean
   postalCode: string
@@ -56,4 +62,11 @@ export interface Session {
   addressComplement?: string
   number?: string
   sessions: Session[]
+  hours: SessionHours[]
+  hour: string
+}
+
+export interface SessionHours {
+  hour: string
+  link: string
 }

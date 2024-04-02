@@ -1,5 +1,4 @@
 'use client'
-import Cookies from 'js-cookie'
 
 import Link from 'next/link'
 import { useState } from 'react'
@@ -10,25 +9,41 @@ import Style from './Newsletter.module.scss'
 import { NewsletterFormSchema } from './Newsletter.schema'
 
 import { Phone } from '@/utils/hooks/useMask'
+import { useGtag } from '@/utils/lib/gtag'
 import { postNewsletter } from '@/utils/server/requests'
+import { IFilmeResponse } from '@/utils/server/types'
 import { zodResolver as ResolverZod } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
+import Cookies from 'js-cookie'
 import { z } from 'zod'
 
 import { Model } from '..'
 
 export type INewsletterForm = z.infer<typeof NewsletterFormSchema>
+type TypeArea = 'filme' | 'modal' | 'sessões' | 'home'
 
 interface INewsletterProps {
   isBg?: boolean
   isHorrizontal?: boolean
+  filmes?: IFilmeResponse
+  type?: TypeArea
+  title?: boolean
 }
 
-const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
+const Newsletter = ({
+  isBg,
+  isHorrizontal,
+  filmes,
+  type,
+  title = true
+}: INewsletterProps) => {
   const [loaging, setLoaging] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
   const [viewSuccess, setViewSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
+
+  const { dataLayerNewsletter, dataLayerMovieSubscribe } = useGtag()
+
   const {
     register,
     handleSubmit,
@@ -48,6 +63,27 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
         setViewSuccess(true)
         Cookies.set('formNewsletter', 'true')
         reset()
+
+        if (filmes && type == 'filme') {
+          dataLayerNewsletter(
+            filmes?.title,
+            filmes?.slug,
+            filmes?.originalTitle,
+            filmes?.genre,
+            'hub',
+            'Hub do Filme'
+          )
+        }
+        if (filmes && type == 'modal') {
+          dataLayerMovieSubscribe(
+            filmes?.title,
+            filmes?.slug,
+            filmes?.originalTitle,
+            filmes?.genre,
+            'modal',
+            'Hub do Filme'
+          )
+        }
       }
     } catch (error) {
       const err = error as AxiosError
@@ -71,7 +107,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
           className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}
         >
           <div className={Style.text}>
-            <h2>Você ama cinema?</h2>
+            {title && <h2>Você ama cinema?</h2>}
             Preencha seus dados e concorra a brindes e convites exclusivos
             Diamond
           </div>
@@ -132,7 +168,7 @@ const Newsletter = ({ isBg, isHorrizontal }: INewsletterProps) => {
               politicas de provacidade
             </Link>
             &nbsp;e&nbsp;
-            <Link href="/termos-e-condicoes">Termos e condições</Link>
+            <Link href="/termos-de-uso">Termos e condições</Link>
           </p>
           {errors.n_termos && (
             <small className="text-error">{errors.n_termos.message}</small>

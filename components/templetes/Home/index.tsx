@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import Link from 'next/link'
-import React, { useContext, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 
 import Style from './Home.module.scss'
@@ -10,10 +11,12 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
 import 'swiper/css/navigation'
 
+import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
+import { useGtag } from '@/utils/lib/gtag'
 import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
@@ -31,7 +34,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
-
+  const { dataLayerHome, dataLayerBannerClick } = useGtag()
   const isMobile: boolean = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -94,6 +97,17 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     setOpen(true)
     setIframe(data)
   }
+  const router = usePathname()
+  const routerPush = useRouter()
+  useEffect(() => {
+    dataLayerHome('Diamond Films', router)
+  }, [dataLayerHome, router])
+
+  function handleClickBanner(e: React.MouseEvent<HTMLImageElement>, data: any) {
+    dataLayerBannerClick(data.title, data.slug, { x: e.clientX, y: e.clientY })
+    routerPush.push(`${data.slug}`)
+  }
+
   return (
     <>
       <Slide.Content
@@ -101,9 +115,18 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
         className={Style.slideBanner}
       >
         {banner?.map((data) => (
-          <Link href={data.slug} key={data.id}>
-            <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} />
-          </Link>
+          // <Link href={data.slug} key={data.id}>
+          //   <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} onClick={} />
+          // </Link>
+          <span key={data.id}>
+            <img
+              alt="banner"
+              src={isMobile ? data.bannerMobile : data?.bannerDesktop}
+              onClick={(e) => handleClickBanner(e, data)}
+              width={1440}
+              height={440}
+            />
+          </span>
         ))}
       </Slide.Content>
       <div className="container">
@@ -132,12 +155,17 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               .map((data) => (
                 <div key={data.id} className={Style.filme}>
                   <Link href={`/${data.slug}`}>
-                    <img src={data.cover} />
+                    <img
+                      src={data.cover}
+                      alt={data.title}
+                      width={270}
+                      height={400}
+                    />
                   </Link>
                   <h2>
                     {data.title} - {formatarData(data?.releasedate)}
                   </h2>
-                  <p>{statusTextData(data?.releasedate)}</p>
+                  <p>{statusTextData(data)}</p>
                   <span
                     onClick={() => handleVerImagem(data)}
                     className={Style.tralher}
@@ -168,25 +196,25 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             </Model.Root>
           )}
           {/* <Slide.Title className={Style.slideTitle}>
-            ASSISTA ONDE E QUANDO QUISER
-            <span>Nossos filmes disponíveis nos streamings.</span>
-          </Slide.Title>
-          <Slide.Content
-            swiperOptions={filmesStreaming}
-            className={Style.slideFilmehomePromo}
-          >
-            {listaFilmes?.streaming?.map((data) => (
-              <div key={data.id} className={Style.filme}>
-                <Link href={`/catalogo/${data.slug}`}>
-                  <img src={data.cover} />
-                </Link>
-                <h2>{data.title}</h2>
-                <a href={data.trailer} className={Style.streaming}>
-                  <span>Assista Agora</span>
-                </a>
-              </div>
-            ))}
-          </Slide.Content> */}
+          ASSISTA ONDE E QUANDO QUISER
+          <span>Nossos filmes disponíveis nos streamings.</span>
+        </Slide.Title>
+        <Slide.Content
+          swiperOptions={filmesStreaming}
+          className={Style.slideFilmehomePromo}
+        >
+          {listaFilmes?.streaming?.map((data) => (
+            <div key={data.id} className={Style.filme}>
+              <Link href={`/catalogo/${data.slug}`}>
+                <img src={data.cover} />
+              </Link>
+              <h2>{data.title}</h2>
+              <a href={data.trailer} className={Style.streaming}>
+                <span>Assista Agora</span>
+              </a>
+            </div>
+          ))}
+        </Slide.Content> */}
         </div>
       </section>
     </>

@@ -31,7 +31,11 @@ const ModelBody: React.FC<IModelBodyProps> = ({
   return (
     <div className={`${Style.modelBody} ${className}`}>
       {children}
-      <button className={Style.modelBodyIconClose} onClick={setOpen}>
+      <button
+        className={Style.modelBodyIconClose}
+        onClick={setOpen}
+        aria-label="Fechar"
+      >
         <AiOutlineClose />
       </button>
     </div>

@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
+
+import { IoClose } from 'react-icons/io5'
 
 import Style from './Nav.module.scss'
 
-import { Logo, NavLink, RedesSociais, Search } from '..'
-
-import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
+import { NavLink, RedesSociais } from '..'
 
 interface NavProps {
   open: boolean
@@ -13,10 +12,16 @@ interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = ({ open, setOpen }) => {
-  const isMobile: boolean = useIsMobile()
   return (
     <nav className={`${Style.navBar}`}>
       <div className={`${Style.NavArea} ${!open ? Style.open : Style.close}`}>
+        <button
+          aria-label="Fechar"
+          className={Style.navFechar}
+          onClick={() => setOpen && setOpen(!open)}
+        >
+          <IoClose />
+        </button>
         <ul>
           <li className={Style.NomeMenu}>
             <span>Menu</span>

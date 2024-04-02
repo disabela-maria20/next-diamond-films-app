@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 
+import { Loading } from '@/components/atoms'
 import { Filme } from '@/components/templetes'
 import { getCatalogoFilme } from '@/utils/server/requests'
 
@@ -15,12 +16,12 @@ export async function generateMetadata({
 }: Params): Promise<Metadata> {
   const filme = await getCatalogoFilme(slug)
   return {
-    title: `Diamond Films - ${filme.movie.title}`,
-    description: filme.movie.shortSynopsis,
+    title: `Diamond Films - ${filme?.movie.title}`,
+    description: filme?.movie.shortSynopsis,
     openGraph: {
-      title: filme.movie.title,
-      description: filme.movie.shortSynopsis,
-      images: filme.movie.bannerDesktop
+      title: filme?.movie.title,
+      description: filme?.movie.shortSynopsis,
+      images: filme?.movie.bannerDesktop
     }
   }
 }
@@ -30,7 +31,7 @@ export default async function pageCatalogoFilme({ params: { slug } }: Params) {
 
   return (
     <>
-      <Suspense fallback="Carregando">
+      <Suspense fallback={<Loading altura={true} />}>
         <Filme movie={filme} />
       </Suspense>
     </>

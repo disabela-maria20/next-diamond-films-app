@@ -1,0 +1,43 @@
+.locationModal {
+  h2 {
+    font-size: 2.4rem;
+    color: $primary-lingh-color;
+    margin-bottom: 20px;
+  }
+
+  p {
+    color: $primary-lingh-color;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    margin: 20px 0;
+  }
+
+  a{
+    color: $primary-lingh-color;
+    text-decoration: underline;
+    padding: 0 5px;
+  }
+  .modalButton {
+    display: flex;
+    gap: 20px;
+
+
+
+    button {
+      border: 2px solid $primary-lingh-color;
+      background-color: transparent;
+      color: $primary-lingh-color;
+      font-size: 1.8rem;
+      padding: 5px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 400ms ease-in-out;
+      font-weight: 600;
+
+      &:hover {
+        background-color: $primary-lingh-color;
+        color: $primary-dark-color;
+      }
+    }
+  }
+}
