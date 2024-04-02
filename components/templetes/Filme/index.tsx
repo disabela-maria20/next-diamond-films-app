@@ -96,7 +96,7 @@ const Filme = (data: IFilmeProps) => {
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
     formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
-    filme.hasSession
+    filme?.hasSession
   const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
