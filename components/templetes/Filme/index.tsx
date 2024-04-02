@@ -197,12 +197,10 @@ const Filme = (data: IFilmeProps) => {
   }
   const URL = [
     {
-      'uma-prova-de-coragem-daa928':
-        'https://diamondfilms.com.br/uma-prova-de-coragem/'
+      umaprovadecoragem: 'https://diamondfilms.com.br/uma-prova-de-coragem/'
     },
     {
-      'uma-vida-a-hist-ria-de-nicholas-winton-a367e4':
-        'https://diamondfilms.com.br/uma-prova-de-coragem/'
+      umavida: 'https://diamondfilms.com.br/uma-prova-de-coragem/'
     }
   ]
 
