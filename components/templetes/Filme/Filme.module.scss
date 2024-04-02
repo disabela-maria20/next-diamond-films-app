@@ -49,6 +49,10 @@
 	gap: 20px;
 	margin-top: 35px;
 
+	a{
+		@include btn-outline();
+		cursor: pointer;
+	}
 	button {
 		@include btn-outline();
 		cursor: pointer;

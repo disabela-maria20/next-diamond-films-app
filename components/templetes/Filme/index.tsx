@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
 
 import { useRouter } from 'next/navigation'
@@ -94,7 +95,8 @@ const Filme = (data: IFilmeProps) => {
   //const formatarData = useFormatarData()
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
-    formatPassouUmaSemanaDesdeData(filme?.releasedate)
+    formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
+    filme.hasSession
   const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
@@ -193,6 +195,32 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
+  const URL = [
+    {
+      'uma-prova-de-coragem-daa928':
+        'https://diamondfilms.com.br/uma-prova-de-coragem/'
+    },
+    {
+      'uma-vida-a-hist-ria-de-nicholas-winton-a367e4':
+        'https://diamondfilms.com.br/uma-prova-de-coragem/'
+    }
+  ]
+
+  const HubFilme = () => {
+    let urlEncontrada = null
+
+    URL.map((objeto) => {
+      const chave = Object.keys(objeto)[0]
+      if (chave === filme.slug) {
+        // @ts-ignore: Unreachable code error
+        urlEncontrada = objeto[chave]
+      }
+    })
+
+    return urlEncontrada
+  }
+
+  const hub = HubFilme()
 
   return (
     <>
@@ -215,7 +243,7 @@ const Filme = (data: IFilmeProps) => {
                   )}
                 </h2>
                 <div className={Style.areaBtnCompra}>
-                  {emExibicao && !isMobile && (
+                  {emExibicao && !isMobile && !hub && (
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -224,6 +252,12 @@ const Filme = (data: IFilmeProps) => {
                       COMPRAR INGRESSOS
                     </button>
                   )}
+                  {!!hub && (
+                    <a href={hub} target="_blank" rel="noopener noreferrer">
+                      Comprar ingresso
+                    </a>
+                  )}
+
                   {sessoes?.length > 0 && (
                     <button onClick={() => setSaibaMais(!saibaMais)}>
                       Saiba +
