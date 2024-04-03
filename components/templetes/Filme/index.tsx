@@ -195,7 +195,6 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
-  console.log(saibaMais)
 
   return (
     <>
