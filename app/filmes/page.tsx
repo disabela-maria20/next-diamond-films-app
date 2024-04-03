@@ -1,9 +1,10 @@
 import { Metadata } from 'next'
-import { Suspense } from 'react'
+import { Suspense, lazy } from 'react'
 
 import { Loading } from '@/components/atoms'
-import Catalogo from '@/components/templetes/Catalogo'
 import { getHome } from '@/utils/server/requests'
+
+const Catalogo = lazy(() => import('@/components/templetes/Catalogo'))
 
 export const metadata: Metadata = {
   title: 'Filmes | Diamond Films',
