@@ -200,7 +200,7 @@ const Filme = (data: IFilmeProps) => {
       umaprovadecoragem: 'https://diamondfilms.com.br/uma-prova-de-coragem/'
     },
     {
-      umavida: 'https://diamondfilms.com.br/uma-prova-de-coragem/'
+      umavida: 'https://diamondfilms.com.br/uma-vida/'
     }
   ]
 
