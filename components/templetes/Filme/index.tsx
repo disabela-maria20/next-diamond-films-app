@@ -195,30 +195,7 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
-  const URL = [
-    {
-      umaprovadecoragem: 'https://diamondfilms.com.br/uma-prova-de-coragem/'
-    },
-    {
-      umavida: 'https://diamondfilms.com.br/uma-vida/'
-    }
-  ]
-
-  const HubFilme = () => {
-    let urlEncontrada = null
-
-    URL.map((objeto) => {
-      const chave = Object.keys(objeto)[0]
-      if (chave === filme.slug) {
-        // @ts-ignore: Unreachable code error
-        urlEncontrada = objeto[chave]
-      }
-    })
-
-    return urlEncontrada
-  }
-
-  const hub = HubFilme()
+  console.log(saibaMais)
 
   return (
     <>
@@ -241,7 +218,7 @@ const Filme = (data: IFilmeProps) => {
                   )}
                 </h2>
                 <div className={Style.areaBtnCompra}>
-                  {emExibicao && !isMobile && !hub && (
+                  {emExibicao && !isMobile && (
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -249,11 +226,6 @@ const Filme = (data: IFilmeProps) => {
                     >
                       COMPRAR INGRESSOS
                     </button>
-                  )}
-                  {!!hub && (
-                    <a href={hub} target="_blank" rel="noopener noreferrer">
-                      Comprar ingresso
-                    </a>
                   )}
 
                   {sessoes?.length > 0 && (
