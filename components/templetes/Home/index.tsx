@@ -13,7 +13,6 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css/navigation'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
-import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
@@ -120,14 +119,14 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           // <Link href={data.slug} key={data.id}>
           //   <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} onClick={} />
           // </Link>
-          <span key={data.id}>
+          <span key={data.id} aria-label="banner">
             <LazyLoadImage
               effect="blur"
               alt="banner"
               src={isMobile ? data.bannerMobile : data?.bannerDesktop}
               onClick={(e) => handleClickBanner(e, data)}
-              width={1440}
-              height={440}
+              width={isMobile ? 800 : 1450}
+              height={isMobile ? 540 : 1000}
             />
           </span>
         ))}
