@@ -33,13 +33,18 @@ export async function getHomeBanner() {
 export async function postNewsletter(
   name: string,
   email: string,
-  phone: string
+  phone: string,
+  url: string
 ) {
-  return axios.post(`/save/optin?name=${name}&email=${email}&phone=${phone}`, {
-    name: name,
-    email: email,
-    phone: phone
-  })
+  return axios.post(
+    `/save/optin?name=${name}&email=${email}&phone=${phone}&url=${url}`,
+    {
+      name: name,
+      email: email,
+      phone: phone,
+      url: url
+    }
+  )
 }
 
 export async function postContact(

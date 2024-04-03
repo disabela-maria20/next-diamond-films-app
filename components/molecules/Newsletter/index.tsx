@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { usePathname } from 'next/navigation'
 
 import Style from './Newsletter.module.scss'
 
@@ -53,11 +54,19 @@ const Newsletter = ({
     resolver: ResolverZod(NewsletterFormSchema)
   })
 
+  const pathname = usePathname()
+  console.log(pathname)
+
   const onSubmit = async (data: INewsletterForm) => {
     if (!data.n_termos) return
     setLoaging(true)
     try {
-      const res = await postNewsletter(data.n_name, data.n_email, data.n_phone)
+      const res = await postNewsletter(
+        data.n_name,
+        data.n_email,
+        data.n_phone,
+        pathname
+      )
       if (res.data.done) {
         setModal(true)
         setViewSuccess(true)

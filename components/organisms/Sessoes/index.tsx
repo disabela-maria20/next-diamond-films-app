@@ -185,7 +185,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
         <img src={poster} alt="Poster Filme" width={1000} height={500} />
         <div
           className={Style.areaPesquisa}
-          style={{ background: `${darken(0.2, color)}` }}
+          style={{ background: `${darken(0.1, color)}` }}
         >
           <div className={Style.flexAreaPesquisa}>
             <IoSearchSharp />
@@ -200,7 +200,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
             {sessao.map((data, i) => (
               <S.ButtonHora
                 key={i}
-                $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
+                $bg={` ${selectedDate === data.date ? darken(0.1, color) : '#fff'}`}
                 className={`${Style.areaData}`}
                 onClick={() => handleDataClick(data.date)}
               >
