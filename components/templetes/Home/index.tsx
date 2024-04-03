@@ -5,11 +5,13 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import Style from './Home.module.scss'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
 import 'swiper/css/navigation'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
@@ -119,7 +121,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
           //   <img src={isMobile ? data.bannerMobile : data?.bannerDesktop} onClick={} />
           // </Link>
           <span key={data.id}>
-            <img
+            <LazyLoadImage
+              effect="blur"
               alt="banner"
               src={isMobile ? data.bannerMobile : data?.bannerDesktop}
               onClick={(e) => handleClickBanner(e, data)}
@@ -155,11 +158,12 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               .map((data) => (
                 <div key={data.id} className={Style.filme}>
                   <Link href={`/${data.slug}`}>
-                    <img
+                    <LazyLoadImage
                       src={data.cover}
                       alt={data.title}
                       width={270}
                       height={400}
+                      effect="blur"
                     />
                   </Link>
                   <h2>

@@ -279,3 +279,8 @@ input[type="checkbox"]:checked::before {
   position: relative !important;
   z-index: -1 !important;
 }
+
+.lazy-load-image-background{
+  width: initial !important;
+  height: initial !important;
+}
