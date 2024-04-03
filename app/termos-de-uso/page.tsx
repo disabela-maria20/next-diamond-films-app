@@ -5,7 +5,7 @@ import { Loading } from '@/components/atoms'
 import TermosCondicoes from '@/components/templetes/TermosCondicoes'
 
 export const metadata: Metadata = {
-  title: 'Diamond Films - Termos Condicoes'
+  title: 'Termos Condicoes | Diamond Films'
 }
 
 const pageTermosCondicoes = () => {
