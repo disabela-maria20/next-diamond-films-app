@@ -11,22 +11,30 @@ import { Header } from '@/components/organisms'
 const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Home | Diamond Films', 
+  title: 'Home | Diamond Films',
   description: "Descubra os filmes mais recentes distribuídos pela Diamond Films Brasil. Confira os trailers, sinopses e datas de lançamento.",
   robots: 'index, follow',
-  openGraph:{
-    title: 'Home | Diamond Films', 
+  openGraph: {
+    title: 'Home | Diamond Films',
     description: "Descubra os filmes mais recentes distribuídos pela Diamond Films Brasil. Confira os trailers, sinopses e datas de lançamento.",
-    images: ''
+    images: [{
+      url: '/img/share.png',
+      width: 800,
+      height: 600
+    }],
+    type: 'website'
   },
   twitter: {
-    title: 'Home | Diamond Films', 
+    title: 'Home | Diamond Films',
     description: "Descubra os filmes mais recentes distribuídos pela Diamond Films Brasil. Confira os trailers, sinopses e datas de lançamento.",
     site: 'https://diamondfilms.com.br/',
+    images: '/img/share.png'
+  },
+  alternates: {
+    canonical: 'http://diamondfilms.com.br'
+  },
+  category: 'Filmes',
 
-
-  }
-  
 }
 export default function RootLayout({
   children
