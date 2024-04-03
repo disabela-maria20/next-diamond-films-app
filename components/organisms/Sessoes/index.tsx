@@ -179,13 +179,16 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     localizacao.latitude
   ])
 
+  function formatarHora(hora: string): string {
+    return hora.slice(0, 5)
+  }
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
         <img src={poster} alt="Poster Filme" width={1000} height={500} />
         <div
           className={Style.areaPesquisa}
-          style={{ background: `${darken(0.1, color)}` }}
+          style={{ background: `${darken(0.2, color)}` }}
         >
           <div className={Style.flexAreaPesquisa}>
             <IoSearchSharp />
@@ -200,7 +203,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
             {sessao.map((data, i) => (
               <S.ButtonHora
                 key={i}
-                $bg={` ${selectedDate === data.date ? darken(0.1, color) : '#fff'}`}
+                $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
                 className={`${Style.areaData}`}
                 onClick={() => handleDataClick(data.date)}
               >
@@ -270,7 +273,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                             onClick={() => handleClickBanner(session)}
                             target="_blank"
                           >
-                            {hour.hour}
+                            {formatarHora(hour.hour)}
                           </S.LinkHora>
                         </li>
                       ))}
