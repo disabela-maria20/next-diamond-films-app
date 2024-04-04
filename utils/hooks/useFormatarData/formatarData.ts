@@ -105,6 +105,27 @@ export const useFormatarData = () => {
 
     return hoje >= umaSemanaDepois
   }
+
+  function formatDataEstreia(dataString: string) {
+    const dataAtual = new Date()
+    const partesData = dataString.split('-')
+
+    if (partesData.length !== 3) {
+      return false
+    }
+
+    const ano = parseInt(partesData[0], 10)
+    const mes = parseInt(partesData[1], 10) - 1
+    const dia = parseInt(partesData[2], 10)
+
+    const dataEstreia = new Date(ano, mes, dia)
+
+    return (
+      dataAtual.getDate() === dataEstreia.getDate() &&
+      dataAtual.getMonth() === dataEstreia.getMonth() &&
+      dataAtual.getFullYear() === dataEstreia.getFullYear()
+    )
+  }
   return {
     formatarData,
     formatDia,
@@ -113,6 +134,7 @@ export const useFormatarData = () => {
     formatDiaDaSemana,
     formatMesmaSemana,
     formatfaltaUmaSemanaParaDataMarcada,
-    formatPassouUmaSemanaDesdeData
+    formatPassouUmaSemanaDesdeData,
+    formatDataEstreia
   }
 }
