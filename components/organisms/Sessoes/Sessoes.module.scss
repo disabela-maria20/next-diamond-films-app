@@ -8,9 +8,13 @@
 			grid-auto-rows: 550px;
 		}
 		img{
+			display: none;
 			object-fit: contain;
 			object-position: right;
 			height: 100%;
+			@include media(lg){
+				display: block;
+			}
 		}
 	}
 

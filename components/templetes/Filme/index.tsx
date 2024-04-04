@@ -4,6 +4,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
@@ -20,7 +21,7 @@ import {
   Session
 } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
-
+import 'react-lazy-load-image-component/src/effects/blur.css'
 interface IFilmeProps {
   movie: {
     movie: IFilmeResponse
@@ -228,13 +229,20 @@ const Filme = (data: IFilmeProps) => {
                       COMPRAR INGRESSOS
                     </button>
                   )}
-
-                  {sessoes?.length > 0 && (
-                    <button onClick={() => setSaibaMais(!saibaMais)}>
-                      Saiba +
-                    </button>
-                  )}
                 </div>
+              </div>
+              <div className={Style.AreaSaibamais}>
+                {sessoes?.length > 0 && (
+                  <button
+                    className={Style.btnSaibaMais}
+                    onClick={() => {
+                      setSaibaMais(!saibaMais)
+                      router.push('#saibamais', { scroll: true })
+                    }}
+                  >
+                    Saiba +
+                  </button>
+                )}
               </div>
             </div>
             {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
@@ -264,10 +272,11 @@ const Filme = (data: IFilmeProps) => {
               {streaming.map((service, index) => (
                 <button key={index}>
                   ASSISTA AGORA NO
-                  <img
+                  <LazyLoadImage
                     src={`/img/streaming/${service.toLowerCase()}.png`}
                     alt={service.toLowerCase()}
                     width="100"
+                    effect="blur"
                   />
                 </button>
               ))}
@@ -276,8 +285,8 @@ const Filme = (data: IFilmeProps) => {
           {saibaMais && (
             <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
-                <div className={Style.areaFlexPoster}>
-                  <img
+                <div className={Style.areaFlexPoster} id="saibamais">
+                  <LazyLoadImage
                     src={filme?.cover}
                     alt={filme?.title}
                     width={270}
@@ -373,7 +382,8 @@ const Filme = (data: IFilmeProps) => {
               >
                 {filme?.images?.map((data) => (
                   <div key={data.url}>
-                    <img
+                    <LazyLoadImage
+                      effect="blur"
                       alt="Filme"
                       className={Style.SlideImgFilme}
                       src={`${data.url}`}
@@ -406,7 +416,8 @@ const Filme = (data: IFilmeProps) => {
                 setOpen={() => setOpen(!open)}
                 className={Style.modalImageFilme}
               >
-                <img
+                <LazyLoadImage
+                  effect="blur"
                   src={image?.url}
                   className={Style.modalSlideImg}
                   alt="Imagem filmes"

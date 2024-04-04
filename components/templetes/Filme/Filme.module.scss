@@ -2,6 +2,7 @@
 	overflow-y: hidden;
 	position: relative;
 }
+
 .areaBtn {
 	@include flex-center();
 	padding: 31px;
@@ -43,16 +44,29 @@
 	}
 }
 
+.AreaSaibamais {
+	display: flex;
+	justify-content: center;
+
+	.btnSaibaMais {
+		@include btn-outline();
+		border: none;
+		cursor: pointer;
+	}
+}
+
+
 .areaBtnCompra {
 
 	@include flex-center();
 	gap: 20px;
 	margin-top: 35px;
 
-	a{
+	a {
 		@include btn-outline();
 		cursor: pointer;
 	}
+
 	button {
 		@include btn-outline();
 		cursor: pointer;
@@ -306,6 +320,7 @@
 
 	width: 100%;
 	height: 700px;
+
 	@include media(lg) {
 		height: 540px;
 	}
@@ -338,6 +353,7 @@
 		z-index: 999;
 
 		.areaTituloBanner {
+
 			// @include media(lg) {
 			// 	display: flex;
 			// 	justify-content: space-between;
@@ -346,11 +362,12 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding-bottom: 35px;
+				
 				flex-direction: column;
 
 				@include media(lg) {
 					flex-direction: row;
+					padding-bottom: 35px;
 				}
 
 				.emExibicao {
@@ -381,6 +398,7 @@
 				font-weight: 700;
 				padding: 25px;
 				margin: 0;
+
 				@include media(lg) {
 					text-align: left;
 					font-size: 5.5rem;
@@ -400,20 +418,20 @@
 	object-position: center center;
 }
 
-.filmeSaibaMais{
+.filmeSaibaMais {
 	opacity: 0;
-  animation: scale-up-ver-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards;
+	animation: scale-up-ver-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards;
 }
 
 @keyframes scale-up-ver-top {
-  0% {
-    transform: scaleY(0.4);
-    transform-origin: 100% 0%;
-  }
-  100% {
-		opacity: 1;
-    transform: scaleY(1);
-    transform-origin: 100% 0%;
-  }
-}
+	0% {
+		transform: scaleY(0.4);
+		transform-origin: 100% 0%;
+	}
 
+	100% {
+		opacity: 1;
+		transform: scaleY(1);
+		transform-origin: 100% 0%;
+	}
+}

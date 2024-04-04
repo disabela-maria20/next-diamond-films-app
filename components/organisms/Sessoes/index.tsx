@@ -183,6 +183,28 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     return hora.slice(0, 5)
   }
 
+  function filterSession(session: Session, searchTerm: string) {
+    const cleanSearchTerm = removeSpecialChars(searchTerm.toLowerCase())
+    const sessionFields = [
+      removeSpecialChars(session.theaterName).toLowerCase(),
+      removeSpecialChars(session.address).toLowerCase(),
+      removeSpecialChars(session.city).toLowerCase(),
+      removeSpecialChars(session.state).toLowerCase()
+    ]
+
+    for (const field of sessionFields) {
+      if (field.includes(cleanSearchTerm)) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  function removeSpecialChars(str: string) {
+    return str.replace(/[^\w\s]/gi, '')
+  }
+
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
@@ -220,19 +242,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
           <div className={Style.areaCinema}>
             {noResultsMessage}
             {sessoesData
-              .filter(
-                (session) =>
-                  session.theaterName
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  session.address
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  session.city
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  session.state.toLowerCase().includes(searchTerm.toLowerCase())
-              )
+              .filter((session) => filterSession(session, searchTerm))
               .sort(
                 (a: { distance: number }, b: { distance: number }) =>
                   a.distance - b.distance
