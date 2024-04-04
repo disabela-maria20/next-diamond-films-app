@@ -9,7 +9,7 @@ import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 
 const Search: React.FC = () => {
   const [searchPopUp, setSearchPopUp] = useState<boolean>(false)
-  const isMobile: boolean = useIsMobile()
+  const { isMobile } = useIsMobile()
 
   return (
     <>

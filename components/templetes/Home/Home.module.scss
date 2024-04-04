@@ -56,6 +56,8 @@
 			margin: 5px 0;
 			font-size: 1.4rem;
 			height: 35px;
+			display: flex;
+			align-items: center;
 
 			@include media(md){
 				height: 30px;
