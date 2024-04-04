@@ -55,29 +55,37 @@
 		h2 {
 			margin: 5px 0;
 			font-size: 1.4rem;
-			height: 55px;
+			height: 35px;
 
 			@include media(md){
-				height: 50px;
+				height: 30px;
 			}
 		}
-
-
+		span{
+			font-size: 1.4rem;
+			
+		}
+		p{
+			font-size: 1rem !important;
+			margin-top: 10px;
+			margin-bottom: 10px !important
+		}
 		.tralher {
 			border: 1px solid $primary-lingh-color;
 			color: $primary-lingh-color;
-			font-size: 1.2rem;
 			font-weight: 700;
 			border-radius: 5px;
 			display: inline-flex;
 			align-items: center;
 			gap: 10px;
-			padding: 5px;
-			margin-top: 10px;
+			padding: 3px;
 			cursor: pointer;
-
+			span {
+				font-size: 1.4rem;
+				color: $primary-lingh-color;
+			}
 			svg {
-				font-size: 1.6rem;
+				font-size: 1.8rem;
 				color: #E52D27;
 			}
 		}

@@ -8,6 +8,7 @@ import { FaInstagram, FaYoutube } from 'react-icons/fa'
 import Style from './Filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
+import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
@@ -91,7 +92,8 @@ const Filme = (data: IFilmeProps) => {
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData()
 
-  const isMobile: boolean = useIsMobile()
+  const { isMobile, isLoading } = useIsMobile()
+
   //const formatarData = useFormatarData()
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
@@ -195,7 +197,7 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
-
+  if (isLoading) return <Loading altura={true} />
   return (
     <>
       <section

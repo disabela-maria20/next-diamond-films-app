@@ -6,6 +6,7 @@ import { FaYoutube } from 'react-icons/fa'
 import Style from './SobreNos.module.scss'
 import { Navigation, Pagination } from 'swiper/modules'
 
+import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
@@ -22,7 +23,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<IFilmeResponse>()
 
-  const isMobile: boolean = useIsMobile()
+  const { isMobile, isLoading } = useIsMobile()
   const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
   const filmesSwiperOptions: SwiperOptions = {
@@ -46,6 +47,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
     setOpen(true)
     setIframe(data)
   }
+  if (isLoading) return <Loading altura={true} />
   return (
     <section className={Style.SobreNos}>
       <div className="container">
@@ -69,7 +71,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
         </p>
 
         <hr />
-        <h2 className={Style.titleOutline}>MISSÃO</h2>
+        {/* <h2 className={Style.titleOutline}>MISSÃO</h2>
         <p>
           Ser uma distribuidora que tem como melhor característica a qualidade
           de seus filmes, a partir de grandes produções e estrelas consagradas.
@@ -87,7 +89,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
           dedicação aos detalhes. Tudo isso sempre com muito respeito aos
           profissionais e clientes envolvidos
         </p>
-        <hr />
+        <hr /> */}
         <h2>VOCÊ AMA CINEMA?</h2>
         <Newsletter
           isHorrizontal={!isMobile ? true : false}
@@ -121,9 +123,8 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
                     height={200}
                   />
                 </Link>
-                <h3>
-                  {data.title} - {formatarData(data?.releasedate)}
-                </h3>
+                <h2>{data.title}</h2>
+                <span>Estreia: {formatarData(data?.releasedate)}</span>
                 <p>{statusTextData(data)}</p>
                 <span
                   onClick={() => handleVerImagem(data)}

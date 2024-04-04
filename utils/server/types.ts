@@ -64,6 +64,8 @@ export interface Session {
   sessions: Session[]
   hours: SessionHours[]
   hour: string
+  state: string
+  city: string
 }
 
 export interface SessionHours {

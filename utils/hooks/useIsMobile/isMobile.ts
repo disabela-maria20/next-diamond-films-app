@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -12,6 +13,7 @@ const useIsMobile = () => {
           userAgent
         )
       setIsMobile(isMobileDevice)
+      setIsLoading(false)
     }
 
     checkIsMobile()
@@ -21,7 +23,7 @@ const useIsMobile = () => {
     return () => window.removeEventListener('resize', checkIsMobile)
   }, [])
 
-  return isMobile
+  return { isMobile, isLoading }
 }
 
 export default useIsMobile

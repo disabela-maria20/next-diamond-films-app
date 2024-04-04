@@ -28,7 +28,7 @@ interface IComprarIngressoSessoesResponse {
 }
 
 const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
-  const isMobile: boolean = useIsMobile()
+  const { isMobile, isLoading } = useIsMobile()
   const [filmesComSessoes, setFilmesComSessoes] = useState<
     IComprarIngressoSessoesResponse[]
   >([])
@@ -75,7 +75,7 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination, Autoplay]
   }
-
+  if (isLoading) return <Loading altura={true} />
   return (
     <>
       {!isMobile && (

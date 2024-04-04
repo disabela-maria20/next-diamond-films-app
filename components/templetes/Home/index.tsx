@@ -13,6 +13,7 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css/navigation'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
+import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
@@ -36,7 +37,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
   const { dataLayerHome, dataLayerBannerClick } = useGtag()
-  const isMobile: boolean = useIsMobile()
+  const { isMobile, isLoading } = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
@@ -109,6 +110,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     routerPush.push(`${data.slug}`)
   }
 
+  if (isLoading) return <Loading altura={true} />
   return (
     <>
       <Slide.Content
@@ -165,9 +167,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                       effect="blur"
                     />
                   </Link>
-                  <h2>
-                    {data.title} - {formatarData(data?.releasedate)}
-                  </h2>
+                  <h2>{data.title}</h2>
+                  <span>Estreia: {formatarData(data?.releasedate)}</span>
                   <p>{statusTextData(data)}</p>
                   <span
                     onClick={() => handleVerImagem(data)}

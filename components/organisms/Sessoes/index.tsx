@@ -182,6 +182,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   function formatarHora(hora: string): string {
     return hora.slice(0, 5)
   }
+
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
@@ -226,7 +227,11 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                     .includes(searchTerm.toLowerCase()) ||
                   session.address
                     .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
+                    .includes(searchTerm.toLowerCase()) ||
+                  session.city
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  session.state.toLowerCase().includes(searchTerm.toLowerCase())
               )
               .sort(
                 (a: { distance: number }, b: { distance: number }) =>
@@ -258,7 +263,8 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                         )}
                         {session.address}, {session.number}
                         {session.addressComplement && '-'}
-                        {session.addressComplement}
+                        {session.addressComplement}, {session.city} {' - '}
+                        {session.state}
                       </h4>
                     </div>
                   </div>

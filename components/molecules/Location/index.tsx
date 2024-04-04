@@ -2,11 +2,9 @@
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 
-import Cookies from 'js-cookie'
-
 import Style from './Location.module.scss'
 
-import { Model } from '..'
+import Cookies from 'js-cookie'
 
 interface LocationData {
   latitude: number
@@ -85,28 +83,30 @@ const Location = () => {
   return (
     <>
       {!locationData && showModal && (
-        <Model.Root>
-          <Model.Body setOpen={() => setShowModal(false)}>
-            <div className={Style.locationModal}>
-              <p>
-                Este site utiliza cookies para melhorar a sua experiência de
-                navegação. Ao continuar, você concorda com o uso de cookies,
-                conforme detalhado em nossa
-                <Link href="/politica-de-privacidade">
-                  Política de Privacidade
-                </Link>
-                e concede autorização para o uso de geolocalização de acordo com
-                nossos termos. Para mais informações ou para ajustar suas
-                configurações, por favor, consulte nossa política de
-                privacidade.
-              </p>
-              <div className={Style.modalButton}>
-                <button onClick={() => handleGetLocation(true)}>Sim</button>
-                <button onClick={() => handleGetLocation(false)}>Não</button>
+        <div className={Style.locationBg}>
+          <section className={Style.localtionCokies}>
+            <div className="container" onClick={() => setShowModal(false)}>
+              <div className={Style.locationModal}>
+                <p>
+                  Este site utiliza cookies para melhorar a sua experiência de
+                  navegação. Ao continuar, você concorda com o uso de cookies,
+                  conforme detalhado em nossa
+                  <Link href="/politica-de-privacidade">
+                    Política de Privacidade
+                  </Link>
+                  e concede autorização para o uso de geolocalização de acordo
+                  com nossos termos. Para mais informações ou para ajustar suas
+                  configurações, por favor, consulte nossa política de
+                  privacidade.
+                </p>
+                <div className={Style.modalButton}>
+                  <button onClick={() => handleGetLocation(true)}>Sim</button>
+                  <button onClick={() => handleGetLocation(false)}>Não</button>
+                </div>
               </div>
             </div>
-          </Model.Body>
-        </Model.Root>
+          </section>
+        </div>
       )}
     </>
   )
