@@ -1,7 +1,7 @@
 'use client'
 
+import { darken } from 'polished'
 import styled from 'styled-components'
-
 function isDarkColor(color: string): boolean {
   color = color.trim()
 
@@ -52,5 +52,24 @@ export const LinkHora = styled.a.attrs<{ $color?: string }>((props) => ({
   &:hover {
     background-color: ${(props) => props.$color};
     color: ${(props) => (isDarkColor(props.$color!) ? '#fff' : '#000')};
+  }
+`
+
+export const LinkLocation = styled.a.attrs<{ $color?: string }>((props) => ({
+  type: 'text',
+  $color: props.$color || '#000'
+}))<{ $color?: string }>`
+  svg {
+    color: ${(props) => props.$color};
+    font-size: 2.5rem;
+    padding: 5px;
+    border-radius: 5px;
+    box-sizing: content-box;
+    border: 2px solid ${(props) => props.$color};
+    transition: 100ms all ease-in;
+    &:hover {
+      color: ${(props) => darken(0.2, props.$color || '')};
+      border: 2px solid ${(props) => darken(0.2, props.$color || '')};
+    }
   }
 `

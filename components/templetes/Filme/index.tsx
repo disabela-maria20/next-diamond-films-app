@@ -59,7 +59,7 @@ const setStreaming = (streaming: string[]): string[] => {
   const availableStreamings: string[] = []
   const enumKeys = Object.keys(EStreaming)
 
-  streaming.forEach((stream: string) => {
+  streaming?.forEach((stream: string) => {
     const matchingKey = enumKeys.find(
       (key) =>
         EStreaming[key as keyof typeof EStreaming].toLowerCase() ===

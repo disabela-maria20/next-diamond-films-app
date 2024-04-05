@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React, { useState, useMemo, ChangeEvent, useEffect } from 'react'
-import { FaMapMarkerAlt } from 'react-icons/fa'
+import React, { useState, ChangeEvent, useEffect } from 'react'
+import { FaMapMarkedAlt } from 'react-icons/fa'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import Style from './Sessoes.module.scss'
@@ -27,21 +27,27 @@ interface LocationData {
 }
 
 const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
-  const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedDate, setSelectedDate] = useState<string | null>(null)
-  const [sessoesData, setSessoesData] = useState<Session[]>([])
-
   const DISTANCIA = 20
 
   const getLocal =
     typeof window !== 'undefined'
       ? window.localStorage.getItem('locationCoords')
       : null
+  const getCidade =
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('locationData')
+      : null
 
   const localizacao: LocationData = getLocal
     ? JSON.parse(getLocal)
     : { latitude: 0, longitude: 0 }
+
+  const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
+  const [searchTerm, setSearchTerm] = useState<string>(
+    getCidade ? getCidade?.replaceAll('"', '') : ''
+  )
+  const [selectedDate, setSelectedDate] = useState<string | null>(null)
+  const [sessoesData, setSessoesData] = useState<Session[]>([])
 
   const { dataLayerMovieTicket } = useGtag()
 
@@ -78,16 +84,7 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
         }))
       }))
       .filter((data) => {
-        return (
-          data.sessions.some(
-            (session) =>
-              session.theaterName
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase()) ||
-              session.address.toLowerCase().includes(searchTerm.toLowerCase())
-          ) &&
-          (!selectedDate || data.date === selectedDate)
-        )
+        return !selectedDate || data.date === selectedDate
       })
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -127,8 +124,11 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     const permissaoNao = sortedSessionsByDistance.filter((data) => {
       return data.distance === 0 || data.distance
     })
-
-    setSessoesData(permissaoSim.length > 0 ? permissaoSim : permissaoNao)
+    if (searchTerm.length > 0) {
+      setSessoesData(permissaoSim.length > 0 ? permissaoSim : permissaoNao)
+    } else {
+      setSessoesData(sortedSessionsByDistance)
+    }
   }, [searchTerm, selectedDate])
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -162,38 +162,27 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     )
   }
 
-  const noResultsMessage = useMemo(() => {
-    if (searchTerm.trim() !== '' || selectedDate) {
-      if (sessao?.length === 0) {
-        return (
-          <div className={Style.noResults}>Nenhum resultado encontrado.</div>
-        )
-      }
-    }
-    return null
-  }, [
-    searchTerm,
-    selectedDate,
-    DISTANCIA,
-    localizacao.latitude,
-    localizacao.latitude
-  ])
-
   function formatarHora(hora: string): string {
     return hora.slice(0, 5)
   }
 
-  function filterSession(session: Session, searchTerm: string) {
-    const cleanSearchTerm = removeSpecialChars(searchTerm.toLowerCase())
+  function filterSession(session: Session, searchTerm: string): boolean {
+    const cleanSearchTerm = removeAccentsAndSpecialChars(
+      searchTerm.toLowerCase().trim()
+    )
+
     const sessionFields = [
-      removeSpecialChars(session.theaterName).toLowerCase(),
-      removeSpecialChars(session.address).toLowerCase(),
-      removeSpecialChars(session.city).toLowerCase(),
-      removeSpecialChars(session.state).toLowerCase()
+      removeAccentsAndSpecialChars(session.theaterName).toLowerCase(),
+      removeAccentsAndSpecialChars(session.address).toLowerCase(),
+      removeAccentsAndSpecialChars(session.city).toLowerCase(),
+      removeAccentsAndSpecialChars(session.state).toLowerCase()
     ]
 
     for (const field of sessionFields) {
-      if (field.includes(cleanSearchTerm)) {
+      if (
+        field.includes(cleanSearchTerm) ||
+        field.includes(cleanSearchTerm.replace('ao', 'ão'))
+      ) {
         return true
       }
     }
@@ -201,8 +190,12 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
     return false
   }
 
-  function removeSpecialChars(str: string) {
-    return str.replace(/[^\w\s]/gi, '')
+  function removeAccentsAndSpecialChars(str: string): string {
+    return str
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s]/gi, '')
+      .replace(/(ã|á|à|â)/gi, 'a')
   }
 
   return (
@@ -246,7 +239,6 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
           </div>
           <div className={Style.areaSessao}>Escolha uma sessão:</div>
           <div className={Style.areaCinema}>
-            {noResultsMessage}
             {sessoesData
               .filter((session) => filterSession(session, searchTerm))
               .sort(
@@ -263,20 +255,21 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                       height={50}
                     />
                     <div className={Style.areaTitle}>
-                      <h3>{session.theaterName}</h3>
-                      <h4>
+                      <span>{session.distance.toFixed(1)}</span>KM
+                      <div className={Style.flexTitleName}>
+                        <h3>{session.theaterName}</h3>
                         {session.distance !== 0 && (
-                          <a
+                          <S.LinkLocation
                             href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
                             target="_blank"
                             rel="noreferrer"
+                            $color={color}
                           >
-                            <strong className={Style.areaDistancia}>
-                              <FaMapMarkerAlt />
-                              <span>{session.distance.toFixed(1)}</span>KM -
-                            </strong>
-                          </a>
+                            <FaMapMarkedAlt />
+                          </S.LinkLocation>
                         )}
+                      </div>
+                      <h4>
                         {session.address}, {session.number}
                         {session.addressComplement && '-'}
                         {session.addressComplement}, {session.city} {' - '}
@@ -303,6 +296,8 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
                   </div>
                 </div>
               ))}
+            {sessoesData.filter((session) => filterSession(session, searchTerm))
+              .length === 0 && <p>Não há cinemas próximos.</p>}
           </div>
         </div>
       </div>

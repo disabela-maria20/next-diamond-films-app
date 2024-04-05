@@ -7,12 +7,14 @@
 			grid-template-columns: 1fr 2fr;
 			grid-auto-rows: 550px;
 		}
-		.SessoesPoster{
+
+		.SessoesPoster {
 			display: none;
 			object-fit: contain;
 			object-position: right;
 			height: 100%;
-			@include media(lg){
+
+			@include media(lg) {
 				display: block;
 			}
 		}
@@ -95,7 +97,7 @@
 	height: 500px;
 	overflow: auto;
 
-	@include media(lg){
+	@include media(lg) {
 		height: 65%;
 	}
 
@@ -118,7 +120,15 @@
 		}
 
 		.areaTitle {
+			position: relative;
 			overflow: hidden;
+
+			.flexTitleName{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+
 			h3 {
 				font-size: 1.8rem;
 				overflow: hidden;
@@ -164,10 +174,11 @@
 	padding: 20px 0;
 }
 
-.areaDistancia{
+.areaDistancia {
 	color: $primary-dark-color;
 	margin-right: 5px;
-	span{
+
+	span {
 		margin: 0 5px;
 	}
 }
