@@ -41,6 +41,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
+    loop: true,
     autoplay: {
       delay: 2500,
       disableOnInteraction: false
@@ -128,7 +129,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               src={isMobile ? data.bannerMobile : data?.bannerDesktop}
               onClick={(e) => handleClickBanner(e, data)}
               width={isMobile ? 800 : 1450}
-              height={isMobile ? 540 : 1000}
+              height={isMobile ? 1000 : 540}
             />
           </span>
         ))}
