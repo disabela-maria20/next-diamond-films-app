@@ -208,7 +208,13 @@ const Sessoes = ({ poster, color, sessao, filme }: ISessoesProps) => {
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
-        <img src={poster} alt="Poster Filme" width={1000} height={500} />
+        <img
+          className={Style.SessoesPoster}
+          src={poster}
+          alt="Poster Filme"
+          width={1000}
+          height={500}
+        />
         <div
           className={Style.areaPesquisa}
           style={{ background: `${darken(0.2, color)}` }}
