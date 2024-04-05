@@ -159,7 +159,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               )
               .map((data) => (
                 <div key={data.id} className={Style.filme}>
-                  <Link href={`/${data.slug}`}>
+                  <Link href={`/${data.slug}`} aria-label={data.title}>
                     <LazyLoadImage
                       src={data.cover}
                       alt={data.title}

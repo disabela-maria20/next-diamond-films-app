@@ -115,7 +115,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
             )
             .map((data) => (
               <div key={data.id} className={Style.filme}>
-                <Link href={`/${data.slug}`}>
+                <Link href={`/${data.slug}`} aria-label={data.title}>
                   <img
                     src={data.cover}
                     alt={data.title}

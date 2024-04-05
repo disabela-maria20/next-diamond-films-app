@@ -10,8 +10,6 @@ const useFilmeTextStatus = () => {
   } = useFormatarData()
 
   const statusTextData = (filmeLista: IFilmeResponse) => {
-    console.log(new Date())
-
     if (
       filmeLista.hasSession &&
       formatfaltaUmaSemanaParaDataMarcada(filmeLista.releasedate)

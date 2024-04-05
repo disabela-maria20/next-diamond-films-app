@@ -75,6 +75,12 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination, Autoplay]
   }
+
+  const formatDateForSorting = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toISOString().slice(0, 10).replace(/-/g, '.')
+  }
+
   if (isLoading) return <Loading altura={true} />
   return (
     <>
@@ -117,22 +123,34 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
           {loading && <Loading />}
           {!loading && (
             <>
-              {filmesComSessoes.map((sessoes) => {
-                return (
-                  <div key={sessoes.movie?.id} className={Style.itemSessao}>
-                    {sessoes.movie && sessoes.sessions && (
-                      <>
-                        <Sessoes
-                          filme={sessoes?.movie}
-                          poster={sessoes.movie.cover}
-                          color={sessoes?.movie.color}
-                          sessao={sessoes?.sessions}
-                        />
-                      </>
-                    )}
-                  </div>
-                )
-              })}
+              {filmesComSessoes
+                .sort((a, b) => {
+                  const dateA = formatDateForSorting(
+                    a.movie?.releasedate as string
+                  )
+                  const dateB = formatDateForSorting(
+                    b.movie?.releasedate as string
+                  )
+                  if (dateA < dateB) return -1
+                  if (dateA > dateB) return 1
+                  return 0
+                })
+                .map((sessoes) => {
+                  return (
+                    <div key={sessoes.movie?.id} className={Style.itemSessao}>
+                      {sessoes.movie && sessoes.sessions && (
+                        <>
+                          <Sessoes
+                            filme={sessoes?.movie}
+                            poster={sessoes.movie.cover}
+                            color={sessoes?.movie.color}
+                            sessao={sessoes?.sessions}
+                          />
+                        </>
+                      )}
+                    </div>
+                  )
+                })}
             </>
           )}
         </div>
