@@ -55,7 +55,6 @@ const Newsletter = ({
   })
 
   const pathname = usePathname()
-  console.log(pathname)
 
   const onSubmit = async (data: INewsletterForm) => {
     if (!data.n_termos) return

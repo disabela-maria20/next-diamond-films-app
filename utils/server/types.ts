@@ -1,8 +1,8 @@
-export interface IFilmeTextStatusProps {
+export interface IFilmeProps {
   movie: IFilmeResponse
   sessions: Session[]
 }
-export interface IFilmeResponse extends IFilmeTextStatusProps {
+export interface IFilmeResponse extends IFilmeProps {
   id: number
   title: string
   slug: string
@@ -48,8 +48,13 @@ export interface IFilmesEstado {
   ESTADO: string
 }
 export interface Session {
-  distance: number
+  selectedSession: Session
   date: string
+  sessions: Sessions[]
+}
+
+export interface Sessions {
+  distance: number
   sessionHour: string
   theaterName: string
   link?: string
@@ -61,14 +66,52 @@ export interface Session {
   lng: string
   addressComplement?: string
   number?: string
-  sessions: Session[]
   hours: SessionHours[]
   hour: string
   state: string
   city: string
+  stateName: string
 }
-
 export interface SessionHours {
   hour: string
-  link: string
+  links: string
+}
+
+interface EstadosBrasileiros {
+  [sigla: string]: string
+}
+
+export interface LocationData {
+  latitude: number
+  longitude: number
+}
+
+export const ESTADOS: EstadosBrasileiros = {
+  AC: 'Acre',
+  AL: 'Alagoas',
+  AP: 'Amapá',
+  AM: 'Amazonas',
+  BA: 'Bahia',
+  CE: 'Ceará',
+  DF: 'Distrito Federal',
+  ES: 'Espírito Santo',
+  GO: 'Goiás',
+  MA: 'Maranhão',
+  MT: 'Mato Grosso',
+  MS: 'Mato Grosso do Sul',
+  MG: 'Minas Gerais',
+  PA: 'Pará',
+  PB: 'Paraíba',
+  PR: 'Paraná',
+  PE: 'Pernambuco',
+  PI: 'Piauí',
+  RJ: 'Rio de Janeiro',
+  RN: 'Rio Grande do Norte',
+  RS: 'Rio Grande do Sul',
+  RO: 'Rondônia',
+  RR: 'Roraima',
+  SC: 'Santa Catarina',
+  SP: 'São Paulo',
+  SE: 'Sergipe',
+  TO: 'Tocantins'
 }

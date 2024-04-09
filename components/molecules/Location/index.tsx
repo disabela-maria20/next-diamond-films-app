@@ -1,8 +1,12 @@
 'use client'
+
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 
 import Style from './Location.module.scss'
+
+import { apiLocation } from './apiLocation'
+import { requestLocationPermission } from './LocationFromPosition'
 
 import Cookies from 'js-cookie'
 
@@ -13,68 +17,35 @@ interface LocationData {
 
 const Location = () => {
   const [showModal, setShowModal] = useState<boolean>(false)
-  const [locationData, setLocationData] = useState<LocationData | null>(null)
 
   useEffect(() => {
-    const savedLocationData = localStorage.getItem('locationData')
-    const savedLocationCoords = localStorage.getItem('locationCoords')
-    const lastDeniedTime = window?.localStorage.getItem('lastDeniedTime')
+    const lastModalViewed = Cookies.get('lastModalViewed')
+    const now = new Date().getTime()
+    const SEVEN_DAYS_IN_MS = 7 * 24 * 60 * 20 * 1000
 
-    if (savedLocationData && savedLocationCoords) {
-      const parsedLocationData = JSON.parse(savedLocationData) as LocationData
-      setLocationData(parsedLocationData)
-    } else {
-      if (
-        !lastDeniedTime ||
-        Date.now() - parseInt(lastDeniedTime, 10) > 7 * 24 * 60 * 60 * 1000
-      ) {
+    if (lastModalViewed) {
+      const lastViewedTimestamp = new Date(lastModalViewed).getTime()
+      if (now - lastViewedTimestamp >= SEVEN_DAYS_IN_MS) {
         setShowModal(true)
       }
+    } else {
+      setShowModal(true)
     }
   }, [])
 
-  const handleGetLocation = async (allow: boolean) => {
-    let location: LocationData | null = null
-    if (allow) {
-      location = await requestLocationPermission()
-    } else {
-      const lastDeniedTime = window?.localStorage.getItem('lastDeniedTime')
-      if (
-        !lastDeniedTime ||
-        Date.now() - parseInt(lastDeniedTime, 10) > 7 * 24 * 60 * 60 * 1000
-      ) {
-        Cookies.remove('lastPermissionTime')
-        window?.localStorage.removeItem('lastDeniedTime')
-      }
-    }
-    if (location) {
-      setLocationData(location)
+  const cacheTimer = async (res: LocationData) => {
+    Cookies.set('geolocation', JSON.stringify(res), { expires: 7 })
+    Cookies.set('lastModalViewed', new Date().toString(), { expires: 7 })
+  }
 
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          const { latitude, longitude } = position.coords
-          window?.localStorage.setItem(
-            'locationCoords',
-            JSON.stringify(location)
-          )
-          try {
-            const response = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
-            )
-            if (!response.ok) {
-              throw new Error('Failed to fetch data')
-            }
-            const data = await response.json()
-            window?.localStorage.setItem(
-              'locationData',
-              JSON.stringify(data.address.city)
-            )
-          } catch (err) {
-            console.log(err)
-          }
-        })
-      } else {
-        console.log('Geolocation is not supported by this browser.')
+  const handleGetLocation = async (isState: boolean) => {
+    if (isState) {
+      setShowModal(false)
+      const localtion: LocationData = await requestLocationPermission()
+      if (localtion) {
+        cacheTimer(localtion)
+        const geo = await apiLocation(localtion)
+        Cookies.set('city', geo.address.city, { expires: 7 })
       }
     }
     setShowModal(false)
@@ -82,11 +53,14 @@ const Location = () => {
 
   return (
     <>
-      {!locationData && showModal && (
+      {showModal && (
         <div className={Style.locationBg}>
           <section className={Style.localtionCokies}>
             <div className="container" onClick={() => setShowModal(false)}>
-              <div className={Style.locationModal}>
+              <div
+                className={Style.locationModal}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <p>
                   Este site utiliza cookies para melhorar a sua experiência de
                   navegação. Ao continuar, você concorda com o uso de cookies,
@@ -110,40 +84,6 @@ const Location = () => {
       )}
     </>
   )
-}
-
-async function requestLocationPermission(): Promise<LocationData | null> {
-  try {
-    const permissionStatus = await navigator.permissions.query({
-      name: 'geolocation'
-    })
-    if (
-      permissionStatus.state === 'granted' ||
-      permissionStatus.state === 'prompt'
-    ) {
-      const position = await new Promise<GeolocationPosition>(
-        (resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject)
-        }
-      )
-      return getLocationFromPosition(position)
-    } else {
-      window?.localStorage.setItem('lastDeniedTime', Date.now().toString())
-      Cookies.set('lastPermissionTime', 'denied')
-      return null
-    }
-  } catch (error) {
-    console.error('Error requesting permission:', error)
-    return null
-  }
-}
-
-function getLocationFromPosition(position: GeolocationPosition): LocationData {
-  const { coords } = position
-  return {
-    latitude: coords.latitude,
-    longitude: coords.longitude
-  }
 }
 
 export default Location

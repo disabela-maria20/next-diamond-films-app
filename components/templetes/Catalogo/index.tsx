@@ -174,8 +174,6 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                 <div key={data.id}>
                   <span
                     onClick={() => {
-                      console.log(data.title)
-
                       router.push(`/${data.slug}`)
                       dataLayerMovieSelect(
                         data.title,

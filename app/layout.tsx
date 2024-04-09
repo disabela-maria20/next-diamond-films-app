@@ -6,6 +6,7 @@ import { Montserrat } from 'next/font/google'
 import Script from 'next/script'
 
 import { Footer, Location } from '@/components/molecules'
+import { LocationProvider } from '@/components/molecules/Location/LocationContext'
 import { Header } from '@/components/organisms'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
@@ -56,7 +57,9 @@ export default function RootLayout({
               })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
           `}} />
         </Header>
-        {children}
+        <LocationProvider>
+          {children}
+        </LocationProvider>
         <Location />
         <Footer />
       </body>

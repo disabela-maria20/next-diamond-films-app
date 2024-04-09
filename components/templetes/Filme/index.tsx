@@ -352,7 +352,6 @@ const Filme = (data: IFilmeProps) => {
                       className={Style.iframeVideoYoutube}
                       key={data.url}
                       onClick={() => {
-                        console.log(data.url)
                         dataLayerPlayTrailer(
                           filme.title,
                           filme.slug,
