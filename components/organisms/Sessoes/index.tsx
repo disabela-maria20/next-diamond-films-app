@@ -2,6 +2,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+'use client'
 import React, { useState, useEffect } from 'react'
 import { FaMapMarkedAlt } from 'react-icons/fa'
 import { IoSearchSharp } from 'react-icons/io5'
@@ -34,6 +38,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [filteredSessions, setFilteredSessions] = useState<Sessions[]>([])
+  const [search, setSearch] = useState()
 
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
 
@@ -75,8 +80,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
   const groupSessoes = (sessao: Sessions[][] | undefined) => {
     const groupedSessions: { [key: string]: Sessions } = {}
 
-    sessao?.forEach((sessionsArray) => {
-      sessionsArray?.forEach(
+    sessao?.map((sessionsArray) => {
+      sessionsArray?.map(
         ({ theaterName, hour: sessionHour, link: links, ...rest }) => {
           const key = `${theaterName}`
           const distance = calculateDistance(Number(rest.lat), Number(rest.lng))
@@ -120,7 +125,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
         setFilteredSessions(groupSessoes([getDate.sessions]))
       }
     }
-  }, [sessao, selectedDate, location, loading])
+  }, [selectedDate, location, loading])
 
   function handleDataClick(date: string): void {
     const selectedSession = sessao?.find((session) => session?.date === date)
@@ -134,21 +139,23 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const search = event.target.value
     setSearchTerm(search)
-    const filteredSessions = sessao.map((data) =>
-      data.sessions.filter(
-        (item: {
-          address: string
-          city: string
-          theaterName: string
-          stateName: string
-        }) =>
-          item?.address?.toLowerCase().includes(search.toLowerCase()) ||
-          item?.city?.toLowerCase().includes(search.toLowerCase()) ||
-          item?.theaterName?.toLowerCase().includes(search.toLowerCase()) ||
-          item?.stateName?.toLowerCase().includes(search.toLowerCase())
+    const listArray = sessao
+      .filter((item) => item.date === selectedDate)
+      .map((data) =>
+        data.sessions.filter(
+          (item: {
+            address: string
+            city: string
+            theaterName: string
+            stateName: string
+          }) =>
+            item?.address?.toLowerCase().includes(search.toLowerCase()) ||
+            item?.city?.toLowerCase().includes(search.toLowerCase()) ||
+            item?.theaterName?.toLowerCase().includes(search.toLowerCase()) ||
+            item?.stateName?.toLowerCase().includes(search.toLowerCase())
+        )
       )
-    )
-    setFilteredSessions(filteredSessions.flat())
+    setFilteredSessions(groupSessoes(listArray))
   }
 
   function formatarHora(hora: string): string {
@@ -235,34 +242,18 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
                   <div className={Style.areaSalaHorario}>
                     <span>{session.technology}</span>
                     <ul>
-                      {searchTerm.length >= 0 && (
-                        <li>
+                      {session?.hours?.map((hour, i) => (
+                        <li key={1 + i}>
                           <S.LinkHora
-                            href={session.link}
+                            href={hour?.links}
                             $color={color}
                             // onClick={() => handleClickBanner(session)}
                             target="_blank"
                           >
-                            {formatarHora(session.hour)}
+                            {formatarHora(hour?.hour)}
                           </S.LinkHora>
                         </li>
-                      )}
-                      {searchTerm == '' && (
-                        <>
-                          {session?.hours?.map((hour, i) => (
-                            <li key={1 + i}>
-                              <S.LinkHora
-                                href={hour.links}
-                                $color={color}
-                                // onClick={() => handleClickBanner(session)}
-                                target="_blank"
-                              >
-                                {formatarHora(hour.hour)}
-                              </S.LinkHora>
-                            </li>
-                          ))}
-                        </>
-                      )}
+                      ))}
                     </ul>
                   </div>
                 </div>
