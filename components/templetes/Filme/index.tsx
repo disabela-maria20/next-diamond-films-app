@@ -2,7 +2,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { FaInstagram, FaYoutube } from 'react-icons/fa'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
@@ -106,22 +106,18 @@ const Filme = (data: IFilmeProps) => {
   const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
 
   const router = useRouter()
-
-  useEffect(() => {
-    dataLayerFichafilme(
-      filme?.title,
-      filme?.slug,
-      filme?.originalTitle,
-      filme?.genre
-    )
-  }, [
-    dataLayerFichafilme,
-    filme?.genre,
-    filme?.originalTitle,
-    filme?.slug,
-    filme?.title
-  ])
-
+  useLayoutEffect(() => {
+    const pageFichafilme = () => {
+      dataLayerFichafilme(
+        filme?.title,
+        filme?.slug,
+        filme?.originalTitle,
+        filme?.genre
+      )
+    }
+    pageFichafilme()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   function handleVerImagem(data: IFilmeResponseUrl) {
     setOpen(true)
     setImage(data)

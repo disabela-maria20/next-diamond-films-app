@@ -1,13 +1,9 @@
+import Cookies from 'js-cookie'
 import { v4 as uuidv4 } from 'uuid'
-
 export const useGtag = () => {
   const id = uuidv4()
 
-  const getCidade =
-    typeof window !== 'undefined'
-      ? window.localStorage.getItem('locationData')
-      : null
-  const cidade = getCidade?.replace(/"/g, '')
+  const cidade = typeof window !== 'undefined' ? Cookies.get('city') : null
 
   const dataLayerHome = (title: string, page_url: string) => {
     window.dataLayer?.push({
@@ -43,7 +39,7 @@ export const useGtag = () => {
   const dataLayerBannerClick = (
     title: string,
     page_url: string,
-    banner_click_position: { x: number; y: number }
+    banner_click_position: number
   ) => {
     window.dataLayer?.push({
       event: 'banner_click',
@@ -54,7 +50,7 @@ export const useGtag = () => {
       property_title: 'Site',
       banner_click_page: 'home',
       banner_click_content: 'Banner Filme: ' + title,
-      banner_click_position: `${banner_click_position.x}, ${banner_click_position.y}`
+      banner_click_position: `${banner_click_position}`
     })
   }
 
@@ -169,7 +165,7 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    movieposition: number
+    movieposition: string[]
   ) => {
     window.dataLayer?.push({
       event: 'movie_select',
@@ -191,7 +187,7 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    movieposition: number
+    movieposition: string[]
   ) => {
     window.dataLayer?.push({
       event: 'movie_filter',

@@ -62,6 +62,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
     setFiltroPesquisa(filmesPesquisados)
   }
 
+  const key = Object.keys(filtroPesquisa)
   const ItemPesquisados = (filme: IFilmeResponse) => {
     if (filme.title.toLowerCase().includes(pesquisa.toLowerCase())) {
       dataLayerMovieFilter(
@@ -69,7 +70,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
         filme.slug,
         filme.originalTitle,
         filme.genre,
-        filme.genre_id
+        key
       )
       return filme.title.toLowerCase().includes(pesquisa.toLowerCase())
     }
@@ -174,13 +175,14 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                 <div key={data.id}>
                   <span
                     onClick={() => {
+                      const key = Object.keys(filtroPesquisa)
                       router.push(`/${data.slug}`)
                       dataLayerMovieSelect(
                         data.title,
                         data.slug,
                         data.originalTitle,
                         data.genre,
-                        data.genre_id
+                        key
                       )
                     }}
                   >

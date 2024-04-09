@@ -3,7 +3,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
@@ -101,13 +101,18 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     setIframe(data)
   }
   const router = usePathname()
-  const routerPush = useRouter()
-  useEffect(() => {
-    dataLayerHome('Diamond Films', router)
-  }, [dataLayerHome, router])
 
-  function handleClickBanner(e: React.MouseEvent<HTMLImageElement>, data: any) {
-    dataLayerBannerClick(data.title, data.slug, { x: e.clientX, y: e.clientY })
+  const routerPush = useRouter()
+  useLayoutEffect(() => {
+    const pageView = () => {
+      dataLayerHome('Diamond Films', '')
+    }
+    pageView()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataLayerHome])
+
+  function handleClickBanner(data: any) {
+    dataLayerBannerClick(data.title, data.slug, data.i)
     routerPush.push(`${data.slug}`)
   }
 
@@ -127,7 +132,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               effect="blur"
               alt="banner"
               src={isMobile ? data.bannerMobile : data?.bannerDesktop}
-              onClick={(e) => handleClickBanner(e, data)}
+              onClick={() => handleClickBanner(data)}
               width={isMobile ? 800 : 1450}
               height={isMobile ? 1000 : 540}
             />
