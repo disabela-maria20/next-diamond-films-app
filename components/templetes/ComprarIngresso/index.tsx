@@ -67,12 +67,13 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
 
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
+    loop: true,
     autoplay: {
       delay: 2500,
       disableOnInteraction: false
     },
     pagination: isMobile ? false : true,
-    navigation: isMobile ? false : true,
+    navigation: true,
     modules: [Navigation, Pagination, Autoplay]
   }
 
