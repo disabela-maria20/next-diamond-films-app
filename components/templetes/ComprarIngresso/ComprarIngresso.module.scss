@@ -48,7 +48,8 @@
 .slideBanner {
 	@include media(lg) {
 		img {
-			width: 1920px;
+			width: 1450px;
+			max-height: 540px;
 			max-width: 100%;
 			margin: 0 auto;
 			display: block;
