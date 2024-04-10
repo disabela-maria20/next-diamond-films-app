@@ -42,10 +42,10 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
     loop: true,
-    // autoplay: {
-    //   delay: 2500,
-    //   disableOnInteraction: false
-    // },
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false
+    },
     pagination: isMobile ? false : true,
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination, Autoplay]
@@ -133,8 +133,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               alt="banner"
               src={isMobile ? data.bannerMobile : data?.bannerDesktop}
               onClick={() => handleClickBanner(data)}
-              width={isMobile ? 800 : 1450}
-              height={isMobile ? 1000 : 540}
             />
           </span>
         ))}
