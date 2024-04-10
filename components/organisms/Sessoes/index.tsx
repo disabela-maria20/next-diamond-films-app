@@ -23,6 +23,7 @@ interface ISessoesProps {
 
 import { useLocationContext } from '@/components/molecules/Location/LocationContext'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
+import { useGtag } from '@/utils/lib/gtag'
 import {
   ESTADOS,
   IFilmeResponse,
@@ -34,13 +35,14 @@ import Cookies from 'js-cookie'
 import { darken } from 'polished'
 const DISTANCIA = 20
 
-const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
+const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [filteredSessions, setFilteredSessions] = useState<Sessions[]>([])
-  const [search, setSearch] = useState()
 
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
+
+  const { dataLayerMovieTicket } = useGtag()
 
   const { location, loading } = useLocationContext()
 
@@ -161,7 +163,17 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
   function formatarHora(hora: string): string {
     return hora.slice(0, 5)
   }
-
+  function handleClickBanner(data: Sessions) {
+    dataLayerMovieTicket(
+      filme.title,
+      filme.slug,
+      filme.originalTitle,
+      filme.genre,
+      data.theaterName,
+      data.address,
+      data.hour
+    )
+  }
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
@@ -247,7 +259,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster }) => {
                           <S.LinkHora
                             href={hour?.links}
                             $color={color}
-                            // onClick={() => handleClickBanner(session)}
+                            onClick={() => handleClickBanner(session)}
                             target="_blank"
                           >
                             {formatarHora(hour?.hour)}
