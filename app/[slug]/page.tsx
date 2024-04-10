@@ -10,9 +10,7 @@ type Params = {
     slug: string
   }
 }
-export const dynamicParams = false
-export const revalidate = 6000
-export const maxDuration = 5
+
 export async function generateMetadata({
   params: { slug }
 }: Params): Promise<Metadata> {
