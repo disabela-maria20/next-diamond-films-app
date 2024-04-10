@@ -34,6 +34,7 @@ export interface IFilmeResponse extends IFilmeProps {
   streaming: string[]
   created_at: string
   hasSession: boolean
+  idVibezzMovie: string
 }
 
 export interface IFilmeResponseUrl {

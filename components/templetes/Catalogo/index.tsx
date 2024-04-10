@@ -70,7 +70,8 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
         filme.slug,
         filme.originalTitle,
         filme.genre,
-        key
+        key,
+        Number(filme.idVibezzMovie)
       )
       return filme.title.toLowerCase().includes(pesquisa.toLowerCase())
     }
@@ -182,7 +183,8 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                         data.slug,
                         data.originalTitle,
                         data.genre,
-                        key
+                        key,
+                        Number(data.idVibezzMovie)
                       )
                     }}
                   >

@@ -111,16 +111,9 @@
 }
 
 .slideBanner {
-
-	@include media(lg) {
-		img {
-			width: 1450px;
-			height: 540px;
-			max-height: min(100%, 540px);
-			max-width: 100%;
-			margin: 0 auto;
-			display: block;
-		}
+	img{
+		width: 100%;
+		max-height: max(100%, 540px) ;
 	}
 }
 

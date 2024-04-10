@@ -81,6 +81,8 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
+  console.log(data)
+
   const filme = data.movie?.movie
   const sessoes = data.movie?.sessions
 
@@ -112,7 +114,8 @@ const Filme = (data: IFilmeProps) => {
         filme?.title,
         filme?.slug,
         filme?.originalTitle,
-        filme?.genre
+        filme?.genre,
+        Number(filme?.idVibezzMovie)
       )
     }
     pageFichafilme()
@@ -353,7 +356,8 @@ const Filme = (data: IFilmeProps) => {
                           filme.slug,
                           filme.originalTitle,
                           filme.genre,
-                          'HUB'
+                          'HUB',
+                          Number(filme.idVibezzMovie)
                         )
                       }}
                     >

@@ -19,7 +19,8 @@ export const useGtag = () => {
     title: string,
     page_url: string,
     moviename_original: string,
-    moviegenre: string
+    moviegenre: string,
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'ficha_filme',
@@ -31,7 +32,7 @@ export const useGtag = () => {
       pagina_filme: 'Hub',
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre
     })
   }
@@ -61,7 +62,8 @@ export const useGtag = () => {
     moviegenre: string,
     theater_exhibitor: string,
     theater_id: string,
-    theater_session: string
+    theater_session: string,
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'movie_tickets',
@@ -72,7 +74,7 @@ export const useGtag = () => {
       property_title: 'Site',
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre,
       theater_exhibitor: theater_exhibitor,
       theater_id: theater_id,
@@ -85,7 +87,8 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    stream_name: string
+    stream_name: string,
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'movie_stream',
@@ -96,7 +99,7 @@ export const useGtag = () => {
       property_title: 'Site',
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre,
       stream_name: stream_name
     })
@@ -108,7 +111,8 @@ export const useGtag = () => {
     moviename_original: string,
     moviegenre: string,
     subscribe_location: string,
-    pagina_filme: string
+    pagina_filme: string,
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'newsletter_subscribe',
@@ -120,7 +124,7 @@ export const useGtag = () => {
       pagina_filme: pagina_filme,
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre,
       subscribe_location: subscribe_location
     })
@@ -131,7 +135,8 @@ export const useGtag = () => {
     moviename_original: string,
     moviegenre: string,
     subscribe_location: string,
-    pagina_filme: string
+    pagina_filme: string,
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'movie_subscribe',
@@ -143,7 +148,7 @@ export const useGtag = () => {
       pagina_filme: pagina_filme,
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre,
       subscribe_location: subscribe_location
     })
@@ -165,7 +170,8 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    movieposition: string[]
+    movieposition: string[],
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'movie_select',
@@ -176,7 +182,7 @@ export const useGtag = () => {
       property_title: 'Site',
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre,
       movieposition: movieposition
     })
@@ -187,7 +193,8 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    movieposition: string[]
+    movieposition: string[],
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'movie_filter',
@@ -198,7 +205,7 @@ export const useGtag = () => {
       property_title: 'Site',
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre,
       movieposition: movieposition
     })
@@ -208,7 +215,8 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    pagina_filme: string
+    pagina_filme: string,
+    movieid: number
   ) => {
     window.dataLayer?.push({
       event: 'play_trailer',
@@ -220,7 +228,7 @@ export const useGtag = () => {
       pagina_filme: pagina_filme,
       moviename: title,
       moviename_original: moviename_original,
-      movieid: '',
+      movieid: Number(movieid),
       moviegenre: moviegenre
     })
   }

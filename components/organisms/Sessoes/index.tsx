@@ -171,7 +171,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
       filme.genre,
       data.theaterName,
       data.address,
-      data.hour
+      data.hour,
+      Number(filme.idVibezzMovie)
     )
   }
   return (

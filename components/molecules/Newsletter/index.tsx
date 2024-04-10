@@ -79,7 +79,8 @@ const Newsletter = ({
             filmes?.originalTitle,
             filmes?.genre,
             'hub',
-            'Hub do Filme'
+            'Hub do Filme',
+            Number(filmes.idVibezzMovie)
           )
         }
         if (filmes && type == 'modal') {
@@ -89,7 +90,8 @@ const Newsletter = ({
             filmes?.originalTitle,
             filmes?.genre,
             'modal',
-            'Hub do Filme'
+            'Hub do Filme',
+            Number(filmes.idVibezzMovie)
           )
         }
       }
