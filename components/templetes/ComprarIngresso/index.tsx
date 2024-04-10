@@ -132,8 +132,8 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
                   const dateB = formatDateForSorting(
                     b.movie?.releasedate as string
                   )
-                  if (dateA < dateB) return -1
-                  if (dateA > dateB) return 1
+                  if (dateA > dateB) return -1
+                  if (dateA < dateB) return 1
                   return 0
                 })
                 .map((sessoes) => {

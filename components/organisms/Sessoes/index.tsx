@@ -125,6 +125,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
       const getDate = sessao.find((session) => session?.date === selectedDate)
       if (getDate) {
         setFilteredSessions(groupSessoes([getDate.sessions]))
+      } else {
+        setSelectedDate(sessao[0].date)
+        setFilteredSessions(groupSessoes([sessao[0].sessions]))
       }
     }
   }, [selectedDate, location, loading])

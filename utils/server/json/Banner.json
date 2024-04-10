@@ -1,23 +1,9 @@
 [
   {
-    "bannerMobile": "/img/poster/uma-prova-de-coragem-mobile.webp",
-    "bannerDesktop": "/img/poster/uma-prova-de-coragem-desktop.webp",
-    "slug": "/umaprovadecoragem",
-    "title": "Uma Prova de coragem",
-    "id": 1
-  },
-  {
     "bannerMobile": "/img/poster/guerra-civil-mobile.webp",
     "bannerDesktop": "/img/poster/guerra-civil-desktop.webp",
     "slug": "/guerracivil",
     "title": "Gerra Civil",
     "id": 2
-  },
-  {
-    "bannerMobile": "/img/poster/osabordavida-mobile.webp",
-    "bannerDesktop": "/img/poster/osabordavida-decktop.webp",
-    "slug": "/osabordavida",
-    "title": "O sabor da vida",
-    "id": 3
   }
 ]

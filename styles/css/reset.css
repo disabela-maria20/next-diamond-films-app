@@ -242,12 +242,12 @@ input[type="checkbox"]:checked::before {
   z-index: 999 !important;
 }
 
-.swiper-pagination-bullet {
+/* .swiper-pagination-bullet {
   background-color: transparent;
   border: 1px solid #ffffff;
-}
+} */
 
-.swiper-pagination {
+/* .swiper-pagination {
   display: flex;
   gap: 10px;
   position: absolute;
@@ -271,7 +271,7 @@ input[type="checkbox"]:checked::before {
 .swiper-button-prev.swiper-button-disabled,
 .swiper-button-next.swiper-button-disabled {
   opacity: 0 !important;
-}
+} */
 
 
 

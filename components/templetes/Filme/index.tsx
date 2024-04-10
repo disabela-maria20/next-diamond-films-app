@@ -81,8 +81,6 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
-  console.log(data)
-
   const filme = data.movie?.movie
   const sessoes = data.movie?.sessions
 

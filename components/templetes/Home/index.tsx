@@ -46,7 +46,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
       delay: 2500,
       disableOnInteraction: false
     },
-    pagination: isMobile ? false : true,
+    // pagination: isMobile ? false : true,
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination, Autoplay]
   }
