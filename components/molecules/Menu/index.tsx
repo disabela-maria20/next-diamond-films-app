@@ -6,13 +6,10 @@ import { useEffect, useState } from 'react'
 
 import Style from './Menu.module.scss'
 
-import { Burger, Loading, Logo, Nav, Search } from '../../atoms'
-
-import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
+import { Burger, Logo, Nav } from '../../atoms'
 
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState<boolean>(true)
-  const { isMobile, isLoading } = useIsMobile()
 
   useEffect(() => {
     if (!open) {
@@ -22,7 +19,6 @@ const Menu = (): JSX.Element => {
       document.body.classList.remove(Style.bgOpacity)
     }
   }, [open])
-  if (isLoading) return <Loading />
   return (
     <>
       <div className={Style.bgNav}>

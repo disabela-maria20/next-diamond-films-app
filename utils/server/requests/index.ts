@@ -7,7 +7,8 @@ export async function getCatalogoFilme(slug: string) {
   try {
     const res = await fetch(`${baseURL}/movie/get/${slug}`, {
       headers,
-      cache: 'force-cache'
+      cache: 'force-cache',
+      next: { revalidate: 3600 }
     })
     return await res.json()
   } catch (err) {
@@ -19,7 +20,8 @@ export async function getHome() {
   try {
     const res = await fetch(`${baseURL}/movie/list-all`, {
       headers,
-      cache: 'force-cache'
+      cache: 'force-cache',
+      next: { revalidate: 3600 }
     })
     return await res.json()
   } catch (err) {
@@ -31,7 +33,8 @@ export async function getHomeBanner() {
   try {
     const res = await fetch(`${baseURL}/banner-home`, {
       headers,
-      cache: 'force-cache'
+      cache: 'force-cache',
+      next: { revalidate: 3600 }
     })
     return await res.json()
   } catch (err) {
