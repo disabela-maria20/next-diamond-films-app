@@ -1,16 +1,19 @@
 import { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
 import { Loading } from '@/components/atoms'
-import { Filme } from '@/components/templetes'
 import { getCatalogoFilme } from '@/utils/server/requests'
+
+const Filme = dynamic(() => import('@/components/templetes/Filme'), {
+  ssr: false
+})
 
 type Params = {
   params: {
     slug: string
   }
 }
-
 export async function generateMetadata({
   params: { slug }
 }: Params): Promise<Metadata> {

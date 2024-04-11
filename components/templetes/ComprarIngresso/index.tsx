@@ -56,7 +56,7 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
       }
     }
     fetchSessoes()
-  }, [listaFilmes.releases, sessoesArray.length])
+  }, [listaFilmes?.releases, sessoesArray?.length])
 
   useEffect(() => {
     const filmesComSessoes = sessoesArray.filter((data) => {
