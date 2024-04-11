@@ -12,7 +12,7 @@
 
 		
 		&.close {
-			transform: translate(-110%);
+			transform: translate(-100%);
 			@include media(xl) {
 				transform: initial;
 				height: initial;
@@ -64,6 +64,7 @@
 		height: 100vh;
 
 		@include media(xl) {
+			height: initial;
 			position: relative;
 			display: flex;
 			align-items: center;
