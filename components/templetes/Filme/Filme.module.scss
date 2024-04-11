@@ -62,7 +62,9 @@
 	@include flex-center();
 	gap: 20px;
 	margin-top: 35px;
-
+	@include media(md) {
+		margin-top: 0
+	}
 	a {
 		@include btn-outline();
 		cursor: pointer;
@@ -362,13 +364,12 @@
 			.subTitle {
 				display: flex;
 				justify-content: space-between;
-				align-items: center;
-				
+				align-items: center;				
 				flex-direction: column;
 
 				@include media(lg) {
 					flex-direction: row;
-					padding-bottom: 35px;
+					// padding-bottom: 35px;
 				}
 
 				.emExibicao {
@@ -377,7 +378,7 @@
 					color: $primary-lingh-color;
 					font-weight: 400;
 					text-align: center;
-
+					text-transform: uppercase;
 					@include media(lg) {
 						font-size: 2.2rem;
 						text-align: left;

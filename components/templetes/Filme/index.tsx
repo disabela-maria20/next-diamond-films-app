@@ -22,6 +22,7 @@ import {
 } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 interface IFilmeProps {
   movie: {
     movie: IFilmeResponse
@@ -94,7 +95,7 @@ const Filme = (data: IFilmeProps) => {
     useFormatarData()
 
   const { isMobile, isLoading } = useIsMobile()
-
+  const statusTextData = useFilmeTextStatus()
   //const formatarData = useFormatarData()
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
@@ -209,13 +210,7 @@ const Filme = (data: IFilmeProps) => {
             <div className={Style.areaTituloBanner}>
               <h1 style={{ color: `${filme?.color}` }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
-                <h2 className={Style.emExibicao}>
-                  {emExibicao && (
-                    <>
-                      <strong>EM EXIBIÇÃO</strong> SOMENTE NOS CINEMAS
-                    </>
-                  )}
-                </h2>
+                <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
                 <div className={Style.areaBtnCompra}>
                   {emExibicao && !isMobile && (
                     <button
