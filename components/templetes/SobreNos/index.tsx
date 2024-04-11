@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -96,7 +97,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
           isBg={true}
           title={false}
         />
-        <h2 className={Style.titleLancamento}>
+        {/* <h2 className={Style.titleLancamento}>
           LANÇAMENTOS
           <span>
             Confira os filmes em exibição e os que serão lançados em breve
@@ -135,7 +136,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
                 </span>
               </div>
             ))}
-        </Slide.Content>
+        </Slide.Content> */}
         {open && (
           <Model.Root>
             <Model.Body
