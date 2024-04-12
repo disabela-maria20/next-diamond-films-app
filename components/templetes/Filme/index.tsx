@@ -12,6 +12,7 @@ import { FreeMode, Scrollbar } from 'swiper/modules'
 import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
+import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { useGtag } from '@/utils/lib/gtag'
@@ -22,7 +23,6 @@ import {
 } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 interface IFilmeProps {
   movie: {
     movie: IFilmeResponse

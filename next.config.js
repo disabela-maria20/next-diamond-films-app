@@ -16,7 +16,7 @@ const nextConfig = {
     styledComponents: true,
     removeConsole: false
   },
-  compress: true
+  output: 'export'
 }
 
 module.exports = nextConfig

@@ -1,13 +1,9 @@
 import { Metadata } from 'next'
-import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
 import { Loading } from '@/components/atoms'
-import { getCatalogoFilme } from '@/utils/server/requests'
-
-const Filme = dynamic(() => import('@/components/templetes/Filme'), {
-  ssr: false
-})
+import { Filme } from '@/components/templetes'
+import { getCatalogoFilme, getHome } from '@/utils/server/requests'
 
 type Params = {
   params: {
@@ -39,4 +35,11 @@ export default async function pageCatalogoFilme({ params: { slug } }: Params) {
       </Suspense>
     </>
   )
+}
+
+export async function generateStaticParams() {
+  const posts = await getHome()
+  return posts.releases.map((post: { slug: string }) => ({
+    slug: post.slug
+  }))
 }

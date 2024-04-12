@@ -1,13 +1,10 @@
 import { Metadata } from 'next'
-import { unstable_cache } from 'next/cache'
 import { Suspense, lazy } from 'react'
 
 import { Loading } from '@/components/atoms'
 import { getHome } from '@/utils/server/requests'
 
 const Catalogo = lazy(() => import('@/components/templetes/Catalogo'))
-
-const getPageFilmes = unstable_cache(async () => getHome(), ['filme'])
 
 export const metadata: Metadata = {
   title: 'Filmes | Diamond Films',
@@ -16,7 +13,7 @@ export const metadata: Metadata = {
 }
 
 const PageFilmes = async () => {
-  const listaFilmes = await getPageFilmes()
+  const listaFilmes = await getHome()
   return (
     <Suspense fallback={<Loading altura={true} />}>
       <Catalogo listaFilmes={listaFilmes} />
