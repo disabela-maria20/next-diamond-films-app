@@ -249,16 +249,6 @@ const Filme = (data: IFilmeProps) => {
           </div>
         </div>
       </section>
-      {!isMobile && (
-        <div className="container">
-          <Newsletter
-            isHorrizontal={!isMobile}
-            isBg={true}
-            filmes={filme}
-            type="filme"
-          />
-        </div>
-      )}
 
       <div style={{ overflow: 'hidden' }}>
         <div className="container">
@@ -411,16 +401,16 @@ const Filme = (data: IFilmeProps) => {
               />
             </section>
           )}
-          {isMobile && (
-            <div className={Style.areaNewsletter}>
-              <Newsletter
-                isHorrizontal={!isMobile}
-                isBg={true}
-                filmes={filme}
-                type="filme"
-              />
-            </div>
-          )}
+
+          <div className={Style.areaNewsletter}>
+            <Newsletter
+              isHorrizontal={!isMobile}
+              isBg={true}
+              filmes={filme}
+              type="filme"
+            />
+          </div>
+
           {open && (
             <Model.Root>
               <Model.Body
