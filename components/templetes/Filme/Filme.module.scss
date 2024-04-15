@@ -5,7 +5,6 @@
 
 .areaBtn {
 	@include flex-center();
-	padding: 31px;
 	gap: 20px;
 	flex-direction: column;
 
@@ -79,14 +78,13 @@
 
 .areaPoster {
 	color: $primary-lingh-color;
-	padding: 35px 0;
-
+	margin-top: 40px;
 	@include media(lg) {
 		display: grid;
 		grid-template-columns: 2fr .7fr;
 		gap: 20px;
 		justify-content: space-between;
-		padding: 90px 0;
+		// padding: 90px 0;
 	}
 
 	h2 {
@@ -234,7 +232,7 @@
 
 .slideTitle {
 	font-size: 3.1rem;
-	margin: 25px 0;
+	margin: 40px 0 40px 0;
 	font-weight: 400;
 	color: $primary-lingh-color;
 }
@@ -437,4 +435,8 @@
 		transform: scaleY(1);
 		transform-origin: 100% 0%;
 	}
+}
+
+.areaNewsletter{
+	margin: 35px 0 ;
 }

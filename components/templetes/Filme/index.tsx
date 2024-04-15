@@ -219,8 +219,8 @@ const Filme = (data: IFilmeProps) => {
               </h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
-                <div className={Style.areaBtnCompra}>
-                  {emExibicao && !isMobile && (
+                {emExibicao && !isMobile && (
+                  <div className={Style.areaBtnCompra}>
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -228,8 +228,8 @@ const Filme = (data: IFilmeProps) => {
                     >
                       COMPRAR INGRESSOS
                     </button>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
               <div className={Style.AreaSaibamais}>
                 {sessoes?.length > 0 && (
@@ -249,14 +249,16 @@ const Filme = (data: IFilmeProps) => {
           </div>
         </div>
       </section>
-      <div className="container">
-        <Newsletter
-          isHorrizontal={!isMobile}
-          isBg={true}
-          filmes={filme}
-          type="filme"
-        />
-      </div>
+      {!isMobile && (
+        <div className="container">
+          <Newsletter
+            isHorrizontal={!isMobile}
+            isBg={true}
+            filmes={filme}
+            type="filme"
+          />
+        </div>
+      )}
 
       <div style={{ overflow: 'hidden' }}>
         <div className="container">
@@ -409,7 +411,16 @@ const Filme = (data: IFilmeProps) => {
               />
             </section>
           )}
-
+          {isMobile && (
+            <div className={Style.areaNewsletter}>
+              <Newsletter
+                isHorrizontal={!isMobile}
+                isBg={true}
+                filmes={filme}
+                type="filme"
+              />
+            </div>
+          )}
           {open && (
             <Model.Root>
               <Model.Body
