@@ -16,7 +16,16 @@ const nextConfig = {
     styledComponents: true,
     removeConsole: false
   },
-  output: 'export'
+  output: 'export',
+  async redirects() {
+    return [
+      {
+        source: '/guerracivil',
+        destination: '/guerracivil/',
+        permanent: true
+      }
+    ]
+  }
   // distDir: 'build',
   // trailingSlash: true
 }
