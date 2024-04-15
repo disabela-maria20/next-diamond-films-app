@@ -20,9 +20,19 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/guerracivil',
-        destination: '/guerracivil/',
-        permanent: true
+        source: '/umaprovadecoragem',
+        destination: 'https://diamondfilms.com.br/uma-prova-de-coragem/',
+        permanent: false
+      },
+      {
+        source: '/umavida',
+        destination: 'https://diamondfilms.com.br/uma-vida/',
+        permanent: false
+      },
+      {
+        source: '/guerra-civil/',
+        destination: '/guerracivil',
+        permanent: false
       }
     ]
   }
