@@ -30,7 +30,7 @@ const nextConfig = {
         permanent: false
       },
       {
-        source: '/guerra-civil/',
+        source: '/guerracivil/',
         destination: '/guerracivil',
         permanent: false
       }
