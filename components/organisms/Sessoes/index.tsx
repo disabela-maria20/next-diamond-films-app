@@ -196,7 +196,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
             <IoSearchSharp />
             <input
               type="text"
-              placeholder="Pesquisar por cinema ou cidade/estado"
+              placeholder="Pesquisar por cinema ou cidade"
               value={searchTerm}
               onChange={handleSearch}
             />
