@@ -37,13 +37,13 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   const [state, setState] = useState<string>()
   const [cities, setCities] = useState<string>()
   const [sessoes, setSessoes] = useState<SessionsArrayResponse>()
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loadings, setLoadings] = useState<boolean>(false)
 
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
 
   const { dataLayerMovieTicket } = useGtag()
 
-  const { location } = useLocationContext()
+  const { location, loading } = useLocationContext()
 
   const calculateDistance = (lat2: number, lon2: number) => {
     const lat1 = location.latitude
@@ -160,32 +160,37 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
 
   useEffect(() => {
     const getFilmeLocation = async () => {
-      setLoading(true)
+      setLoadings(true)
       const res = await getLocation(filme.slug)
-      setLoading(false)
+      setLoadings(false)
       setLocalFilmes(res)
     }
     getFilmeLocation()
   }, [filme.slug])
-
   const getCookieCity = Cookies.get('city')
-  console.log(getCookieCity)
+
+  console.log(location)
+
   useEffect(() => {
     const getFilmeSessoes = async () => {
-      setLoading(true)
+      setLoadings(true)
       if (cities) {
         const res = await getSession(filme.slug, cities)
         setSessoes(res)
       }
-      if (getCookieCity) {
+
+      if (
+        location.latitude !== 0 &&
+        location.longitude !== 0 &&
+        getCookieCity
+      ) {
         const res = await getSession(filme.slug, getCookieCity)
         setSessoes(res)
       }
-
-      setLoading(false)
+      setLoadings(false)
     }
     getFilmeSessoes()
-  }, [filme.slug, cities, getCookieCity])
+  }, [filme.slug, cities, location, getCookieCity, loading])
 
   return (
     <section className={Style.areaSessao}>
@@ -229,7 +234,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                   ))}
             </select>
           </div>
-          {loading && <Loading />}
+          {loadings && <Loading />}
           {filteredSessions.length !== 0 && !loading && (
             <>
               <div
