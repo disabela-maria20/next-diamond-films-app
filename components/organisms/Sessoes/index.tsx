@@ -169,25 +169,15 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   }, [filme.slug])
   const getCookieCity = Cookies.get('city')
 
-  console.log(location)
-
   useEffect(() => {
     const getFilmeSessoes = async () => {
-      setLoadings(true)
       if (cities) {
         const res = await getSession(filme.slug, cities)
         setSessoes(res)
       }
-
-      if (
-        location.latitude !== 0 &&
-        location.longitude !== 0 &&
-        getCookieCity
-      ) {
-        const res = await getSession(filme.slug, getCookieCity)
-        setSessoes(res)
-      }
-      setLoadings(false)
+      if (!getCookieCity) return
+      const res = await getSession(filme.slug, getCookieCity)
+      setSessoes(res)
     }
     getFilmeSessoes()
   }, [filme.slug, cities, location, getCookieCity, loading])
@@ -208,9 +198,10 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         >
           <div className={Style.flexAreaPesquisa}>
             <IoSearchSharp />
-            <select
+            <S.SelectLocation
               value={state}
               onChange={({ target }) => setState(target.value)}
+              $color={`${color}`}
             >
               <option value="estado">Estado</option>
               {localFilmes?.map((data) => (
@@ -218,10 +209,11 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                   {obterNomeEstado(data.state)}
                 </option>
               ))}
-            </select>
-            <select
+            </S.SelectLocation>
+            <S.SelectLocation
               value={cities}
               onChange={({ target }) => setCities(target.value)}
+              $color={color}
             >
               <option value="cidade">Cidade</option>
               {localFilmes &&
@@ -232,7 +224,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                       {city}
                     </option>
                   ))}
-            </select>
+            </S.SelectLocation>
           </div>
           {loadings && <Loading />}
           {filteredSessions.length !== 0 && !loading && (

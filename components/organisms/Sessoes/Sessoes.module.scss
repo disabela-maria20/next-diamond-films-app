@@ -41,6 +41,12 @@
 	.flexAreaPesquisa {
 		display: flex;
 		align-items: center;
+		gap: 5px;
+		padding: 0 5px;
+		@include media(lg) {
+			padding: 0 20px;
+
+		}
 		background-color: $primary-lingh-color;
 		// position: relative;
 		// top: -25px;
