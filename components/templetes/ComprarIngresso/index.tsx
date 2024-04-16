@@ -9,7 +9,7 @@ import { Loading } from '@/components/atoms'
 import { Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
-import { IFilmeResponse, Session } from '@/utils/server/types'
+import { IFilmeResponse } from '@/utils/server/types'
 import axios from 'axios'
 import { SwiperOptions } from 'swiper/types'
 
@@ -24,7 +24,6 @@ interface IComprarIngressoProps {
 
 interface IComprarIngressoSessoesResponse {
   movie?: IFilmeResponse
-  sessions?: Session[]
 }
 
 const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
@@ -60,7 +59,7 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
 
   useEffect(() => {
     const filmesComSessoes = sessoesArray.filter((data) => {
-      return data.sessions && data.sessions.length > 0
+      return data.movie && data.movie.hasSession
     })
     setFilmesComSessoes(filmesComSessoes)
   }, [sessoesArray])
@@ -139,13 +138,12 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
                 .map((sessoes) => {
                   return (
                     <div key={sessoes.movie?.id} className={Style.itemSessao}>
-                      {sessoes.movie && sessoes.sessions && (
+                      {sessoes.movie && (
                         <>
                           <Sessoes
                             filme={sessoes?.movie}
                             poster={sessoes.movie.cover}
                             color={sessoes?.movie.color}
-                            sessao={sessoes?.sessions}
                           />
                         </>
                       )}
