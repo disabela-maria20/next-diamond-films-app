@@ -45,7 +45,7 @@
 		// position: relative;
 		// top: -25px;
 
-		input {
+		input, select {
 			width: 100%;
 			@include inputNewsletter;
 		}
@@ -166,7 +166,6 @@
 			grid-gap: 15px;
 			grid-row-gap: 40px;
 			margin-top: 15px;
-			li {}
 		}
 	}
 }
@@ -182,5 +181,17 @@
 
 	span {
 		margin: 0 5px;
+	}
+}
+
+.sessoesVazio{
+	height: calc(100% - 70px);
+
+	p{
+		font-size: 1.6rem;
+		line-height: 2.6rem;
+		margin: 20px 0;
+		text-align: center;
+		padding: 15px 0;
 	}
 }
