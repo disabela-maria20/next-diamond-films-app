@@ -151,8 +151,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       if (getDate) {
         setFilteredSessions(groupSessoes([getDate.sessions]))
       } else {
-        setSelectedDate(sessoes.sessions[0].date)
-        setFilteredSessions(groupSessoes([sessoes.sessions[0].sessions]))
+        setSelectedDate(sessoes.sessions[0]?.date)
+        setFilteredSessions(groupSessoes([sessoes.sessions[0]?.sessions]))
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -175,8 +175,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         const res = await getSession(filme.slug, cities)
         setSessoes(res)
       }
-      if (!getCookieCity) return
-      const res = await getSession(filme.slug, getCookieCity)
+      if (location.latitude == 0) return
+      const res = await getSession(filme.slug, getCookieCity as string)
       setSessoes(res)
     }
     getFilmeSessoes()
@@ -198,10 +198,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         >
           <div className={Style.flexAreaPesquisa}>
             <IoSearchSharp />
-            <S.SelectLocation
+            <select
               value={state}
               onChange={({ target }) => setState(target.value)}
-              $color={`${color}`}
             >
               <option value="estado">Estado</option>
               {localFilmes?.map((data) => (
@@ -209,11 +208,10 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                   {obterNomeEstado(data.state)}
                 </option>
               ))}
-            </S.SelectLocation>
-            <S.SelectLocation
+            </select>
+            <select
               value={cities}
               onChange={({ target }) => setCities(target.value)}
-              $color={color}
             >
               <option value="cidade">Cidade</option>
               {localFilmes &&
@@ -224,7 +222,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                       {city}
                     </option>
                   ))}
-            </S.SelectLocation>
+            </select>
           </div>
           {loadings && <Loading />}
           {filteredSessions.length !== 0 && !loading && (
