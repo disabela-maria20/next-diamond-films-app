@@ -74,6 +74,12 @@
 	button {
 		@include btn-outline();
 		cursor: pointer;
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		img{
+			max-width: 100px;
+		}
 	}
 
 }

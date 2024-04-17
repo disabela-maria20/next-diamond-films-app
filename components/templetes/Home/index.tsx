@@ -15,6 +15,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css'
 
 import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
+import { useLocationContext } from '@/components/molecules/Location/LocationContext'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
@@ -50,6 +51,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination, Autoplay]
   }
+  const { locationArea } = useLocationContext()
 
   const filmesSwiperOptions: SwiperOptions = {
     slidesPerView: 2,
@@ -109,10 +111,10 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     }
     pageView()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataLayerHome])
+  }, [])
 
   function handleClickBanner(data: any) {
-    dataLayerBannerClick(data.title, data.slug, data.i)
+    dataLayerBannerClick(data.title, data.slug, data.id)
     routerPush.push(`${data.slug}`)
   }
 
