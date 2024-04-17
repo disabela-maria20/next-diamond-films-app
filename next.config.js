@@ -4,6 +4,7 @@
 
 const path = require('path')
 const nextConfig = {
+  reactStrictMode: false,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles', 'sass')],
     prependData: `@import 'abstracts/_index.scss';`

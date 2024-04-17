@@ -36,7 +36,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
-  const { dataLayerHome, dataLayerBannerClick } = useGtag()
+  const { dataLayerHome } = useGtag()
   const { isMobile, isLoading } = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -105,7 +105,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   dataLayerHome('Diamond Films', '')
 
   function handleClickBanner(data: any) {
-    dataLayerBannerClick(data.title, data.slug, data.i)
+    // dataLayerBannerClick(data.title, data.slug, data.i)
     routerPush.push(`${data.slug}`)
   }
 
