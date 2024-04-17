@@ -175,13 +175,28 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         const res = await getSession(filme.slug, cities)
         setSessoes(res)
       }
-      if (location.latitude === 0 || getCookieCity !== 'undefined') return
-      const res = await getSession(filme.slug, getCookieCity as string)
-      setSessoes(res)
     }
     getFilmeSessoes()
-  }, [filme.slug, cities, location, getCookieCity, loading])
+  }, [filme.slug, cities, getCookieCity, location])
 
+  useEffect(() => {
+    const getFilmeSessoes = async () => {
+      if (
+        getCookieCity &&
+        getCookieCity !== 'undefined' &&
+        location.latitude !== 0 &&
+        location.longitude !== 0
+      ) {
+        const res = await getSession(filme.slug, getCookieCity)
+        setSessoes(res)
+        setFilteredSessions([res])
+      } else {
+        return
+      }
+    }
+    getFilmeSessoes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localFilmes])
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
