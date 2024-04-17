@@ -73,3 +73,12 @@ export const LinkLocation = styled.a.attrs<{ $color?: string }>((props) => ({
     }
   }
 `
+
+export const SelectLocation = styled.select.attrs<{ $color?: string }>(
+  (props) => ({
+    type: 'text',
+    $color: props.$color || '#000'
+  })
+)<{ $color?: string }>`
+  border: 2px solid ${(props) => props.$color} !important;
+`

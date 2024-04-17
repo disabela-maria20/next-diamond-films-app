@@ -1,10 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use client'
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import React, { useState, useEffect } from 'react'
 import { FaMapMarkedAlt } from 'react-icons/fa'
@@ -18,40 +12,40 @@ interface ISessoesProps {
   filme: IFilmeResponse
   poster: string
   color: string
-  sessao: Session[]
 }
 
+import { Loading } from '@/components/atoms'
 import { useLocationContext } from '@/components/molecules/Location/LocationContext'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import { useGtag } from '@/utils/lib/gtag'
+import { getLocation, getSession } from '@/utils/server/requests'
 import {
   ESTADOS,
   IFilmeResponse,
-  LocationData,
-  Session,
-  Sessions
+  Sessions,
+  Location,
+  SessionsArrayResponse
 } from '@/utils/server/types'
 import Cookies from 'js-cookie'
 import { darken } from 'polished'
-const DISTANCIA = 20
 
-const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
-  const [searchTerm, setSearchTerm] = useState<string>('')
+const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [filteredSessions, setFilteredSessions] = useState<Sessions[]>([])
+
+  const [localFilmes, setLocalFilmes] = useState<Location[]>()
+  const [state, setState] = useState<string>()
+  const [cities, setCities] = useState<string>()
+  const [sessoes, setSessoes] = useState<SessionsArrayResponse>()
+  const [loadings, setLoadings] = useState<boolean>(false)
 
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
 
   const { dataLayerMovieTicket } = useGtag()
 
-  const { location, loading } = useLocationContext()
+  const { location, loading, locationArea } = useLocationContext()
 
-  const getLocal =
-    typeof window !== 'undefined' ? Cookies.get('geolocation') : null
-
-  const localizacao: LocationData = getLocal
-    ? JSON.parse(getLocal)
-    : { latitude: 0, longitude: 0 }
+  console.log(locationArea?.address)
 
   const calculateDistance = (lat2: number, lon2: number) => {
     const lat1 = location.latitude
@@ -79,16 +73,47 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
     return ESTADOS[sigla] || 'Estado não encontrado'
   }
 
-  const groupSessoes = (sessao: Sessions[][] | undefined) => {
+  function handleDataClick(date: string): void {
+    const selectedSession = sessoes?.sessions?.find(
+      (session) => session?.date === date
+    )
+    const filteredSessions = selectedSession
+      ? groupSessoes([selectedSession.sessions])
+      : []
+    setFilteredSessions(filteredSessions)
+    setSelectedDate(date)
+  }
+
+  function formatarHora(hora: string): string {
+    return hora?.slice(0, 5)
+  }
+
+  function handleClickBanner(data: Sessions) {
+    dataLayerMovieTicket(
+      filme.title,
+      filme.slug,
+      filme.originalTitle,
+      filme.genre,
+      data.theaterName,
+      data.address,
+      data.hour,
+      Number(filme.idVibezzMovie)
+    )
+  }
+
+  const groupSessoes = (sessao: Sessions[] | undefined) => {
     const groupedSessions: { [key: string]: Sessions } = {}
 
     sessao?.map((sessionsArray) => {
+      // @ts-ignore: Unreachable code error
       sessionsArray?.map(
+        // @ts-ignore: Unreachable code error
         ({ theaterName, hour: sessionHour, link: links, ...rest }) => {
           const key = `${theaterName}`
           const distance = calculateDistance(Number(rest.lat), Number(rest.lng))
           const stateName = obterNomeEstado(rest.state)
           if (!groupedSessions[key]) {
+            // @ts-ignore: Unreachable code error
             groupedSessions[key] = {
               theaterName,
               hour: sessionHour,
@@ -121,63 +146,51 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
   }, [])
 
   useEffect(() => {
-    if (sessao) {
-      const getDate = sessao.find((session) => session?.date === selectedDate)
+    if (sessoes) {
+      const getDate = sessoes.sessions.find(
+        (session) => session?.date === selectedDate
+      )
       if (getDate) {
         setFilteredSessions(groupSessoes([getDate.sessions]))
       } else {
-        setSelectedDate(sessao[0].date)
-        setFilteredSessions(groupSessoes([sessao[0].sessions]))
+        setSelectedDate(sessoes.sessions[0]?.date)
+        setFilteredSessions(groupSessoes([sessoes.sessions[0]?.sessions]))
       }
     }
-  }, [selectedDate, location, loading])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate, location, sessoes])
 
-  function handleDataClick(date: string): void {
-    const selectedSession = sessao?.find((session) => session?.date === date)
-    const filteredSessions = selectedSession
-      ? groupSessoes([selectedSession.sessions])
-      : []
-    setFilteredSessions(filteredSessions)
-    setSelectedDate(date)
-  }
+  useEffect(() => {
+    const getFilmeLocation = async () => {
+      setLoadings(true)
+      const res = await getLocation(filme.slug)
+      setLoadings(false)
+      setLocalFilmes(res)
+    }
+    getFilmeLocation()
+  }, [filme.slug])
+  const getCookieCity = Cookies.get('city')
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const search = event.target.value
-    setSearchTerm(search)
-    const listArray = sessao
-      .filter((item) => item.date === selectedDate)
-      .map((data) =>
-        data.sessions.filter(
-          (item: {
-            address: string
-            city: string
-            theaterName: string
-            stateName: string
-          }) =>
-            item?.address?.toLowerCase().includes(search.toLowerCase()) ||
-            item?.city?.toLowerCase().includes(search.toLowerCase()) ||
-            item?.theaterName?.toLowerCase().includes(search.toLowerCase()) ||
-            item?.stateName?.toLowerCase().includes(search.toLowerCase())
-        )
-      )
-    setFilteredSessions(groupSessoes(listArray))
-  }
+  useEffect(() => {
+    const getFilmeSessoes = async () => {
+      if (cities) {
+        const res = await getSession(filme.slug, cities)
+        setSessoes(res)
+      }
+    }
+    getFilmeSessoes()
+  }, [filme.slug, cities, getCookieCity, location])
 
-  function formatarHora(hora: string): string {
-    return hora.slice(0, 5)
-  }
-  function handleClickBanner(data: Sessions) {
-    dataLayerMovieTicket(
-      filme.title,
-      filme.slug,
-      filme.originalTitle,
-      filme.genre,
-      data.theaterName,
-      data.address,
-      data.hour,
-      Number(filme.idVibezzMovie)
-    )
-  }
+  useEffect(() => {
+    const getFilmeSessoes = async () => {
+      const res = await getSession(filme.slug, locationArea?.address.city)
+      setSessoes(res)
+      setFilteredSessions([res])
+    }
+    getFilmeSessoes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locationArea?.address.city])
+
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
@@ -194,88 +207,120 @@ const Sessoes: React.FC<ISessoesProps> = ({ sessao, color, poster, filme }) => {
         >
           <div className={Style.flexAreaPesquisa}>
             <IoSearchSharp />
-            <input
-              type="text"
-              placeholder="Pesquisar"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
+            <select
+              value={state}
+              onChange={({ target }) => setState(target.value)}
+            >
+              <option value="estado">Estado</option>
+              {localFilmes
+                ?.sort((a, b) => a.state.localeCompare(b.state))
+                ?.map((data) => (
+                  <option key={data.state} value={data.state}>
+                    {obterNomeEstado(data.state)}
+                  </option>
+                ))}
+            </select>
+            <select
+              value={cities}
+              onChange={({ target }) => setCities(target.value)}
+            >
+              <option value="cidade">Cidade</option>
+              {localFilmes &&
+                localFilmes
+                  .find((item) => item.state === state)
+                  ?.cities.slice()
+                  .sort((a, b) => a.localeCompare(b))
+                  .map((city: string) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+            </select>
           </div>
-          <div className={Style.flexData} style={{ background: `${color}` }}>
-            {sessao.map((data, i) => (
-              <S.ButtonHora
-                key={i}
-                $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
-                className={`${Style.areaData}`}
-                onClick={() => handleDataClick(data.date)}
+          {loadings && loading && <Loading />}
+          {filteredSessions.length !== 0 && !loading && (
+            <>
+              <div
+                className={Style.flexData}
+                style={{ background: `${color}` }}
               >
-                <span className={Style.mes}>{formatMes(data.date)}</span>
-                <span className={Style.dia}>{formatDia(data.date)}</span>
-                <span className={Style.diaSemana}>
-                  {formatDiaDaSemana(data.date)}
-                </span>
-              </S.ButtonHora>
-            ))}
-          </div>
-          <div className={Style.areaSessao}>Escolha uma sessão:</div>
-          <div className={Style.areaCinema}>
-            {filteredSessions &&
-              filteredSessions.map((session, i) => (
-                <div key={1 + i} className={Style.ItemSessao}>
-                  <div className={Style.flexTitle}>
-                    <img
-                      src="/img/icon _ticket_.png"
-                      alt={session.theaterName}
-                      width={50}
-                      height={50}
-                    />
-                    <div className={Style.areaTitle}>
-                      {session.distance > 0 && (
-                        <>
-                          <span>{session.distance.toFixed(1)}</span>KM
-                        </>
-                      )}
-                      <div className={Style.flexTitleName}>
-                        <h3>{session.theaterName}</h3>
+                {sessoes?.sessions.map((data, i) => (
+                  <S.ButtonHora
+                    key={i}
+                    $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
+                    className={`${Style.areaData}`}
+                    onClick={() => handleDataClick(data.date)}
+                  >
+                    <span className={Style.mes}>{formatMes(data.date)}</span>
+                    <span className={Style.dia}>{formatDia(data.date)}</span>
+                    <span className={Style.diaSemana}>
+                      {formatDiaDaSemana(data.date)}
+                    </span>
+                  </S.ButtonHora>
+                ))}
+              </div>
+              <div className={Style.areaSessao}>Escolha uma sessão:</div>
+              <div className={Style.areaCinema}>
+                {filteredSessions &&
+                  filteredSessions.map((session, i) => (
+                    <div key={1 + i} className={Style.ItemSessao}>
+                      <div className={Style.flexTitle}>
+                        <img
+                          src="/img/icon _ticket_.png"
+                          alt={session.theaterName}
+                          width={50}
+                          height={50}
+                        />
+                        <div className={Style.areaTitle}>
+                          {session.distance > 0 && (
+                            <>
+                              <span>{session.distance.toFixed(1)}</span>KM
+                            </>
+                          )}
+                          <div className={Style.flexTitleName}>
+                            <h3>{session.theaterName}</h3>
 
-                        <S.LinkLocation
-                          href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          $color={color}
-                        >
-                          <FaMapMarkedAlt />
-                        </S.LinkLocation>
+                            <S.LinkLocation
+                              href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              $color={color}
+                            >
+                              <FaMapMarkedAlt />
+                            </S.LinkLocation>
+                          </div>
+                          <h4>
+                            {session.address}, {session.number}
+                            {session.addressComplement && '-'}
+                            {session.addressComplement}, {session.city} {' - '}
+                            {session.state}
+                          </h4>
+                        </div>
                       </div>
-                      <h4>
-                        {session.address}, {session.number}
-                        {session.addressComplement && '-'}
-                        {session.addressComplement}, {session.city} {' - '}
-                        {session.state}
-                      </h4>
+                      <div className={Style.areaSalaHorario}>
+                        <span>{session.technology}</span>
+                        <ul>
+                          {session?.hours
+                            ?.sort((a, b) => a.hour.localeCompare(b.hour))
+                            ?.map((hour, i) => (
+                              <li key={1 + i}>
+                                <S.LinkHora
+                                  href={hour?.links}
+                                  $color={color}
+                                  onClick={() => handleClickBanner(session)}
+                                  target="_blank"
+                                >
+                                  {formatarHora(hour?.hour)}
+                                </S.LinkHora>
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                  <div className={Style.areaSalaHorario}>
-                    <span>{session.technology}</span>
-                    <ul>
-                      {session?.hours?.map((hour, i) => (
-                        <li key={1 + i}>
-                          <S.LinkHora
-                            href={hour?.links}
-                            $color={color}
-                            onClick={() => handleClickBanner(session)}
-                            target="_blank"
-                          >
-                            {formatarHora(hour?.hour)}
-                          </S.LinkHora>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            {filteredSessions.length == 0 && <p>Não há sessões disponiveis</p>}
-          </div>
+                  ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>

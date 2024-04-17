@@ -16,17 +16,12 @@ import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { useGtag } from '@/utils/lib/gtag'
-import {
-  IFilmeResponse,
-  IFilmeResponseUrl,
-  Session
-} from '@/utils/server/types'
+import { IFilmeResponse, IFilmeResponseUrl } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 interface IFilmeProps {
   movie: {
     movie: IFilmeResponse
-    sessions: Session[]
   }
 }
 
@@ -83,13 +78,12 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 
 const Filme = (data: IFilmeProps) => {
   const filme = data.movie?.movie
-  const sessoes = data.movie?.sessions
 
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [image, setImage] = useState<IFilmeResponseUrl>()
-  const [saibaMais, setSaibaMais] = useState<boolean>(sessoes?.length === 0)
+  const [saibaMais, setSaibaMais] = useState<boolean>(!filme.hasSession)
 
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData()
@@ -213,11 +207,13 @@ const Filme = (data: IFilmeProps) => {
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: setColor(filme.slug) }}>{filme?.title}</h1>
+              <h1 style={{ color: `${setColor(filme.slug)}` }}>
+                {filme?.title}
+              </h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
-                <div className={Style.areaBtnCompra}>
-                  {emExibicao && !isMobile && (
+                {emExibicao && !isMobile && (
+                  <div className={Style.areaBtnCompra}>
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -225,11 +221,11 @@ const Filme = (data: IFilmeProps) => {
                     >
                       COMPRAR INGRESSOS
                     </button>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
               <div className={Style.AreaSaibamais}>
-                {sessoes?.length > 0 && (
+                {filme.hasSession && (
                   <button
                     className={Style.btnSaibaMais}
                     onClick={() => {
@@ -246,14 +242,6 @@ const Filme = (data: IFilmeProps) => {
           </div>
         </div>
       </section>
-      <div className="container">
-        <Newsletter
-          isHorrizontal={!isMobile}
-          isBg={true}
-          filmes={filme}
-          type="filme"
-        />
-      </div>
 
       <div style={{ overflow: 'hidden' }}>
         <div className="container">
@@ -395,17 +383,25 @@ const Filme = (data: IFilmeProps) => {
             </section>
           )}
 
-          {sessoes.length > 0 && (
-            <section id="sessao">
+          {filme.hasSession && (
+            <section id="sessao" className={Style.combrarIngresso}>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
-              <Sessoes
-                filme={filme}
-                sessao={sessoes}
-                color={filme.color}
-                poster={filme.cover}
-              />
+              <p>
+                Para buscar as sessões: Selecione o ESTADO e a CIDADE, e veja os
+                cinemas disponiveis com as sessões
+              </p>
+              <Sessoes filme={filme} color={filme.color} poster={filme.cover} />
             </section>
           )}
+
+          <div className={Style.areaNewsletter}>
+            <Newsletter
+              isHorrizontal={!isMobile}
+              isBg={true}
+              filmes={filme}
+              type="filme"
+            />
+          </div>
 
           {open && (
             <Model.Root>

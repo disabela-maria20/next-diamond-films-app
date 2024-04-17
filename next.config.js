@@ -16,7 +16,28 @@ const nextConfig = {
     styledComponents: true,
     removeConsole: false
   },
-  output: 'export'
+  output: 'export',
+  async redirects() {
+    return [
+      {
+        source: '/umaprovadecoragem',
+        destination: 'https://diamondfilms.com.br/uma-prova-de-coragem/',
+        permanent: false
+      },
+      {
+        source: '/umavida',
+        destination: 'https://diamondfilms.com.br/uma-vida/',
+        permanent: false
+      },
+      {
+        source: '/guerra-civil',
+        destination: '/guerracivil',
+        permanent: false
+      }
+    ]
+  }
+  // distDir: 'build',
+  // trailingSlash: true
 }
 
 module.exports = nextConfig

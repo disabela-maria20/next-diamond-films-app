@@ -8,6 +8,7 @@ import React, {
   ReactNode
 } from 'react'
 
+import { apiLocation } from './apiLocation'
 import { requestLocationPermission } from './LocationFromPosition'
 
 import { LocationData } from '@/utils/server/types'
@@ -17,6 +18,7 @@ interface LocationContextType {
   loading: boolean
   error: Error | null
   refreshLocation: () => void
+  locationArea: any
 }
 
 const LocationContext = createContext<LocationContextType>({
@@ -26,7 +28,8 @@ const LocationContext = createContext<LocationContextType>({
   },
   loading: false,
   error: null,
-  refreshLocation: () => {}
+  refreshLocation: () => {},
+  locationArea: {}
 })
 
 export const useLocationContext = () => useContext(LocationContext)
@@ -38,6 +41,7 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({
     latitude: 0,
     longitude: 0
   })
+  const [locationArea, setlocationArea] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<any>(null)
 
@@ -46,6 +50,9 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({
     try {
       const loc = await requestLocationPermission()
       setLocation(loc)
+
+      const res = await apiLocation(loc)
+      setlocationArea(res)
     } catch (err) {
       setError(err)
     } finally {
@@ -55,11 +62,18 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     refreshLocation()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <LocationContext.Provider
-      value={{ location, loading, error, refreshLocation }}
+      value={{
+        location,
+        loading,
+        error,
+        refreshLocation,
+        locationArea
+      }}
     >
       {children}
     </LocationContext.Provider>

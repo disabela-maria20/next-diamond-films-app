@@ -1,6 +1,6 @@
 export interface IFilmeProps {
   movie: IFilmeResponse
-  sessions: Session[]
+  sessions: Sessions
 }
 export interface IFilmeResponse extends IFilmeProps {
   id: number
@@ -48,12 +48,13 @@ export interface IFilmesEstado {
   CIDADE: string
   ESTADO: string
 }
-export interface Session {
-  selectedSession: Session
-  date: string
-  sessions: Sessions[]
+export interface SessionsArrayResponse {
+  sessions: SessionsResponse[]
 }
-
+export interface SessionsResponse {
+  date: string
+  sessions: Sessions
+}
 export interface Sessions {
   distance: number
   sessionHour: string
@@ -73,6 +74,7 @@ export interface Sessions {
   city: string
   stateName: string
 }
+
 export interface SessionHours {
   hour: string
   links: string
@@ -115,4 +117,9 @@ export const ESTADOS: EstadosBrasileiros = {
   SP: 'São Paulo',
   SE: 'Sergipe',
   TO: 'Tocantins'
+}
+
+export interface Location {
+  state: string
+  cities: string[]
 }
