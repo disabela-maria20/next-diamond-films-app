@@ -36,7 +36,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   const { formatarData } = useFormatarData()
   const statusTextData = useFilmeTextStatus()
-  const { dataLayerHome } = useGtag()
+  const { dataLayerHome, dataLayerBannerClick } = useGtag()
   const { isMobile, isLoading } = useIsMobile()
 
   const bannerSwiperOptions: SwiperOptions = {
@@ -100,12 +100,19 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     setOpen(true)
     setIframe(data)
   }
-  const routerPush = useRouter()
+  const router = usePathname()
 
-  dataLayerHome('Diamond Films', '')
+  const routerPush = useRouter()
+  useEffect(() => {
+    const pageView = () => {
+      console.log(dataLayerHome('Diamond Films', ''))
+    }
+    pageView()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function handleClickBanner(data: any) {
-    // dataLayerBannerClick(data.title, data.slug, data.i)
+    dataLayerBannerClick(data.title, data.slug, data.i)
     routerPush.push(`${data.slug}`)
   }
 
