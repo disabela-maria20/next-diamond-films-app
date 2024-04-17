@@ -26,7 +26,6 @@ import {
   Location,
   SessionsArrayResponse
 } from '@/utils/server/types'
-import Cookies from 'js-cookie'
 import { darken } from 'polished'
 
 const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
@@ -44,8 +43,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   const { dataLayerMovieTicket } = useGtag()
 
   const { location, loading, locationArea } = useLocationContext()
-
-  console.log(locationArea?.address)
 
   const calculateDistance = (lat2: number, lon2: number) => {
     const lat1 = location.latitude
@@ -169,7 +166,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     }
     getFilmeLocation()
   }, [filme.slug])
-  const getCookieCity = Cookies.get('city')
 
   useEffect(() => {
     const getFilmeSessoes = async () => {
@@ -179,7 +175,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       }
     }
     getFilmeSessoes()
-  }, [filme.slug, cities, getCookieCity, location])
+  }, [filme.slug, cities, location])
 
   useEffect(() => {
     const getFilmeSessoes = async () => {
@@ -215,7 +211,11 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
               {localFilmes
                 ?.sort((a, b) => a.state.localeCompare(b.state))
                 ?.map((data) => (
-                  <option key={data.state} value={data.state}>
+                  <option
+                    key={data.state}
+                    value={data.state}
+                    selected={data.state === ESTADOS[data.state]}
+                  >
                     {obterNomeEstado(data.state)}
                   </option>
                 ))}
