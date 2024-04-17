@@ -196,6 +196,11 @@ const Filme = (data: IFilmeProps) => {
       </div>
     )
   }
+  const setColor = (slug: string) => {
+    const colorTitle = ['guerracivil']
+    const color = colorTitle.includes(slug)
+    return color ? '#01fc30' : filme.color
+  }
   if (isLoading) return <Loading altura={true} />
   return (
     <>
@@ -208,7 +213,7 @@ const Filme = (data: IFilmeProps) => {
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: `${filme?.color}` }}>{filme?.title}</h1>
+              <h1 style={{ color: setColor(filme.slug) }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
                 <div className={Style.areaBtnCompra}>
