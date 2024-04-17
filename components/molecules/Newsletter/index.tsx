@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import Link from 'next/link'
@@ -35,11 +36,12 @@ const Newsletter = ({
   isBg,
   isHorrizontal,
   filmes,
-  type,
+  type = 'filme',
   title = true
 }: INewsletterProps) => {
   const [loaging, setLoaging] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
+
   const [viewSuccess, setViewSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
 
@@ -71,8 +73,7 @@ const Newsletter = ({
         setViewSuccess(true)
         Cookies.set('formNewsletter', 'true')
         reset()
-
-        if (filmes && type == 'filme') {
+        if (filmes) {
           dataLayerNewsletter(
             filmes?.title,
             filmes?.slug,
@@ -82,14 +83,12 @@ const Newsletter = ({
             'Hub do Filme',
             Number(filmes.idVibezzMovie)
           )
-        }
-        if (filmes && type == 'modal') {
           dataLayerMovieSubscribe(
             filmes?.title,
             filmes?.slug,
             filmes?.originalTitle,
             filmes?.genre,
-            'modal',
+            'hub',
             'Hub do Filme',
             Number(filmes.idVibezzMovie)
           )
@@ -102,7 +101,6 @@ const Newsletter = ({
         setViewSuccess(false)
       }
     } finally {
-      setError(false)
       setLoaging(false)
     }
   }

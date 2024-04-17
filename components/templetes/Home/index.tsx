@@ -100,12 +100,11 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     setOpen(true)
     setIframe(data)
   }
-  const router = usePathname()
 
   const routerPush = useRouter()
   useEffect(() => {
     const pageView = () => {
-      console.log(dataLayerHome('Diamond Films', ''))
+      dataLayerHome('Diamond Films', '')
     }
     pageView()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,6 +184,25 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                 </div>
               ))}
           </Slide.Content>
+          {open && (
+            <Model.Root>
+              <Model.Body
+                setOpen={() => setOpen(!open)}
+                className={Style.ModaliframeVideoYoutube}
+              >
+                <div className={Style.iframeVideoYoutube} key={iframe?.trailer}>
+                  <iframe
+                    className={Style.embedResponsiveItem}
+                    src={iframe?.trailer}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </Model.Body>
+            </Model.Root>
+          )}
           {open && (
             <Model.Root>
               <Model.Body
