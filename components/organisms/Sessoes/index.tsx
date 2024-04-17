@@ -43,7 +43,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
 
   const { dataLayerMovieTicket } = useGtag()
 
-  const { location, loading } = useLocationContext()
+  const { location, loading, locationArea } = useLocationContext()
+
+  console.log(locationArea?.address)
 
   const calculateDistance = (lat2: number, lon2: number) => {
     const lat1 = location.latitude
@@ -181,22 +183,14 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
 
   useEffect(() => {
     const getFilmeSessoes = async () => {
-      if (
-        getCookieCity &&
-        getCookieCity !== 'undefined' &&
-        location.latitude !== 0 &&
-        location.longitude !== 0
-      ) {
-        const res = await getSession(filme.slug, getCookieCity)
-        setSessoes(res)
-        setFilteredSessions([res])
-      } else {
-        return
-      }
+      const res = await getSession(filme.slug, locationArea?.address.city)
+      setSessoes(res)
+      setFilteredSessions([res])
     }
     getFilmeSessoes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localFilmes])
+  }, [locationArea?.address.city])
+
   return (
     <section className={Style.areaSessao}>
       <div className={Style.gridSessoes}>
@@ -218,11 +212,13 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
               onChange={({ target }) => setState(target.value)}
             >
               <option value="estado">Estado</option>
-              {localFilmes?.map((data) => (
-                <option key={data.state} value={data.state}>
-                  {obterNomeEstado(data.state)}
-                </option>
-              ))}
+              {localFilmes
+                ?.sort((a, b) => a.state.localeCompare(b.state))
+                ?.map((data) => (
+                  <option key={data.state} value={data.state}>
+                    {obterNomeEstado(data.state)}
+                  </option>
+                ))}
             </select>
             <select
               value={cities}
@@ -232,14 +228,16 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
               {localFilmes &&
                 localFilmes
                   .find((item) => item.state === state)
-                  ?.cities.map((city: string) => (
+                  ?.cities.slice()
+                  .sort((a, b) => a.localeCompare(b))
+                  .map((city: string) => (
                     <option key={city} value={city}>
                       {city}
                     </option>
                   ))}
             </select>
           </div>
-          {loadings && <Loading />}
+          {loadings && loading && <Loading />}
           {filteredSessions.length !== 0 && !loading && (
             <>
               <div
@@ -302,18 +300,20 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                       <div className={Style.areaSalaHorario}>
                         <span>{session.technology}</span>
                         <ul>
-                          {session?.hours?.map((hour, i) => (
-                            <li key={1 + i}>
-                              <S.LinkHora
-                                href={hour?.links}
-                                $color={color}
-                                onClick={() => handleClickBanner(session)}
-                                target="_blank"
-                              >
-                                {formatarHora(hour?.hour)}
-                              </S.LinkHora>
-                            </li>
-                          ))}
+                          {session?.hours
+                            ?.sort((a, b) => a.hour.localeCompare(b.hour))
+                            ?.map((hour, i) => (
+                              <li key={1 + i}>
+                                <S.LinkHora
+                                  href={hour?.links}
+                                  $color={color}
+                                  onClick={() => handleClickBanner(session)}
+                                  target="_blank"
+                                >
+                                  {formatarHora(hour?.hour)}
+                                </S.LinkHora>
+                              </li>
+                            ))}
                         </ul>
                       </div>
                     </div>
