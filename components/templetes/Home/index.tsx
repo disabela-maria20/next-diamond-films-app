@@ -100,16 +100,9 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     setOpen(true)
     setIframe(data)
   }
-  const router = usePathname()
-
   const routerPush = useRouter()
-  useLayoutEffect(() => {
-    const pageView = () => {
-      dataLayerHome('Diamond Films', '')
-    }
-    pageView()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataLayerHome])
+
+  dataLayerHome('Diamond Films', '')
 
   function handleClickBanner(data: any) {
     dataLayerBannerClick(data.title, data.slug, data.i)
