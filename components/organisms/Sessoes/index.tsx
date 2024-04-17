@@ -175,7 +175,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         const res = await getSession(filme.slug, cities)
         setSessoes(res)
       }
-      if (location.latitude == 0) return
+      if (location.latitude === 0 || getCookieCity !== 'undefined') return
       const res = await getSession(filme.slug, getCookieCity as string)
       setSessoes(res)
     }
