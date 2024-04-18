@@ -95,10 +95,12 @@ const Filme = (data: IFilmeProps) => {
     formatMesmaSemana(filme?.releasedate) ||
     formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
     filme?.hasSession
+
   const streaming = setStreaming(filme?.streaming)
 
   const { formatarData } = useFormatarData()
-  const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
+  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
+    useGtag()
 
   const router = useRouter()
   useLayoutEffect(() => {
@@ -212,8 +214,8 @@ const Filme = (data: IFilmeProps) => {
               </h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
-                {emExibicao && !isMobile && (
-                  <div className={Style.areaBtnCompra}>
+                <div className={Style.areaBtnCompra}>
+                  {emExibicao && !isMobile && streaming.length === 0 && (
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -221,8 +223,30 @@ const Filme = (data: IFilmeProps) => {
                     >
                       COMPRAR INGRESSOS
                     </button>
-                  </div>
-                )}
+                  )}
+                  {streaming.length !== 0 && !isMobile && (
+                    <button
+                      onClick={() => {
+                        dataLayerMovieStream(
+                          filme.title,
+                          filme.slug,
+                          filme.originalTitle,
+                          filme.genre,
+                          filme.streaming.toString(),
+                          Number(filme.idVibezzMovie)
+                        )
+                      }}
+                    >
+                      ASSISTA AGORA NO
+                      <LazyLoadImage
+                        src={`/img/streaming/${'amazonprime'}.png`}
+                        // alt={service.toLowerCase()}
+                        width="100"
+                        effect="blur"
+                      />
+                    </button>
+                  )}
+                </div>
               </div>
               <div className={Style.AreaSaibamais}>
                 {filme.hasSession && (
@@ -245,28 +269,36 @@ const Filme = (data: IFilmeProps) => {
 
       <div style={{ overflow: 'hidden' }}>
         <div className="container">
-          {emExibicao && isMobile && (
-            <div className={Style.areaBtnCompra}>
+          <div className={Style.areaBtnCompra}>
+            {emExibicao && isMobile && streaming.length === 0 && (
               <button onClick={() => router.push('#sessao', { scroll: true })}>
                 COMPRAR INGRESSOS
               </button>
-            </div>
-          )}
-          {filme?.status != 'ativo' && streaming !== null && (
-            <div className={Style.areaBtn}>
-              {streaming.map((service, index) => (
-                <button key={index}>
-                  ASSISTA AGORA NO
-                  <LazyLoadImage
-                    src={`/img/streaming/${service.toLowerCase()}.png`}
-                    alt={service.toLowerCase()}
-                    width="100"
-                    effect="blur"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
+            )}
+            {streaming.length !== 0 && isMobile && (
+              <button
+                onClick={() => {
+                  dataLayerMovieStream(
+                    filme.title,
+                    filme.slug,
+                    filme.originalTitle,
+                    filme.genre,
+                    filme.streaming.toString(),
+                    Number(filme.idVibezzMovie)
+                  )
+                }}
+              >
+                ASSISTA AGORA NO
+                <LazyLoadImage
+                  src={`/img/streaming/${'amazonprime'}.png`}
+                  // alt={service.toLowerCase()}
+                  width="100"
+                  effect="blur"
+                />
+              </button>
+            )}
+          </div>
+
           {saibaMais && (
             <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
