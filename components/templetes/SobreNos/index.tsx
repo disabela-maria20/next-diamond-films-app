@@ -117,7 +117,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
                 <h3>
                   {data.title} - {formatarData(data?.releasedate)}
                 </h3>
-                <p>{statusTextData(data?.releasedate)}</p>
+                <p>{statusTextData(data)}</p>
                 <span
                   onClick={() => handleVerImagem(data)}
                   className={Style.tralher}
