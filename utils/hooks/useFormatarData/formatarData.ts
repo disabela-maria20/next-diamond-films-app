@@ -59,11 +59,62 @@ export const useFormatarData = () => {
     return SEMANA[mes + 1]
   }
 
+  function formatMesmaSemana(dataString: string): boolean {
+    const data = new Date(dataString)
+    const hoje = new Date()
+
+    const semanaAtual = new Date(
+      hoje.getFullYear(),
+      hoje.getMonth(),
+      hoje.getDate()
+    )
+    const semanaData = new Date(
+      data.getFullYear(),
+      data.getMonth(),
+      data.getDate()
+    )
+
+    const numeroSemanaAtual = Math.ceil(
+      (+semanaAtual - +new Date(semanaAtual.getFullYear(), 0, 1)) / 86400000 / 7
+    )
+    const numeroSemanaData = Math.ceil(
+      (+semanaData - +new Date(semanaData.getFullYear(), 0, 1)) / 86400000 / 7
+    )
+
+    return numeroSemanaData === numeroSemanaAtual
+  }
+
+  function formatfaltaUmaSemanaParaDataMarcada(dataString: string): boolean {
+    const data = new Date(dataString)
+    const hoje = new Date()
+
+    const semanaAtual = new Date(
+      hoje.getFullYear(),
+      hoje.getMonth(),
+      hoje.getDate()
+    )
+    const semanaData = new Date(
+      data.getFullYear(),
+      data.getMonth(),
+      data.getDate()
+    )
+
+    const numeroSemanaAtual = Math.ceil(
+      (+semanaAtual - +new Date(semanaAtual.getFullYear(), 0, 1)) / 86400000 / 7
+    )
+    const numeroSemanaData = Math.ceil(
+      (+semanaData - +new Date(semanaData.getFullYear(), 0, 1)) / 86400000 / 7
+    )
+
+    return numeroSemanaAtual - numeroSemanaData === 1
+  }
   return {
     formatarData,
     formatDia,
     formatMes,
     formatAno,
-    formatDiaDaSemana
+    formatDiaDaSemana,
+    formatMesmaSemana,
+    formatfaltaUmaSemanaParaDataMarcada
   }
 }

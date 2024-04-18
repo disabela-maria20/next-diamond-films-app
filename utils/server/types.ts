@@ -1,4 +1,8 @@
-export interface IFilmeResponse {
+export interface IFilmeTextStatusProps {
+  movie: IFilmeResponse
+  sessions: Session[]
+}
+export interface IFilmeResponse extends IFilmeTextStatusProps {
   id: number
   title: string
   slug: string

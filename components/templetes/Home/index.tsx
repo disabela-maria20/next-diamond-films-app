@@ -157,7 +157,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                   <h2>
                     {data.title} - {formatarData(data?.releasedate)}
                   </h2>
-                  <p>{statusTextData(data?.releasedate)}</p>
+                  <p>{statusTextData(data)}</p>
                   <span
                     onClick={() => handleVerImagem(data)}
                     className={Style.tralher}
