@@ -413,6 +413,7 @@ const Filme = (data: IFilmeProps) => {
               />
             </div>
           )}
+
           {open && (
             <Model.Root>
               <Model.Body

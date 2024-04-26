@@ -35,6 +35,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
     // setFiltroPesquisa([])
     const novoGenero = event.target.value
     setFiltroGenero(novoGenero)
+    dataLayerMovieFilter('Filmes | Diamond Film', 'filmes', '', novoGenero, 0)
   }
 
   const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -62,17 +63,8 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
     setFiltroPesquisa(filmesPesquisados)
   }
 
-  const key = Object.keys(filtroPesquisa)
   const ItemPesquisados = (filme: IFilmeResponse) => {
     if (filme.title.toLowerCase().includes(pesquisa.toLowerCase())) {
-      dataLayerMovieFilter(
-        filme.title,
-        filme.slug,
-        filme.originalTitle,
-        filme.genre,
-        key,
-        Number(filme.idVibezzMovie)
-      )
       return filme.title.toLowerCase().includes(pesquisa.toLowerCase())
     }
   }
@@ -176,14 +168,12 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                 <div key={data.id}>
                   <span
                     onClick={() => {
-                      const key = Object.keys(filtroPesquisa)
                       router.push(`/${data.slug}`)
                       dataLayerMovieSelect(
                         data.title,
                         data.slug,
                         data.originalTitle,
                         data.genre,
-                        key,
                         Number(data.idVibezzMovie)
                       )
                     }}

@@ -54,6 +54,8 @@
 		input, select {
 			width: 100%;
 			@include inputNewsletter;
+
+			color: $primary-dark-color;
 		}
 
 		svg {

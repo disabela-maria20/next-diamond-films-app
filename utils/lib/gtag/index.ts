@@ -170,7 +170,6 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    movieposition: string[],
     movieid: number
   ) => {
     window.dataLayer?.push({
@@ -183,8 +182,7 @@ export const useGtag = () => {
       moviename: title,
       moviename_original: moviename_original,
       movieid: Number(movieid),
-      moviegenre: moviegenre,
-      movieposition: movieposition
+      moviegenre: moviegenre
     })
   }
 
@@ -193,7 +191,6 @@ export const useGtag = () => {
     page_url: string,
     moviename_original: string,
     moviegenre: string,
-    movieposition: string[],
     movieid: number
   ) => {
     window.dataLayer?.push({
@@ -206,8 +203,7 @@ export const useGtag = () => {
       moviename: title,
       moviename_original: moviename_original,
       movieid: Number(movieid),
-      moviegenre: moviegenre,
-      movieposition: movieposition
+      moviegenre: moviegenre
     })
   }
   const dataLayerPlayTrailer = (
