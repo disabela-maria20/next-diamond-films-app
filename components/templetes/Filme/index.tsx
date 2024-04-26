@@ -245,6 +245,16 @@ const Filme = (data: IFilmeProps) => {
 
       <div style={{ overflow: 'hidden' }}>
         <div className="container">
+          {!filme.hasSession && (
+            <div className={Style.areaNewsletter}>
+              <Newsletter
+                isHorrizontal={!isMobile}
+                isBg={true}
+                filmes={filme}
+                type="filme"
+              />
+            </div>
+          )}
           {emExibicao && isMobile && (
             <div className={Style.areaBtnCompra}>
               <button onClick={() => router.push('#sessao', { scroll: true })}>
@@ -393,16 +403,16 @@ const Filme = (data: IFilmeProps) => {
               <Sessoes filme={filme} color={filme.color} poster={filme.cover} />
             </section>
           )}
-
-          <div className={Style.areaNewsletter}>
-            <Newsletter
-              isHorrizontal={!isMobile}
-              isBg={true}
-              filmes={filme}
-              type="filme"
-            />
-          </div>
-
+          {filme.hasSession && (
+            <div className={Style.areaNewsletter}>
+              <Newsletter
+                isHorrizontal={!isMobile}
+                isBg={true}
+                filmes={filme}
+                type="filme"
+              />
+            </div>
+          )}
           {open && (
             <Model.Root>
               <Model.Body
