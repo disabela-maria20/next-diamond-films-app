@@ -114,7 +114,6 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
                 new Date(b.releasedate).getTime() -
                 new Date(a.releasedate).getTime()
             )
-
             .map((data) => (
               <div key={data.id} className={Style.filme}>
                 <Link href={`/${data.slug}`}>

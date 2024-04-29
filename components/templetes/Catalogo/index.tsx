@@ -164,30 +164,36 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
                 ? filtroPesquisa
                 : // eslint-disable-next-line no-unsafe-optional-chaining
                   listaFilmes?.releases.filter(filtrarFilmes)
-              ).map((data) => (
-                <div key={data.id}>
-                  <span
-                    onClick={() => {
-                      router.push(`/${data.slug}`)
-                      dataLayerMovieSelect(
-                        data.title,
-                        data.slug,
-                        data.originalTitle,
-                        data.genre,
-                        Number(data.idVibezzMovie)
-                      )
-                    }}
-                  >
-                    <img
-                      src={data.cover}
-                      alt={data.title}
-                      width={700}
-                      height={320}
-                    />
-                    <h2>{data.title}</h2>
-                  </span>
-                </div>
-              ))}
+              )
+                .sort(
+                  (a, b) =>
+                    new Date(b.releasedate).getTime() -
+                    new Date(a.releasedate).getTime()
+                )
+                .map((data) => (
+                  <div key={data.id}>
+                    <span
+                      onClick={() => {
+                        router.push(`/${data.slug}`)
+                        dataLayerMovieSelect(
+                          data.title,
+                          data.slug,
+                          data.originalTitle,
+                          data.genre,
+                          Number(data.idVibezzMovie)
+                        )
+                      }}
+                    >
+                      <img
+                        src={data.cover}
+                        alt={data.title}
+                        width={700}
+                        height={320}
+                      />
+                      <h2>{data.title}</h2>
+                    </span>
+                  </div>
+                ))}
             </div>
           </>
         )}
