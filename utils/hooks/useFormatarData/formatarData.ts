@@ -23,7 +23,7 @@ export const SEMANA: string[] = [
   'sab',
   'dom'
 ]
-
+const mesesImpares = MESES.filter((_, index) => (index + 1) % 2 !== 0)
 export const useFormatarData = () => {
   const formatarData = (data: string): string => {
     const partesData = data?.split('-')
@@ -35,8 +35,6 @@ export const useFormatarData = () => {
   }
 
   const formatDia = (text: string) => {
-    const mesesImpares = MESES.filter((_, index) => (index + 1) % 2 !== 0)
-
     const data = new Date(text)
     console.log()
 
@@ -56,6 +54,12 @@ export const useFormatarData = () => {
     const data = new Date(text)
     const mes = data.getMonth()
     if (data.getDate() + 1 === 32) {
+      return MESES[mes + 1]
+    }
+    if (
+      data.getDate() + 1 == 31 &&
+      MESES.includes(mesesImpares[data.getMonth() + 1])
+    ) {
       return MESES[mes + 1]
     }
     return MESES[mes]
