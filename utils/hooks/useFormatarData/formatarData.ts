@@ -35,8 +35,18 @@ export const useFormatarData = () => {
   }
 
   const formatDia = (text: string) => {
+    const mesesImpares = MESES.filter((_, index) => (index + 1) % 2 !== 0)
+
     const data = new Date(text)
+    console.log()
+
     if (data.getDate() + 1 === 32) {
+      return 1
+    }
+    if (
+      data.getDate() + 1 == 31 &&
+      MESES.includes(mesesImpares[data.getMonth() + 1])
+    ) {
       return 1
     }
     return data.getDate() + 1
@@ -60,8 +70,8 @@ export const useFormatarData = () => {
 
   const formatDiaDaSemana = (text: string) => {
     const data = new Date(text)
-    const mes = data.getDay()
-    return SEMANA[mes + 1]
+    const mes = data.getDay() + 1
+    return SEMANA[mes]
   }
 
   function formatMesmaSemana(dataString: string): boolean {
