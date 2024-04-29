@@ -157,10 +157,11 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             className={Style.slideFilmehomePromo}
           >
             {listaFilmes?.releases
+              .reverse()
               .sort(
                 (a, b) =>
-                  new Date(a.releasedate).getTime() -
-                  new Date(b.releasedate).getTime()
+                  new Date(b.releasedate).getTime() -
+                  new Date(a.releasedate).getTime()
               )
               .map((data) => (
                 <div key={data.id} className={Style.filme}>
