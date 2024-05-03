@@ -197,6 +197,7 @@ const Filme = (data: IFilmeProps) => {
     const color = colorTitle.includes(slug)
     return color ? '#01fc30' : filme.color
   }
+
   if (isLoading) return <Loading altura={true} />
   return (
     <>
