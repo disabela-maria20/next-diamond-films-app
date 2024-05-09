@@ -24,6 +24,13 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   const [filtroPesquisa, setFiltroPesquisa] = useState<IFilmeResponse[]>([])
   const { formatAno } = useFormatarData()
 
+  const lancamento = listaFilmes.releases
+
+  const streaming = listaFilmes.streaming
+
+  const concatFilmes = lancamento.concat(streaming)
+  console.log(concatFilmes)
+
   const { dataLayerMovieSelect, dataLayerMovieFilter } = useGtag()
 
   const router = useRouter()
@@ -59,7 +66,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
     // setFiltroGenero('')
     // setFiltroAno('')
     setFiltroAlfabeto('')
-    const filmesPesquisados = listaFilmes.releases.filter(ItemPesquisados)
+    const filmesPesquisados = concatFilmes.filter(ItemPesquisados)
     setFiltroPesquisa(filmesPesquisados)
   }
 
@@ -103,13 +110,13 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
         <div className={Style.gridCatalogo}>
           <select value={filtroGenero} onChange={handleGeneroChange}>
             <option value="">Gênero</option>
-            {Array.from(
-              new Set(listaFilmes.releases.map((data) => data.genre))
-            ).map((genre, index) => (
-              <option key={index} value={genre}>
-                {genre}
-              </option>
-            ))}
+            {Array.from(new Set(concatFilmes.map((data) => data.genre))).map(
+              (genre, index) => (
+                <option key={index} value={genre}>
+                  {genre}
+                </option>
+              )
+            )}
           </select>
           <select value={filtroAno} onChange={handleAnoChange}>
             <option value="">Ano</option>
@@ -154,7 +161,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
           ))}
         </div>
         {(filtroPesquisa.length > 0 ||
-          listaFilmes?.releases.filter(filtrarFilmes).length > 0) && (
+          concatFilmes.filter(filtrarFilmes).length > 0) && (
           <>
             <div className={Style.areaTitleCatalogoFilmeAno}>
               <h2>2024</h2> <span></span>
@@ -163,7 +170,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
               {(filtroPesquisa.length > 0
                 ? filtroPesquisa
                 : // eslint-disable-next-line no-unsafe-optional-chaining
-                  listaFilmes?.releases.filter(filtrarFilmes)
+                  concatFilmes.filter(filtrarFilmes)
               )
                 .sort(
                   (a, b) =>
@@ -199,7 +206,7 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
         )}
 
         {filtroPesquisa.length === 0 &&
-          listaFilmes?.releases.filter(filtrarFilmes).length === 0 && (
+          concatFilmes.filter(filtrarFilmes).length === 0 && (
             <p className={Style.CatalogoVazio}>Nenhum filme encontrado</p>
           )}
       </div>
