@@ -117,7 +117,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     dataLayerBannerClick(data.title, data.slug, data.id)
     routerPush.push(`${data.slug}`)
   }
-
   if (isLoading) return <Loading altura={true} />
   return (
     <>
@@ -206,26 +205,46 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
               </Model.Body>
             </Model.Root>
           )}
-          {/* <Slide.Title className={Style.slideTitle}>
-          ASSISTA ONDE E QUANDO QUISER
-          <span>Nossos filmes disponíveis nos streamings.</span>
-        </Slide.Title>
-        <Slide.Content
-          swiperOptions={filmesStreaming}
-          className={Style.slideFilmehomePromo}
-        >
-          {listaFilmes?.streaming?.map((data) => (
-            <div key={data.id} className={Style.filme}>
-              <Link href={`/catalogo/${data.slug}`}>
-                <img src={data.cover} />
-              </Link>
-              <h2>{data.title}</h2>
-              <a href={data.trailer} className={Style.streaming}>
-                <span>Assista Agora</span>
-              </a>
-            </div>
-          ))}
-        </Slide.Content> */}
+          {open && (
+            <Model.Root>
+              <Model.Body
+                setOpen={() => setOpen(!open)}
+                className={Style.ModaliframeVideoYoutube}
+              >
+                <div className={Style.iframeVideoYoutube} key={iframe?.trailer}>
+                  <iframe
+                    className={Style.embedResponsiveItem}
+                    src={iframe?.trailer}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </Model.Body>
+            </Model.Root>
+          )}
+          {true && (
+            <>
+              <Slide.Title className={Style.slideTitle}>
+                CATALOGO
+                <span>Nossos filmes disponíveis nos streamings.</span>
+              </Slide.Title>
+              <Slide.Content
+                swiperOptions={filmesStreaming}
+                className={Style.slideFilmehomePromo}
+              >
+                {listaFilmes?.streaming?.map((data) => (
+                  <div key={data.id} className={Style.filme}>
+                    <Link href={`/${data.slug}`}>
+                      <img src={data.cover} />
+                      <h2>{data.title}</h2>
+                    </Link>
+                  </div>
+                ))}
+              </Slide.Content>
+            </>
+          )}
         </div>
       </section>
     </>

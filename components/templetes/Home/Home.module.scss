@@ -58,7 +58,7 @@
 			height: 35px;
 			display: flex;
 			align-items: center;
-
+			color: $primary-lingh-color;
 			@include media(md){
 				height: 30px;
 			}

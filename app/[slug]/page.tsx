@@ -10,6 +10,10 @@ type Params = {
     slug: string
   }
 }
+
+interface ICatalogoFilmeProps {
+  slug: string
+}
 export async function generateMetadata({
   params: { slug }
 }: Params): Promise<Metadata> {
@@ -39,7 +43,19 @@ export default async function pageCatalogoFilme({ params: { slug } }: Params) {
 
 export async function generateStaticParams() {
   const posts = await getHome()
-  return posts.releases.map((post: { slug: string }) => ({
-    slug: post.slug
-  }))
+  const lancamento: ICatalogoFilmeProps[] = posts.releases.map(
+    (post: { slug: string }) => ({
+      slug: post.slug
+    })
+  )
+
+  const streaming: ICatalogoFilmeProps[] = posts.streaming.map(
+    (post: { slug: string }) => ({
+      slug: post.slug
+    })
+  )
+
+  const concat = lancamento.concat(streaming)
+
+  return concat
 }

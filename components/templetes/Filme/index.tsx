@@ -34,6 +34,12 @@ enum EStreaming {
   AppleTVPlus = 'Apple TV+'
 }
 
+enum EStatus {
+  LANCAMENTO = 'lançamento',
+  STREAMING = 'streaming',
+  INATIVO = 'inativo'
+}
+
 const classificacoesIndicativas = [
   { idade: 'Livre', cor: '#048f16' },
   { idade: '10', cor: '#0281df' },
@@ -78,6 +84,7 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 
 const Filme = (data: IFilmeProps) => {
   const filme = data.movie?.movie
+  const isStreaming = filme.status == EStatus.STREAMING
 
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
@@ -97,6 +104,7 @@ const Filme = (data: IFilmeProps) => {
     filme?.hasSession
 
   const streaming = setStreaming(filme?.streaming)
+  console.log(streaming)
 
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
@@ -146,7 +154,6 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const swiperOptionsVideo: SwiperOptions = {
     slidesPerView: 1,
@@ -198,6 +205,7 @@ const Filme = (data: IFilmeProps) => {
     return color ? '#01fc30' : filme.color
   }
   if (isLoading) return <Loading altura={true} />
+
   return (
     <>
       <section
@@ -215,7 +223,7 @@ const Filme = (data: IFilmeProps) => {
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
                 <div className={Style.areaBtnCompra}>
-                  {emExibicao && !isMobile && (
+                  {emExibicao && !isMobile && !isStreaming && (
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -224,7 +232,7 @@ const Filme = (data: IFilmeProps) => {
                       COMPRAR INGRESSOS
                     </button>
                   )}
-                  {streaming !== null && !isMobile && (
+                  {streaming.length > 0 && !isMobile && (
                     <button
                       onClick={() => {
                         dataLayerMovieStream(
@@ -275,7 +283,7 @@ const Filme = (data: IFilmeProps) => {
                 COMPRAR INGRESSOS
               </button>
             )}
-            {streaming !== null && isMobile && (
+            {streaming.length > 0 && isMobile && (
               <button
                 onClick={() => {
                   dataLayerMovieStream(
@@ -414,7 +422,6 @@ const Filme = (data: IFilmeProps) => {
               </Slide.Content>
             </section>
           )}
-
           {filme.hasSession && (
             <section id="sessao" className={Style.combrarIngresso}>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
@@ -425,16 +432,16 @@ const Filme = (data: IFilmeProps) => {
               <Sessoes filme={filme} color={filme.color} poster={filme.cover} />
             </section>
           )}
-
-          <div className={Style.areaNewsletter}>
-            <Newsletter
-              isHorrizontal={!isMobile}
-              isBg={true}
-              filmes={filme}
-              type="filme"
-            />
-          </div>
-
+          {filme.hasSession && (
+            <div className={Style.areaNewsletter}>
+              <Newsletter
+                isHorrizontal={!isMobile}
+                isBg={true}
+                filmes={filme}
+                type="filme"
+              />
+            </div>
+          )}
           {open && (
             <Model.Root>
               <Model.Body
