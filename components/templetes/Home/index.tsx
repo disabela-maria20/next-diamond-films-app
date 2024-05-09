@@ -51,8 +51,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination, Autoplay]
   }
-  const { locationArea } = useLocationContext()
-
   const filmesSwiperOptions: SwiperOptions = {
     slidesPerView: 2,
     pagination: false,
@@ -174,8 +172,14 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                     />
                   </Link>
                   <h2>{data.title}</h2>
-                  <span>Estreia: {formatarData(data?.releasedate)}</span>
-                  <p>{statusTextData(data)}</p>
+                  {!data.hasSession ? (
+                    <span className={Style.data}>
+                      Estreia: {formatarData(data?.releasedate)}
+                    </span>
+                  ) : (
+                    <span className={Style.data}>{statusTextData(data)}</span>
+                  )}
+
                   <span
                     onClick={() => handleVerImagem(data)}
                     className={Style.tralher}

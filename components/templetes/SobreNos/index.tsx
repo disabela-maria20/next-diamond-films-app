@@ -50,7 +50,7 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
   if (isLoading) return <Loading altura={true} />
   return (
     <section className={Style.SobreNos}>
-      <div className="container">
+      <div className="container" style={{ overflow: 'hidden' }}>
         <img src="/img/logo.webp" alt="logo" width={300} height={200} />
         <h1>SOBRE NÓS</h1>
         <p>
@@ -124,8 +124,13 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
                   />
                 </Link>
                 <h2>{data.title}</h2>
-                <span>Estreia: {formatarData(data?.releasedate)}</span>
-                <p>{statusTextData(data)}</p>
+                {!data.hasSession ? (
+                  <span className={Style.data}>
+                    Estreia: {formatarData(data?.releasedate)}
+                  </span>
+                ) : (
+                  <span className={Style.data}>{statusTextData(data)}</span>
+                )}
                 <span
                   onClick={() => handleVerImagem(data)}
                   className={Style.tralher}
