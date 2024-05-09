@@ -34,11 +34,11 @@ enum EStreaming {
   AppleTVPlus = 'Apple TV+'
 }
 
-// enum EStatus {
-//   LANCAMENTO = 'lançamento',
-//   STREAMING = 'streaming',
-//   INATIVO = 'inativo'
-// }
+enum EStatus {
+  LANCAMENTO = 'lançamento',
+  STREAMING = 'streaming',
+  INATIVO = 'inativo'
+}
 
 const classificacoesIndicativas = [
   { idade: 'Livre', cor: '#048f16' },
@@ -84,7 +84,7 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 
 const Filme = (data: IFilmeProps) => {
   const filme = data.movie?.movie
-  // const isStreaming = filme.status == EStatus.STREAMING
+  const isStreaming = filme.status == EStatus.STREAMING
 
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
@@ -103,7 +103,6 @@ const Filme = (data: IFilmeProps) => {
     formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
     filme?.hasSession
   const streaming = setStreaming(filme?.streaming)
-  console.log(streaming)
 
   const { formatarData } = useFormatarData()
   const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
@@ -223,7 +222,7 @@ const Filme = (data: IFilmeProps) => {
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
                 <div className={Style.areaBtnCompra}>
-                  {emExibicao && !isMobile && (
+                  {emExibicao && !isMobile && !isStreaming && (
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -232,7 +231,7 @@ const Filme = (data: IFilmeProps) => {
                       COMPRAR INGRESSOS
                     </button>
                   )}
-                  {streaming !== null && !isMobile && (
+                  {streaming.length > 0 && !isMobile && (
                     <button
                       onClick={() => {
                         dataLayerMovieStream(
@@ -287,14 +286,14 @@ const Filme = (data: IFilmeProps) => {
               />
             </div>
           )}
-          {emExibicao && isMobile && (
+          {emExibicao && isMobile && !isStreaming && (
             <div className={Style.areaBtnCompra}>
               <button onClick={() => router.push('#sessao', { scroll: true })}>
                 COMPRAR INGRESSOS
               </button>
             </div>
           )}
-          {streaming !== null && isMobile && (
+          {streaming.length > 0 && isMobile && (
             <button
               onClick={() => {
                 dataLayerMovieStream(
