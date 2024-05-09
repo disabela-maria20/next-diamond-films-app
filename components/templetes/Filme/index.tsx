@@ -34,6 +34,12 @@ enum EStreaming {
   AppleTVPlus = 'Apple TV+'
 }
 
+// enum EStatus {
+//   LANCAMENTO = 'lançamento',
+//   STREAMING = 'streaming',
+//   INATIVO = 'inativo'
+// }
+
 const classificacoesIndicativas = [
   { idade: 'Livre', cor: '#048f16' },
   { idade: '10', cor: '#0281df' },
@@ -78,6 +84,7 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 
 const Filme = (data: IFilmeProps) => {
   const filme = data.movie?.movie
+  // const isStreaming = filme.status == EStatus.STREAMING
 
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
@@ -96,9 +103,11 @@ const Filme = (data: IFilmeProps) => {
     formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
     filme?.hasSession
   const streaming = setStreaming(filme?.streaming)
+  console.log(streaming)
 
   const { formatarData } = useFormatarData()
-  const { dataLayerFichafilme, dataLayerPlayTrailer } = useGtag()
+  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
+    useGtag()
 
   const router = useRouter()
   useLayoutEffect(() => {
@@ -144,7 +153,6 @@ const Filme = (data: IFilmeProps) => {
       }
     }
   }
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const swiperOptionsVideo: SwiperOptions = {
     slidesPerView: 1,
@@ -195,7 +203,9 @@ const Filme = (data: IFilmeProps) => {
     const color = colorTitle.includes(slug)
     return color ? '#01fc30' : filme.color
   }
+
   if (isLoading) return <Loading altura={true} />
+
   return (
     <>
       <section
@@ -212,8 +222,8 @@ const Filme = (data: IFilmeProps) => {
               </h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
-                {emExibicao && !isMobile && (
-                  <div className={Style.areaBtnCompra}>
+                <div className={Style.areaBtnCompra}>
+                  {emExibicao && !isMobile && (
                     <button
                       onClick={() => {
                         router.push('#sessao', { scroll: true })
@@ -221,8 +231,30 @@ const Filme = (data: IFilmeProps) => {
                     >
                       COMPRAR INGRESSOS
                     </button>
-                  </div>
-                )}
+                  )}
+                  {streaming !== null && !isMobile && (
+                    <button
+                      onClick={() => {
+                        dataLayerMovieStream(
+                          filme.title,
+                          filme.slug,
+                          filme.originalTitle,
+                          filme.genre,
+                          filme.streaming.toString(),
+                          Number(filme.idVibezzMovie)
+                        )
+                      }}
+                    >
+                      ASSISTA AGORA NO
+                      <LazyLoadImage
+                        src={`/img/streaming/${'amazonprime'}.png`}
+                        // alt={service.toLowerCase()}
+                        width="100"
+                        effect="blur"
+                      />
+                    </button>
+                  )}
+                </div>
               </div>
               <div className={Style.AreaSaibamais}>
                 {filme.hasSession && (
@@ -262,21 +294,29 @@ const Filme = (data: IFilmeProps) => {
               </button>
             </div>
           )}
-          {filme?.status != 'ativo' && streaming !== null && (
-            <div className={Style.areaBtn}>
-              {streaming.map((service, index) => (
-                <button key={index}>
-                  ASSISTA AGORA NO
-                  <LazyLoadImage
-                    src={`/img/streaming/${service.toLowerCase()}.png`}
-                    alt={service.toLowerCase()}
-                    width="100"
-                    effect="blur"
-                  />
-                </button>
-              ))}
-            </div>
+          {streaming !== null && isMobile && (
+            <button
+              onClick={() => {
+                dataLayerMovieStream(
+                  filme.title,
+                  filme.slug,
+                  filme.originalTitle,
+                  filme.genre,
+                  filme.streaming.toString(),
+                  Number(filme.idVibezzMovie)
+                )
+              }}
+            >
+              ASSISTA AGORA NO
+              <LazyLoadImage
+                src={`/img/streaming/${'amazonprime'}.png`}
+                // alt={service.toLowerCase()}
+                width="100"
+                effect="blur"
+              />
+            </button>
           )}
+
           {saibaMais && (
             <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
@@ -392,7 +432,6 @@ const Filme = (data: IFilmeProps) => {
               </Slide.Content>
             </section>
           )}
-
           {filme.hasSession && (
             <section id="sessao" className={Style.combrarIngresso}>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
@@ -403,16 +442,15 @@ const Filme = (data: IFilmeProps) => {
               <Sessoes filme={filme} color={filme.color} poster={filme.cover} />
             </section>
           )}
-          {filme.hasSession && (
-            <div className={Style.areaNewsletter}>
-              <Newsletter
-                isHorrizontal={!isMobile}
-                isBg={true}
-                filmes={filme}
-                type="filme"
-              />
-            </div>
-          )}
+
+          <div className={Style.areaNewsletter}>
+            <Newsletter
+              isHorrizontal={!isMobile}
+              isBg={true}
+              filmes={filme}
+              type="filme"
+            />
+          </div>
 
           {open && (
             <Model.Root>

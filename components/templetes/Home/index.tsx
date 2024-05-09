@@ -51,8 +51,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     navigation: isMobile ? false : true,
     modules: [Navigation, Pagination, Autoplay]
   }
-  const { locationArea } = useLocationContext()
-
   const filmesSwiperOptions: SwiperOptions = {
     slidesPerView: 2,
     pagination: false,
@@ -116,7 +114,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     dataLayerBannerClick(data.title, data.slug, data.id)
     routerPush.push(`${data.slug}`)
   }
-
   if (isLoading) return <Loading altura={true} />
   return (
     <>
@@ -175,8 +172,14 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                     />
                   </Link>
                   <h2>{data.title}</h2>
-                  <span>Estreia: {formatarData(data?.releasedate)}</span>
-                  <p>{statusTextData(data)}</p>
+                  {!data.hasSession ? (
+                    <span className={Style.data}>
+                      Estreia: {formatarData(data?.releasedate)}
+                    </span>
+                  ) : (
+                    <span className={Style.data}>{statusTextData(data)}</span>
+                  )}
+
                   <span
                     onClick={() => handleVerImagem(data)}
                     className={Style.tralher}
@@ -245,6 +248,27 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                 </div>
               ))}
             </Slide.Content> */}
+          {true && (
+            <>
+              <Slide.Title className={Style.slideTitle}>
+                CATALOGO
+                <span>Nossos filmes disponíveis nos streamings.</span>
+              </Slide.Title>
+              <Slide.Content
+                swiperOptions={filmesStreaming}
+                className={Style.slideFilmehomePromo}
+              >
+                {listaFilmes?.streaming?.map((data) => (
+                  <div key={data.id} className={Style.filme}>
+                    <Link href={`/${data.slug}`}>
+                      <img src={data.cover} />
+                      <h2>{data.title}</h2>
+                    </Link>
+                  </div>
+                ))}
+              </Slide.Content>
+            </>
+          )}
         </div>
       </section>
     </>

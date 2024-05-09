@@ -63,6 +63,7 @@ export default function RootLayout({
         <Location />
         <Footer />
       </body>
+      <Script src='https://www.youtube.com/iframe_api'></Script>
       <GoogleTagManager gtmId="GTM-ND454GP5" />
       <GoogleAnalytics gaId="G-DRBHT7HM35" />
     </html>
