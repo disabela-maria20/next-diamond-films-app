@@ -250,7 +250,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             </Slide.Content> */}
           {true && (
             <>
-              <Slide.Title className={Style.slideTitle}>CATALOGO</Slide.Title>
+              <Slide.Title className={Style.slideTitle}>CATÁLOGO</Slide.Title>
               <Slide.Content
                 swiperOptions={filmesStreaming}
                 className={Style.slideFilmehomePromo}
