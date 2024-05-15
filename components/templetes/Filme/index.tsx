@@ -12,7 +12,6 @@ import { FreeMode, Scrollbar } from 'swiper/modules'
 import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
 import { Sessoes } from '@/components/organisms'
-import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { useGtag } from '@/utils/lib/gtag'
@@ -96,7 +95,6 @@ const Filme = (data: IFilmeProps) => {
     useFormatarData()
 
   const { isMobile, isLoading } = useIsMobile()
-  const statusTextData = useFilmeTextStatus()
   //const formatarData = useFormatarData()
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
@@ -220,7 +218,9 @@ const Filme = (data: IFilmeProps) => {
                 {filme?.title}
               </h1>
               <div className={Style.subTitle}>
-                <h2 className={Style.emExibicao}>{statusTextData(filme)}</h2>
+                <h2 className={Style.emExibicao}>
+                  {formatarData(filme.releasedate)}
+                </h2>
                 <div className={Style.areaBtnCompra}>
                   {emExibicao && !isMobile && !isStreaming && (
                     <button
