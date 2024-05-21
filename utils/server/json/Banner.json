@@ -1,9 +1,30 @@
 [
   {
-    "bannerMobile": "/img/poster/guerra-civil-mobile.webp",
-    "bannerDesktop": "/img/poster/guerra-civil-desktop.webp",
-    "slug": "/guerracivil",
-    "title": "Gerra Civil",
+    "bannerDesktop": "/img/poster/BeloDesastreDesktop.png",
+    "bannerMobile": "/img/poster/BeloDesastreMobile.png",
+    "slug": "/belodesastreocasamento",
+    "title": "BELO DESASTRE - O CASAMENTO",
     "id": 1
+  },
+  {
+    "bannerDesktop": "/img/poster/FuriaPrimitivaDesktop.png",
+    "bannerMobile": "/img/poster/FuriaPrimitivaMobile.png",
+    "slug": "/assassinoporacaso",
+    "title": "FÚRIA PRIMITIVA",
+    "id": 2
+  },
+  {
+    "bannerDesktop": "/img/poster/ImaculadaDesktop.png",
+    "bannerMobile": "/img/poster/ImaculadaMobile.png",
+    "slug": "/imaculada",
+    "title": "IMACULADA",
+    "id": 3
+  },
+  {
+    "bannerDesktop": "/img/poster/AssassinoPorAcasoDesktop.png",
+    "bannerMobile": "/img/poster/AssassinoPorAcasoMobile.png",
+    "slug": "/assassinoporacaso",
+    "title": "ASSASSINO POR ACASO",
+    "id": 4
   }
 ]

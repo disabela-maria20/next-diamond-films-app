@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
@@ -15,7 +15,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css'
 
 import { Loading } from '@/components/atoms'
 import { Model, Newsletter, Slide } from '@/components/molecules'
-import { useLocationContext } from '@/components/molecules/Location/LocationContext'
 import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
