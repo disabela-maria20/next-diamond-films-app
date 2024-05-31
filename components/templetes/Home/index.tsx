@@ -101,6 +101,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   }
 
   const routerPush = useRouter()
+
   useEffect(() => {
     const pageView = () => {
       dataLayerHome('Diamond Films', '')
@@ -113,7 +114,9 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     dataLayerBannerClick(data.title, data.slug, data.id)
     routerPush.push(`${data.slug}`)
   }
+
   if (isLoading) return <Loading altura={true} />
+
   return (
     <>
       <Slide.Content

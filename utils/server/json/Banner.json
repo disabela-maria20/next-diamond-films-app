@@ -1,30 +1,23 @@
 [
   {
-    "bannerDesktop": "/img/poster/BeloDesastreDesktop.png",
-    "bannerMobile": "/img/poster/BeloDesastreMobile.png",
-    "slug": "/belodesastreocasamento",
-    "title": "BELO DESASTRE - O CASAMENTO",
-    "id": 1
-  },
-  {
     "bannerDesktop": "/img/poster/FuriaPrimitivaDesktop.png",
     "bannerMobile": "/img/poster/FuriaPrimitivaMobile.png",
-    "slug": "/assassinoporacaso",
+    "slug": "/furiaprimitiva",
     "title": "FÚRIA PRIMITIVA",
-    "id": 2
+    "id": 1
   },
   {
     "bannerDesktop": "/img/poster/ImaculadaDesktop.png",
     "bannerMobile": "/img/poster/ImaculadaMobile.png",
     "slug": "/imaculada",
     "title": "IMACULADA",
-    "id": 3
+    "id": 2
   },
   {
     "bannerDesktop": "/img/poster/AssassinoPorAcasoDesktop.png",
     "bannerMobile": "/img/poster/AssassinoPorAcasoMobile.png",
     "slug": "/assassinoporacaso",
     "title": "ASSASSINO POR ACASO",
-    "id": 4
+    "id": 3
   }
 ]
