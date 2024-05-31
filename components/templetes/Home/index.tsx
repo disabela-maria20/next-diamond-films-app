@@ -257,7 +257,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
                 swiperOptions={filmesStreaming}
                 className={Style.slideFilmehomePromo}
               >
-                {listaFilmes?.streaming?.map((data) => (
+                {listaFilmes?.streaming?.reverse().map((data) => (
                   <div key={data.id} className={Style.filme}>
                     <Link href={`/${data.slug}`}>
                       <img src={data.cover} />

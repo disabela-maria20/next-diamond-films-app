@@ -47,7 +47,7 @@ export const useFormatarData = () => {
     ) {
       return data.getDate() + 1
     }
-    return data.getDate()
+    return data.getDate() + 1
   }
 
   const formatMes = (text: string) => {
@@ -60,7 +60,7 @@ export const useFormatarData = () => {
       data.getDate() + 1 == 31 &&
       MESES.includes(mesesImpares[data.getMonth() + 1])
     ) {
-      return MESES[mes + 1]
+      return MESES[mes]
     }
     return MESES[mes]
   }
