@@ -29,7 +29,6 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   const streaming = listaFilmes.streaming
 
   const concatFilmes = lancamento.concat(streaming)
-  console.log(concatFilmes)
 
   const { dataLayerMovieSelect, dataLayerMovieFilter } = useGtag()
 

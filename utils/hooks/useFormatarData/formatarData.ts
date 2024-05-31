@@ -54,8 +54,6 @@ export const useFormatarData = () => {
 
   const formatMes = (text: string): string => {
     const mes = dataSessao(text)
-    console.log(mes.mes)
-
     return MESES[Number(mes.mes) - 1]
   }
 

@@ -100,7 +100,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
 
   const groupSessoes = (sessao: Sessions[] | undefined) => {
     const groupedSessions: { [key: string]: Sessions } = {}
-    console.log(sessao)
 
     sessao?.map((sessionsArray) => {
       // @ts-ignore: Unreachable code error
@@ -144,8 +143,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   }, [])
 
   useEffect(() => {
-    console.log(sessoes)
-
     if (sessoes) {
       const getDate = sessoes.sessions.find(
         (session) => session?.date === selectedDate
@@ -244,8 +241,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                 style={{ background: `${color}` }}
               >
                 {sessoes?.sessions.map((data, i) => {
-                  console.log(data)
-
                   return (
                     <S.ButtonHora
                       key={i}
