@@ -42,6 +42,7 @@ const Location = () => {
     if (isState) {
       setShowModal(false)
       const localtion: LocationData = await requestLocationPermission()
+
       if (localtion) {
         cacheTimer(localtion)
         const geo = await apiLocation(localtion)

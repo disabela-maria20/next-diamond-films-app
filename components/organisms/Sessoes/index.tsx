@@ -100,6 +100,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
 
   const groupSessoes = (sessao: Sessions[] | undefined) => {
     const groupedSessions: { [key: string]: Sessions } = {}
+    console.log(sessao)
 
     sessao?.map((sessionsArray) => {
       // @ts-ignore: Unreachable code error
@@ -143,6 +144,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   }, [])
 
   useEffect(() => {
+    console.log(sessoes)
+
     if (sessoes) {
       const getDate = sessoes.sessions.find(
         (session) => session?.date === selectedDate
@@ -211,11 +214,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
               {localFilmes
                 ?.sort((a, b) => a.state.localeCompare(b.state))
                 ?.map((data) => (
-                  <option
-                    key={data.state}
-                    value={data.state}
-                    selected={data.state === ESTADOS[data.state]}
-                  >
+                  <option key={data.state} value={data.state}>
                     {obterNomeEstado(data.state)}
                   </option>
                 ))}
@@ -244,20 +243,24 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                 className={Style.flexData}
                 style={{ background: `${color}` }}
               >
-                {sessoes?.sessions.map((data, i) => (
-                  <S.ButtonHora
-                    key={i}
-                    $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
-                    className={`${Style.areaData}`}
-                    onClick={() => handleDataClick(data.date)}
-                  >
-                    <span className={Style.mes}>{formatMes(data.date)}</span>
-                    <span className={Style.dia}>{formatDia(data.date)}</span>
-                    <span className={Style.diaSemana}>
-                      {formatDiaDaSemana(data.date)}
-                    </span>
-                  </S.ButtonHora>
-                ))}
+                {sessoes?.sessions.map((data, i) => {
+                  console.log(data)
+
+                  return (
+                    <S.ButtonHora
+                      key={i}
+                      $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
+                      className={`${Style.areaData}`}
+                      onClick={() => handleDataClick(data.date)}
+                    >
+                      <span className={Style.mes}>{formatMes(data.date)}</span>
+                      <span className={Style.dia}>{formatDia(data.date)}</span>
+                      <span className={Style.diaSemana}>
+                        {formatDiaDaSemana(data.date)}
+                      </span>
+                    </S.ButtonHora>
+                  )
+                })}
               </div>
               <div className={Style.areaSessao}>Escolha uma sessão:</div>
               <div className={Style.areaCinema}>

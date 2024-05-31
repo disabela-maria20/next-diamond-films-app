@@ -1,16 +1,16 @@
 export const MESES: string[] = [
-  'janeiro',
-  'fevereiro',
-  'março',
-  'abril',
-  'maio',
-  'junho',
-  'julho',
-  'agosto',
-  'setembro',
-  'outubro',
-  'novembro',
-  'dezembro'
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro'
 ]
 
 export const SEMANA: string[] = [
@@ -23,8 +23,21 @@ export const SEMANA: string[] = [
   'sab',
   'dom'
 ]
-const mesesImpares = MESES.filter((_, index) => (index + 1) % 2 !== 0)
+
 export const useFormatarData = () => {
+  const dataSessao = (data: string) => {
+    const partes = data.split('-')
+    const ano = partes[0]
+    const mes = partes[1]
+    const dia = partes[2]
+
+    return {
+      ano: ano,
+      mes: mes,
+      dia: dia
+    }
+  }
+
   const formatarData = (data: string): string => {
     const partesData = data?.split('-')
     const dia = partesData[2]
@@ -34,35 +47,16 @@ export const useFormatarData = () => {
     return `${dia} de ${mes} de ${ano}`
   }
 
-  const formatDia = (text: string) => {
-    const data = new Date(text)
-    console.log()
-
-    if (data.getDate() + 1 === 32) {
-      return 1
-    }
-    if (
-      data.getDate() + 1 == 31 &&
-      MESES.includes(mesesImpares[data.getMonth() + 1])
-    ) {
-      return data.getDate() + 1
-    }
-    return data.getDate() + 1
+  const formatDia = (data: string): string => {
+    const dia = dataSessao(data)
+    return dia.dia
   }
 
-  const formatMes = (text: string) => {
-    const data = new Date(text)
-    const mes = data.getMonth()
-    if (data.getDate() + 1 === 32) {
-      return MESES[mes + 1]
-    }
-    if (
-      data.getDate() + 1 == 31 &&
-      MESES.includes(mesesImpares[data.getMonth() + 1])
-    ) {
-      return MESES[mes]
-    }
-    return MESES[mes]
+  const formatMes = (text: string): string => {
+    const mes = dataSessao(text)
+    console.log(mes.mes)
+
+    return MESES[Number(mes.mes) - 1]
   }
 
   const formatAno = (text: string) => {
