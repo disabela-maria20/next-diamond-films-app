@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
@@ -116,8 +117,8 @@ const Newsletter = ({
         >
           <div className={Style.text}>
             {title && <h2>Você ama cinema?</h2>}
-            Preencha seus dados e concorra a brindes e convites exclusivos
-            Diamond
+            Preencha seus dados e fique por dentro das novidades da
+            Diamond Films
           </div>
           <div className={Style.inputNome}>
             <label htmlFor="">
