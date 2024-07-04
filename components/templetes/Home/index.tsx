@@ -72,8 +72,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     slidesPerView: 2,
     pagination: false,
     spaceBetween: 20,
-    //navigation: isMobile ? false : true,
-    navigation: false,
+    navigation: isMobile ? false : true,
     modules: [Navigation, Pagination],
     breakpoints: {
       640: {
