@@ -14,17 +14,10 @@
     "id": 1
   },
   {
-    "bannerDesktop": "/img/poster/ImaculadaDesktop.png",
-    "bannerMobile": "/img/poster/ImaculadaMobile.png",
-    "slug": "/imaculada",
-    "title": "IMACULADA",
-    "id": 2
-  },
-  {
     "bannerDesktop": "/img/poster/AssassinoPorAcasoDesktop.png",
     "bannerMobile": "/img/poster/AssassinoPorAcasoMobile.png",
     "slug": "/assassinoporacaso",
     "title": "ASSASSINO POR ACASO",
-    "id": 3
+    "id": 2
   }
 ]
