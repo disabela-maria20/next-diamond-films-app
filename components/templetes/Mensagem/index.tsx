@@ -60,21 +60,15 @@ const Mensagem = () => {
   }
 
   const copiarMensagemFim = () => {
-    const mensagemHtmlEntities = transformarParaHtmlEntities(
-      mensagemFim,
-      alfabetoFim,
-      alfabetoInicio
-    )
     navigator.clipboard
-      .writeText(mensagemHtmlEntities)
+      .writeText(mensagemFim)
       .then(() => {
-        alert('Mensagem copiada com sucesso!')
+        return
       })
       .catch((err) => {
         console.error('Erro ao copiar a mensagem: ', err)
       })
   }
-
   return (
     <section className={Style.Mensagem}>
       <img src="/img/longlegs.png" alt="Poster do filme longlegs" />
