@@ -1,3 +1,5 @@
+import { BannersResponse } from '../types'
+
 import axios from 'axios'
 // Configuração global do token para todas as solicitações Axios
 axios.defaults.baseURL = process.env.API_URL
@@ -19,6 +21,11 @@ export async function getHome() {
   } catch (err) {
     console.log(err)
   }
+}
+
+export async function getBanner(): Promise<BannersResponse> {
+  const res = await axios.get(`/banner/list-all`)
+  return res.data
 }
 
 export async function getHomeBanner() {
