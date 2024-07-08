@@ -1,0 +1,77 @@
+.areaMensagem{
+  padding: 45px 0;
+
+  @include media(lg) {
+    padding: 0 0;
+  }
+  color: $primary-lingh-color;
+
+	h1{
+    text-transform: uppercase;
+		font-size: 3.1rem;
+		@include media(lg){
+			font-size: 4.1rem;
+		}
+	}
+
+	p{
+		font-size: 1.6rem;
+		line-height: 2.6rem;
+		margin: 20px 0;
+	}
+
+  .grid{
+    display: grid;
+    @include media(lg){
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+    }
+
+    label span{
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+      margin: 20px 0;
+      @include media(lg){
+        font-size: 3.1rem;
+      }
+    }
+    .font{
+      font-family: "Longlegs-Regular";
+      font-size: 3.0rem
+    }
+    textarea{
+      @include inputNewsletter();
+      height: 200px;
+      padding-top: 10px;
+    }
+
+  }
+  .areaBtn{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 45px;
+    button {
+      background-color: $secondary-colors;
+      border: none;
+      color: $primary-lingh-color;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      position: relative;
+      left: 1px;
+      transition: all 0.5s;
+      cursor: pointer;
+
+      &:disabled {
+        background-color: #749dbc;
+      }
+
+      &:hover {
+        background-color: darken($secondary-colors, 10%);
+      }
+    }
+  }
+}
