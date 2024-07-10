@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import Style from './Mensagem.module.scss'
 
@@ -8,12 +8,9 @@ const Mensagem = () => {
   const [mensagemInicio, setMensagemInicio] = useState<string>('')
   const [mensagemFim, setMensagemFim] = useState<string>('')
 
-  const alfabetoInicio =
-    'A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z'.split(
-      ', '
-    )
+  const alfabetoInicio = 'abcdefghijklmnopqrstuvwxyz'.split('')
   const alfabetoFim =
-    '•, ∕∕, V, ⊂, —, Г, ∖∖, ∩, :, ⨅, ⏋, ͻ, ⨰, ⏊, ⎿ , ⨪, ⫻, Ω, S, ⊙, ⏁, V, ⊔,⨲, ∴, ╋'.split(
+    '•, ∕∕, V, ⊂, —, Г, ∖∖, ∩, :, ⨅, ⏋, ͻ, ⨰, ⏊, ⎿, ⨪, ⫻, Ω, Ͼ, ⊙, ⏁, ⊘, ⊔, ⨲, ∴, ╋'.split(
       ', '
     )
 
@@ -22,15 +19,37 @@ const Mensagem = () => {
     alfabetoOrigem: string[],
     alfabetoDestino: string[]
   ): string => {
-    return Array.from(texto)
-      .map((char) => {
-        const index = alfabetoOrigem.indexOf(char.toUpperCase())
-        if (index !== -1) {
-          return alfabetoDestino[index]
+    const mapeamentoParaEspecial = new Map<string, string>()
+    const mapeamentoParaNormal = new Map<string, string>()
+
+    // Construindo os mapas bidirecionais
+    alfabetoOrigem.forEach((char, index) => {
+      mapeamentoParaEspecial.set(char.toLowerCase(), alfabetoDestino[index])
+      mapeamentoParaNormal.set(alfabetoDestino[index], char.toLowerCase())
+    })
+
+    let resultado = ''
+    let temp = ''
+
+    for (const char of texto) {
+      if (mapeamentoParaEspecial.has(char.toLowerCase())) {
+        temp += mapeamentoParaEspecial.get(char.toLowerCase())!
+      } else if (mapeamentoParaNormal.has(char)) {
+        temp += mapeamentoParaNormal.get(char)!
+      } else {
+        if (temp) {
+          resultado += temp
+          temp = ''
         }
-        return char
-      })
-      .join('')
+        resultado += char
+      }
+    }
+
+    if (temp) {
+      resultado += temp
+    }
+
+    return resultado
   }
 
   const handleMensagemInicioChange = (
@@ -69,6 +88,7 @@ const Mensagem = () => {
         console.error('Erro ao copiar a mensagem: ', err)
       })
   }
+
   return (
     <section className={Style.Mensagem}>
       <img src="/img/longlegs.png" alt="Poster do filme longlegs" />
