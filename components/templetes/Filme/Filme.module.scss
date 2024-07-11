@@ -449,6 +449,11 @@
 
 .areaNewsletter {
 	margin-top: 35px;
+	margin-bottom: 35px;
+  @include media(lg){
+    padding: 0;
+    margin-bottom: 90px;
+  }
 }
 
 .combrarIngresso {

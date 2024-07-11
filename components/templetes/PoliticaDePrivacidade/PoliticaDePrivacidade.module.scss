@@ -1,6 +1,10 @@
 .politicaDePrivacidade{
 	color: $primary-lingh-color;
-
+	margin-bottom: 35px;
+  @include media(lg){
+    padding: 0;
+    margin-bottom: 90px;
+  }
 	h1{
 		font-size: 3.1rem;
 		padding-top: 160px;

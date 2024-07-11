@@ -1,7 +1,7 @@
 .areaContato {
   padding-top: 120px;
   color: $primary-lingh-color;
-
+  
   p {
     font-size: 1.4rem;
     line-height: 2rem;
@@ -14,8 +14,11 @@
       gap: 90px;
       grid-template-columns: repeat(2, 1fr);
     }
-
-
+    margin-bottom: 35px;
+    @include media(lg){
+      padding: 0;
+      margin-bottom: 90px;
+    }
 
     h1,
     h2 {

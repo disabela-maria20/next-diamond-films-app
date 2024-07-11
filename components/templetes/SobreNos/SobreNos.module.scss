@@ -66,6 +66,12 @@
 	.slideFilmehomePromo {
 		overflow: visible;
 		position: relative;
+		margin-bottom: 35px;
+
+		@include media(lg) {
+			padding: 0;
+			margin-bottom: 90px;
+		}
 
 		img {
 			width: 100%;

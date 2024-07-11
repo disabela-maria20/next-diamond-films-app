@@ -1,4 +1,9 @@
 .ComprarIngresso {
+	margin-bottom: 35px;
+  @include media(lg){
+    padding: 0;
+    margin-bottom: 90px;
+  }
 	h1 {
 		color: $primary-lingh-color;
 		font-size: 3.1rem;
