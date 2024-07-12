@@ -31,12 +31,15 @@ export interface IFilmeResponse extends IFilmeProps {
   socialCampaign: string
   videos: IFilmeResponseUrl[]
   images: IFilmeResponseUrl[]
-  streaming: string[]
+  streaming: IStreaming[]
   created_at: string
   hasSession: boolean
   idVibezzMovie: string
 }
 
+export interface IStreaming {
+  platform: string
+}
 export interface IFilmeResponseUrl {
   url: string
 }
@@ -123,6 +126,7 @@ export interface Location {
   state: string
   cities: string[]
 }
+
 export interface Banner {
   bannerDesktop: string
   bannerMobile: string
