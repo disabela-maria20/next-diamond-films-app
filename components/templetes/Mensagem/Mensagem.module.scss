@@ -1,14 +1,14 @@
 .Mensagem {
-  background-color: #ff0a0a;
+  background-color: #fe0000;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 0 20px 45px;
+  padding: 0 20px 0;
 
   @include media(lg) {
-    padding: 90px 115px;
+    padding: 0 0;
   }
 
   .areaMensagem {
@@ -72,12 +72,12 @@
       border: none;
       height: 125px;
       padding: 20px;
-      color: #ff0a0a;
+      color: #fe0000;
       font-size: 1.5rem;
       font-weight: 700;
 
       &::placeholder {
-        color: #ff0a0a;
+        color: #fe0000;
         font-size: 1.5rem;
       }
     }
@@ -90,12 +90,12 @@
 
       .alterar {
         background-color: $primary-dark-color;
-        color: #ff0a0a;
+        color: #fe0000;
       }
 
       .copiar {
         color: $primary-dark-color;
-        background-color: #ff0a0a;
+        background-color: #fe0000;
         border: 2px solid;
       }
 
@@ -136,7 +136,7 @@
       button {
         padding: 5px;
         color: $primary-dark-color;
-        background-color: #ff0a0a;
+        background-color: #fe0000;
         border: 2px solid $primary-dark-color;
         border-radius: 5px;
         cursor: pointer;
@@ -145,7 +145,7 @@
 
         &:hover {
           background-color: $primary-dark-color;
-          color: #ff0a0a;
+          color: #fe0000;
         }
 
         @include media(md) {

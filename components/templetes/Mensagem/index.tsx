@@ -95,6 +95,7 @@ const Mensagem = () => {
           VERIFIQUE A CLASSIFICAÇÃO INDICATIVA
         </p>
       </div>
+      <img src="/img/longlegs/LONGLEGS_Landing.jpg" alt="imagem ilustrativa " />
     </section>
   )
 }
