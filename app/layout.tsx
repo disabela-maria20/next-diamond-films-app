@@ -5,9 +5,8 @@ import '@/styles/sass/globals.scss'
 import { Montserrat } from 'next/font/google'
 import Script from 'next/script'
 
-import { Footer, Location } from '@/components/molecules'
+import { Location } from '@/components/molecules'
 import { LocationProvider } from '@/components/molecules/Location/LocationContext'
-import { Header } from '@/components/organisms'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
