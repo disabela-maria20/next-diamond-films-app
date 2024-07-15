@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
 import { Loading } from '@/components/atoms'
+import { Footer } from '@/components/molecules'
+import { Header } from '@/components/organisms'
 import { getHome } from '@/utils/server/requests'
 
 const SobreNos = dynamic(() => import('@/components/templetes/SobreNos'), {
@@ -19,7 +21,11 @@ export default async function Page() {
   const listaFilmes = await getHome()
   return (
     <Suspense fallback={<Loading altura={true} />}>
-      <SobreNos listaFilmes={listaFilmes} />
+      <>
+        <Header />
+        <SobreNos listaFilmes={listaFilmes} />
+        <Footer />
+      </>
     </Suspense>
   )
 }

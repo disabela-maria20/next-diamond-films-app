@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import { Suspense, lazy } from 'react'
 
 import { Loading } from '@/components/atoms'
+import { Footer } from '@/components/molecules'
+import { Header } from '@/components/organisms'
 
 const Contato = lazy(() => import('@/components/templetes/Contato'))
 
@@ -13,7 +15,11 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <Suspense fallback={<Loading altura={true} />}>
-      <Contato />
+      <>
+        <Header />
+        <Contato />
+        <Footer />
+      </>
     </Suspense>
   )
 }

@@ -45,8 +45,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={montserrat.className}>
-        <Header>
-          <Script dangerouslySetInnerHTML={{
+        <LocationProvider>
+          {children}
+        </LocationProvider>
+        <Location />
+        <Script dangerouslySetInnerHTML={{
             __html: `(function(h,o,t,j,a,r){
               h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
               h._hjSettings={hjid:3920910,hjsv:6};
@@ -56,12 +59,6 @@ export default function RootLayout({
               a.appendChild(r);
               })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
           `}} />
-        </Header>
-        <LocationProvider>
-          {children}
-        </LocationProvider>
-        <Location />
-        <Footer />
       </body>
       <Script src='https://www.youtube.com/iframe_api'></Script>
       <GoogleTagManager gtmId="GTM-ND454GP5" />

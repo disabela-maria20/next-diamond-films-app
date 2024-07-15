@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { Loading } from '@/components/atoms'
+import { Footer } from '@/components/molecules'
+import { Header } from '@/components/organisms'
 import PoliticaDePrivacidade from '@/components/templetes/PoliticaDePrivacidade'
 
 export const metadata: Metadata = {
@@ -11,7 +13,11 @@ export const metadata: Metadata = {
 const pagePoliticaDePrivacidade = () => {
   return (
     <Suspense fallback={<Loading altura={true} />}>
-      <PoliticaDePrivacidade />
+      <>
+        <Header />
+        <PoliticaDePrivacidade />
+        <Footer />
+      </>
     </Suspense>
   )
 }

@@ -34,6 +34,13 @@ const specialToRegular: Record<string, string> = {
   "Z": "＋"
 }
 
+const keyboardOrderQWERTY = [
+  ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+  ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+  ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Deletar'],
+  ['Espaço']
+]
+
 const regularToSpecial = Object.fromEntries(Object.entries(specialToRegular).map(([key, value]) => [value, key]))
 
 const Mensagem = () => {
@@ -64,6 +71,26 @@ const Mensagem = () => {
     setUseSpecialChars(!useSpecialChars)
   }
 
+  const keys = useSpecialChars
+    ? keyboardOrderQWERTY.map((row) =>
+        row.map((key) => key !== 'Deletar' && key !== 'Espaço' ? specialToRegular[key] || key : key)
+      )
+    : keyboardOrderQWERTY
+  
+  const handleKeyPress = (char: string) => {
+    if (char === 'Deletar') {
+      handleDelete()
+    } else if (char === 'Espaço') {
+      setText((prevText) => prevText + ' ')
+    } else {
+      setText((prevText) => prevText + char)
+    }
+  }
+
+  const handleDelete = () => {
+    setText((prevText) => prevText.slice(0, -1))
+  }
+
   return (
     <section className={Style.Mensagem}>
       <div className={Style.areaMensagem}>
@@ -90,6 +117,17 @@ const Mensagem = () => {
           <button className={Style.copiar} onClick={handleCopy}>
             Copiar
           </button>
+        </div>
+        <div className={Style.letras}>
+          {keys.map((row, rowIndex) => (
+            <div key={rowIndex} className={Style.row}>
+              {row.map((char) => (
+                <button key={char} onClick={() => handleKeyPress(char)}>
+                  {char}
+                </button>
+              ))}
+            </div>
+          ))}
         </div>
         <p className={Style.classificacao}>
           VERIFIQUE A CLASSIFICAÇÃO INDICATIVA

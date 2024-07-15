@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { Loading } from '@/components/atoms'
+import { Footer } from '@/components/molecules'
+import { Header } from '@/components/organisms'
 import { Filme } from '@/components/templetes'
 import { getCatalogoFilme, getHome } from '@/utils/server/requests'
 
@@ -33,11 +35,13 @@ export default async function pageCatalogoFilme({ params: { slug } }: Params) {
   const filme = await getCatalogoFilme(slug)
 
   return (
-    <>
-      <Suspense fallback={<Loading altura={true} />}>
+    <Suspense fallback={<Loading altura={true} />}>
+      <>
+        <Header />
         <Filme movie={filme} />
-      </Suspense>
-    </>
+        <Footer />
+      </>
+    </Suspense>
   )
 }
 
