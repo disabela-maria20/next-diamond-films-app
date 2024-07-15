@@ -5,7 +5,7 @@ import { Loading } from '@/components/atoms'
 import { Mensagem } from '@/components/templetes'
 
 export const metadata: Metadata = {
-  title: 'Diamond Films - Politica De Privacidade'
+  title: 'Diamond Films - Escreva sua mensagem'
 }
 
 const pageMensagem = () => {
