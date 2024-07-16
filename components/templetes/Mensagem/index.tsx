@@ -100,7 +100,7 @@ const Mensagem = () => {
         </h2>
         <img src="/img/longlegs/logo.png" alt="logo do filme longlegs" />
         <h1>Longlegs - Vínculo Mortal</h1>
-        <label htmlFor="mensagemInicio">Decifre as mensagens de longlegs</label>
+        <label htmlFor="mensagemInicio">Decifre as mensagens de Longlegs</label>
         <textarea
           onChange={handleChange}
           id="mensagemInicio"
