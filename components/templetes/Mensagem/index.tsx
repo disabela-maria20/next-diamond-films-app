@@ -12,7 +12,7 @@ const specialToRegular: Record<string, string> = {
   "D": "⊂",
   "E": "—",
   "F": "ᒕ",
-  "G": "⫴",
+  "G": "\\\\",
   "H": "Ո",
   "I": "：",
   "J": "⊓",
@@ -57,13 +57,20 @@ const Mensagem = () => {
   }
 
   const convertToSpecial = (text: string) => {
-    return text.split('').map((char) => specialToRegular[char.toUpperCase()] || char).join('')
+    return text.split('').map((char) => {
+      if (char.toUpperCase() === 'G') {
+        return '\\\\'
+      }
+      return specialToRegular[char.toUpperCase()] || char
+    }).join('')
   }
+
 
   const convertToRegular = (text: string) => {
-    return text.split('').map((char) => regularToSpecial[char] || char).join('')
+    return text.replace(/\\\\/g, 'G').split('').map((char) => {
+      return regularToSpecial[char] || char
+    }).join('')
   }
-
   const toggleLanguage = () => {
     setText((prevText) => {
       return useSpecialChars ? convertToRegular(prevText) : convertToSpecial(prevText)
@@ -73,10 +80,10 @@ const Mensagem = () => {
 
   const keys = useSpecialChars
     ? keyboardOrderQWERTY.map((row) =>
-        row.map((key) => key !== 'Deletar' && key !== 'Espaço' ? specialToRegular[key] || key : key)
-      )
+      row.map((key) => key !== 'Deletar' && key !== 'Espaço' ? specialToRegular[key] || key : key)
+    )
     : keyboardOrderQWERTY
-  
+
   const handleKeyPress = (char: string) => {
     if (char === 'Deletar') {
       handleDelete()
