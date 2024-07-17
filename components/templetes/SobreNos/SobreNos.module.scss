@@ -2,6 +2,16 @@
 	color: $primary-lingh-color;
 	padding-top: 150px;
 
+	.grid {
+		display: grid;
+		gap: 35px;
+
+		@include media(lg) {
+			align-items: center;
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
 	img {
 		display: block;
 		max-width: 350px;
@@ -13,6 +23,7 @@
 
 		@include media(lg) {
 			font-size: 3.5rem;
+			margin-bottom: 0;
 		}
 	}
 
@@ -23,6 +34,19 @@
 		@include media(lg) {
 			margin-top: 45px;
 			font-size: 3.5rem;
+		}
+	}
+
+	.video {
+		position: relative;
+		padding-bottom: 56.25%;
+
+		iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 		}
 	}
 

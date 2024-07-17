@@ -53,22 +53,36 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
       <div className="container" style={{ overflow: 'hidden' }}>
         <img src="/img/logo.webp" alt="logo" width={300} height={200} />
         <h1>SOBRE NÓS</h1>
-        <p>
-          A Diamond Films é a maior distribuidora independente da América
-          Latina. Fundada em 2010, se destaca por distribuir os melhores filmes
-          independentes da indústria cinematográfica. Atualmente, a empresa atua
-          em sete países da América Latina: Argentina, Bolívia, Brasil, Chile,
-          Colômbia, Peru e México. No ano de 2016 começou a atuar no mercado
-          europeu, por meio da sua filial na Espanha. No Brasil desde 2013, a
-          Diamond Films distribuiu títulos como &lsquo;Os Oito Odiados&lsquo;;
-          &lsquo;Lion - Uma Jornada para Casa&lsquo;, &lsquo;Moonlight - Sob a
-          Luz do Luar&lsquo;, &lsquo;Green Book - O Guia&lsquo;, &lsquo;Moonfall
-          – Ameaça Lunar&lsquo;, &lsquo;No Ritmo do Coração&lsquo;,
-          &lsquo;Spencer&lsquo;, &lsquo;A Pior Pessoa do Mundo&lsquo;,
-          &lsquo;Órfã 2: A Origem&lsquo;, &lsquo;One Piece Film Red’,
-          &lsquo;Tudo em Todo o Lugar ao Mesmo Tempo&lsquo; e &lsquo;Fale
-          Comigo’.
-        </p>
+        <div className={Style.grid}>
+          <p>
+            A Diamond Films é a maior distribuidora independente da América
+            Latina. Fundada em 2010, se destaca por distribuir os melhores
+            filmes independentes da indústria cinematográfica. Atualmente, a
+            empresa atua em sete países da América Latina: Argentina, Bolívia,
+            Brasil, Chile, Colômbia, Peru e México. No ano de 2016 começou a
+            atuar no mercado europeu, por meio da sua filial na Espanha. No
+            Brasil desde 2013, a Diamond Films distribuiu títulos como &lsquo;Os
+            Oito Odiados&lsquo;; &lsquo;Lion - Uma Jornada para Casa&lsquo;,
+            &lsquo;Moonlight - Sob a Luz do Luar&lsquo;, &lsquo;Green Book - O
+            Guia&lsquo;, &lsquo;Moonfall – Ameaça Lunar&lsquo;, &lsquo;No Ritmo
+            do Coração&lsquo;, &lsquo;Spencer&lsquo;, &lsquo;A Pior Pessoa do
+            Mundo&lsquo;, &lsquo;Órfã 2: A Origem&lsquo;, &lsquo;One Piece Film
+            Red’, &lsquo;Tudo em Todo o Lugar ao Mesmo Tempo&lsquo; e
+            &lsquo;Fale Comigo’.
+          </p>
+          <div className={Style.video}>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/exKaBNI_cHY?si=-VnLDLwYzXi5vGTk"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
 
         <hr />
         {/* <h2 className={Style.titleOutline}>MISSÃO</h2>

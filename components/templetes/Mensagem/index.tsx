@@ -45,7 +45,7 @@ const regularToSpecial = Object.fromEntries(Object.entries(specialToRegular).map
 
 const Mensagem = () => {
   const [text, setText] = useState('')
-  const [useSpecialChars, setUseSpecialChars] = useState(false)
+  const [useSpecialChars, setUseSpecialChars] = useState(true)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text)
@@ -79,11 +79,12 @@ const Mensagem = () => {
   }
 
   const keys = useSpecialChars
-    ? keyboardOrderQWERTY.map((row) =>
+  ? keyboardOrderQWERTY.map((row) =>
       row.map((key) => key !== 'Deletar' && key !== 'Espaço' ? specialToRegular[key] || key : key)
     )
-    : keyboardOrderQWERTY
-
+  : keyboardOrderQWERTY.map((row) =>
+      row.map((key) => key) 
+    )
   const handleKeyPress = (char: string) => {
     if (char === 'Deletar') {
       handleDelete()
