@@ -251,8 +251,10 @@
 }
 
 .modalSlideImg {
+	padding: 0 30px;
 	@include media(xl) {
-		max-width: 1000px !important;
+		width: 100% !important;
+    max-height: 650px !important;
 	}
 }
 
@@ -465,5 +467,25 @@
 		font-size: 1.6rem;
 		line-height: 2.6rem;
 		margin: 20px 0;
+	}
+}
+
+.btnSlideImagem{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	height: 100%;
+	z-index: -1;
+	
+	button{
+		background-color: transparent;
+		color: $primary-lingh-color;
+		border: none;
+		font-size: 5.4rem;
+		cursor: pointer;
 	}
 }
