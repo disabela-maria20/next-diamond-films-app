@@ -251,11 +251,13 @@
 }
 
 .modalSlideImg {
-	padding: 0 30px;
-	@include media(xl) {
-		width: 100% !important;
-    max-height: 650px !important;
+	width: 100%;
+	max-height: 450px;
+
+	@include media(xxl){
+		max-height: 750px;
 	}
+	padding: 0 30px;
 }
 
 .areaIframeVideoYoutube {
