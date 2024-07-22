@@ -339,6 +339,12 @@
 		height: 540px;
 	}
 
+	@include media(xxl){
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: top;
+	}
+
 	&::before {
 		content: '';
 		position: absolute;
