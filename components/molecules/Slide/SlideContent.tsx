@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { SwiperOptions } from 'swiper/types'
@@ -18,13 +18,6 @@ const SlideContent: React.FC<CustomSwiperProps> = ({
   swiperOptions,
   className
 }) => {
-  const prevRef = useRef<HTMLDivElement>(null)
-  const nextRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    console.log(swiperOptions)
-  }, [swiperOptions, prevRef, nextRef])
-
   return (
     <>
       <Swiper {...swiperOptions} className={className}>
