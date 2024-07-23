@@ -138,12 +138,12 @@ const CardFilme = ({
                     width={300}
                     height={200}
                   />
-                  <span
+                  {/* <span
                     className={Style.status}
                     style={{ background: `${data.color_status}` }}
                   >
                     {checkStatus(data.status)}
-                  </span>
+                  </span> */}
                 </Link>
                 <h3>{data.title}</h3>
                 {!data.hasSession ? (
@@ -195,12 +195,12 @@ const CardFilme = ({
           <div key={data.id} className={Style.CardFilme}>
             <Link href={`/${data.slug}`}>
               <img src={data.cover} alt={data.title} width={300} height={200} />
-              <span
+              {/* <span
                 className={Style.status}
                 style={{ background: `${data.color_status}` }}
               >
                 {checkStatus(data.status)}
-              </span>
+              </span> */}
             </Link>
             <h3>{data.title}</h3>
           </div>
