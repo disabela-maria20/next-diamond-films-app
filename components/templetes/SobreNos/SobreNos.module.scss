@@ -1,7 +1,11 @@
 .SobreNos {
 	color: $primary-lingh-color;
 	padding-top: 150px;
+	padding-bottom: 45px;
 
+	@include media(lg){
+		padding-bottom: 90px;
+	}
 	.grid {
 		display: grid;
 		gap: 35px;
@@ -59,7 +63,7 @@
 
 	a {
 		color: $primary-lingh-color;
-		padding: 0 5px;
+		// padding: 0 5px;
 		text-decoration: underline;
 	}
 

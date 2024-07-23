@@ -118,7 +118,10 @@ const CardFilme = ({
   if (slide == 'lancamento') {
     return (
       <>
-        <Slide.Content swiperOptions={filmesSwiperOptions}>
+        <Slide.Content
+          className={Style.slideFilmehomePromo}
+          swiperOptions={filmesSwiperOptions}
+        >
           {listaFilmes?.releases
             .reverse()
             .sort(
@@ -142,7 +145,7 @@ const CardFilme = ({
                     {checkStatus(data.status)}
                   </span>
                 </Link>
-                <h2>{data.title}</h2>
+                <h3>{data.title}</h3>
                 {!data.hasSession ? (
                   <span className={Style.data}>
                     Estreia: {formatarData(data?.releasedate ?? '')}
@@ -184,7 +187,10 @@ const CardFilme = ({
   }
   if (slide == 'streaming') {
     return (
-      <Slide.Content swiperOptions={filmesStreaming}>
+      <Slide.Content
+        className={Style.slideFilmehomePromo}
+        swiperOptions={filmesStreaming}
+      >
         {listaFilmes?.streaming.reverse().map((data) => (
           <div key={data.id} className={Style.CardFilme}>
             <Link href={`/${data.slug}`}>
@@ -196,7 +202,7 @@ const CardFilme = ({
                 {checkStatus(data.status)}
               </span>
             </Link>
-            <h2>{data.title}</h2>
+            <h3>{data.title}</h3>
           </div>
         ))}
       </Slide.Content>
@@ -214,7 +220,7 @@ const CardFilme = ({
             {checkStatus(data?.status)}
           </span>
         </Link>
-        <h2>{data?.title}</h2>
+        <h3>{data?.title}</h3>
       </div>
     )
   }
