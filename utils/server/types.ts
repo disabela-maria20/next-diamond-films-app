@@ -6,6 +6,7 @@ export interface IFilmeResponse extends IFilmeProps {
   id: number
   title: string
   slug: string
+  color_status: string
   originalTitle: string
   countryOrigin: string
   contentRating: string
