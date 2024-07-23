@@ -31,15 +31,14 @@ const SobreNos = ({ listaFilmes }: ISobreNosProps) => {
               Brasil, Chile, Colômbia, Peru e México.
             </p>
             <p>
-              No Brasil desde 2013, a Diamond Films distribuiu títulos como
-              &lsquo;Os Oito Odiados&lsquo;; &lsquo;Lion - Uma Jornada para
-              Casa&lsquo;, &lsquo;Moonlight - Sob a Luz do Luar&lsquo;,
-              &lsquo;Green Book - O Guia&lsquo;, &lsquo;Moonfall – Ameaça
-              Lunar&lsquo;, &lsquo;No Ritmo do Coração&lsquo;,
-              &lsquo;Spencer&lsquo;, &lsquo;A Pior Pessoa do Mundo&lsquo;,
-              &lsquo;Órfã 2: A Origem&lsquo;, &lsquo;One Piece Film &lsquo;,
-              &lsquo;Tudo em Todo o Lugar ao Mesmo Tempo&lsquo; e &lsquo;Fale
-              Comigo&lsquo;.
+              No Brasil desde há mais de duas décadas, a Diamond Films
+              distribuiu títulos como “Os Oito Odiados”, “Lion - Uma Jornada
+              para Casa”, “Moonlight - Sob a Luz do Luar”, “Green Book - O
+              Guia”, “Moonfall – Ameaça Lunar”, “No Ritmo do Coração”,
+              “Spencer”, “A Pior Pessoa do Mundo”, “Órfã 2: A Origem”,
+              “Hereditário”, “One Piece Film Red”, “Tudo em Todo o Lugar ao
+              Mesmo Tempo”, “Fale Comigo”, “Ferrari”, “Beekeeper”, “Imaculada” e
+              “Guerra Civil”.
             </p>
           </div>
 
