@@ -62,6 +62,7 @@ const Newsletter = ({
   const onSubmit = async (data: INewsletterForm) => {
     if (!data.n_termos) return
     setLoaging(true)
+    setError(false)
     try {
       const res = await postNewsletter(
         data.n_name,
@@ -72,6 +73,7 @@ const Newsletter = ({
       if (res.data.done) {
         setModal(true)
         setViewSuccess(true)
+        setError(false)
         Cookies.set('formNewsletter', 'true')
         reset()
         if (filmes) {
@@ -97,7 +99,7 @@ const Newsletter = ({
       }
     } catch (error) {
       const err = error as AxiosError
-      if (err.response?.status != 200) {
+      if (err.response?.status !== 200) {
         setError(true)
         setViewSuccess(false)
       }

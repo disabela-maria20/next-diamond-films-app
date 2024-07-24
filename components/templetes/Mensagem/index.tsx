@@ -48,7 +48,7 @@ const regularToSpecial = Object.fromEntries(Object.entries(specialToRegular).map
 const Mensagem = () => {
   const [text, setText] = useState('')
   const [useSpecialChars, setUseSpecialChars] = useState(true)
-  const [isModel, setIsModal] = useState<boolean>(false)
+  const [isModel, setIsModal] = useState<boolean>(true)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text)
@@ -145,13 +145,16 @@ const Mensagem = () => {
         </p>
       </div>
       <img src="/img/longlegs/LONGLEGS_Landing.jpg" alt="imagem ilustrativa " />
-      <Model.Root>
-        <Model.Body setOpen={() => setIsModal(!isModel)}>
-          <Model.Content>
-            <Newsletter type='modal' />
-          </Model.Content>
-        </Model.Body>
-      </Model.Root>
+      {isModel &&
+        <Model.Root>
+          <Model.Body setOpen={() => setIsModal(!isModel)}>
+            <Model.Content>
+              <Newsletter type='modal' />
+            </Model.Content>
+          </Model.Body>
+        </Model.Root>
+      }
+
 
     </section>
   )
