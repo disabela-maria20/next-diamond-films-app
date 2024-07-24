@@ -20,8 +20,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/guerra-civil',
-        destination: '/guerracivil',
+        source: '/codigolonglegs',
+        destination: '/',
         permanent: false
       }
     ]
