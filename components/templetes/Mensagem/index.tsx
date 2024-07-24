@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 
 import Style from './Mensagem.module.scss'
 
+import { Model, Newsletter } from '@/components/molecules'
+
 const specialToRegular: Record<string, string> = {
   "A": "•",
   "B": "⫽",
@@ -46,6 +48,7 @@ const regularToSpecial = Object.fromEntries(Object.entries(specialToRegular).map
 const Mensagem = () => {
   const [text, setText] = useState('')
   const [useSpecialChars, setUseSpecialChars] = useState(true)
+  const [isModel, setIsModal] = useState<boolean>(false)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text)
@@ -79,11 +82,11 @@ const Mensagem = () => {
   }
 
   const keys = useSpecialChars
-  ? keyboardOrderQWERTY.map((row) =>
+    ? keyboardOrderQWERTY.map((row) =>
       row.map((key) => key !== 'Deletar' && key !== 'Espaço' ? specialToRegular[key] || key : key)
     )
-  : keyboardOrderQWERTY.map((row) =>
-      row.map((key) => key) 
+    : keyboardOrderQWERTY.map((row) =>
+      row.map((key) => key)
     )
   const handleKeyPress = (char: string) => {
     if (char === 'Deletar') {
@@ -142,6 +145,14 @@ const Mensagem = () => {
         </p>
       </div>
       <img src="/img/longlegs/LONGLEGS_Landing.jpg" alt="imagem ilustrativa " />
+      <Model.Root>
+        <Model.Body setOpen={() => setIsModal(!isModel)}>
+          <Model.Content>
+            <Newsletter type='modal' />
+          </Model.Content>
+        </Model.Body>
+      </Model.Root>
+
     </section>
   )
 }
