@@ -16,16 +16,16 @@ const nextConfig = {
     styledComponents: true,
     removeConsole: false
   },
-  output: 'export',
-  async redirects() {
-    return [
-      {
-        source: '/codigolonglegs',
-        destination: '/',
-        permanent: false
-      }
-    ]
-  }
+  output: 'export'
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: '/codigolonglegs',
+  //       destination: '/',
+  //       permanent: false
+  //     }
+  //   ]
+  // }
   // distDir: 'build',
   // trailingSlash: true
 }
