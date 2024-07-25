@@ -65,7 +65,7 @@ const Newsletter = ({
   useEffect(() => {
     setInterval(() => {
       setIsModal(true)
-    }, 60000 * 5)
+    }, 90000)
   }, [])
 
   const { dataLayerNewsletter, dataLayerMovieSubscribe } = useGtag()
