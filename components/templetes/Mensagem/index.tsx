@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 import Style from './Mensagem.module.scss'
 
-import { Model, Newsletter } from '@/components/molecules'
+import { Newsletter } from '@/components/molecules'
 
 const specialToRegular: Record<string, string> = {
   "A": "•",
@@ -48,7 +48,6 @@ const regularToSpecial = Object.fromEntries(Object.entries(specialToRegular).map
 const Mensagem = () => {
   const [text, setText] = useState('')
   const [useSpecialChars, setUseSpecialChars] = useState(true)
-  const [isModel, setIsModal] = useState<boolean>(true)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text)
@@ -145,17 +144,7 @@ const Mensagem = () => {
         </p>
       </div>
       <img src="/img/longlegs/LONGLEGS_Landing.jpg" alt="imagem ilustrativa " />
-      {isModel &&
-        <Model.Root>
-          <Model.Body setOpen={() => setIsModal(!isModel)}>
-            <Model.Content>
-              <Newsletter type='modal' />
-            </Model.Content>
-          </Model.Body>
-        </Model.Root>
-      }
-
-
+      <Newsletter type='modal' />
     </section>
   )
 }

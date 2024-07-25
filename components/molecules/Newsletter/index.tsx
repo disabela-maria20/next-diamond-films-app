@@ -3,7 +3,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { usePathname } from 'next/navigation'
 
@@ -33,6 +33,24 @@ interface INewsletterProps {
   title?: boolean
 }
 
+type ModalState = 'closed' | 'success' | 'error'
+
+interface ModalAction {
+  type: ModalState
+}
+
+const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
+  switch (action.type) {
+    case 'success':
+    case 'error':
+      return action.type
+    case 'closed':
+      return 'closed'
+    default:
+      return state
+  }
+}
+
 const Newsletter = ({
   isBg,
   isHorrizontal,
@@ -40,11 +58,15 @@ const Newsletter = ({
   type = 'filme',
   title = true
 }: INewsletterProps) => {
-  const [loaging, setLoaging] = useState<boolean>(false)
-  const [modal, setModal] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [isModel, setIsModal] = useState<boolean>(true)
+  const [modalState, dispatch] = useReducer(modalReducer, 'closed')
 
-  const [viewSuccess, setViewSuccess] = useState<boolean>(false)
-  const [error, setError] = useState<boolean>(false)
+  useEffect(() => {
+    setInterval(() => {
+      setIsModal(true)
+    }, 60000 * 5)
+  }, [])
 
   const { dataLayerNewsletter, dataLayerMovieSubscribe } = useGtag()
 
@@ -61,8 +83,7 @@ const Newsletter = ({
 
   const onSubmit = async (data: INewsletterForm) => {
     if (!data.n_termos) return
-    setLoaging(true)
-    setError(false)
+    setLoading(true)
     try {
       const res = await postNewsletter(
         data.n_name,
@@ -71,9 +92,6 @@ const Newsletter = ({
         pathname
       )
       if (res.data.done) {
-        setModal(true)
-        setViewSuccess(true)
-        setError(false)
         Cookies.set('formNewsletter', 'true')
         reset()
         if (filmes) {
@@ -96,124 +114,148 @@ const Newsletter = ({
             Number(filmes.idVibezzMovie)
           )
         }
+        setIsModal(false)
+        setTimeout(() => dispatch({ type: 'success' }), 300)
+      } else {
+        dispatch({ type: 'error' })
       }
     } catch (error) {
       const err = error as AxiosError
       if (err.response?.status !== 200) {
-        setError(true)
-        setViewSuccess(false)
+        dispatch({ type: 'error' })
       }
     } finally {
-      setLoaging(false)
+      setLoading(false)
     }
   }
 
+  const renderSuccessContent = () => (
+    <div className={Style.newsletterPopUpTermos}>
+      <p>
+        Agradecemos seu interesse. Logo entraremos em contato com novidades
+        sobre nossos filmes.
+      </p>
+      <div className={Style.newsletterPopUpTermosFlex}>
+        <button onClick={() => dispatch({ type: 'closed' })}>Fechar</button>
+      </div>
+    </div>
+  )
+
+  const renderErrorContent = () => (
+    <div className={Style.newsletterPopUpTermos}>
+      <p>Preencha corretamente as informações</p>
+      <div className={Style.newsletterPopUpTermosFlex}>
+        <button onClick={() => dispatch({ type: 'closed' })}>Fechar</button>
+      </div>
+    </div>
+  )
+
+  const renderModalContent = () => {
+    switch (modalState) {
+      case 'success':
+        return renderSuccessContent()
+      case 'error':
+        return renderErrorContent()
+      default:
+        return null
+    }
+  }
+
+  const Form = () => (
+    <section
+      className={`${Style.newsletter} ${isBg ? Style.newsletterBg : ''}`}
+    >
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}
+      >
+        <div className={Style.text}>
+          {title && <h2>Você ama cinema?</h2>}
+          Preencha seus dados e fique por dentro das novidades da Diamond Films
+        </div>
+        <div className={Style.inputNome}>
+          <label htmlFor="">
+            <input
+              type="text"
+              placeholder="Nome"
+              id="n_name"
+              {...register('n_name')}
+            />
+          </label>
+          {errors.n_name && (
+            <small className="text-error">{errors.n_name.message}</small>
+          )}
+        </div>
+        <div className={Style.inputTelefone}>
+          <label htmlFor="n_phone">
+            <input
+              id="n_phone"
+              type="text"
+              placeholder="Telefone"
+              {...register('n_phone')}
+              onChange={(e) =>
+                ((e.target as HTMLInputElement).value = Phone(
+                  (e.target as HTMLInputElement).value
+                ))
+              }
+            />
+          </label>
+          {errors.n_phone && (
+            <small className="text-error">{errors.n_phone.message}</small>
+          )}
+        </div>
+        <div className={Style.inputEmail}>
+          <label htmlFor="n_email">
+            <input
+              type="email"
+              id="n_email"
+              placeholder="E-mail"
+              {...register('n_email')}
+            />
+            <button type="submit" disabled={disabled}>
+              {loading ? 'Carregando' : 'Enviar'}
+            </button>
+          </label>
+          {errors.n_email && (
+            <small className="text-error">{errors.n_email.message}</small>
+          )}
+        </div>
+      </form>
+      <label htmlFor="termos" className={Style.newsletterPopUpTermosFlex}>
+        <input type="checkbox" id="termos" {...register('n_termos')} />
+        <p>
+          Li, e aceito as&nbsp;
+          <Link href="/politica-de-privacidade">políticas de privacidade</Link>
+          &nbsp;e&nbsp;
+          <Link href="/termos-de-uso">Termos e condições</Link>
+        </p>
+        {errors.n_termos && (
+          <small className="text-error">{errors.n_termos.message}</small>
+        )}
+      </label>
+    </section>
+  )
+
   return (
     <>
-      <section
-        className={`${Style.newsletter} ${isBg ? Style.newsletterBg : ''}`}
-      >
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}
-        >
-          <div className={Style.text}>
-            {title && <h2>Você ama cinema?</h2>}
-            Preencha seus dados e fique por dentro das novidades da
-            Diamond Films
-          </div>
-          <div className={Style.inputNome}>
-            <label htmlFor="">
-              <input
-                type="text"
-                placeholder="Nome"
-                id="n_name"
-                {...register('n_name')}
-              />
-            </label>
-            {errors.n_name && (
-              <small className="text-error">{errors.n_name.message}</small>
-            )}
-          </div>
-          <div className={Style.inputTelefone}>
-            <label htmlFor="n_phone">
-              <input
-                id="n_phone"
-                type="text"
-                placeholder="Telefone"
-                {...register('n_phone')}
-                onChange={(e) =>
-                  ((e.target as HTMLInputElement).value = Phone(
-                    (e.target as HTMLInputElement).value
-                  ))
-                }
-              />
-            </label>
-            {errors.n_phone && (
-              <small className="text-error">{errors.n_phone.message}</small>
-            )}
-          </div>
-          <div className={Style.inputEmail}>
-            <label htmlFor="n_email">
-              <input
-                type="email"
-                id="n_email"
-                placeholder="E-mail"
-                {...register('n_email')}
-              />
-
-              <button type="submit" disabled={disabled}>
-                {loaging ? 'Carregando' : 'Enviar'}
-              </button>
-            </label>
-            {errors.n_email && (
-              <small className="text-error">{errors.n_email.message}</small>
-            )}
-          </div>
-        </form>
-        <label htmlFor="termos" className={Style.newsletterPopUpTermosFlex}>
-          <input type="checkbox" id="termos" {...register('n_termos')} />
-          <p>
-            Li, e aceito as&nbsp;
-            <Link href="/politica-de-privacidade">
-              politicas de provacidade
-            </Link>
-            &nbsp;e&nbsp;
-            <Link href="/termos-de-uso">Termos e condições</Link>
-          </p>
-          {errors.n_termos && (
-            <small className="text-error">{errors.n_termos.message}</small>
-          )}
-        </label>
-      </section>
-      {modal && (
+      {type === 'modal' && isModel && (
         <Model.Root>
-          <Model.Body setOpen={() => setModal(!modal)}>
-            <Model.Title>
-              {viewSuccess && 'ENVIADO COM SUCESSO'}
-              {error && 'PREENCHA AS INFORMAÇÕES CORRETAMENTE'}
-            </Model.Title>
+          <Model.Body setOpen={() => setIsModal(!isModel)}>
             <Model.Content>
-              {viewSuccess && (
-                <div className={Style.newsletterPopUpTermos}>
-                  <p>
-                    Agradeçemos seu interesse. Logo entraremos em contato com
-                    novidades sobre nossos filmes.
-                  </p>
-                  <div className={Style.newsletterPopUpTermosFlex}>
-                    <button onClick={() => setModal(!modal)}>Fechar</button>
-                  </div>
-                </div>
-              )}
-              {error && (
-                <div className={Style.newsletterPopUpTermos}>
-                  <p>Preencha corretamnte as infomações</p>
-                  <div className={Style.newsletterPopUpTermosFlex}>
-                    <button onClick={() => setModal(!modal)}>Fechar</button>
-                  </div>
-                </div>
-              )}
+              <Form />
             </Model.Content>
+          </Model.Body>
+        </Model.Root>
+      )}
+      {type !== 'modal' && <Form />}
+      {modalState !== 'closed' && (
+        <Model.Root>
+          <Model.Body setOpen={() => dispatch({ type: 'closed' })}>
+            <Model.Title>
+              {modalState === 'success' && 'ENVIADO COM SUCESSO'}
+              {modalState === 'error' && 'PREENCHA AS INFORMAÇÕES CORRETAMENTE'}
+            </Model.Title>
+            <Model.Content>{renderModalContent()}</Model.Content>
           </Model.Body>
         </Model.Root>
       )}
