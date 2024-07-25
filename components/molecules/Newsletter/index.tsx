@@ -59,7 +59,7 @@ const Newsletter = ({
   title = true
 }: INewsletterProps) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [isModel, setIsModal] = useState<boolean>(true)
+  const [isModel, setIsModal] = useState<boolean>(false)
   const [modalState, dispatch] = useReducer(modalReducer, 'closed')
 
   useEffect(() => {
