@@ -26,23 +26,23 @@ interface ICardFilmeProps {
 }
 type TSlide = 'streaming' | 'lancamento' | 'catalogo'
 
-enum Status {
-  LANCAMENTO = 'lancamento',
-  STREAMING = 'streaming',
-  INATIVO = 'inativo',
-  PRODUCAO = 'producao',
-  POSPRODUCAO = 'pos-producao',
-  EMBREVE = 'embreve'
-}
+// enum Status {
+//   LANCAMENTO = 'lancamento',
+//   STREAMING = 'streaming',
+//   INATIVO = 'inativo',
+//   PRODUCAO = 'producao',
+//   POSPRODUCAO = 'pos-producao',
+//   EMBREVE = 'embreve'
+// }
 
-const statusCorrecoes: Record<Status, string> = {
-  [Status.LANCAMENTO]: 'Lançamento',
-  [Status.STREAMING]: 'Streaming',
-  [Status.INATIVO]: 'Inativo',
-  [Status.PRODUCAO]: 'Produção',
-  [Status.POSPRODUCAO]: 'Pós-Produção',
-  [Status.EMBREVE]: 'Em Breve'
-}
+// const statusCorrecoes: Record<Status, string> = {
+//   [Status.LANCAMENTO]: 'Lançamento',
+//   [Status.STREAMING]: 'Streaming',
+//   [Status.INATIVO]: 'Inativo',
+//   [Status.PRODUCAO]: 'Produção',
+//   [Status.POSPRODUCAO]: 'Pós-Produção',
+//   [Status.EMBREVE]: 'Em Breve'
+// }
 
 import 'swiper/css/navigation'
 import 'react-lazy-load-image-component/src/effects/blur.css'
@@ -108,12 +108,12 @@ const CardFilme = ({
     }
   }
 
-  const checkStatus = (status: string | undefined) => {
-    if (!status) return
-    const statusKey = status as Status
-    const statusCorrigido = statusCorrecoes[statusKey]
-    return statusCorrigido
-  }
+  // const checkStatus = (status: string | undefined) => {
+  //   if (!status) return
+  //   const statusKey = status as Status
+  //   const statusCorrigido = statusCorrecoes[statusKey]
+  //   return statusCorrigido
+  // }
 
   if (slide == 'lancamento') {
     return (
@@ -213,12 +213,12 @@ const CardFilme = ({
       <div key={data?.id} className={Style.CardFilme}>
         <Link href={`/${data?.slug}`}>
           <img src={data?.cover} alt={data?.title} width={300} height={200} />
-          <span
+          {/* <span
             className={Style.status}
             style={{ background: `${data?.color_status}` }}
           >
             {checkStatus(data?.status)}
-          </span>
+          </span> */}
         </Link>
         <h3>{data?.title}</h3>
       </div>
