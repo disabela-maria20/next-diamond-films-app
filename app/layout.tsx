@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: 'Home | Diamond Films',
     description: "Descubra os filmes mais recentes distribuídos pela Diamond Films Brasil. Confira os trailers, sinopses e datas de lançamento.",
     images: [{
-      url: '/img/share.png',
+      url: 'https://diamondfilms.com.br/img/share.png',
       width: 800,
       height: 600
     }],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: 'Home | Diamond Films',
     description: "Descubra os filmes mais recentes distribuídos pela Diamond Films Brasil. Confira os trailers, sinopses e datas de lançamento.",
     site: 'https://diamondfilms.com.br/',
-    images: '/img/share.png'
+    images: 'https://diamondfilms.com.br/img/share.png'
   },
   alternates: {
     canonical: 'http://diamondfilms.com.br'

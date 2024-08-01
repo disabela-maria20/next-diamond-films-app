@@ -26,7 +26,7 @@ export async function generateMetadata({
     openGraph: {
       title: filme?.movie.title,
       description: filme?.movie.shortSynopsis,
-      images: filme?.movie.bannerDesktop
+      images: `https://diamondfilms.com.br/` + filme?.movie.bannerDesktop
     }
   }
 }
