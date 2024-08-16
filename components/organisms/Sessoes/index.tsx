@@ -173,19 +173,25 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         const res = await getSession(filme.slug, cities)
         setSessoes(res)
       }
+      return
     }
     getFilmeSessoes()
   }, [filme.slug, cities, location])
 
   useEffect(() => {
     const getFilmeSessoes = async () => {
-      const res = await getSession(filme.slug, locationArea?.address.city)
-      setSessoes(res)
-      setFilteredSessions([res])
+      try {
+        const res = await getSession(filme.slug, locationArea?.address.city)
+
+        setSessoes(res)
+        setFilteredSessions([res])
+      } catch (e) {
+        return
+      }
     }
     getFilmeSessoes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locationArea?.address.city])
+  }, [locationArea])
 
   return (
     <section className={Style.areaSessao}>
