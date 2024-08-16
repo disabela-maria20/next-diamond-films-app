@@ -17,7 +17,6 @@ interface ISessoesProps {
 import { Loading } from '@/components/atoms'
 import { useLocationContext } from '@/components/molecules/Location/LocationContext'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
-import { useGtag } from '@/utils/lib/gtag'
 import { getLocation, getSession } from '@/utils/server/requests'
 import {
   ESTADOS,
