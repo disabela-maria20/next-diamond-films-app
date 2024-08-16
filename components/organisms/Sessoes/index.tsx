@@ -40,8 +40,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
 
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
 
-  const { dataLayerMovieTicket } = useGtag()
-
   const { location, loading, locationArea } = useLocationContext()
 
   const calculateDistance = (lat2: number, lon2: number) => {

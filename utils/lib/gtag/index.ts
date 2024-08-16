@@ -6,6 +6,7 @@ export const useGtag = () => {
   const cidade = typeof window !== 'undefined' ? Cookies.get('city') : null
 
   const dataLayerHome = (title: string, page_url: string) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'home',
       user_id_anonymous: id,
@@ -22,6 +23,7 @@ export const useGtag = () => {
     moviegenre: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'ficha_filme',
       city_id: cidade,
@@ -42,6 +44,7 @@ export const useGtag = () => {
     page_url: string,
     banner_click_position: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'banner_click',
       city_id: cidade,
@@ -65,6 +68,7 @@ export const useGtag = () => {
     theater_session: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'movie_tickets',
       city_id: cidade,
@@ -90,6 +94,7 @@ export const useGtag = () => {
     stream_name: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'movie_stream',
       city_id: cidade,
@@ -114,6 +119,7 @@ export const useGtag = () => {
     pagina_filme: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'newsletter_subscribe',
       city_id: cidade,
@@ -138,6 +144,7 @@ export const useGtag = () => {
     pagina_filme: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'movie_subscribe',
       city_id: cidade,
@@ -155,6 +162,7 @@ export const useGtag = () => {
   }
 
   const dataLayerContato = (title: string, page_url: string) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'contato',
       city_id: cidade,
@@ -172,6 +180,7 @@ export const useGtag = () => {
     moviegenre: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'movie_select',
       city_id: cidade,
@@ -193,6 +202,7 @@ export const useGtag = () => {
     moviegenre: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'movie_filter',
       city_id: cidade,
@@ -214,6 +224,7 @@ export const useGtag = () => {
     pagina_filme: string,
     movieid: number
   ) => {
+    if (!window.dataLayer) return
     window.dataLayer?.push({
       event: 'play_trailer',
       city_id: cidade,
@@ -228,7 +239,7 @@ export const useGtag = () => {
       moviegenre: moviegenre
     })
   }
-
+  if (!window.dataLayer) return
   return {
     dataLayerHome,
     dataLayerFichafilme,
