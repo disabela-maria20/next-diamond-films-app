@@ -17,6 +17,7 @@ interface ISessoesProps {
 import { Loading } from '@/components/atoms'
 import { useLocationContext } from '@/components/molecules/Location/LocationContext'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
+import { useGtag } from '@/utils/lib/gtag'
 import { getLocation, getSession } from '@/utils/server/requests'
 import {
   ESTADOS,
@@ -38,6 +39,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   const [loadings, setLoadings] = useState<boolean>(false)
 
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
+
+  const { dataLayerMovieTicket } = useGtag()
 
   const { location, loading, locationArea } = useLocationContext()
 
