@@ -4,10 +4,26 @@
 	.gridSessoes {
 		@include media(lg) {
 			display: grid;
-			grid-template-columns: 1fr 2fr;
-			grid-auto-rows: 550px;
+			grid-template-columns: 1fr 1.4fr;
+			grid-auto-rows: 555px;
 		}
 
+		@include media(xl) {
+			display: grid;
+			grid-template-columns: 1fr 2.3fr;
+			grid-auto-rows: 513px;
+		}
+
+		@include media(xl) {
+			display: grid;
+			grid-template-columns: 1fr 2.3fr;
+			grid-auto-rows: 513px;
+		}
+		@include media(xxl) {
+			display: grid;
+			grid-template-columns: 1fr 3fr;
+			grid-auto-rows: 513px;
+		}
 		.SessoesPoster {
 			display: none;
 			object-fit: contain;
@@ -43,15 +59,18 @@
 		align-items: center;
 		gap: 5px;
 		padding: 0 5px;
+
 		@include media(lg) {
 			padding: 0 20px;
 
 		}
+
 		background-color: $primary-lingh-color;
 		// position: relative;
 		// top: -25px;
 
-		input, select {
+		input,
+		select {
 			width: 100%;
 			@include inputNewsletter;
 
@@ -106,7 +125,11 @@
 	overflow: auto;
 
 	@include media(lg) {
-		height: 65%;
+		height: 62%;
+	}
+
+	@include media(xxl) {
+		height: 61%;
 	}
 
 	.flexTitle {
@@ -192,10 +215,10 @@
 	}
 }
 
-.sessoesVazio{
+.sessoesVazio {
 	height: calc(100% - 70px);
 
-	p{
+	p {
 		font-size: 1.6rem;
 		line-height: 2.6rem;
 		margin: 20px 0;
