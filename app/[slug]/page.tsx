@@ -1,11 +1,12 @@
 import { Metadata } from 'next'
-import { Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 
 import { Loading } from '@/components/atoms'
 import { Footer } from '@/components/molecules'
 import { Header } from '@/components/organisms'
-import { Filme } from '@/components/templetes'
 import { getCatalogoFilme, getHome } from '@/utils/server/requests'
+
+const Filme = lazy(() => import('@/components/templetes/Filme'))
 
 type Params = {
   params: {
