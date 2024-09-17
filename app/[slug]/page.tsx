@@ -1,12 +1,16 @@
 import { Metadata } from 'next'
-import { lazy, Suspense } from 'react'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 
 import { Loading } from '@/components/atoms'
 import { Footer } from '@/components/molecules'
 import { Header } from '@/components/organisms'
 import { getCatalogoFilme, getHome } from '@/utils/server/requests'
 
-const Filme = lazy(() => import('@/components/templetes/Filme'))
+const Filme = dynamic(() => import('@/components/templetes/Filme'), {
+  ssr: false,
+  loading: () => <Loading altura={true} />
+})
 
 type Params = {
   params: {
