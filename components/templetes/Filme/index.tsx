@@ -60,12 +60,19 @@ const Filme = (data: IFilmeProps) => {
   const filme = data.movie?.movie
   //const streaming = filme.streaming.map((data) => data.platform).join(',')
   const isStreaming = filme.status == EStatus.STREAMING
+  const {
+    formatMesmaSemana,
+    formatPassouUmaSemanaDesdeData,
+    formatfaltaUmaSemanaParaDataMarcada
+  } = useFormatarData()
 
   const [imageIndex, setImageIndex] = useState<number>(0)
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [saibaMais, setSaibaMais] = useState<boolean>(!filme.hasSession)
+  const [saibaMais, setSaibaMais] = useState<boolean>(
+    formatfaltaUmaSemanaParaDataMarcada(filme.releasedate) && filme.hasSession
+  )
 
   const handlePrevImage = () => {
     setImageIndex((prevIndex) =>
@@ -78,8 +85,6 @@ const Filme = (data: IFilmeProps) => {
       prevIndex === filme.images.length - 1 ? 0 : prevIndex + 1
     )
   }
-  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
-    useFormatarData()
 
   const { isMobile, isLoading } = useIsMobile()
   //const formatarData = useFormatarData()
@@ -303,7 +308,7 @@ const Filme = (data: IFilmeProps) => {
             </button>
           )}
 
-          {saibaMais && (
+          {!saibaMais && (
             <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
                 <div className={Style.areaFlexPoster} id="saibamais">
