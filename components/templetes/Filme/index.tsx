@@ -71,7 +71,8 @@ const Filme = (data: IFilmeProps) => {
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [saibaMais, setSaibaMais] = useState<boolean>(
-    formatfaltaUmaSemanaParaDataMarcada(filme.releasedate) && filme.hasSession
+    formatfaltaUmaSemanaParaDataMarcada(filme.releasedate)
+    // && filme.hasSession
   )
 
   const handlePrevImage = () => {
