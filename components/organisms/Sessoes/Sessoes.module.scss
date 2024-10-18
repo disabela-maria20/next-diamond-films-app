@@ -9,21 +9,10 @@
 		}
 
 		@include media(xl) {
-			display: grid;
-			grid-template-columns: 1fr 2.3fr;
-			grid-auto-rows: 513px;
+			display: flex;
+			height: 510px;
 		}
 
-		@include media(xl) {
-			display: grid;
-			grid-template-columns: 1fr 2.3fr;
-			grid-auto-rows: 513px;
-		}
-		@include media(xxl) {
-			display: grid;
-			grid-template-columns: 1fr 3fr;
-			grid-auto-rows: 513px;
-		}
 		.SessoesPoster {
 			display: none;
 			object-fit: contain;
@@ -31,6 +20,7 @@
 			height: 100%;
 
 			@include media(lg) {
+				width: 30%;
 				display: block;
 			}
 		}
@@ -53,6 +43,11 @@
 
 .areaPesquisa {
 	padding: 15px;
+
+	@include media(lg) {
+		position: relative;
+		width: 70%;
+	}
 
 	.flexAreaPesquisa {
 		display: flex;
@@ -125,12 +120,12 @@
 	overflow: auto;
 
 	@include media(lg) {
-		height: 62%;
+		height: 59%;
 	}
 
-	@include media(xxl) {
-		height: 61%;
-	}
+	// @include media(xxl) {
+	// 	height: 61%;
+	// }
 
 	.flexTitle {
 		display: grid;

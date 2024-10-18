@@ -26,24 +26,6 @@ interface ICardFilmeProps {
 }
 type TSlide = 'streaming' | 'lancamento' | 'catalogo'
 
-// enum Status {
-//   LANCAMENTO = 'lancamento',
-//   STREAMING = 'streaming',
-//   INATIVO = 'inativo',
-//   PRODUCAO = 'producao',
-//   POSPRODUCAO = 'pos-producao',
-//   EMBREVE = 'embreve'
-// }
-
-// const statusCorrecoes: Record<Status, string> = {
-//   [Status.LANCAMENTO]: 'Lançamento',
-//   [Status.STREAMING]: 'Streaming',
-//   [Status.INATIVO]: 'Inativo',
-//   [Status.PRODUCAO]: 'Produção',
-//   [Status.POSPRODUCAO]: 'Pós-Produção',
-//   [Status.EMBREVE]: 'Em Breve'
-// }
-
 import 'swiper/css/navigation'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
@@ -107,13 +89,6 @@ const CardFilme = ({
       }
     }
   }
-
-  // const checkStatus = (status: string | undefined) => {
-  //   if (!status) return
-  //   const statusKey = status as Status
-  //   const statusCorrigido = statusCorrecoes[statusKey]
-  //   return statusCorrigido
-  // }
 
   if (slide == 'lancamento') {
     return (

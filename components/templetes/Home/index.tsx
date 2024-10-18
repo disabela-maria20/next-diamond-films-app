@@ -98,26 +98,6 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             </span>
           </Slide.Title>
           <CardFilme listaFilmes={listaFilmes} />
-          {/* <Slide.Title className={Style.slideTitle}>
-              ASSISTA ONDE E QUANDO QUISER
-              <span>Nossos filmes disponíveis nos streamings.</span>
-            </Slide.Title>
-            <Slide.Content
-              swiperOptions={filmesStreaming}
-              className={Style.slideFilmehomePromo}
-            >
-              {listaFilmes?.streaming?.map((data) => (
-                <div key={data.id} className={Style.filme}>
-                  <Link href={`/catalogo/${data.slug}`}>
-                    <img src={data.cover} />
-                  </Link>
-                  <h2>{data.title}</h2>
-                  <a href={data.trailer} className={Style.streaming}>
-                    <span>Assista Agora</span>
-                  </a>
-                </div>
-              ))}
-            </Slide.Content> */}
           {true && (
             <>
               <Slide.Title className={Style.slideTitle}>CATÁLOGO</Slide.Title>

@@ -10,11 +10,19 @@ const useFilmeTextStatus = () => {
   } = useFormatarData()
 
   const statusTextData = (filmeLista: IFilmeResponse) => {
+    console.log('====================================')
+    console.log(
+      filmeLista.title,
+      formatfaltaUmaSemanaParaDataMarcada(filmeLista.releasedate)
+    )
+    console.log('====================================')
     if (
       filmeLista.hasSession &&
       formatfaltaUmaSemanaParaDataMarcada(filmeLista.releasedate)
-    )
+    ) {
       return 'Em pré-venda'
+    }
+
     if (filmeLista.streaming.length > 0) return 'Em streaming'
     if (filmeLista.hasSession) return 'Hoje nos cinemas'
     if (

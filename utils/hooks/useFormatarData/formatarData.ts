@@ -104,12 +104,11 @@ export const useFormatarData = () => {
 
     const diffEmMilissegundos: number =
       dataMarcada.getTime() - dataAtual.getTime()
-
     const diffEmDias: number = Math.floor(
       diffEmMilissegundos / (1000 * 60 * 60 * 24)
     )
 
-    return diffEmDias >= 0 && diffEmDias <= 7
+    return diffEmDias > 0
   }
 
   function formatPassouUmaSemanaDesdeData(dataString: string): boolean {
