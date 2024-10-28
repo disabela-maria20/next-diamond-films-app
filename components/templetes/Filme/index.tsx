@@ -53,7 +53,7 @@ function converterParaHorasEMinutos(totalMinutos: number) {
   const horas = Math.floor(totalMinutos / 60)
   const minutos = totalMinutos % 60
 
-  return `${horas}h e ${minutos}min`
+  return `${horas}h${minutos}min`
 }
 
 const Filme = (data: IFilmeProps) => {
