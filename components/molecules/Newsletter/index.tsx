@@ -1,1 +1,266 @@
-/* eslint-disable no-irregular-whitespace *//* eslint-disable @typescript-eslint/no-unused-vars */'use client'import Link from 'next/link'import { useEffect, useReducer, useState } from 'react'import { useForm } from 'react-hook-form'import { usePathname } from 'next/navigation'import Style from './Newsletter.module.scss'import { NewsletterFormSchema } from './Newsletter.schema'import { Phone } from '@/utils/hooks/useMask'import { useGtag } from '@/utils/lib/gtag'import { postNewsletter } from '@/utils/server/requests'import { IFilmeResponse } from '@/utils/server/types'import { zodResolver as ResolverZod } from '@hookform/resolvers/zod'import { AxiosError } from 'axios'import Cookies from 'js-cookie'import { z } from 'zod'import { Model } from '..'export type INewsletterForm = z.infer<typeof NewsletterFormSchema>type TypeArea = 'filme' | 'modal' | 'sessões' | 'home'interface INewsletterProps {  isBg?: boolean  isHorrizontal?: boolean  filmes?: IFilmeResponse  type?: TypeArea  title?: boolean}type ModalState = 'closed' | 'success' | 'error'interface ModalAction {  type: ModalState}const modalReducer = (state: ModalState, action: ModalAction): ModalState => {  switch (action.type) {    case 'success':    case 'error':      return action.type    case 'closed':      return 'closed'    default:      return state  }}const Newsletter = ({  isBg,  isHorrizontal,  filmes,  type = 'filme',  title = true}: INewsletterProps) => {  const [loading, setLoading] = useState<boolean>(false)  const [isModel, setIsModal] = useState<boolean>(false)  const [modalState, dispatch] = useReducer(modalReducer, 'closed')  useEffect(() => {    setInterval(() => {      setIsModal(true)    }, 90000)  }, [])  const { dataLayerNewsletter, dataLayerMovieSubscribe } = useGtag()  const {    register,    handleSubmit,    reset,    formState: { errors, disabled }  } = useForm<INewsletterForm>({    resolver: ResolverZod(NewsletterFormSchema)  })  const pathname = usePathname()  const onSubmit = async (data: INewsletterForm) => {    if (!data.n_termos) return    setLoading(true)    try {      const res = await postNewsletter(        data.n_name,        data.n_email,        data.n_phone,        pathname      )      if (res.data.done) {        Cookies.set('formNewsletter', 'true')        reset()        if (filmes) {          dataLayerNewsletter(            filmes?.title,            filmes?.slug,            filmes?.originalTitle,            filmes?.genre,            'hub',            'Hub do Filme',            Number(filmes.idVibezzMovie)          )          dataLayerMovieSubscribe(            filmes?.title,            filmes?.slug,            filmes?.originalTitle,            filmes?.genre,            'hub',            'Hub do Filme',            Number(filmes.idVibezzMovie)          )        }        setIsModal(false)        setTimeout(() => dispatch({ type: 'success' }), 300)      } else {        dispatch({ type: 'error' })      }    } catch (error) {      const err = error as AxiosError      if (err.response?.status !== 200) {        dispatch({ type: 'error' })      }    } finally {      setLoading(false)    }  }  const renderSuccessContent = () => (    <div className={Style.newsletterPopUpTermos}>      <p>        Agradecemos seu interesse. Logo entraremos em contato com novidades        sobre nossos filmes.      </p>      <div className={Style.newsletterPopUpTermosFlex}>        <button onClick={() => dispatch({ type: 'closed' })}>Fechar</button>      </div>    </div>  )  const renderErrorContent = () => (    <div className={Style.newsletterPopUpTermos}>      <p>Preencha corretamente as informações</p>      <div className={Style.newsletterPopUpTermosFlex}>        <button onClick={() => dispatch({ type: 'closed' })}>Fechar</button>      </div>    </div>  )  const renderModalContent = () => {    switch (modalState) {      case 'success':        return renderSuccessContent()      case 'error':        return renderErrorContent()      default:        return null    }  }  const Form = () => (    <section      className={`${Style.newsletter} ${isBg ? Style.newsletterBg : ''}`}    >      <form        onSubmit={handleSubmit(onSubmit)}        className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}      >        <div className={Style.text}>          {title && <h2>Você ama cinema?</h2>}          Preencha seus dados e fique por dentro das novidades da Diamond Films        </div>        <div className={Style.inputNome}>          <label htmlFor="">            <input              type="text"              placeholder="Nome"              id="n_name"              {...register('n_name')}            />          </label>          {errors.n_name && (            <small className="text-error">{errors.n_name.message}</small>          )}        </div>        <div className={Style.inputTelefone}>          <label htmlFor="n_phone">            <input              id="n_phone"              type="text"              placeholder="Telefone"              {...register('n_phone')}              onChange={(e) =>                ((e.target as HTMLInputElement).value = Phone(                  (e.target as HTMLInputElement).value                ))              }            />          </label>          {errors.n_phone && (            <small className="text-error">{errors.n_phone.message}</small>          )}        </div>        <div className={Style.inputEmail}>          <label htmlFor="n_email">            <input              type="email"              id="n_email"              placeholder="E-mail"              {...register('n_email')}            />            <button type="submit" disabled={disabled}>              {loading ? 'Carregando' : 'Enviar'}            </button>          </label>          {errors.n_email && (            <small className="text-error">{errors.n_email.message}</small>          )}        </div>      </form>      <label htmlFor="termos" className={Style.newsletterPopUpTermosFlex}>        <input type="checkbox" id="termos" {...register('n_termos')} />        <p>          Li, e aceito as&nbsp;          <Link href="/politica-de-privacidade">políticas de privacidade</Link>          &nbsp;e&nbsp;          <Link href="/termos-de-uso">Termos e condições</Link>        </p>        {errors.n_termos && (          <small className="text-error">{errors.n_termos.message}</small>        )}      </label>    </section>  )  return (    <>      {type === 'modal' && isModel && (        <Model.Root>          <Model.Body setOpen={() => setIsModal(!isModel)}>            <Model.Content>              <Form />            </Model.Content>          </Model.Body>        </Model.Root>      )}      {type !== 'modal' && <Form />}      {modalState !== 'closed' && (        <Model.Root>          <Model.Body setOpen={() => dispatch({ type: 'closed' })}>            <Model.Title>              {modalState === 'success' && 'ENVIADO COM SUCESSO'}              {modalState === 'error' && 'PREENCHA AS INFORMAÇÕES CORRETAMENTE'}            </Model.Title>            <Model.Content>{renderModalContent()}</Model.Content>          </Model.Body>        </Model.Root>      )}    </>  )}export default Newsletter
+/* eslint-disable no-irregular-whitespace */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+'use client'
+
+import Link from 'next/link'
+import { useEffect, useReducer, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { usePathname } from 'next/navigation'
+
+import Style from './Newsletter.module.scss'
+
+import { NewsletterFormSchema } from './Newsletter.schema'
+
+import { Phone } from '@/utils/hooks/useMask'
+import { useGtag } from '@/utils/lib/gtag'
+import { postNewsletter } from '@/utils/server/requests'
+import { IFilmeResponse } from '@/utils/server/types'
+import { zodResolver as ResolverZod } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
+import Cookies from 'js-cookie'
+import { z } from 'zod'
+
+import { Model } from '..'
+
+export type INewsletterForm = z.infer<typeof NewsletterFormSchema>
+type TypeArea = 'filme' | 'modal' | 'sessões' | 'home'
+
+interface INewsletterProps {
+  isBg?: boolean
+  isHorrizontal?: boolean
+  filmes?: IFilmeResponse
+  type?: TypeArea
+  title?: boolean
+}
+
+type ModalState = 'closed' | 'success' | 'error'
+
+interface ModalAction {
+  type: ModalState
+}
+
+const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
+  switch (action.type) {
+    case 'success':
+    case 'error':
+      return action.type
+    case 'closed':
+      return 'closed'
+    default:
+      return state
+  }
+}
+
+const Newsletter = ({
+  isBg,
+  isHorrizontal,
+  filmes,
+  type = 'filme',
+  title = true,
+}: INewsletterProps) => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const [isModel, setIsModal] = useState<boolean>(false)
+  const [modalState, dispatch] = useReducer(modalReducer, 'closed')
+
+  useEffect(() => {
+    setInterval(() => {
+      setIsModal(true)
+    }, 90000)
+  }, [])
+
+  const { dataLayerNewsletter, dataLayerMovieSubscribe } = useGtag()
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, disabled },
+  } = useForm<INewsletterForm>({
+    resolver: ResolverZod(NewsletterFormSchema),
+  })
+
+  const pathname = usePathname()
+
+  const onSubmit = async (data: INewsletterForm) => {
+    if (!data.n_termos) return
+    setLoading(true)
+    try {
+      const res = await postNewsletter(
+        data.n_name,
+        data.n_email,
+        data.n_phone,
+        pathname
+      )
+      if (res.data.done) {
+        Cookies.set('formNewsletter', 'true')
+        reset()
+        if (filmes) {
+          dataLayerNewsletter(
+            filmes?.title,
+            filmes?.slug,
+            filmes?.originalTitle,
+            filmes?.genre,
+            'hub',
+            'Hub do Filme',
+            Number(filmes.idVibezzMovie)
+          )
+          dataLayerMovieSubscribe(
+            filmes?.title,
+            filmes?.slug,
+            filmes?.originalTitle,
+            filmes?.genre,
+            'hub',
+            'Hub do Filme',
+            Number(filmes.idVibezzMovie)
+          )
+        }
+        setIsModal(false)
+        setTimeout(() => dispatch({ type: 'success' }), 300)
+      } else {
+        dispatch({ type: 'error' })
+      }
+    } catch (error) {
+      const err = error as AxiosError
+      if (err.response?.status !== 200) {
+        dispatch({ type: 'error' })
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const renderSuccessContent = () => (
+    <div className={Style.newsletterPopUpTermos}>
+      <p>
+        Agradecemos seu interesse. Logo entraremos em contato com novidades
+        sobre nossos filmes.
+      </p>
+      <div className={Style.newsletterPopUpTermosFlex}>
+        <button onClick={() => dispatch({ type: 'closed' })}>Fechar</button>
+      </div>
+    </div>
+  )
+
+  const renderErrorContent = () => (
+    <div className={Style.newsletterPopUpTermos}>
+      <p>Preencha corretamente as informações</p>
+      <div className={Style.newsletterPopUpTermosFlex}>
+        <button onClick={() => dispatch({ type: 'closed' })}>Fechar</button>
+      </div>
+    </div>
+  )
+
+  const renderModalContent = () => {
+    switch (modalState) {
+      case 'success':
+        return renderSuccessContent()
+      case 'error':
+        return renderErrorContent()
+      default:
+        return null
+    }
+  }
+
+  const Form = () => (
+    <section
+      className={`${Style.newsletter} ${isBg ? Style.newsletterBg : ''}`}
+    >
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={`${Style.gridNewsletter} ${isHorrizontal ? Style.gridNewsletterHorrizontal : ''}`}
+      >
+        <div className={Style.text}>
+          {title && <h2>Você ama cinema?</h2>}
+          Preencha seus dados e fique por dentro das novidades da Diamond Films
+        </div>
+        <div className={Style.inputNome}>
+          <label htmlFor="">
+            <input
+              type="text"
+              placeholder="Nome"
+              id="n_name"
+              {...register('n_name')}
+            />
+          </label>
+          {errors.n_name && (
+            <small className="text-error">{errors.n_name.message}</small>
+          )}
+        </div>
+        <div className={Style.inputTelefone}>
+          <label htmlFor="n_phone">
+            <input
+              id="n_phone"
+              type="text"
+              placeholder="Telefone"
+              {...register('n_phone')}
+              onChange={(e) =>
+                ((e.target as HTMLInputElement).value = Phone(
+                  (e.target as HTMLInputElement).value
+                ))
+              }
+            />
+          </label>
+          {errors.n_phone && (
+            <small className="text-error">{errors.n_phone.message}</small>
+          )}
+        </div>
+        <div className={Style.inputEmail}>
+          <label htmlFor="n_email">
+            <input
+              type="email"
+              id="n_email"
+              placeholder="E-mail"
+              {...register('n_email')}
+            />
+            <button type="submit" disabled={disabled}>
+              {loading ? 'Carregando' : 'Enviar'}
+            </button>
+          </label>
+          {errors.n_email && (
+            <small className="text-error">{errors.n_email.message}</small>
+          )}
+        </div>
+      </form>
+      <label htmlFor="termos" className={Style.newsletterPopUpTermosFlex}>
+        <input type="checkbox" id="termos" {...register('n_termos')} />
+        <p>
+          Li, e aceito as&nbsp;
+          <Link href="/politica-de-privacidade">políticas de privacidade</Link>
+          &nbsp;e&nbsp;
+          <Link href="/termos-de-uso">Termos e condições</Link>
+        </p>
+        {errors.n_termos && (
+          <small className="text-error">{errors.n_termos.message}</small>
+        )}
+      </label>
+    </section>
+  )
+
+  return (
+    <>
+      {type === 'modal' && isModel && (
+        <Model.Root>
+          <Model.Body setOpen={() => setIsModal(!isModel)}>
+            <Model.Content>
+              <Form />
+            </Model.Content>
+          </Model.Body>
+        </Model.Root>
+      )}
+      {type !== 'modal' && <Form />}
+      {modalState !== 'closed' && (
+        <Model.Root>
+          <Model.Body setOpen={() => dispatch({ type: 'closed' })}>
+            <Model.Title>
+              {modalState === 'success' && 'ENVIADO COM SUCESSO'}
+              {modalState === 'error' && 'PREENCHA AS INFORMAÇÕES CORRETAMENTE'}
+            </Model.Title>
+            <Model.Content>{renderModalContent()}</Model.Content>
+          </Model.Body>
+        </Model.Root>
+      )}
+    </>
+  )
+}
+
+export default Newsletter

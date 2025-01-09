@@ -1,1 +1,34 @@
-[  {    "bannerDesktop": "/img/poster/o-cara-da-piscina-desktop.png",    "bannerMobile": "/img/poster/o-cara-da-piscina-mobile.png",    "slug": "/ocaradapiscina",    "title": "O CARA DA PISCINA",    "id": 1,    "color": "#fff"  },  {    "bannerDesktop": "/img/poster/FuriaPrimitivaDesktop.png",    "bannerMobile": "/img/poster/FuriaPrimitivaMobile.png",    "slug": "/furiaprimitiva",    "title": "FÚRIA PRIMITIVA",    "id": 2,    "color": "#fff"  },  {    "bannerDesktop": "/img/poster/ImaculadaDesktop.png",    "bannerMobile": "/img/poster/ImaculadaMobile.png",    "slug": "/imaculada",    "title": "IMACULADA",    "id": 3,    "color": "#fff"  },  {    "bannerDesktop": "/img/poster/AssassinoPorAcasoDesktop.png",    "bannerMobile": "/img/poster/AssassinoPorAcasoMobile.png",    "slug": "/assassinoporacaso",    "title": "ASSASSINO POR ACASO",    "id": 4,    "color": "#fff"  }]
+[
+  {
+    "bannerDesktop": "/img/poster/o-cara-da-piscina-desktop.png",
+    "bannerMobile": "/img/poster/o-cara-da-piscina-mobile.png",
+    "slug": "/ocaradapiscina",
+    "title": "O CARA DA PISCINA",
+    "id": 1,
+    "color": "#fff"
+  },
+  {
+    "bannerDesktop": "/img/poster/FuriaPrimitivaDesktop.png",
+    "bannerMobile": "/img/poster/FuriaPrimitivaMobile.png",
+    "slug": "/furiaprimitiva",
+    "title": "FÚRIA PRIMITIVA",
+    "id": 2,
+    "color": "#fff"
+  },
+  {
+    "bannerDesktop": "/img/poster/ImaculadaDesktop.png",
+    "bannerMobile": "/img/poster/ImaculadaMobile.png",
+    "slug": "/imaculada",
+    "title": "IMACULADA",
+    "id": 3,
+    "color": "#fff"
+  },
+  {
+    "bannerDesktop": "/img/poster/AssassinoPorAcasoDesktop.png",
+    "bannerMobile": "/img/poster/AssassinoPorAcasoMobile.png",
+    "slug": "/assassinoporacaso",
+    "title": "ASSASSINO POR ACASO",
+    "id": 4,
+    "color": "#fff"
+  }
+]

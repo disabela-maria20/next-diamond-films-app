@@ -1,1 +1,7 @@
-{  "editor.formatOnSave": false,  "editor.tabSize": 2,  "editor.wordWrap": "off",  "editor.codeActionsOnSave": {    "source.fixAll.eslint": "explicit"  },  "CodeGPT.apiKey": "CodeGPT Plus Beta"}
+{
+  "editor.formatOnSave": false,
+  "files.trimTrailingWhitespace": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
+}
