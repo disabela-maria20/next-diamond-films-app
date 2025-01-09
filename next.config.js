@@ -18,15 +18,17 @@ const nextConfig = {
   },
   reactStrictMode: false,
   output: 'export',
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/codigolonglegs',
-  //       destination: '/',
-  //       permanent: false
-  //     }
-  //   ]
-  // }
+  experimental: {
+    dynamicIO: true,
+    cacheLife: {
+      images: {
+        stale: 60 * 60 * 24,
+        revalidate: 60 * 60 * 24,
+        expire: 60 * 60 * 24 * 30,
+      },
+    },
+  },
+
   // distDir: 'build',
   // trailingSlash: true
 }

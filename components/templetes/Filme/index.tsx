@@ -76,11 +76,9 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
-  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
-    useFormatarData()
+  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } = useFormatarData()
   const { formatarData } = useFormatarData()
-  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
-    useGtag()
+  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } = useGtag()
 
   const router = useRouter()
   const filme = data.movie?.movie
@@ -116,10 +114,8 @@ const Filme = (data: IFilmeProps) => {
 
   const viewSaibaMais = useCallback(() => {
     console.log('teste')
-
     setSaibaMais((prev) => !prev)
-    router.push('#saibamais', { scroll: true })
-  }, [router])
+  }, [])
 
   const handlePrevImage = () => {
     setImageIndex((prevIndex) =>

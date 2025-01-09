@@ -1,16 +1,13 @@
 import { Metadata } from 'next'
-import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+
+import { Suspense, lazy } from 'react'
 
 import { Loading } from '@/components/atoms'
 import { Footer } from '@/components/molecules'
 import { Header } from '@/components/organisms'
 import { getHome } from '@/utils/server/requests'
 
-const Catalogo = dynamic(() => import('@/components/templetes/Catalogo'), {
-  ssr: false,
-  loading: () => <Loading altura={true} />,
-})
+const Catalogo = lazy(() => import('@/components/templetes/Catalogo'))
 
 export const metadata: Metadata = {
   title: 'Filmes | Diamond Films',
