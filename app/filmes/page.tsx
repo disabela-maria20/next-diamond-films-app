@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-
 import { Suspense, lazy } from 'react'
 
 import { Loading } from '@/components/atoms'

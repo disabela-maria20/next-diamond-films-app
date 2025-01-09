@@ -50,6 +50,15 @@
         }
       }
     ],
-    "prettier/prettier": ["error"]
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "crlf",
+        "trailingComma": "none",
+        "semi": false,
+        "singleQuote": true,
+        "tabWidth": 2
+      }
+    ]
   }
 }
