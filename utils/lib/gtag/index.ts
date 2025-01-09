@@ -12,7 +12,7 @@ export const useGtag = () => {
       city_id: cidade,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
-      property_title: 'Site',
+      property_title: 'Site'
     })
   }
   const dataLayerFichafilme = (
@@ -33,7 +33,7 @@ export const useGtag = () => {
       moviename: title,
       moviename_original: moviename_original,
       movieid: Number(movieid),
-      moviegenre: moviegenre,
+      moviegenre: moviegenre
     })
   }
 
@@ -51,7 +51,7 @@ export const useGtag = () => {
       property_title: 'Site',
       banner_click_page: 'home',
       banner_click_content: 'Banner Filme: ' + title,
-      banner_click_position: `${banner_click_position}`,
+      banner_click_position: `${banner_click_position}`
     })
   }
 
@@ -78,7 +78,7 @@ export const useGtag = () => {
       moviegenre: moviegenre,
       theater_exhibitor: theater_exhibitor,
       theater_id: theater_id,
-      theater_session: theater_session,
+      theater_session: theater_session
     })
   }
 
@@ -101,7 +101,7 @@ export const useGtag = () => {
       moviename_original: moviename_original,
       movieid: Number(movieid),
       moviegenre: moviegenre,
-      stream_name: stream_name,
+      stream_name: stream_name
     })
   }
 
@@ -126,7 +126,7 @@ export const useGtag = () => {
       moviename_original: moviename_original,
       movieid: Number(movieid),
       moviegenre: moviegenre,
-      subscribe_location: subscribe_location,
+      subscribe_location: subscribe_location
     })
   }
   const dataLayerMovieSubscribe = (
@@ -150,7 +150,7 @@ export const useGtag = () => {
       moviename_original: moviename_original,
       movieid: Number(movieid),
       moviegenre: moviegenre,
-      subscribe_location: subscribe_location,
+      subscribe_location: subscribe_location
     })
   }
 
@@ -161,7 +161,7 @@ export const useGtag = () => {
       user_id_anonymous: id,
       page_url: 'https://diamondfilms.com.br/' + page_url,
       page_title: title,
-      property_title: 'Site',
+      property_title: 'Site'
     })
   }
 
@@ -182,7 +182,7 @@ export const useGtag = () => {
       moviename: title,
       moviename_original: moviename_original,
       movieid: Number(movieid),
-      moviegenre: moviegenre,
+      moviegenre: moviegenre
     })
   }
 
@@ -203,7 +203,7 @@ export const useGtag = () => {
       moviename: title,
       moviename_original: moviename_original,
       movieid: Number(movieid),
-      moviegenre: moviegenre,
+      moviegenre: moviegenre
     })
   }
   const dataLayerPlayTrailer = (
@@ -225,7 +225,7 @@ export const useGtag = () => {
       moviename: title,
       moviename_original: moviename_original,
       movieid: Number(movieid),
-      moviegenre: moviegenre,
+      moviegenre: moviegenre
     })
   }
 
@@ -240,6 +240,6 @@ export const useGtag = () => {
     dataLayerContato,
     dataLayerMovieSelect,
     dataLayerPlayTrailer,
-    dataLayerMovieFilter,
+    dataLayerMovieFilter
   }
 }

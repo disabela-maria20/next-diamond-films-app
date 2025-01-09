@@ -22,7 +22,7 @@ export const NewsletterFormSchema = z.object({
     .refine(
       (value: string) => /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/.test(value),
       {
-        message: 'Endereço de e-mail invalido',
+        message: 'Endereço de e-mail invalido'
       }
     ),
   n_phone: z
@@ -30,6 +30,6 @@ export const NewsletterFormSchema = z.object({
     .min(11, { message: 'Número de telefone invalido' })
     .nonempty('Telefone é obrigatorio'),
   n_termos: z.boolean().refine((val) => val === true, {
-    message: 'Você deve concordar com os termos e condições.',
-  }),
+    message: 'Você deve concordar com os termos e condições.'
+  })
 })

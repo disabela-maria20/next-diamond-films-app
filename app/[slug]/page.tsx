@@ -20,7 +20,7 @@ interface ICatalogoFilmeProps {
   slug: string
 }
 export async function generateMetadata({
-  params: { slug },
+  params: { slug }
 }: Params): Promise<Metadata> {
   const filme = await getCatalogoFilme(slug)
   return {
@@ -29,8 +29,8 @@ export async function generateMetadata({
     openGraph: {
       title: filme?.movie.title,
       description: filme?.movie.shortSynopsis,
-      images: `https://diamondfilms.com.br/` + filme?.movie.bannerDesktop,
-    },
+      images: `https://diamondfilms.com.br/` + filme?.movie.bannerDesktop
+    }
   }
 }
 
@@ -52,13 +52,13 @@ export async function generateStaticParams() {
   const posts = await getHome()
   const lancamento: ICatalogoFilmeProps[] = posts.releases.map(
     (post: { slug: string }) => ({
-      slug: post.slug,
+      slug: post.slug
     })
   )
 
   const streaming: ICatalogoFilmeProps[] = posts.streaming.map(
     (post: { slug: string }) => ({
-      slug: post.slug,
+      slug: post.slug
     })
   )
 

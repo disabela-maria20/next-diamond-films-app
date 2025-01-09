@@ -6,15 +6,15 @@ const path = require('path')
 const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles', 'sass')],
-    prependData: `@import 'abstracts/_index.scss';`,
+    prependData: `@import 'abstracts/_index.scss';`
   },
   env: {
     API_TOKEM: process.env.API_TOKEN,
-    API_URL: process.env.API_URL,
+    API_URL: process.env.API_URL
   },
   compiler: {
     styledComponents: true,
-    removeConsole: false,
+    removeConsole: false
   },
   reactStrictMode: false,
   output: 'export',
@@ -24,10 +24,10 @@ const nextConfig = {
       images: {
         stale: 60 * 60 * 24,
         revalidate: 60 * 60 * 24,
-        expire: 60 * 60 * 24 * 30,
-      },
-    },
-  },
+        expire: 60 * 60 * 24 * 30
+      }
+    }
+  }
 
   // distDir: 'build',
   // trailingSlash: true

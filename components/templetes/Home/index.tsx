@@ -36,11 +36,11 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
     loop: true,
     autoplay: {
       delay: 2500,
-      disableOnInteraction: false,
+      disableOnInteraction: false
     },
     // pagination: isMobile ? false : true,
     navigation: isMobile ? false : true,
-    modules: [Navigation, Pagination, Autoplay],
+    modules: [Navigation, Pagination, Autoplay]
   }
 
   const routerPush = useRouter()

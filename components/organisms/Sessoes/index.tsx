@@ -24,7 +24,7 @@ import {
   IFilmeResponse,
   Sessions,
   Location,
-  SessionsArrayResponse,
+  SessionsArrayResponse
 } from '@/utils/server/types'
 import { darken } from 'polished'
 
@@ -120,7 +120,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
               distance,
               // @ts-ignore: Unreachable code error
               stateName,
-              ...rest,
+              ...rest
             }
           }
           // @ts-ignore: Unreachable code error
@@ -209,35 +209,41 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         >
           <div className={Style.flexAreaPesquisa}>
             <IoSearchSharp />
-            <select
-              value={state}
-              onChange={({ target }) => setState(target.value)}
-            >
-              <option value="estado">Estado</option>
-              {localFilmes
-                ?.sort((a, b) => a.state.localeCompare(b.state))
-                ?.map((data) => (
-                  <option key={data.state} value={data.state}>
-                    {obterNomeEstado(data.state)}
-                  </option>
-                ))}
-            </select>
-            <select
-              value={cities}
-              onChange={({ target }) => setCities(target.value)}
-            >
-              <option value="cidade">Cidade</option>
-              {localFilmes &&
-                localFilmes
-                  .find((item) => item.state === state)
-                  ?.cities.slice()
-                  .sort((a, b) => a.localeCompare(b))
-                  .map((city: string) => (
-                    <option key={city} value={city}>
-                      {city}
+            <label htmlFor="estado">
+              <select
+                id="estado"
+                value={state}
+                onChange={({ target }) => setState(target.value)}
+              >
+                <option value="estado">Estado</option>
+                {localFilmes
+                  ?.sort((a, b) => a.state.localeCompare(b.state))
+                  ?.map((data) => (
+                    <option key={data.state} value={data.state}>
+                      {obterNomeEstado(data.state)}
                     </option>
                   ))}
-            </select>
+              </select>
+            </label>
+            <label htmlFor="cidade">
+              <select
+                id="cidade"
+                value={cities}
+                onChange={({ target }) => setCities(target.value)}
+              >
+                <option value="cidade">Cidade</option>
+                {localFilmes &&
+                  localFilmes
+                    .find((item) => item.state === state)
+                    ?.cities.slice()
+                    .sort((a, b) => a.localeCompare(b))
+                    .map((city: string) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    ))}
+              </select>
+            </label>
           </div>
           {loadings && loading && <Loading />}
           {filteredSessions.length !== 0 && !loading && (

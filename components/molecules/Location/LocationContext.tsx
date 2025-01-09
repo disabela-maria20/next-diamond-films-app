@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
   useState,
-  ReactNode,
+  ReactNode
 } from 'react'
 
 import { apiLocation } from './apiLocation'
@@ -24,22 +24,22 @@ interface LocationContextType {
 const LocationContext = createContext<LocationContextType>({
   location: {
     latitude: 0,
-    longitude: 0,
+    longitude: 0
   },
   loading: false,
   error: null,
   refreshLocation: () => {},
-  locationArea: {},
+  locationArea: {}
 })
 
 export const useLocationContext = () => useContext(LocationContext)
 
 export const LocationProvider: React.FC<{ children: ReactNode }> = ({
-  children,
+  children
 }) => {
   const [location, setLocation] = useState<LocationData>({
     latitude: 0,
-    longitude: 0,
+    longitude: 0
   })
   const [locationArea, setlocationArea] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
@@ -72,7 +72,7 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({
         loading,
         error,
         refreshLocation,
-        locationArea,
+        locationArea
       }}
     >
       {children}

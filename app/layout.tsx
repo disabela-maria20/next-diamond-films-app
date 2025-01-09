@@ -1,7 +1,7 @@
-/* eslint-disable prettier/prettier */
+import '@/styles/sass/globals.scss'
+
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from 'next'
-import '@/styles/sass/globals.scss'
 import { Montserrat } from 'next/font/google'
 import Script from 'next/script'
 
@@ -23,25 +23,25 @@ export const metadata: Metadata = {
       {
         url: 'https://diamondfilms.com.br/img/share.png',
         width: 800,
-        height: 600,
-      },
+        height: 600
+      }
     ],
-    type: 'website',
+    type: 'website'
   },
   twitter: {
     title: 'Home | Diamond Films',
     description:
       'Descubra os filmes mais recentes distribuídos pela Diamond Films Brasil. Confira os trailers, sinopses e datas de lançamento.',
     site: 'https://diamondfilms.com.br/',
-    images: 'https://diamondfilms.com.br/img/share.png',
+    images: 'https://diamondfilms.com.br/img/share.png'
   },
   alternates: {
-    canonical: 'https://diamondfilms.com.br',
+    canonical: 'https://diamondfilms.com.br'
   },
-  category: 'Filmes',
+  category: 'Filmes'
 }
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode
 }>) {
@@ -60,7 +60,7 @@ export default function RootLayout({
               r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
               a.appendChild(r);
               })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-          `,
+          `
           }}
         />
       </body>

@@ -11,5 +11,5 @@ export const Model = {
   Title: ModelTitle,
   Content: ModelContent,
   Root: ModelRoot,
-  Body: ModelBody,
+  Body: ModelBody
 }

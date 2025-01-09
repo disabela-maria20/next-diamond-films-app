@@ -12,7 +12,7 @@ interface IModelBodyProps {
 const ModelBody: React.FC<IModelBodyProps> = ({
   children,
   setOpen,
-  className,
+  className
 }) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

@@ -11,7 +11,7 @@ const ComprarIngresso = lazy(
 )
 
 export const metadata: Metadata = {
-  title: 'Diamond Films - Comprar Ingresso',
+  title: 'Diamond Films - Comprar Ingresso'
 }
 
 const pageComprarIngresso = async () => {

@@ -8,7 +8,7 @@ import { getBanner, getHome } from '@/utils/server/requests'
 
 const Home = lazy(() => import('@/components/templetes/Home'), {
   ssr: false,
-  loading: () => <Loading altura={true} />,
+  loading: () => <Loading altura={true} />
 })
 
 export default async function PageHome() {

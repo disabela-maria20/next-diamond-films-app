@@ -5,5 +5,5 @@ import SlideTitle from './SlideTitle'
 
 export const Slide = {
   Content: SlideContent,
-  Title: SlideTitle,
+  Title: SlideTitle
 }

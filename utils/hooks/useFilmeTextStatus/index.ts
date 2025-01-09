@@ -4,7 +4,7 @@ import { IFilmeResponse } from '@/utils/server/types'
 
 const useFilmeTextStatus = () => {
   const {
-    formatfaltaUmaSemanaParaDataMarcada,
+    formatfaltaUmaSemanaParaDataMarcada
     // formatPassouUmaSemanaDesdeData,
     // formatDataEstreia
   } = useFormatarData()

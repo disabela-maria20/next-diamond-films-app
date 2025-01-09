@@ -32,7 +32,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css'
 const CardFilme = ({
   data,
   listaFilmes,
-  slide = 'lancamento',
+  slide = 'lancamento'
 }: ICardFilmeProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<IFilmeResponse>()
@@ -55,13 +55,13 @@ const CardFilme = ({
     breakpoints: {
       640: {
         slidesPerView: 3,
-        spaceBetween: 20,
+        spaceBetween: 20
       },
       990: {
         slidesPerView: 5,
-        spaceBetween: 10,
-      },
-    },
+        spaceBetween: 10
+      }
+    }
   }
 
   const filmesStreaming: SwiperOptions = {
@@ -73,21 +73,21 @@ const CardFilme = ({
     breakpoints: {
       640: {
         slidesPerView: 3,
-        spaceBetween: 20,
+        spaceBetween: 20
       },
       768: {
         slidesPerView: 4,
-        spaceBetween: 10,
+        spaceBetween: 10
       },
       990: {
         slidesPerView: 5,
-        spaceBetween: 10,
+        spaceBetween: 10
       },
       1100: {
         slidesPerView: 6,
-        spaceBetween: 10,
-      },
-    },
+        spaceBetween: 10
+      }
+    }
   }
 
   if (slide == 'lancamento') {

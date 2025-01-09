@@ -120,7 +120,7 @@ export const ESTADOS: EstadosBrasileiros = {
   SC: 'Santa Catarina',
   SP: 'São Paulo',
   SE: 'Sergipe',
-  TO: 'Tocantins',
+  TO: 'Tocantins'
 }
 
 export interface Location {

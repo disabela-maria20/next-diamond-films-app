@@ -56,7 +56,7 @@ const Newsletter = ({
   isHorrizontal,
   filmes,
   type = 'filme',
-  title = true,
+  title = true
 }: INewsletterProps) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [isModel, setIsModal] = useState<boolean>(false)
@@ -74,9 +74,9 @@ const Newsletter = ({
     register,
     handleSubmit,
     reset,
-    formState: { errors, disabled },
+    formState: { errors, disabled }
   } = useForm<INewsletterForm>({
-    resolver: ResolverZod(NewsletterFormSchema),
+    resolver: ResolverZod(NewsletterFormSchema)
   })
 
   const pathname = usePathname()

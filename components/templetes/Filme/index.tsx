@@ -29,7 +29,7 @@ interface IFilmeProps {
 enum EStatus {
   LANCAMENTO = 'lançamento',
   STREAMING = 'streaming',
-  INATIVO = 'inativo',
+  INATIVO = 'inativo'
 }
 
 const classificacoesIndicativas = [
@@ -38,7 +38,7 @@ const classificacoesIndicativas = [
   { idade: '12', cor: '#f5d218' },
   { idade: '14', cor: '#f0850c' },
   { idade: '16', cor: '#d40011' },
-  { idade: '18', cor: '#161616' },
+  { idade: '18', cor: '#161616' }
 ]
 
 const swiperOptions: SwiperOptions = {
@@ -46,20 +46,20 @@ const swiperOptions: SwiperOptions = {
   spaceBetween: 10,
   freeMode: true,
   pagination: {
-    clickable: true,
+    clickable: true
   },
   scrollbar: { hide: true },
   modules: [FreeMode, Scrollbar],
   breakpoints: {
     640: {
       slidesPerView: 3,
-      spaceBetween: 20,
+      spaceBetween: 20
     },
     768: {
       slidesPerView: 4,
-      spaceBetween: 10,
-    },
-  },
+      spaceBetween: 10
+    }
+  }
 }
 function setDefinirCorClassificacaoIndicativa(idade: string) {
   const classificacao = classificacoesIndicativas.find(
@@ -76,9 +76,11 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
-  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } = useFormatarData()
+  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
+    useFormatarData()
   const { formatarData } = useFormatarData()
-  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } = useGtag()
+  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
+    useGtag()
 
   const router = useRouter()
   const filme = data.movie?.movie
@@ -109,7 +111,7 @@ const Filme = (data: IFilmeProps) => {
     filme?.slug,
     filme?.originalTitle,
     filme?.genre,
-    filme?.idVibezzMovie,
+    filme?.idVibezzMovie
   ])
 
   const viewSaibaMais = useCallback(() => {
@@ -146,7 +148,7 @@ const Filme = (data: IFilmeProps) => {
       <section
         className={Style.areaBanner}
         style={{
-          backgroundImage: `url(${isMobile ? filme?.bannerMobile : filme?.bannerDesktop})`,
+          backgroundImage: `url(${isMobile ? filme?.bannerMobile : filme?.bannerDesktop})`
         }}
       >
         <div className={Style.bannerFilme}>
@@ -162,7 +164,7 @@ const Filme = (data: IFilmeProps) => {
                     <button
                       onClick={() => {
                         router.push('#sessao', {
-                          scroll: true,
+                          scroll: true
                         })
                       }}
                     >
@@ -283,7 +285,7 @@ const Filme = (data: IFilmeProps) => {
                       {filme?.age && (
                         <span
                           style={{
-                            background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`,
+                            background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
                           }}
                         >
                           {filme?.age}

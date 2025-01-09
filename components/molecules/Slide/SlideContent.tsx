@@ -16,7 +16,7 @@ interface CustomSwiperProps {
 const SlideContent: React.FC<CustomSwiperProps> = ({
   children,
   swiperOptions,
-  className,
+  className
 }) => {
   return (
     <>

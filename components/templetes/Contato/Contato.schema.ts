@@ -22,7 +22,7 @@ export const ContatoFormSchema = z.object({
     .refine(
       (value: string) => /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/.test(value),
       {
-        message: 'Endereço de e-mail invalido',
+        message: 'Endereço de e-mail invalido'
       }
     ),
   c_phone: z
@@ -33,6 +33,6 @@ export const ContatoFormSchema = z.object({
     .string({ required_error: 'Mensagem é obrigatoria' })
     .min(15, { message: 'Mensagem é obrigatoria' }),
   c_termos: z.boolean().refine((val) => val === true, {
-    message: 'Você deve concordar com os termos e condições.',
-  }),
+    message: 'Você deve concordar com os termos e condições.'
+  })
 })

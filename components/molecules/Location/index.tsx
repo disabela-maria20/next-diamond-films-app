@@ -47,7 +47,7 @@ const Location = () => {
         cacheTimer(localtion)
         const geo = await apiLocation(localtion)
         Cookies.set('localtion', geo, { expires: 7 })
-        Cookies.set('city', geo.address.city, { expires: 7 })
+        Cookies.set('city', geo.address?.city, { expires: 7 })
       }
     }
     setShowModal(false)

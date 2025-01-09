@@ -12,7 +12,7 @@ const Catalogo = lazy(() => import('@/components/templetes/Catalogo'))
 export const metadata: Metadata = {
   title: 'Filmes | Diamond Films',
   description:
-    'Explore nosso catálogo de filmes diversificado, incluindo os mais recentes lançamentos e clássicos imperdíveis. Encontre informações detalhadas sobre cada filme e descubra o que está em cartaz.',
+    'Explore nosso catálogo de filmes diversificado, incluindo os mais recentes lançamentos e clássicos imperdíveis. Encontre informações detalhadas sobre cada filme e descubra o que está em cartaz.'
 }
 
 const PageFilmes = async () => {

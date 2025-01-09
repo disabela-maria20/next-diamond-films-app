@@ -15,32 +15,32 @@ const RedesSociais: React.FC = () => {
       id: 0,
       name: 'facebook',
       icone: <FaFacebookF />,
-      link: 'https://www.facebook.com/DiamondFilmsBR',
+      link: 'https://www.facebook.com/DiamondFilmsBR'
     },
     {
       id: 1,
       name: 'Instagram',
       icone: <FaInstagram />,
-      link: 'https://www.instagram.com/diamondfilmsbr/',
+      link: 'https://www.instagram.com/diamondfilmsbr/'
     },
     {
       id: 2,
       name: 'Youtube',
       icone: <FaYoutube />,
-      link: 'https://www.youtube.com/@DiamondFilmsBrasil',
+      link: 'https://www.youtube.com/@DiamondFilmsBrasil'
     },
     {
       id: 3,
       name: 'Tiktok',
       icone: <FaTiktok />,
-      link: 'https://www.tiktok.com/@diamondfilmsbr?lang=pt-BR',
+      link: 'https://www.tiktok.com/@diamondfilmsbr?lang=pt-BR'
     },
     {
       id: 4,
       name: 'Twitter',
       icone: <FaXTwitter />,
-      link: 'https://twitter.com/DiamondFilmsBR',
-    },
+      link: 'https://twitter.com/DiamondFilmsBR'
+    }
   ]
 
   return (

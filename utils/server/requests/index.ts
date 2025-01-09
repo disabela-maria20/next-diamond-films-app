@@ -55,7 +55,7 @@ export async function postNewsletter(
       name: name,
       email: email,
       phone: phone,
-      url: url,
+      url: url
     }
   )
 }
@@ -71,7 +71,7 @@ export async function postContact(
       name: name,
       email: email,
       phone: phone,
-      message: message,
+      message: message
     }
   )
 }

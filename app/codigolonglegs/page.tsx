@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     description:
       'Desvende os mistérios de Longlegs! Use um teclado especial para decifrar as mensagens secretas e mergulhe na trama emocionante deste filme intrigante.',
     images: 'https://diamondfilms.com.br/img/longlegs/LONGLEGS_Landing.jpg',
-    url: 'https://diamondfilms.com.br/codigolonglegs',
-  },
+    url: 'https://diamondfilms.com.br/codigolonglegs'
+  }
 }
 
 const pageMensagem = () => {

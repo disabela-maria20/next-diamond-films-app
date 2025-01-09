@@ -69,11 +69,11 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
     loop: true,
     autoplay: {
       delay: 2500,
-      disableOnInteraction: false,
+      disableOnInteraction: false
     },
     pagination: isMobile ? false : true,
     navigation: true,
-    modules: [Navigation, Pagination, Autoplay],
+    modules: [Navigation, Pagination, Autoplay]
   }
 
   const formatDateForSorting = (dateString: string) => {

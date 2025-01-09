@@ -28,9 +28,9 @@ const Contato = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, disabled },
+    formState: { errors, disabled }
   } = useForm<IContatoForm>({
-    resolver: ResolverZod(ContatoFormSchema),
+    resolver: ResolverZod(ContatoFormSchema)
   })
 
   const { dataLayerContato } = useGtag()

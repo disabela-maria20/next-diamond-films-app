@@ -32,7 +32,7 @@ function isDarkColor(color: string): boolean {
 
 export const ButtonHora = styled.div.attrs<{ $bg?: string }>((props) => ({
   type: 'text',
-  $bg: props.$bg || '#fff',
+  $bg: props.$bg || '#fff'
 }))<{ $bg?: string }>`
   background-color: ${(props) => props.$bg} !important;
   cursor: pointer;
@@ -41,13 +41,13 @@ export const ButtonHora = styled.div.attrs<{ $bg?: string }>((props) => ({
 
 export const LinkHora = styled.a.attrs<{ $color?: string }>((props) => ({
   type: 'text',
-  $color: props.$color || '#000',
+  $color: props.$color || '#000'
 }))<{ $color?: string }>`
   border-radius: 5px;
   padding: 10px;
   font-size: 1.2rem;
   color: #000;
-  border: 2px solid ${(props) => props.$color};
+  border: 2px solid ${(props) => darken(0.2, props.$color || '')};
 
   &:hover {
     background-color: ${(props) => props.$color};
@@ -57,7 +57,7 @@ export const LinkHora = styled.a.attrs<{ $color?: string }>((props) => ({
 
 export const LinkLocation = styled.a.attrs<{ $color?: string }>((props) => ({
   type: 'text',
-  $color: props.$color || '#000',
+  $color: props.$color || '#000'
 }))<{ $color?: string }>`
   svg {
     color: ${(props) => props.$color};
@@ -77,7 +77,7 @@ export const LinkLocation = styled.a.attrs<{ $color?: string }>((props) => ({
 export const SelectLocation = styled.select.attrs<{ $color?: string }>(
   (props) => ({
     type: 'text',
-    $color: props.$color || '#000',
+    $color: props.$color || '#000'
   })
 )<{ $color?: string }>`
   border: 2px solid ${(props) => props.$color} !important;

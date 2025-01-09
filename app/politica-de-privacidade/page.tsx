@@ -7,7 +7,7 @@ import { Header } from '@/components/organisms'
 import PoliticaDePrivacidade from '@/components/templetes/PoliticaDePrivacidade'
 
 export const metadata: Metadata = {
-  title: 'Diamond Films - Politica De Privacidade',
+  title: 'Diamond Films - Politica De Privacidade'
 }
 
 const pagePoliticaDePrivacidade = () => {

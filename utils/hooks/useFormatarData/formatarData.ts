@@ -10,7 +10,7 @@ export const MESES: string[] = [
   'Setembro',
   'Outubro',
   'Novembro',
-  'Dezembro',
+  'Dezembro'
 ]
 
 export const SEMANA: string[] = [
@@ -21,7 +21,7 @@ export const SEMANA: string[] = [
   'qui',
   'sex',
   'sab',
-  'dom',
+  'dom'
 ]
 
 export const useFormatarData = () => {
@@ -34,7 +34,7 @@ export const useFormatarData = () => {
     return {
       ano: ano,
       mes: mes,
-      dia: dia,
+      dia: dia
     }
   }
 
@@ -150,6 +150,6 @@ export const useFormatarData = () => {
     formatMesmaSemana,
     formatfaltaUmaSemanaParaDataMarcada,
     formatPassouUmaSemanaDesdeData,
-    formatDataEstreia,
+    formatDataEstreia
   }
 }
