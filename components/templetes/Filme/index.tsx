@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { FaYoutube } from 'react-icons/fa'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -62,9 +62,7 @@ const swiperOptions: SwiperOptions = {
   }
 }
 function setDefinirCorClassificacaoIndicativa(idade: string) {
-  const classificacao = classificacoesIndicativas.find(
-    (classificacao) => classificacao.idade === idade
-  )
+  const classificacao = classificacoesIndicativas.find((classificacao) => classificacao.idade === idade)
 
   return classificacao ? classificacao.cor : ''
 }
@@ -77,21 +75,15 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
-  console.log(data)
-
-  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
-    useFormatarData()
+  const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } = useFormatarData()
   const { formatarData } = useFormatarData()
-  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
-    useGtag()
+  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } = useGtag()
 
   const router = useRouter()
   const filme = data.movie?.movie
   const isStreaming = filme.status == EStatus.STREAMING
   const emExibicao =
-    formatMesmaSemana(filme?.releasedate) ||
-    formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
-    filme?.hasSession
+    formatMesmaSemana(filme?.releasedate) || formatPassouUmaSemanaDesdeData(filme?.releasedate) || filme?.hasSession
 
   const { isMobile, isLoading } = useIsMobile()
   const [imageIndex, setImageIndex] = useState<number>(0)
@@ -101,32 +93,22 @@ const Filme = (data: IFilmeProps) => {
   const [saibaMais, setSaibaMais] = useState<boolean>(filme.hasSession)
 
   useEffect(() => {
-    dataLayerFichafilme(
-      filme?.title,
-      filme?.slug,
-      filme?.originalTitle,
-      filme?.genre,
-      Number(filme?.idVibezzMovie)
-    )
-  }, [
-    dataLayerFichafilme,
-    filme?.title,
-    filme?.slug,
-    filme?.originalTitle,
-    filme?.genre,
-    filme?.idVibezzMovie
-  ])
+    dataLayerFichafilme(filme?.title, filme?.slug, filme?.originalTitle, filme?.genre, Number(filme?.idVibezzMovie))
+  }, [dataLayerFichafilme, filme?.title, filme?.slug, filme?.originalTitle, filme?.genre, filme?.idVibezzMovie])
+
+  const viewSaibaMais = useCallback(() => {
+    console.log('teste')
+
+    setSaibaMais((prev) => !prev)
+    router.push('#saibamais', { scroll: true })
+  }, [router])
 
   const handlePrevImage = () => {
-    setImageIndex((prevIndex) =>
-      prevIndex === 0 ? filme.images.length - 1 : prevIndex - 1
-    )
+    setImageIndex((prevIndex) => (prevIndex === 0 ? filme.images.length - 1 : prevIndex - 1))
   }
 
   const handleNextImage = () => {
-    setImageIndex((prevIndex) =>
-      prevIndex === filme.images.length - 1 ? 0 : prevIndex + 1
-    )
+    setImageIndex((prevIndex) => (prevIndex === filme.images.length - 1 ? 0 : prevIndex + 1))
   }
 
   function handleVerImagem(index: number) {
@@ -154,14 +136,14 @@ const Filme = (data: IFilmeProps) => {
             <div className={Style.areaTituloBanner}>
               <h1 style={{ color: filme.slug }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
-                <h2 className={Style.emExibicao}>
-                  {formatarData(filme.releasedate)}
-                </h2>
+                <h2 className={Style.emExibicao}>{formatarData(filme.releasedate)}</h2>
                 <div className={Style.areaBtnCompra}>
                   {!isStreaming && emExibicao && !isMobile && (
                     <button
                       onClick={() => {
-                        router.push('#sessao', { scroll: true })
+                        router.push('#sessao', {
+                          scroll: true
+                        })
                       }}
                     >
                       COMPRAR INGRESSOS
@@ -194,13 +176,7 @@ const Filme = (data: IFilmeProps) => {
               </div>
               <div className={Style.AreaSaibamais}>
                 {filme.hasSession && (
-                  <button
-                    className={Style.btnSaibaMais}
-                    onClick={() => {
-                      setSaibaMais(!saibaMais)
-                      router.push('#saibamais', { scroll: true })
-                    }}
-                  >
+                  <button className={Style.btnSaibaMais} onClick={viewSaibaMais}>
                     Saiba +
                   </button>
                 )}
@@ -215,19 +191,12 @@ const Filme = (data: IFilmeProps) => {
         <div className="container">
           {!filme.hasSession && (
             <div className={Style.areaNewsletter}>
-              <Newsletter
-                isHorrizontal={!isMobile}
-                isBg={true}
-                filmes={filme}
-                type="filme"
-              />
+              <Newsletter isHorrizontal={!isMobile} isBg={true} filmes={filme} type="filme" />
             </div>
           )}
           {emExibicao && isMobile && !isStreaming && (
             <div className={Style.areaBtnCompra}>
-              <button onClick={() => router.push('#sessao', { scroll: true })}>
-                COMPRAR INGRESSOS
-              </button>
+              <button onClick={() => router.push('#sessao', { scroll: true })}>COMPRAR INGRESSOS</button>
             </div>
           )}
           {filme.streaming.length > 0 && isMobile && (
@@ -257,20 +226,12 @@ const Filme = (data: IFilmeProps) => {
             <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
                 <div className={Style.areaFlexPoster} id="saibamais">
-                  <LazyLoadImage
-                    src={filme?.cover}
-                    alt={filme?.title}
-                    width={270}
-                    height={400}
-                  />
+                  <LazyLoadImage src={filme?.cover} alt={filme?.title} width={270} height={400} />
                   <div>
                     <h2>Sinopse</h2>
                     <p>{filme?.shortSynopsis}</p>
                     <div className={Style.AreaLinksSociais}>
-                      <span
-                        className={Style.areaAssitirTrailer}
-                        onClick={() => handleVerVideo(filme.trailer)}
-                      >
+                      <span className={Style.areaAssitirTrailer} onClick={() => handleVerVideo(filme.trailer)}>
                         <FaYoutube />
                         <span>ASSISTA AO TRAILER</span>
                       </span>
@@ -354,10 +315,7 @@ const Filme = (data: IFilmeProps) => {
               </section>
 
               <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
-              <Slide.Content
-                swiperOptions={swiperOptions}
-                className={Style.areaSlide}
-              >
+              <Slide.Content swiperOptions={swiperOptions} className={Style.areaSlide}>
                 {filme?.images?.map((data, i) => (
                   <div key={data.url}>
                     <LazyLoadImage
@@ -378,29 +336,18 @@ const Filme = (data: IFilmeProps) => {
           {filme.hasSession && (
             <section id="sessao" className={Style.combrarIngresso}>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
-              <p>
-                Para buscar as sessões: Selecione o ESTADO e a CIDADE, e veja os
-                cinemas disponiveis com as sessões
-              </p>
+              <p>Para buscar as sessões: Selecione o ESTADO e a CIDADE, e veja os cinemas disponiveis com as sessões</p>
               <Sessoes filme={filme} color={filme.color} poster={filme.cover} />
             </section>
           )}
 
           <div className={Style.areaNewsletter}>
-            <Newsletter
-              isHorrizontal={!isMobile}
-              isBg={true}
-              filmes={filme}
-              type="filme"
-            />
+            <Newsletter isHorrizontal={!isMobile} isBg={true} filmes={filme} type="filme" />
           </div>
 
           {open && (
             <Model.Root>
-              <Model.Body
-                setOpen={() => setOpen(!open)}
-                className={Style.modalImageFilme}
-              >
+              <Model.Body setOpen={() => setOpen(!open)} className={Style.modalImageFilme}>
                 <LazyLoadImage
                   effect="blur"
                   src={filme.images[imageIndex]?.url}
@@ -422,10 +369,7 @@ const Filme = (data: IFilmeProps) => {
           )}
           {openModal && (
             <Model.Root>
-              <Model.Body
-                setOpen={() => setOpenModal(!openModal)}
-                className={Style.ModaliframeVideoYoutube}
-              >
+              <Model.Body setOpen={() => setOpenModal(!openModal)} className={Style.ModaliframeVideoYoutube}>
                 <div className={Style.iframeVideoYoutube} key={iframe}>
                   <iframe
                     className={Style.embedResponsiveItem}

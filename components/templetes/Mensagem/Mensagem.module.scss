@@ -1,166 +1,1 @@
-.Mensagem {
-  background-color: #fe0000;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 0 20px 0;
-
-  @include media(lg) {
-    padding: 0 0;
-  }
-
-  .areaMensagem {
-    max-width: 450px;
-
-    h2 {
-      margin-top: 120px;
-      color: $primary-dark-color;
-      text-transform: uppercase;
-      font-size: 28px;
-      text-align: center;
-
-      span {
-        margin-left: 10px;
-        font-size: 16px;
-        display: block;
-
-        @include media(lg) {
-          display: inline;
-        }
-      }
-    }
-
-    img {
-      display: block;
-      margin: 0 auto;
-      padding: 20px 0;
-    }
-
-    h1 {
-      position: absolute;
-      left: -999999999px;
-      overflow: hidden;
-      text-transform: uppercase;
-      font-size: 3.1rem;
-
-      @include media(lg) {
-        font-size: 4.1rem;
-      }
-    }
-
-    label {
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-      line-height: 2.6rem;
-      margin: 20px 0;
-      display: block;
-      font-weight: 700;
-      text-align: center;
-
-      span {
-        margin-bottom: 100px;
-      }
-    }
-
-    textarea {
-      width: 100%;
-      max-width: 450px;
-      margin: 0 auto;
-      background-color: $primary-dark-color;
-      border: none;
-      height: 125px;
-      padding: 20px;
-      color: #fe0000;
-      font-size: 1.5rem;
-      font-weight: 700;
-
-      &::placeholder {
-        color: #fe0000;
-        font-size: 1.5rem;
-      }
-    }
-
-    .areaBtn {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 15px 0;
-
-      .alterar {
-        background-color: $primary-dark-color;
-        color: #fe0000;
-      }
-
-      .copiar {
-        color: $primary-dark-color;
-        background-color: #fe0000;
-        border: 2px solid;
-      }
-
-      button {
-        border: none;
-        font-weight: 700;
-        padding: 10px 15px;
-        transition: all 0.5s;
-        cursor: pointer;
-        font-size: 1.4rem;
-
-        &:hover {
-          transform: scale(1.04)
-        }
-      }
-    }
-
-    .letras {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      width: 100%;
-
-      @include media(md) {
-        max-width: 450px;
-      }
-
-      .row {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex: 1 1 auto;
-        gap: 5px;
-        width: 100%;
-      }
-
-      button {
-        padding: 5px;
-        color: $primary-dark-color;
-        background-color: #fe0000;
-        border: 2px solid $primary-dark-color;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-        font-size: 16px;
-
-        &:hover {
-          background-color: $primary-dark-color;
-          color: #fe0000;
-        }
-
-        @include media(md) {
-          font-size: 1.8rem;
-          padding: 10px 15px;
-        }
-      }
-    }
-
-    .classificacao {
-      font-weight: 700;
-      text-align: center;
-      font-size: 1.8rem;
-      margin-top: 35px;
-    }
-  }
-
-}
+.Mensagem {  background-color: #fe0000;  display: flex;  justify-content: center;  flex-direction: column;  align-items: center;  gap: 10px;  padding: 0 20px 0;  @include media(lg) {    padding: 0 0;  }  .areaMensagem {    max-width: 450px;    h2 {      margin-top: 120px;      color: $primary-dark-color;      text-transform: uppercase;      font-size: 28px;      text-align: center;      span {        margin-left: 10px;        font-size: 16px;        display: block;        @include media(lg) {          display: inline;        }      }    }    img {      display: block;      margin: 0 auto;      padding: 20px 0;    }    h1 {      position: absolute;      left: -999999999px;      overflow: hidden;      text-transform: uppercase;      font-size: 3.1rem;      @include media(lg) {        font-size: 4.1rem;      }    }    label {      margin-bottom: 20px;      font-size: 1.8rem;      line-height: 2.6rem;      margin: 20px 0;      display: block;      font-weight: 700;      text-align: center;      span {        margin-bottom: 100px;      }    }    textarea {      width: 100%;      max-width: 450px;      margin: 0 auto;      background-color: $primary-dark-color;      border: none;      height: 125px;      padding: 20px;      color: #fe0000;      font-size: 1.5rem;      font-weight: 700;      &::placeholder {        color: #fe0000;        font-size: 1.5rem;      }    }    .areaBtn {      display: flex;      justify-content: center;      gap: 20px;      padding: 15px 0;      .alterar {        background-color: $primary-dark-color;        color: #fe0000;      }      .copiar {        color: $primary-dark-color;        background-color: #fe0000;        border: 2px solid;      }      button {        border: none;        font-weight: 700;        padding: 10px 15px;        transition: all 0.5s;        cursor: pointer;        font-size: 1.4rem;        &:hover {          transform: scale(1.04);        }      }    }    .letras {      display: flex;      flex-direction: column;      align-items: center;      gap: 5px;      width: 100%;      @include media(md) {        max-width: 450px;      }      .row {        display: flex;        justify-content: center;        align-items: center;        flex: 1 1 auto;        gap: 5px;        width: 100%;      }      button {        padding: 5px;        color: $primary-dark-color;        background-color: #fe0000;        border: 2px solid $primary-dark-color;        border-radius: 5px;        cursor: pointer;        transition: background-color 0.2s;        font-size: 16px;        &:hover {          background-color: $primary-dark-color;          color: #fe0000;        }        @include media(md) {          font-size: 1.8rem;          padding: 10px 15px;        }      }    }    .classificacao {      font-weight: 700;      text-align: center;      font-size: 1.8rem;      margin-top: 35px;    }  }}

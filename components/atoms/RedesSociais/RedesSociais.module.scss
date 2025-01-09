@@ -1,15 +1,1 @@
-.redesSociais {
-	display: none;
-
-	@include media(xl) {
-		display: block;
-	}
-
-	li a {
-		padding: 0 !important;
-	}
-
-	svg {
-		font-size: 1.8rem
-	}
-}
+.redesSociais {  display: none;  @include media(xl) {    display: block;  }  li a {    padding: 0 !important;  }  svg {    font-size: 1.8rem;  }}
