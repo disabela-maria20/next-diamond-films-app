@@ -16,6 +16,7 @@ const nextConfig = {
     styledComponents: true,
     removeConsole: false
   },
+  reactStrictMode: false,
   output: 'export'
   // async redirects() {
   //   return [

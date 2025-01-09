@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     images: 'https://diamondfilms.com.br/img/share.png'
   },
   alternates: {
-    canonical: 'http://diamondfilms.com.br'
+    canonical: 'https://diamondfilms.com.br'
   },
   category: 'Filmes',
 

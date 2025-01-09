@@ -31,7 +31,6 @@ interface IHomeProps {
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const { dataLayerHome, dataLayerBannerClick } = useGtag()
   const { isMobile, isLoading } = useIsMobile()
-
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
     loop: true,
@@ -47,12 +46,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const routerPush = useRouter()
 
   useEffect(() => {
-    const pageView = () => {
-      dataLayerHome('Diamond Films', '')
-    }
-    pageView()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    dataLayerHome('Diamond Films', '')
+  }, [dataLayerHome])
 
   function handleClickBanner(data: any) {
     dataLayerBannerClick(data.title, data.slug, data.id)

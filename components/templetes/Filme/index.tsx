@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
-
 import { useRouter } from 'next/navigation'
-import { useLayoutEffect, useState } from 'react'
-import { FaInstagram, FaYoutube } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
+import { FaYoutube } from 'react-icons/fa'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
@@ -16,10 +15,11 @@ import { Sessoes } from '@/components/organisms'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
 import { useGtag } from '@/utils/lib/gtag'
-import { IFilmeResponse, IFilmeResponseUrl } from '@/utils/server/types'
+import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
 import 'react-lazy-load-image-component/src/effects/blur.css'
+
 interface IFilmeProps {
   movie: {
     movie: IFilmeResponse
@@ -41,6 +41,26 @@ const classificacoesIndicativas = [
   { idade: '18', cor: '#161616' }
 ]
 
+const swiperOptions: SwiperOptions = {
+  slidesPerView: 2,
+  spaceBetween: 10,
+  freeMode: true,
+  pagination: {
+    clickable: true
+  },
+  scrollbar: { hide: true },
+  modules: [FreeMode, Scrollbar],
+  breakpoints: {
+    640: {
+      slidesPerView: 3,
+      spaceBetween: 20
+    },
+    768: {
+      slidesPerView: 4,
+      spaceBetween: 10
+    }
+  }
+}
 function setDefinirCorClassificacaoIndicativa(idade: string) {
   const classificacao = classificacoesIndicativas.find(
     (classificacao) => classificacao.idade === idade
@@ -57,17 +77,45 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
-  const filme = data.movie?.movie
-  //const streaming = filme.streaming.map((data) => data.platform).join(',')
-  const isStreaming = filme.status == EStatus.STREAMING
+  console.log(data)
+
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData()
+  const { formatarData } = useFormatarData()
+  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
+    useGtag()
 
+  const router = useRouter()
+  const filme = data.movie?.movie
+  const isStreaming = filme.status == EStatus.STREAMING
+  const emExibicao =
+    formatMesmaSemana(filme?.releasedate) ||
+    formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
+    filme?.hasSession
+
+  const { isMobile, isLoading } = useIsMobile()
   const [imageIndex, setImageIndex] = useState<number>(0)
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [saibaMais, setSaibaMais] = useState<boolean>(filme.hasSession)
+
+  useEffect(() => {
+    dataLayerFichafilme(
+      filme?.title,
+      filme?.slug,
+      filme?.originalTitle,
+      filme?.genre,
+      Number(filme?.idVibezzMovie)
+    )
+  }, [
+    dataLayerFichafilme,
+    filme?.title,
+    filme?.slug,
+    filme?.originalTitle,
+    filme?.genre,
+    filme?.idVibezzMovie
+  ])
 
   const handlePrevImage = () => {
     setImageIndex((prevIndex) =>
@@ -81,32 +129,7 @@ const Filme = (data: IFilmeProps) => {
     )
   }
 
-  const { isMobile, isLoading } = useIsMobile()
-  //const formatarData = useFormatarData()
-  const emExibicao =
-    formatMesmaSemana(filme?.releasedate) ||
-    formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
-    filme?.hasSession
-
-  const { formatarData } = useFormatarData()
-  const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
-    useGtag()
-
-  const router = useRouter()
-  useLayoutEffect(() => {
-    const pageFichafilme = () => {
-      dataLayerFichafilme(
-        filme?.title,
-        filme?.slug,
-        filme?.originalTitle,
-        filme?.genre,
-        Number(filme?.idVibezzMovie)
-      )
-    }
-    pageFichafilme()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  function handleVerImagem(data: IFilmeResponseUrl, index: number) {
+  function handleVerImagem(index: number) {
     setOpen(true)
     setImageIndex(index)
   }
@@ -114,77 +137,6 @@ const Filme = (data: IFilmeProps) => {
   function handleVerVideo(data: string) {
     setOpenModal(true)
     setIframe(data)
-  }
-
-  const swiperOptions: SwiperOptions = {
-    slidesPerView: 2,
-    spaceBetween: 10,
-    freeMode: true,
-    pagination: {
-      clickable: true
-    },
-    scrollbar: { hide: true },
-    modules: [FreeMode, Scrollbar],
-    breakpoints: {
-      640: {
-        slidesPerView: 3,
-        spaceBetween: 20
-      },
-      768: {
-        slidesPerView: 4,
-        spaceBetween: 10
-      }
-    }
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const swiperOptionsVideo: SwiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 10,
-    freeMode: true,
-    grabCursor: true,
-    // pagination: {
-    //   clickable: true
-    // },
-    pagination: false,
-    scrollbar: { hide: true },
-    modules: [FreeMode, Scrollbar],
-    breakpoints: {
-      640: {
-        slidesPerView: 2,
-        spaceBetween: 20
-      }
-    }
-  }
-
-  const Links = ({ youtube, insta }: { youtube: string; insta: string }) => {
-    return (
-      <div className={Style.AreaLinksSociais}>
-        {!!insta && (
-          <a
-            className={Style.instagram}
-            href={insta}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FaInstagram />
-          </a>
-        )}
-        {!!youtube && (
-          <span
-            className={Style.areaAssitirTrailer}
-            onClick={() => handleVerVideo(youtube)}
-          >
-            <FaYoutube />
-            <span>ASSISTA AO TRAILER</span>
-          </span>
-        )}
-      </div>
-    )
-  }
-  const setColor = (slug: string) => {
-    const colorTitle = ['guerracivil']
-    const color = colorTitle.includes(slug)
-    return color ? '#01fc30' : filme.color
   }
 
   if (isLoading) return <Loading altura={true} />
@@ -200,9 +152,7 @@ const Filme = (data: IFilmeProps) => {
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: `${setColor(filme.slug)}` }}>
-                {filme?.title}
-              </h1>
+              <h1 style={{ color: filme.slug }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>
                   {formatarData(filme.releasedate)}
@@ -316,10 +266,17 @@ const Filme = (data: IFilmeProps) => {
                   <div>
                     <h2>Sinopse</h2>
                     <p>{filme?.shortSynopsis}</p>
-                    <Links youtube={filme?.trailer} insta=""></Links>
+                    <div className={Style.AreaLinksSociais}>
+                      <span
+                        className={Style.areaAssitirTrailer}
+                        onClick={() => handleVerVideo(filme.trailer)}
+                      >
+                        <FaYoutube />
+                        <span>ASSISTA AO TRAILER</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
-
                 <div className={Style.areaFlexInformacoes}>
                   <div>
                     <h2>Informações</h2>
@@ -408,7 +365,7 @@ const Filme = (data: IFilmeProps) => {
                       alt="Filme"
                       className={Style.SlideImgFilme}
                       src={`${data.url}`}
-                      onClick={() => handleVerImagem(data, i)}
+                      onClick={() => handleVerImagem(i)}
                       style={{ cursor: 'pointer' }}
                       width={300}
                       height={200}
