@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { FaMapMarkedAlt } from 'react-icons/fa'
 import { IoSearchSharp } from 'react-icons/io5'
 
@@ -58,9 +58,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2)
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2)
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     const distanceInKilometers = R * c
 
@@ -182,7 +182,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     const getFilmeSessoes = async () => {
       try {
         const res = await getSession(filme.slug, locationArea?.address.city)
-
         setSessoes(res)
         setFilteredSessions([res])
       } catch (e) {
@@ -192,6 +191,41 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     getFilmeSessoes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationArea])
+
+  console.log(filteredSessions);
+
+
+  const Horarios = (session: Sessions | undefined, nome: string) => {
+    if (session?.hours && Array.isArray(session.hours)) {
+      const filteredHours = session.hours.filter((hour) =>
+        hour.links?.includes(nome)
+      );
+
+      if (filteredHours.length > 0) {
+        return (
+          <ul>
+            {filteredHours
+              .sort((a, b) => a.hour.localeCompare(b.hour))
+              .map((hour, i) => (
+                <li key={i}>
+                  <S.LinkHora
+                    href={hour?.links}
+                    $color={color}
+                    onClick={() => handleClickBanner(session)}
+                    target="_blank"
+                  >
+                    {formatarHora(hour?.hour)}
+                  </S.LinkHora>
+                </li>
+              ))}
+          </ul>
+        );
+      }
+    }
+
+    return false;
+  };
+
 
   return (
     <section className={Style.areaSessao}>
@@ -207,134 +241,132 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
           className={Style.areaPesquisa}
           style={{ background: `${darken(0.2, color)}` }}
         >
-          <div className={Style.flexAreaPesquisa}>
-            <IoSearchSharp />
-            <label htmlFor="estado">
-              <select
-                id="estado"
-                value={state}
-                onChange={({ target }) => setState(target.value)}
-              >
-                <option value="estado">Estado</option>
-                {localFilmes
-                  ?.sort((a, b) => a.state.localeCompare(b.state))
-                  ?.map((data) => (
-                    <option key={data.state} value={data.state}>
-                      {obterNomeEstado(data.state)}
-                    </option>
-                  ))}
-              </select>
-            </label>
-            <label htmlFor="cidade">
-              <select
-                id="cidade"
-                value={cities}
-                onChange={({ target }) => setCities(target.value)}
-              >
-                <option value="cidade">Cidade</option>
-                {localFilmes &&
-                  localFilmes
-                    .find((item) => item.state === state)
-                    ?.cities.slice()
-                    .sort((a, b) => a.localeCompare(b))
-                    .map((city: string) => (
-                      <option key={city} value={city}>
-                        {city}
+          <div className={Style.HorarioSessoes}  style={{ background: `${darken(0.2, color)}` }}>
+            <div className={Style.flexAreaPesquisa}>
+              <IoSearchSharp />
+              <label htmlFor="estado">
+                <select
+                  id="estado"
+                  value={state}
+                  onChange={({ target }) => setState(target.value)}
+                >
+                  <option value="estado">Estado</option>
+                  {localFilmes
+                    ?.sort((a, b) => a.state.localeCompare(b.state))
+                    ?.map((data) => (
+                      <option key={data.state} value={data.state}>
+                        {obterNomeEstado(data.state)}
                       </option>
                     ))}
-              </select>
-            </label>
-          </div>
-          {loadings && loading && <Loading />}
-          {filteredSessions.length !== 0 && !loading && (
-            <>
-              <div
-                className={Style.flexData}
-                style={{ background: `${color}` }}
-              >
-                {sessoes?.sessions.map((data, i) => {
-                  return (
-                    <S.ButtonHora
-                      key={i}
-                      $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
-                      className={`${Style.areaData}`}
-                      onClick={() => handleDataClick(data.date)}
-                    >
-                      <span className={Style.mes}>{formatMes(data.date)}</span>
-                      <span className={Style.dia}>{formatDia(data.date)}</span>
-                      <span className={Style.diaSemana}>
-                        {formatDiaDaSemana(data.date)}
-                      </span>
-                    </S.ButtonHora>
-                  )
-                })}
-              </div>
-              <div className={Style.areaSessao}>Escolha uma sessão:</div>
-              <div className={Style.areaCinema}>
-                {filteredSessions &&
-                  filteredSessions.map((session, i) => (
-                    <div key={1 + i} className={Style.ItemSessao}>
-                      <div className={Style.flexTitle}>
-                        <img
-                          src="/img/icon _ticket_.png"
-                          alt={session.theaterName}
-                          width={50}
-                          height={50}
-                        />
-                        <div className={Style.areaTitle}>
-                          {session.distance > 0 && (
-                            <>
-                              <span>{session.distance.toFixed(1)}</span>KM
-                            </>
-                          )}
-                          <div className={Style.flexTitleName}>
-                            <h3>{session.theaterName}</h3>
+                </select>
+              </label>
+              <label htmlFor="cidade">
+                <select
+                  id="cidade"
+                  value={cities}
+                  onChange={({ target }) => setCities(target.value)}
+                >
+                  <option value="cidade">Cidade</option>
+                  {localFilmes &&
+                    localFilmes
+                      .find((item) => item.state === state)
+                      ?.cities.slice()
+                      .sort((a, b) => a.localeCompare(b))
+                      .map((city: string) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                </select>
+              </label>
+            </div>
+            {loadings && loading && <Loading />}
+            {filteredSessions.length !== 0 && !loading && (
+              <>
+                <div
+                  className={Style.flexData}
+                  style={{ background: `${color}` }}
+                >
+                  {sessoes?.sessions.map((data, i) => {
+                    return (
+                      <S.ButtonHora
+                        key={i}
+                        $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
+                        className={`${Style.areaData}`}
+                        onClick={() => handleDataClick(data.date)}
+                      >
+                        <span className={Style.mes}>{formatMes(data.date)}</span>
+                        <span className={Style.dia}>{formatDia(data.date)}</span>
+                        <span className={Style.diaSemana}>
+                          {formatDiaDaSemana(data.date)}
+                        </span>
+                      </S.ButtonHora>
+                    )
+                  })}
+                </div>
+                <div className={Style.areaSessao}>Escolha uma sessão:</div>
+                <div className={Style.areaCinema}>
+                  {filteredSessions &&
+                    filteredSessions.map((session, i) => (
+                      <div key={1 + i} className={Style.ItemSessao}>
+                        <div className={Style.flexTitle}>
+                          <img
+                            src="/img/icon _ticket_.png"
+                            alt={session.theaterName}
+                            width={50}
+                            height={50}
+                          />
+                          <div className={Style.areaTitle}>
+                            {session.distance > 0 && (
+                              <>
+                                <span>{session.distance.toFixed(1)}</span>KM
+                              </>
+                            )}
+                            <div className={Style.flexTitleName}>
+                              <h3>{session.theaterName}</h3>
 
-                            <S.LinkLocation
-                              href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
-                              target="_blank"
-                              rel="noreferrer"
-                              $color={color}
-                            >
-                              <FaMapMarkedAlt />
-                            </S.LinkLocation>
+                              <S.LinkLocation
+                                href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                $color={color}
+                              >
+                                <FaMapMarkedAlt />
+                              </S.LinkLocation>
+                            </div>
+                            <h4>
+                              {session.address}, {session.number}
+                              {session.addressComplement && '-'}
+                              {session.addressComplement}, {session.city} {' - '}
+                              {session.state}
+                            </h4>
                           </div>
-                          <h4>
-                            {session.address}, {session.number}
-                            {session.addressComplement && '-'}
-                            {session.addressComplement}, {session.city} {' - '}
-                            {session.state}
-                          </h4>
+                        </div>
+                        <div className={Style.areaSalaHorario}>
+                          <span>{session.technology}</span>
+                          <div>
+                            {Horarios(session, "cinemark") && <h4>Cinemark</h4>}
+                            {Horarios(session, "cinemark")}
+
+                            {Horarios(session, "ingresso.com") && <h4>Ingresso.com</h4>}
+                            {Horarios(session, "ingresso.com")}
+
+                            {Horarios(session, "veloxtickets") && <h4>Veloxtickets</h4>}
+                            {Horarios(session, "veloxtickets")}
+                          </div>
                         </div>
                       </div>
-                      <div className={Style.areaSalaHorario}>
-                        <span>{session.technology}</span>
-                        <ul>
-                          {session?.hours
-                            ?.sort((a, b) => a.hour.localeCompare(b.hour))
-                            ?.map((hour, i) => (
-                              <li key={1 + i}>
-                                <S.LinkHora
-                                  href={hour?.links}
-                                  $color={color}
-                                  onClick={() => handleClickBanner(session)}
-                                  target="_blank"
-                                >
-                                  {formatarHora(hour?.hour)}
-                                </S.LinkHora>
-                              </li>
-                            ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </>
-          )}
+                    ))}
+                </div>
+              </>
+            )}
+          </div>
+
         </div>
       </div>
     </section>
   )
 }
+
 
 export default React.memo(Sessoes)
