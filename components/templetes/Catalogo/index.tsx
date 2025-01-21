@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import Style from './Catalogo.module.scss'
-
 import { CardFilme } from '@/components/molecules'
 import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
 import { useGtag } from '@/utils/lib/gtag'
@@ -11,8 +10,8 @@ import { IFilmeResponse } from '@/utils/server/types'
 
 interface ICatalogoProps {
   listaFilmes: {
-    releases: Array<IFilmeResponse>
-    streaming: Array<IFilmeResponse>
+    releases: IFilmeResponse[]
+    streaming: IFilmeResponse[]
   }
 }
 
@@ -20,83 +19,48 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
   const [filtroGenero, setFiltroGenero] = useState<string>('')
   const [filtroAno, setFiltroAno] = useState<string>('')
   const [pesquisa, setPesquisa] = useState<string>('')
-  const [filtroAlfabeto, setFiltroAlfabeto] = useState<string>('')
-  const [filtroPesquisa, setFiltroPesquisa] = useState<IFilmeResponse[]>([])
+  const [resultadosPesquisa, setResultadosPesquisa] = useState<IFilmeResponse[]>([])
+  const [titulo, setTitulo] = useState<string>('TUDO')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const { formatAno } = useFormatarData()
-
-  const lancamento = listaFilmes.releases
-
-  const streaming = listaFilmes.streaming
-
-  const concatFilmes = lancamento.concat(streaming)
-
   const { dataLayerMovieFilter } = useGtag()
 
-  const handleGeneroChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    // setFiltroAno('')
-    // setPesquisa('')
-    // setFiltroAlfabeto('')
-    // setFiltroPesquisa([])
-    const novoGenero = event.target.value
-    setFiltroGenero(novoGenero)
-    dataLayerMovieFilter('Filmes | Diamond Film', 'filmes', '', novoGenero, 0)
+  const todosOsFilmes = [...listaFilmes.releases, ...listaFilmes.streaming]
+
+  const handleBuscar = () => {
+    setIsLoading(true)
+
+    const filmesFiltrados = todosOsFilmes.filter((filme) =>
+      filme.title.toLowerCase().includes(pesquisa.toLowerCase())
+    )
+    setResultadosPesquisa(filmesFiltrados)
+    atualizarTitulo(filmesFiltrados)
+    setIsLoading(false) // Simula um pequeno atraso
   }
 
-  const handleAnoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    // setFiltroGenero('')
-    // setPesquisa('')
-    // setFiltroAlfabeto('')
-    // setFiltroPesquisa([])
-    const novoAno = event.target.value
-    setFiltroAno(novoAno)
-  }
-
-  const handleFiltroAlfabeto = (letra: string) => {
-    // setFiltroGenero('')
-    // setFiltroAno('')
-    setPesquisa('')
-    setFiltroPesquisa([])
-    setFiltroAlfabeto(letra)
-  }
-
-  const handlePesquisa = () => {
-    // setFiltroGenero('')
-    // setFiltroAno('')
-    setFiltroAlfabeto('')
-    const filmesPesquisados = concatFilmes.filter(ItemPesquisados)
-    setFiltroPesquisa(filmesPesquisados)
-  }
-
-  const ItemPesquisados = (filme: IFilmeResponse) => {
-    if (filme.title.toLowerCase().includes(pesquisa.toLowerCase())) {
-      return filme.title.toLowerCase().includes(pesquisa.toLowerCase())
+  const atualizarTitulo = (filmes: IFilmeResponse[]) => {
+    if (filmes.length === 0) {
+      setTitulo('Nenhum resultado encontrado');
+      dataLayerMovieFilter('Filmes | Diamond Film', 'filmes', '', 'Nenhum resultado encontrado', 0);
+      return;
     }
-  }
+
+    const tituloAtualizado =
+      filtroGenero ? `Gênero: ${filtroGenero}` :
+        filtroAno ? `Ano: ${filtroAno}` :
+          pesquisa ? `Resultados para: "${pesquisa}"` :
+            'TUDO';
+
+    dataLayerMovieFilter('Filmes | Diamond Film', 'filmes', '', tituloAtualizado, 0);
+
+    setTitulo(tituloAtualizado);
+  };
+
 
   const filtrarFilmes = (filme: IFilmeResponse) => {
-    if (filtroPesquisa.length > 0 && !filtroPesquisa.includes(filme)) {
-      return false
-    }
-
-    if (filtroGenero && filme.genre !== filtroGenero) {
-      return false
-    }
-    if (filtroAno && formatAno(filme.releasedate) !== parseInt(filtroAno)) {
-      return false
-    }
-
-    if (filtroAlfabeto === '#' && !isNaN(parseInt(filme.title.charAt(0)))) {
-      return true
-    }
-    if (
-      filtroAlfabeto &&
-      filme.title.charAt(0).toUpperCase() !== filtroAlfabeto
-    ) {
-      return false
-    }
-    if (filtroAno === '2024' && formatAno(filme.releasedate) !== 2024) {
-      return false
-    }
+    if (filtroGenero && filme.genre !== filtroGenero) return false
+    if (filtroAno && formatAno(filme.releasedate) !== parseInt(filtroAno)) return false
     return true
   }
 
@@ -104,26 +68,23 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
     <section className={Style.catalogo}>
       <div className="container">
         <h1>Filmes</h1>
+
+        {/* Filtros */}
         <div className={Style.gridCatalogo}>
-          <select value={filtroGenero} onChange={handleGeneroChange}>
+          <select value={filtroGenero} onChange={(e) => setFiltroGenero(e.target.value)}>
             <option value="">Gênero</option>
-            {Array.from(new Set(concatFilmes.map((data) => data.genre))).map(
-              (genre, index) => (
-                <option key={index} value={genre}>
-                  {genre}
-                </option>
-              )
-            )}
+            {Array.from(new Set(todosOsFilmes.map((filme) => filme.genre))).map((genre, index) => (
+              <option key={index} value={genre}>
+                {genre}
+              </option>
+            ))}
           </select>
-          <select value={filtroAno} onChange={handleAnoChange}>
+          <select value={filtroAno} onChange={(e) => setFiltroAno(e.target.value)}>
             <option value="">Ano</option>
             {Array.from(
               { length: new Date().getFullYear() - 2023 },
               (_, index) => (
-                <option
-                  key={index}
-                  value={(new Date().getFullYear() - index).toString()}
-                >
+                <option key={index} value={(new Date().getFullYear() - index).toString()}>
                   {new Date().getFullYear() - index}
                 </option>
               )
@@ -134,59 +95,45 @@ const Catalogo: React.FC<ICatalogoProps> = ({ listaFilmes }) => {
               type="text"
               placeholder="Pesquisar nome..."
               value={pesquisa}
-              onChange={({ target }) => setPesquisa(target.value)}
+              onChange={(e) => setPesquisa(e.target.value)}
             />
-            <button onClick={() => handlePesquisa()}>
+            <button onClick={handleBuscar}>
               <IoSearchSharp />
             </button>
           </div>
         </div>
-        <div className={Style.gridFiltroAlfabeto}>
-          <button onClick={() => handleFiltroAlfabeto('')}>
-            <strong>TUDO</strong>
-          </button>
-          <button onClick={() => handleFiltroAlfabeto('#')}>#</button>
-          {Array.from({ length: 26 }, (_, index) => (
-            <button
-              key={index}
-              onClick={() =>
-                handleFiltroAlfabeto(String.fromCharCode(65 + index))
-              }
-            >
-              {String.fromCharCode(65 + index)}
-            </button>
-          ))}
-        </div>
-        {(filtroPesquisa.length > 0 ||
-          concatFilmes.filter(filtrarFilmes).length > 0) && (
-          <>
+
+        {isLoading ? (
+          <p className={Style.Carregando}>Carregando...</p>
+        ) : (
+          <div>
             <div className={Style.areaTitleCatalogoFilmeAno}>
-              <h2>2024</h2> <span></span>
+              <h2>{titulo}</h2>
+              <span></span>
             </div>
+
             <div className={Style.gridFilmesCatalogo}>
-              {(filtroPesquisa.length > 0
-                ? filtroPesquisa
-                : // eslint-disable-next-line no-unsafe-optional-chaining
-                  concatFilmes.filter(filtrarFilmes)
+              {(resultadosPesquisa.length > 0
+                ? resultadosPesquisa
+                : todosOsFilmes.filter(filtrarFilmes)
               )
                 .sort(
                   (a, b) =>
-                    new Date(b.releasedate).getTime() -
-                    new Date(a.releasedate).getTime()
+                    new Date(b.releasedate).getTime() - new Date(a.releasedate).getTime()
                 )
-                .map((data) => (
-                  <div key={data.id}>
-                    <CardFilme data={data} slide="catalogo" />
+                .map((filme) => (
+                  <div key={filme.id}>
+                    <CardFilme data={filme} slide="catalogo" />
                   </div>
                 ))}
             </div>
-          </>
-        )}
 
-        {filtroPesquisa.length === 0 &&
-          concatFilmes.filter(filtrarFilmes).length === 0 && (
-            <p className={Style.CatalogoVazio}>Nenhum filme encontrado</p>
-          )}
+            {resultadosPesquisa.length === 0 &&
+              todosOsFilmes.filter(filtrarFilmes).length === 0 && (
+                <p className={Style.CatalogoVazio}>Nenhum filme encontrado</p>
+              )}
+          </div>
+        )}
       </div>
     </section>
   )
