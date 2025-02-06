@@ -93,12 +93,8 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
             </span>
           </Slide.Title>
           <CardFilme listaFilmes={listaFilmes} />
-          {true && (
-            <>
-              <Slide.Title className={Style.slideTitle}>CATÁLOGO</Slide.Title>
-              <CardFilme slide="streaming" listaFilmes={listaFilmes} />
-            </>
-          )}
+          <Slide.Title className={Style.slideTitle}>CATÁLOGO</Slide.Title>
+          <CardFilme slide="streaming" listaFilmes={listaFilmes} />
         </div>
       </section>
     </>

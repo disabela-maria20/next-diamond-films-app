@@ -76,6 +76,9 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
+
+  
+
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData()
   const { formatarData } = useFormatarData()

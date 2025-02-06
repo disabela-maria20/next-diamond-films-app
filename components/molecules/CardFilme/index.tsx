@@ -128,13 +128,14 @@ const CardFilme = ({
                 ) : (
                   <span className={Style.data}>{statusTextData(data)}</span>
                 )}
-                <span
+                {data.trailer != '' &&  <span
                   onClick={() => handleVerImagem(data)}
                   className={Style.tralher}
                 >
                   <FaYoutube />
                   <span>Assista ao Trailer</span>
-                </span>
+                </span>}
+               
               </div>
             ))}
         </Slide.Content>
