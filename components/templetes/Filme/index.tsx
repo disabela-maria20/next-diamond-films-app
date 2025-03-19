@@ -19,6 +19,7 @@ import { IFilmeResponse } from '@/utils/server/types'
 import { SwiperOptions } from 'swiper/types'
 
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
 
 interface IFilmeProps {
   movie: {
@@ -78,7 +79,7 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 const Filme = (data: IFilmeProps) => {
 
   
-
+  const statusTextData = useFilmeTextStatus()
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData()
   const { formatarData } = useFormatarData()
@@ -160,7 +161,14 @@ const Filme = (data: IFilmeProps) => {
               <h1 style={{ color: filme.slug }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>
-                  {formatarData(filme.releasedate)}
+                  
+                {!filme.hasSession ? (
+                  <span className={Style.data}>
+                    Estreia: {formatarData(filme?.releasedate ?? '')}
+                  </span>
+                ) : (
+                  <span className={Style.data}>{statusTextData(filme)}</span>
+                )}
                 </h2>
                 <div className={Style.areaBtnCompra}>
                   {!isStreaming && emExibicao && !isMobile && (
