@@ -98,11 +98,10 @@ const CardFilme = ({
           swiperOptions={filmesSwiperOptions}
         >
           {listaFilmes?.releases
-            .reverse()
             .sort(
               (a, b) =>
-                new Date(b.releasedate).getTime() -
-                new Date(a.releasedate).getTime()
+                new Date(a.releasedate).getTime() -
+                new Date(b.releasedate).getTime()
             )
             .map((data) => (
               <div key={data.id} className={Style.CardFilme}>
@@ -167,7 +166,13 @@ const CardFilme = ({
         className={Style.slideFilmehomePromo}
         swiperOptions={filmesStreaming}
       >
-        {listaFilmes?.streaming.reverse().map((data) => (
+        {listaFilmes?.streaming
+        .sort(
+          (a, b) =>
+            new Date(b.releasedate).getTime() -
+            new Date(a.releasedate).getTime()
+        )
+        .map((data) => (
           <div key={data.id} className={Style.CardFilme}>
             <Link href={`/${data.slug}`}>
               <img src={data.cover} alt={data.title} width={300} height={200} />

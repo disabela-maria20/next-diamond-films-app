@@ -192,9 +192,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationArea])
 
-  console.log(filteredSessions);
-
-
   const Horarios = (session: Sessions | undefined, nome: string) => {
     if (session?.hours && Array.isArray(session.hours)) {
       const filteredHours = session.hours.filter((hour) =>

@@ -38,7 +38,6 @@ const ComprarIngresso = ({ banner, listaFilmes }: IComprarIngressoProps) => {
   const [sessoesArray, setSessoesArray] = useState<
     IComprarIngressoSessoesResponse[]
   >([])
-console.log(filmesComSessoes);
   useEffect(() => {
     const fetchSessoes = async () => {
       try {

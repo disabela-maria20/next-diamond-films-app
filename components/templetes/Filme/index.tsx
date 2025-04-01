@@ -109,17 +109,9 @@ const Filme = (data: IFilmeProps) => {
       filme?.genre,
       Number(filme?.idVibezzMovie)
     )
-  }, [
-    dataLayerFichafilme,
-    filme?.title,
-    filme?.slug,
-    filme?.originalTitle,
-    filme?.genre,
-    filme?.idVibezzMovie
-  ])
+  }, [])
 
   const viewSaibaMais = useCallback(() => {
-    console.log('teste')
     setSaibaMais((prev) => !prev)
   }, [])
 
