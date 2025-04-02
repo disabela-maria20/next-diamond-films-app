@@ -47,7 +47,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
 
   useEffect(() => {
     dataLayerHome('Diamond Films', '')
-  }, [dataLayerHome])
+  }, [])
 
   function handleClickBanner(data: any) {
     dataLayerBannerClick(data.title, data.slug, data.id)
