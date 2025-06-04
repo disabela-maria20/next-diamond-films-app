@@ -62,7 +62,7 @@ const Home = ({ banner, listaFilmes }: IHomeProps) => {
         swiperOptions={bannerSwiperOptions}
         className={Style.slideBanner}
       >
-        {banner?.map((data) => (
+        {banner?.reverse().map((data) => (
           <div className={Style.areaBanner} key={data.id} aria-label="banner">
             <LazyLoadImage
               effect="blur"
