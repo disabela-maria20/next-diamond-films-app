@@ -26,7 +26,6 @@
     }
   }
 
- 
   .areaSessao {
     display: block;
     padding: 5px 20px;
@@ -186,7 +185,7 @@
       font-size: 1.8rem;
       font-weight: 700;
     }
-    h4{
+    h4 {
       font-size: 1.6rem;
       margin-bottom: 20px;
     }
@@ -226,9 +225,40 @@
   }
 }
 
-
-.HorarioSessoes{
+.HorarioSessoes {
   height: 100%;
   position: relative;
   overflow: hidden;
+}
+
+.modalSection {
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: $primary-lingh-color;
+  }
+  p {
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    color: $primary-lingh-color;
+    padding-top: 0 !important;
+    padding-bottom: 20px !important;
+  }
+  .modalLinks{
+    display: flex;
+    gap: 10px;
+  }
+  a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: $primary-color-gray;
+    // color: $primary-lingh-color;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.4rem;
+
+    &:hover {
+      background-color: darken($primary-color-gray, 10%);
+    }
+  }
 }

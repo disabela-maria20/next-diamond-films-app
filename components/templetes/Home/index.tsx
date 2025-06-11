@@ -31,6 +31,7 @@ interface IHomeProps {
 const Home = ({ banner, listaFilmes }: IHomeProps) => {
   const { dataLayerHome, dataLayerBannerClick } = useGtag()
   const { isMobile, isLoading } = useIsMobile()
+   const [showModal, setShowModal] = useState<boolean>(false)
   const bannerSwiperOptions: SwiperOptions = {
     slidesPerView: 1,
     loop: true,

@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaMapMarkedAlt } from 'react-icons/fa'
 import { IoSearchSharp } from 'react-icons/io5'
-
 import Style from './Sessoes.module.scss'
-
 import * as S from './styles'
+import { Loading } from '@/components/atoms'
+import { useLocationContext } from '@/components/molecules/Location/LocationContext'
+import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
+import { useGtag } from '@/utils/lib/gtag'
+import { getLocation, getSession } from '@/utils/server/requests'
+import { ESTADOS, IFilmeResponse, Sessions, Location, SessionsArrayResponse } from '@/utils/server/types'
+import { darken } from 'polished'
+import { Model } from '@/components/molecules'
 
 interface ISessoesProps {
   filme: IFilmeResponse
@@ -14,24 +20,17 @@ interface ISessoesProps {
   color: string
 }
 
-import { Loading } from '@/components/atoms'
-import { useLocationContext } from '@/components/molecules/Location/LocationContext'
-import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
-import { useGtag } from '@/utils/lib/gtag'
-import { getLocation, getSession } from '@/utils/server/requests'
-import {
-  ESTADOS,
-  IFilmeResponse,
-  Sessions,
-  Location,
-  SessionsArrayResponse
-} from '@/utils/server/types'
-import { darken } from 'polished'
+interface IModalData {
+  theaterName: string
+  hour: string
+  links: { url: string; source: string }[]
+}
 
 const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [filteredSessions, setFilteredSessions] = useState<Sessions[]>([])
-
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [modalData, setModalData] = useState<IModalData | null>(null)
   const [localFilmes, setLocalFilmes] = useState<Location[]>()
   const [state, setState] = useState<string>()
   const [cities, setCities] = useState<string>()
@@ -39,9 +38,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   const [loadings, setLoadings] = useState<boolean>(false)
 
   const { formatDia, formatMes, formatDiaDaSemana } = useFormatarData()
-
   const { dataLayerMovieTicket } = useGtag()
-
   const { location, loading, locationArea } = useLocationContext()
 
   const calculateDistance = (lat2: number, lon2: number) => {
@@ -62,10 +59,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2)
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    const distanceInKilometers = R * c
-
-    return distanceInKilometers
+    return R * c
   }
+
   function obterNomeEstado(sigla: string): string {
     return ESTADOS[sigla] || 'Estado não encontrado'
   }
@@ -130,12 +126,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     })
 
     const groupedSessionsArray = Object.values(groupedSessions)
-
-    const sortedSessionsByDistance = groupedSessionsArray.sort((a, b) => {
-      return a.distance - b.distance
-    })
-
-    return sortedSessionsByDistance
+    return groupedSessionsArray.sort((a, b) => a.distance - b.distance)
   }
 
   useEffect(() => {
@@ -154,7 +145,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         setFilteredSessions(groupSessoes([sessoes.sessions[0]?.sessions]))
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate, location, sessoes])
 
   useEffect(() => {
@@ -173,7 +163,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
         const res = await getSession(filme.slug, cities)
         setSessoes(res)
       }
-      return
     }
     getFilmeSessoes()
   }, [filme.slug, cities, location])
@@ -189,40 +178,100 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       }
     }
     getFilmeSessoes()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locationArea])
+  }, [locationArea, filme.slug])
 
-  const Horarios = (session: Sessions | undefined, nome: string) => {
-    if (session?.hours && Array.isArray(session.hours)) {
-      const filteredHours = session.hours.filter((hour) =>
-        hour.links?.includes(nome)
-      );
+  const handleOpenModal = (theaterName: string, hour: string, links: { url: string; source: string }[]) => {
+    setModalData({
+      theaterName,
+      hour,
+      links
+    })
+    setShowModal(true)
+  }
 
-      if (filteredHours.length > 0) {
-        return (
-          <ul>
-            {filteredHours
-              .sort((a, b) => a.hour.localeCompare(b.hour))
-              .map((hour, i) => (
-                <li key={i}>
-                  <S.LinkHora
-                    href={hour?.links}
-                    $color={color}
-                    onClick={() => handleClickBanner(session)}
-                    target="_blank"
-                  >
-                    {formatarHora(hour?.hour)}
-                  </S.LinkHora>
-                </li>
-              ))}
-          </ul>
-        );
-      }
+  const closeModal = () => {
+    setShowModal(false)
+    setModalData(null)
+  }
+
+  const Horarios = (d: Sessions) => {
+    const session = {
+      theaterName: "2132 - Cinemark Shopping Iguatemi SP",
+      technology: "2D",
+      isImax: false,
+      date: "2025-06-12",
+      distance: 6.290994331718377,
+      address: "Av Brigadeiro Faria Lima",
+      number: "2232",
+      addressComplement: "Loja GR 8/Piso 8",
+      postalCode: "01450-120",
+      city: "São Paulo",
+      state: "SP",
+      stateName: "São Paulo",
+      lat: "-23.5775",
+      lng: "-46.6876",
+      alternative_link: "",
+      hours: [
+        {
+          hour: "18:20:00",
+          links: "https://www.cingresso.com/partner/21F99EE3-2BE4-4D47-8B46-6FC6BD850FD2"
+        },
+        {
+          hour: "18:20:00",
+          links: "https://www.cinemark.com.br/partner/21F99EE3-2BE4-4D47-8B46-6FC6BD850FD2"
+        },
+        {
+          hour: "20:45:00",
+          links: "https://www.cinemark.com.br/partner/D2B6295B-FB7A-4618-AF88-A11901643625"
+        }
+      ]
     }
+    if (!session.hours || !Array.isArray(session.hours)) return null;
 
-    return false;
-  };
+    const hourMap = new Map<string, { url: string; source: string }[]>()
 
+    session.hours.forEach(({ hour, links }) => {
+      const horaFormatada = formatarHora(hour)
+      const source = links.includes('cinemark') ? 'Cinemark' :
+        links.includes('ingresso') ? 'Ingresso.com' :
+          'Veloxtickets'
+
+      if (!hourMap.has(horaFormatada)) {
+        hourMap.set(horaFormatada, [])
+      }
+      hourMap.get(horaFormatada)!.push({ url: links, source })
+    })
+
+    const horariosOrdenados = Array.from(hourMap.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+
+    return (
+      <ul className={Style.listaHorarios}>
+        {horariosOrdenados.map(([hora, links], i) => (
+          <li key={i}>
+            {links.length === 1 ? (
+              <S.LinkHora
+                href={links[0].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                $color={color}
+                onClick={() => handleClickBanner(session)}
+              >
+                {hora}
+              </S.LinkHora>
+            ) : (
+              <S.LinkHoraBTN
+                onClick={() => handleOpenModal(session.theaterName, hora, links)}
+                $color={color}
+              >
+                {hora}
+              </S.LinkHoraBTN>
+            )}
+          </li>
+        ))}
+      </ul>
+    )
+  }
 
   return (
     <section className={Style.areaSessao}>
@@ -238,7 +287,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
           className={Style.areaPesquisa}
           style={{ background: `${darken(0.2, color)}` }}
         >
-          <div className={Style.HorarioSessoes}  style={{ background: `${darken(0.2, color)}` }}>
+          <div className={Style.HorarioSessoes} style={{ background: `${darken(0.2, color)}` }}>
             <div className={Style.flexAreaPesquisa}>
               <IoSearchSharp />
               <label htmlFor="estado">
@@ -284,86 +333,109 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                   className={Style.flexData}
                   style={{ background: `${color}` }}
                 >
-                  {sessoes?.sessions.map((data, i) => {
-                    return (
-                      <S.ButtonHora
-                        key={i}
-                        $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
-                        className={`${Style.areaData}`}
-                        onClick={() => handleDataClick(data.date)}
-                      >
-                        <span className={Style.mes}>{formatMes(data.date)}</span>
-                        <span className={Style.dia}>{formatDia(data.date)}</span>
-                        <span className={Style.diaSemana}>
-                          {formatDiaDaSemana(data.date)}
-                        </span>
-                      </S.ButtonHora>
-                    )
-                  })}
+                  {sessoes?.sessions.map((data, i) => (
+                    <S.ButtonHora
+                      key={i}
+                      $bg={` ${selectedDate === data.date ? darken(0.2, color) : '#fff'}`}
+                      className={`${Style.areaData}`}
+                      onClick={() => handleDataClick(data.date)}
+                    >
+                      <span className={Style.mes}>{formatMes(data.date)}</span>
+                      <span className={Style.dia}>{formatDia(data.date)}</span>
+                      <span className={Style.diaSemana}>
+                        {formatDiaDaSemana(data.date)}
+                      </span>
+                    </S.ButtonHora>
+                  ))}
                 </div>
                 <div className={Style.areaSessao}>Escolha uma sessão:</div>
                 <div className={Style.areaCinema}>
-                  {filteredSessions &&
-                    filteredSessions.map((session, i) => (
-                      <div key={1 + i} className={Style.ItemSessao}>
-                        <div className={Style.flexTitle}>
-                          <img
-                            src="/img/icon _ticket_.png"
-                            alt={session.theaterName}
-                            width={50}
-                            height={50}
-                          />
-                          <div className={Style.areaTitle}>
-                            {session.distance > 0 && (
-                              <>
-                                <span>{session.distance.toFixed(1)}</span>KM
-                              </>
-                            )}
-                            <div className={Style.flexTitleName}>
-                              <h3>{session.theaterName}</h3>
-
-                              <S.LinkLocation
-                                href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                $color={color}
-                              >
-                                <FaMapMarkedAlt />
-                              </S.LinkLocation>
-                            </div>
-                            <h4>
-                              {session.address}, {session.number}
-                              {session.addressComplement && '-'}
-                              {session.addressComplement}, {session.city} {' - '}
-                              {session.state}
-                            </h4>
+                  {filteredSessions.map((session, i) => (
+                    <div key={i} className={Style.ItemSessao}>
+                      <div className={Style.flexTitle}>
+                        <img
+                          src="/img/icon _ticket_.png"
+                          alt={session.theaterName}
+                          width={50}
+                          height={50}
+                        />
+                        <div className={Style.areaTitle}>
+                          {session.distance > 0 && (
+                            <>
+                              <span>{session.distance.toFixed(1)}</span>KM
+                            </>
+                          )}
+                          <div className={Style.flexTitleName}>
+                            <h3>{session.theaterName}</h3>
+                            <S.LinkLocation
+                              href={`https://maps.google.com/?q=${session.lat},${session.lng}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              $color={color}
+                            >
+                              <FaMapMarkedAlt />
+                            </S.LinkLocation>
                           </div>
-                        </div>
-                        <div className={Style.areaSalaHorario}>
-                          <span>{session.technology}</span>
-                          <div>
-                            {Horarios(session, "cinemark") && <h4>Cinemark</h4>}
-                            {Horarios(session, "cinemark")}
-
-                            {Horarios(session, "ingresso.com") && <h4>Ingresso.com</h4>}
-                            {Horarios(session, "ingresso.com")}
-
-                            {Horarios(session, "veloxtickets") && <h4>Veloxtickets</h4>}
-                            {Horarios(session, "veloxtickets")}
-                          </div>
+                          <h4>
+                            {session.address}, {session.number}
+                            {session.addressComplement && '-'}
+                            {session.addressComplement}, {session.city} {' - '}
+                            {session.state}
+                          </h4>
                         </div>
                       </div>
-                    ))}
+                      <div className={Style.areaSalaHorario}>
+                        <span>{session.technology}</span>
+                        <div>
+                          <h4>Horários disponíveis:</h4>
+                          {Horarios(session)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </>
             )}
           </div>
-
         </div>
       </div>
+
+      {showModal && modalData && (
+        <Model.Root>
+          <Model.Body setOpen={closeModal}>
+            <Model.Title>Escolha onde comprar</Model.Title>
+            <Model.Content>
+              <section className={Style.modalSection}>
+                <h3>{modalData.theaterName}</h3>
+                <p>Horário: {modalData.hour}</p>
+                <div className={Style.modalLinks}>
+                  {modalData.links.map((link, index) => (
+                    <a
+                      key={index}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={Style.modalLink}
+                      style={{ backgroundColor: color }}
+                      onClick={() => handleClickBanner({
+                        theaterName: modalData.theaterName,
+                        address: filteredSessions[0]?.address || '',
+                        hour: modalData.hour,
+                        ...filteredSessions[0]
+                      })}
+                    >
+                      Comprar no {link.source}
+                    </a>
+                  ))}
+                </div>
+              </section>
+
+            </Model.Content>
+          </Model.Body>
+        </Model.Root>
+      )}
     </section>
   )
 }
-
 
 export default React.memo(Sessoes)
