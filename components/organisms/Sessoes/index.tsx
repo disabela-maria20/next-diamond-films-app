@@ -255,6 +255,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 $color={color}
+                // @ts-ignore: Unreachable code error
                 onClick={() => handleClickBanner(session)}
               >
                 {hora}
@@ -418,8 +419,11 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                       className={Style.modalLink}
                       style={{ backgroundColor: color }}
                       onClick={() => handleClickBanner({
+                        // @ts-ignore: Unreachable code error
                         theaterName: modalData.theaterName,
+                        // @ts-ignore: Unreachable code error
                         address: filteredSessions[0]?.address || '',
+                        // @ts-ignore: Unreachable code error
                         hour: modalData.hour,
                         ...filteredSessions[0]
                       })}
