@@ -10,19 +10,11 @@ import { getCatalogoFilme, getHome } from '@/utils/server/requests'
 export const revalidate = 60
 export const dynamicParams = true
 
-type Params = {
-  params: {
-    slug: string
-  }
-}
-
 interface ICatalogoFilmeProps {
   slug: string
 }
-export async function generateMetadata({
-  params: { slug }
-}: Params): Promise<Metadata> {
-  const filme = await getCatalogoFilme(slug)
+export async function generateMetadata(): Promise<Metadata> {
+  const filme = await getCatalogoFilme('juneandjohn')
   return {
     title: `Diamond Films - ${filme?.movie.title}`,
     description: filme?.movie.shortSynopsis,
@@ -34,8 +26,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function pageCatalogoFilme({ params: { slug } }: Params) {
-  const filme = await getCatalogoFilme(slug)
+export default async function pageCatalogoFilme() {
+
+  const filme = await getCatalogoFilme('juneandjohn')
 
   return (
     <Suspense fallback={<Loading altura={true} />}>

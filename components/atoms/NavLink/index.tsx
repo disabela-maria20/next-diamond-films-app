@@ -6,22 +6,22 @@ const LINK = [
   {
     nome: 'comprar ingresso',
     link: '/comprar-ingressos',
-    menu: true,
-    footer: true
+    menu: false,
+    footer: false
   },
   { nome: 'home', link: '/', menu: false, footer: false },
   {
     nome: 'Filmes',
     link: '/filmes',
-    menu: true,
-    footer: true
+    menu: false,
+    footer: false
   },
-  { nome: 'contato', link: '/fale-conosco', menu: true, footer: true },
+  { nome: 'contato', link: '/fale-conosco', menu: false, footer: false },
   {
     nome: 'sobre nós',
     link: '/sobre-nos',
-    menu: true,
-    footer: true
+    menu: false,
+    footer: false
   },
 
   { nome: 'Em Breve', link: '/em-breve', menu: false, footer: false },

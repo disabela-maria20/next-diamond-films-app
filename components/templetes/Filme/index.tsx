@@ -6,7 +6,7 @@ import { FaYoutube } from 'react-icons/fa'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
-import Style from './Filme.module.scss'
+import Style from './filme.module.scss'
 import { FreeMode, Scrollbar } from 'swiper/modules'
 
 import { Loading } from '@/components/atoms'
@@ -88,7 +88,7 @@ const Filme = (data: IFilmeProps) => {
 
   const router = useRouter()
   const filme = data.movie?.movie
-  const isStreaming = filme.status == EStatus.STREAMING
+  const isStreaming = filme?.status == EStatus.STREAMING
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
     formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
@@ -99,7 +99,7 @@ const Filme = (data: IFilmeProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [iframe, setIframe] = useState<string>()
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [saibaMais, setSaibaMais] = useState<boolean>(filme.hasSession)
+  const [saibaMais, setSaibaMais] = useState<boolean>(filme?.hasSession)
 
   useEffect(() => {
     dataLayerFichafilme(
@@ -117,13 +117,13 @@ const Filme = (data: IFilmeProps) => {
 
   const handlePrevImage = () => {
     setImageIndex((prevIndex) =>
-      prevIndex === 0 ? filme.images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? filme?.images.length - 1 : prevIndex - 1
     )
   }
 
   const handleNextImage = () => {
     setImageIndex((prevIndex) =>
-      prevIndex === filme.images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === filme?.images.length - 1 ? 0 : prevIndex + 1
     )
   }
 
@@ -150,11 +150,11 @@ const Filme = (data: IFilmeProps) => {
         <div className={Style.bannerFilme}>
           <div className="container">
             <div className={Style.areaTituloBanner}>
-              <h1 style={{ color: filme.slug }}>{filme?.title}</h1>
+              <h1 style={{ color: filme?.slug }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>
                   
-                {!filme.hasSession ? (
+                {!filme?.hasSession ? (
                   <span className={Style.data}>
                     Estreia: {formatarData(filme?.releasedate ?? '')}
                   </span>
@@ -174,16 +174,16 @@ const Filme = (data: IFilmeProps) => {
                       COMPRAR INGRESSOS
                     </button>
                   )}
-                  {filme.streaming.length > 0 && !isMobile && (
+                  {filme?.streaming.length > 0 && !isMobile && (
                     <button
                       onClick={() => {
                         dataLayerMovieStream(
-                          filme.title,
-                          filme.slug,
-                          filme.originalTitle,
-                          filme.genre,
-                          filme.streaming.toString(),
-                          Number(filme.idVibezzMovie)
+                          filme?.title,
+                          filme?.slug,
+                          filme?.originalTitle,
+                          filme?.genre,
+                          filme?.streaming.toString(),
+                          Number(filme?.idVibezzMovie)
                         )
                         window.location.href = ' https://www.primevideo.com/'
                       }}
@@ -200,7 +200,7 @@ const Filme = (data: IFilmeProps) => {
                 </div>
               </div>
               <div className={Style.AreaSaibamais}>
-                {filme.hasSession && (
+                {filme?.hasSession && (
                   <button
                     className={Style.btnSaibaMais}
                     onClick={viewSaibaMais}
@@ -217,7 +217,7 @@ const Filme = (data: IFilmeProps) => {
 
       <div style={{ overflow: 'hidden' }}>
         <div className="container">
-          {!filme.hasSession && (
+          {!filme?.hasSession && (
             <div className={Style.areaNewsletter}>
               <Newsletter
                 isHorrizontal={!isMobile}
@@ -234,16 +234,16 @@ const Filme = (data: IFilmeProps) => {
               </button>
             </div>
           )}
-          {filme.streaming.length > 0 && isMobile && (
+          {filme?.streaming.length > 0 && isMobile && (
             <button
               onClick={() => {
                 dataLayerMovieStream(
-                  filme.title,
-                  filme.slug,
-                  filme.originalTitle,
-                  filme.genre,
-                  filme.streaming.toString(),
-                  Number(filme.idVibezzMovie)
+                  filme?.title,
+                  filme?.slug,
+                  filme?.originalTitle,
+                  filme?.genre,
+                  filme?.streaming.toString(),
+                  Number(filme?.idVibezzMovie)
                 )
               }}
             >
@@ -273,7 +273,7 @@ const Filme = (data: IFilmeProps) => {
                     <div className={Style.AreaLinksSociais}>
                       <span
                         className={Style.areaAssitirTrailer}
-                        onClick={() => handleVerVideo(filme.trailer)}
+                        onClick={() => handleVerVideo(filme?.trailer)}
                       >
                         <FaYoutube />
                         <span>ASSISTA AO TRAILER</span>
@@ -335,12 +335,12 @@ const Filme = (data: IFilmeProps) => {
                       key={data.url}
                       onClick={() => {
                         dataLayerPlayTrailer(
-                          filme.title,
-                          filme.slug,
-                          filme.originalTitle,
-                          filme.genre,
+                          filme?.title,
+                          filme?.slug,
+                          filme?.originalTitle,
+                          filme?.genre,
                           'HUB',
-                          Number(filme.idVibezzMovie)
+                          Number(filme?.idVibezzMovie)
                         )
                       }}
                     >
@@ -379,14 +379,14 @@ const Filme = (data: IFilmeProps) => {
               </Slide.Content>
             </section>
           )}
-          {filme.hasSession && (
+          {filme?.hasSession && (
             <section id="sessao" className={Style.combrarIngresso}>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
               <p>
                 Para buscar as sessões: Selecione o ESTADO e a CIDADE, e veja os
                 cinemas disponiveis com as sessões
               </p>
-              <Sessoes filme={filme} color={filme.color} poster={filme.cover} />
+              <Sessoes filme={filme} color={filme?.color} poster={filme?.cover} />
             </section>
           )}
 
@@ -407,7 +407,7 @@ const Filme = (data: IFilmeProps) => {
               >
                 <LazyLoadImage
                   effect="blur"
-                  src={filme.images[imageIndex]?.url}
+                  src={filme?.images[imageIndex]?.url}
                   className={Style.modalSlideImg}
                   alt="Imagem filmes"
                   width={700}

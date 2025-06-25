@@ -39,6 +39,7 @@ export const useFormatarData = () => {
   }
 
   const formatarData = (data: string): string => {
+    if(data === undefined) return ''
     const partesData = data?.split('-')
     const dia = partesData[2]
     const mes = MESES[parseInt(partesData[1], 10) - 1]
