@@ -417,7 +417,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className={Style.modalLink}
-                      style={{ backgroundColor: color }}
+                      // style={{ backgroundColor: color }}
                       onClick={() => handleClickBanner({
                         // @ts-ignore: Unreachable code error
                         theaterName: modalData.theaterName,
@@ -428,7 +428,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                         ...filteredSessions[0]
                       })}
                     >
-                      Comprar no {link.source}
+                      <img src={`/img/logos/${link.source}.png`} alt="" />
                     </a>
                   ))}
                 </div>
