@@ -194,38 +194,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     setModalData(null)
   }
 
-  const Horarios = (d: Sessions) => {
-    const session = {
-      theaterName: "2132 - Cinemark Shopping Iguatemi SP",
-      technology: "2D",
-      isImax: false,
-      date: "2025-06-12",
-      distance: 6.290994331718377,
-      address: "Av Brigadeiro Faria Lima",
-      number: "2232",
-      addressComplement: "Loja GR 8/Piso 8",
-      postalCode: "01450-120",
-      city: "São Paulo",
-      state: "SP",
-      stateName: "São Paulo",
-      lat: "-23.5775",
-      lng: "-46.6876",
-      alternative_link: "",
-      hours: [
-        {
-          hour: "18:20:00",
-          links: "https://www.cingresso.com/partner/21F99EE3-2BE4-4D47-8B46-6FC6BD850FD2"
-        },
-        {
-          hour: "18:20:00",
-          links: "https://www.cinemark.com.br/partner/21F99EE3-2BE4-4D47-8B46-6FC6BD850FD2"
-        },
-        {
-          hour: "20:45:00",
-          links: "https://www.cinemark.com.br/partner/D2B6295B-FB7A-4618-AF88-A11901643625"
-        }
-      ]
-    }
+  const Horarios = (session: Sessions) => {
+   
     if (!session.hours || !Array.isArray(session.hours)) return null;
 
     const hourMap = new Map<string, { url: string; source: string }[]>()
