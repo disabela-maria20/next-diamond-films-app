@@ -81,7 +81,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     return hora?.slice(0, 5)
   }
 
-  function handleClickBanner(data: Sessions) {
+  function handleClickBanner(data: Sessions, link: string, exhibitor: string) {
+    console.log(data);
+
     dataLayerMovieTicket(
       filme.title,
       filme.slug,
@@ -90,7 +92,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       data.theaterName,
       data.address,
       data.hour,
-      Number(filme.idVibezzMovie)
+      Number(filme.idVibezzMovie),
+      link,
+      exhibitor
     )
   }
 
@@ -180,7 +184,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     getFilmeSessoes()
   }, [locationArea, filme.slug])
 
-  const handleOpenModal = (theaterName: string, hour: string, links: { url: string; source: string }[]) => {
+  const handleOpenModal = (theaterName: string, hour: string, links: any) => {
     setModalData({
       theaterName,
       hour,
@@ -195,25 +199,37 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   }
 
   const Horarios = (session: Sessions) => {
-   
     if (!session.hours || !Array.isArray(session.hours)) return null;
 
-    const hourMap = new Map<string, { url: string; source: string }[]>()
+    const hourMap = new Map<string, { url: string; source: string }[]>();
 
     session.hours.forEach(({ hour, links }) => {
-      const horaFormatada = formatarHora(hour)
-      const source = links.includes('cinemark') ? 'Cinemark' :
-        links.includes('ingresso') ? 'Ingresso.com' :
-          'Veloxtickets'
+      const horaFormatada = formatarHora(hour);
+
+      // Aqui vamos identificar corretamente o nome da bilheteria e o link
+      let url = '';
+      let source = '';
+
+      if (links.includes('cinemark')) {
+        url = links;
+        source = 'Cinemark';
+      } else if (links.includes('ingresso')) {
+        url = links;
+        source = 'Ingresso.com';
+      } else {
+        url = links;
+        source = 'Veloxtickets';
+      }
 
       if (!hourMap.has(horaFormatada)) {
-        hourMap.set(horaFormatada, [])
+        hourMap.set(horaFormatada, []);
       }
-      hourMap.get(horaFormatada)!.push({ url: links, source })
-    })
+
+      hourMap.get(horaFormatada)!.push({ url, source });
+    });
 
     const horariosOrdenados = Array.from(hourMap.entries())
-      .sort(([a], [b]) => a.localeCompare(b))
+      .sort(([a], [b]) => a.localeCompare(b));
 
     return (
       <ul className={Style.listaHorarios}>
@@ -225,14 +241,17 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 $color={color}
-                // @ts-ignore: Unreachable code error
-                onClick={() => handleClickBanner(session)}
+                onClick={() =>
+                  handleClickBanner(session, links[0].url, links[0].source)
+                }
               >
                 {hora}
               </S.LinkHora>
             ) : (
               <S.LinkHoraBTN
-                onClick={() => handleOpenModal(session.theaterName, hora, links)}
+                onClick={() =>
+                  handleOpenModal(session.theaterName, hora, links)
+                }
                 $color={color}
               >
                 {hora}
@@ -241,8 +260,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
           </li>
         ))}
       </ul>
-    )
-  }
+    );
+  };
+
 
   return (
     <section className={Style.areaSessao}>
@@ -388,15 +408,16 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                       rel="noopener noreferrer"
                       className={Style.modalLink}
                       // style={{ backgroundColor: color }}
-                      onClick={() => handleClickBanner({
-                        // @ts-ignore: Unreachable code error
-                        theaterName: modalData.theaterName,
-                        // @ts-ignore: Unreachable code error
-                        address: filteredSessions[0]?.address || '',
-                        // @ts-ignore: Unreachable code error
-                        hour: modalData.hour,
-                        ...filteredSessions[0]
-                      })}
+                      onClick={() => handleClickBanner(
+                        {
+                          ...filteredSessions[0],
+                          theaterName: modalData.theaterName,
+                          address: filteredSessions[0]?.address || '',
+                          hour: modalData.hour,
+                        },
+                        link.url,
+                        link.source
+                      )}
                     >
                       <img src={`/img/logos/${link.source}.png`} alt="" />
                     </a>
