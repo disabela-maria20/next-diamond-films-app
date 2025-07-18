@@ -105,7 +105,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       // @ts-ignore: Unreachable code error
       sessionsArray?.map(
         // @ts-ignore: Unreachable code error
-        ({ theaterName, hour: sessionHour, link: links, ...rest }) => {
+        ({ theaterName, hour: sessionHour, link: links, link_cinemark: link_cinemark, link_ingresso: link_ingresso, alternative_link: alternative_link, exhibitor: exhibitor, ...rest }) => {
           const key = `${theaterName}`
           const distance = calculateDistance(Number(rest.lat), Number(rest.lng))
           const stateName = obterNomeEstado(rest.state)
@@ -120,16 +120,37 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
               distance,
               // @ts-ignore: Unreachable code error
               stateName,
+              // @ts-ignore: Unreachable code error
+              link_cinemark,
+              // @ts-ignore: Unreachable code error
+              link_ingresso,
+              // @ts-ignore: Unreachable code error
+              alternative_link,
+              // @ts-ignore: Unreachable code error
+              exhibitor,
+              // @ts-ignore: Unreachable code error
               ...rest
             }
           }
           // @ts-ignore: Unreachable code error
-          groupedSessions[key].hours.push({ hour: sessionHour, links: links })
+          groupedSessions[key].hours.push({
+            hour: sessionHour,
+            links: links,
+            // @ts-ignore: Unreachable code error
+            exhibitor: exhibitor,
+            link_cinemark,
+            // @ts-ignore: Unreachable code error
+            link_ingresso,
+            // @ts-ignore: Unreachable code error
+            alternative_link,
+          })
         }
       )
     })
 
     const groupedSessionsArray = Object.values(groupedSessions)
+    console.log(groupedSessionsArray);
+
     return groupedSessionsArray.sort((a, b) => a.distance - b.distance)
   }
 
@@ -198,70 +219,54 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     setModalData(null)
   }
 
-  const Horarios = (session: Sessions) => {
-    if (!session.hours || !Array.isArray(session.hours)) return null;
-
-    const hourMap = new Map<string, { url: string; source: string }[]>();
-
-    session.hours.forEach(({ hour, links }) => {
-      const horaFormatada = formatarHora(hour);
-
-      // Aqui vamos identificar corretamente o nome da bilheteria e o link
-      let url = '';
-      let source = '';
-
-      if (links.includes('cinemark')) {
-        url = links;
-        source = 'Cinemark';
-      } else if (links.includes('ingresso')) {
-        url = links;
-        source = 'Ingresso.com';
-      } else {
-        url = links;
-        source = 'Veloxtickets';
-      }
-
-      if (!hourMap.has(horaFormatada)) {
-        hourMap.set(horaFormatada, []);
-      }
-
-      hourMap.get(horaFormatada)!.push({ url, source });
+const Horarios = (session: Sessions) => {
+  const horariosAgrupados = session.hours.reduce((acc: Record<string, any[]>, item) => {
+    if (!acc[item.hour]) {
+      acc[item.hour] = [];
+    }
+    acc[item.hour].push({
+      url: item.alternative_link || item.link_cinemark || item.link_ingresso || item.links,
+      source: item.exhibitor
     });
+    return acc;
+  }, {});
 
-    const horariosOrdenados = Array.from(hourMap.entries())
-      .sort(([a], [b]) => a.localeCompare(b));
+  const horariosOrdenados = Object.entries(horariosAgrupados).sort((a, b) =>
+    a[0].localeCompare(b[0])
+  );
+  
+  return (
+    <ul className={Style.listaHorarios}>
+      {horariosOrdenados.map(([hora, links], i) => (
+        <li key={i}>
+          {links.length === 1 ? (
+            <S.LinkHora
+              href={links[0].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              $color={color}
+              onClick={() =>
+                handleClickBanner(session as any, links[0].url, links[0].source)
+              }
+            >
+              {hora}
+            </S.LinkHora>
+          ) : (
+            <S.LinkHoraBTN
+              onClick={() =>
+                handleOpenModal(session?.theaterName as any, hora, links)
+              }
+              $color={color}
+            >
+              {hora}
+            </S.LinkHoraBTN>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
-    return (
-      <ul className={Style.listaHorarios}>
-        {horariosOrdenados.map(([hora, links], i) => (
-          <li key={i}>
-            {links.length === 1 ? (
-              <S.LinkHora
-                href={links[0].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                $color={color}
-                onClick={() =>
-                  handleClickBanner(session, links[0].url, links[0].source)
-                }
-              >
-                {hora}
-              </S.LinkHora>
-            ) : (
-              <S.LinkHoraBTN
-                onClick={() =>
-                  handleOpenModal(session.theaterName, hora, links)
-                }
-                $color={color}
-              >
-                {hora}
-              </S.LinkHoraBTN>
-            )}
-          </li>
-        ))}
-      </ul>
-    );
-  };
 
 
   return (

@@ -23,6 +23,7 @@ export async function generateMetadata({
   params: { slug }
 }: Params): Promise<Metadata> {
   const filme = await getCatalogoFilme(slug)
+
   return {
     title: `Diamond Films - ${filme?.movie.title}`,
     description: filme?.movie.shortSynopsis,

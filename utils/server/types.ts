@@ -1,141 +1,149 @@
 export interface IFilmeProps {
-  movie: IFilmeResponse
-  sessions: Sessions
+  movie: IFilmeResponse;
+  sessions: Sessions;
 }
 export interface IFilmeResponse extends IFilmeProps {
-  id: number
-  title: string
-  slug: string
-  color_status: string
-  originalTitle: string
-  countryOrigin: string
-  contentRating: string
-  banner_logo: string
-  duration: number
-  synopsis: string
-  shortSynopsis: string
-  cast: string
-  director: string
-  genre_id: number
-  genre: string
-  age: string
-  ageExplain: string
-  releasedate: string
-  premiereDate: string
-  partnerCode: string
-  status: string
-  cover: string
-  bannerMobile: string
-  bannerDesktop: string
-  color: string
-  trailer: string
-  socialCampaign: string
-  videos: IFilmeResponseUrl[]
-  images: IFilmeResponseUrl[]
-  streaming: IStreaming[]
-  created_at: string
-  hasSession: boolean
-  idVibezzMovie: string
+  id: number;
+  title: string;
+  slug: string;
+  color_status: string;
+  originalTitle: string;
+  countryOrigin: string;
+  contentRating: string;
+  banner_logo: string;
+  duration: number;
+  synopsis: string;
+  shortSynopsis: string;
+  cast: string;
+  director: string;
+  genre_id: number;
+  genre: string;
+  age: string;
+  ageExplain: string;
+  releasedate: string;
+  premiereDate: string;
+  partnerCode: string;
+  status: string;
+  cover: string;
+  bannerMobile: string;
+  bannerDesktop: string;
+  color: string;
+  trailer: string;
+  socialCampaign: string;
+  videos: IFilmeResponseUrl[];
+  images: IFilmeResponseUrl[];
+  streaming: IStreaming[];
+  created_at: string;
+  hasSession: boolean;
+  idVibezzMovie: string;
 }
 
 export interface IStreaming {
-  platform: string
+  platform: string;
 }
 export interface IFilmeResponseUrl {
-  url: string
+  url: string;
 }
 
 export interface IFilmesEstadosResponse {
-  estados: IFilmesEstado[]
+  estados: IFilmesEstado[];
 }
 export interface IFilmesEstado {
-  CIDADE: string
-  ESTADO: string
+  CIDADE: string;
+  ESTADO: string;
 }
 export interface SessionsArrayResponse {
-  sessions: SessionsResponse[]
+  sessions: SessionsResponse[];
 }
 export interface SessionsResponse {
-  date: string
-  sessions: Sessions
+  date: string;
+  sessions: Sessions;
 }
 export interface Sessions {
-  distance: number
-  sessionHour: string
-  theaterName: string
-  link?: string
-  technology: string
-  isImax: boolean
-  postalCode: string
-  address: string
-  lat: string
-  lng: string
-  addressComplement?: string
-  number?: string
-  hours: SessionHours[]
-  hour: string
-  state: string
-  city: string
-  stateName: string
+  distance: number;
+  sessionHour: string;
+  theaterName: string;
+  link?: string;
+  technology: string;
+  isImax: boolean;
+  postalCode: string;
+  address: string;
+  lat: string;
+  lng: string;
+  addressComplement?: string;
+  number?: string;
+  hours: SessionHours[];
+  hour: string;
+  state: string;
+  city: string;
+  stateName: string;
+  exhibitor: string;
+  link_cinemark: string;
+  link_ingresso: string;
+  alternative_link: string;
 }
 
 export interface SessionHours {
-  hour: string
-  links: string
+  hour: string;
+  links: string;
+  exhibitor: string;
+  link_cinemark: string;
+  link_ingresso: string;
+  alternative_link: string;
 }
 
 interface EstadosBrasileiros {
-  [sigla: string]: string
+  [sigla: string]: string;
 }
 
 export interface LocationData {
-  latitude: number
-  longitude: number
+  latitude: number;
+  longitude: number;
 }
 
 export const ESTADOS: EstadosBrasileiros = {
-  AC: 'Acre',
-  AL: 'Alagoas',
-  AP: 'Amapá',
-  AM: 'Amazonas',
-  BA: 'Bahia',
-  CE: 'Ceará',
-  DF: 'Distrito Federal',
-  ES: 'Espírito Santo',
-  GO: 'Goiás',
-  MA: 'Maranhão',
-  MT: 'Mato Grosso',
-  MS: 'Mato Grosso do Sul',
-  MG: 'Minas Gerais',
-  PA: 'Pará',
-  PB: 'Paraíba',
-  PR: 'Paraná',
-  PE: 'Pernambuco',
-  PI: 'Piauí',
-  RJ: 'Rio de Janeiro',
-  RN: 'Rio Grande do Norte',
-  RS: 'Rio Grande do Sul',
-  RO: 'Rondônia',
-  RR: 'Roraima',
-  SC: 'Santa Catarina',
-  SP: 'São Paulo',
-  SE: 'Sergipe',
-  TO: 'Tocantins'
-}
+  AC: "Acre",
+  AL: "Alagoas",
+  AP: "Amapá",
+  AM: "Amazonas",
+  BA: "Bahia",
+  CE: "Ceará",
+  DF: "Distrito Federal",
+  ES: "Espírito Santo",
+  GO: "Goiás",
+  MA: "Maranhão",
+  MT: "Mato Grosso",
+  MS: "Mato Grosso do Sul",
+  MG: "Minas Gerais",
+  PA: "Pará",
+  PB: "Paraíba",
+  PR: "Paraná",
+  PE: "Pernambuco",
+  PI: "Piauí",
+  RJ: "Rio de Janeiro",
+  RN: "Rio Grande do Norte",
+  RS: "Rio Grande do Sul",
+  RO: "Rondônia",
+  RR: "Roraima",
+  SC: "Santa Catarina",
+  SP: "São Paulo",
+  SE: "Sergipe",
+  TO: "Tocantins",
+};
 
 export interface Location {
-  state: string
-  cities: string[]
+  state: string;
+  cities: string[];
 }
 
 export interface Banner {
-  bannerDesktop: string
-  bannerMobile: string
-  slug: string
-  title: string
-  id: number
+  bannerDesktop: string;
+  bannerMobile: string;
+  slug: string;
+  title: string;
+  id: number;
 }
 
 export interface BannersResponse {
-  banners: Banner[]
+  banners: Banner[];
 }
