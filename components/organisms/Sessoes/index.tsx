@@ -165,6 +165,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
           });
         }
       );
+      if (!arrayToIterate) {
+        return []
+      }
       debugger
     });
 
