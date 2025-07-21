@@ -277,7 +277,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                   )
                 }
               >
-                {hora}
+                {hora.slice(0, 5)}
               </S.LinkHora>
             ) : (
               <S.LinkHoraBTN
@@ -286,7 +286,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                 }
                 $color={color}
               >
-                {hora}
+                {hora.slice(0, 5)}
               </S.LinkHoraBTN>
             )}
           </li>
