@@ -106,6 +106,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   }
 
   const groupSessoes = (sessao: Sessions[] | undefined) => {
+
     const groupedSessions: {
       [key: string]: Sessions & {
         hours: any[];
@@ -114,6 +115,8 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       };
     } = {};
 
+    if (!sessao) return [];
+    
     sessao?.forEach((sessionsArray) => {
       // Ensure sessionsArray is always an array before using forEach
       const arrayToIterate = Array.isArray(sessionsArray)
