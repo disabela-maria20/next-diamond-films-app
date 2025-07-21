@@ -116,7 +116,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     } = {};
 
     if (!sessao) return [];
-    
+    debugger
     sessao?.forEach((sessionsArray) => {
       // Ensure sessionsArray is always an array before using forEach
       const arrayToIterate = Array.isArray(sessionsArray)
@@ -165,6 +165,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
           });
         }
       );
+      debugger
     });
 
     return Object.values(groupedSessions).sort(
