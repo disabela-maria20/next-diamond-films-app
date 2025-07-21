@@ -88,7 +88,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     return hora?.slice(0, 5);
   }
 
-  function handleClickBanner(data: Sessions, link: string, exhibitor: string) {
+  function handleClickBanner(data: Sessions, link: string) {
     console.log(data);
 
     dataLayerMovieTicket(
@@ -101,7 +101,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       data.hour,
       Number(filme.idVibezzMovie),
       link,
-      exhibitor
+      data.exhibitor
     );
   }
 
@@ -258,61 +258,60 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   // Utility function to format time
   const formatTime = (hora: string) => hora?.slice(0, 5);
 
-  const Horarios = (session: Sessions & { hours?: any[] }) => {
-    if (!Array.isArray(session.hours)) {
-      return <p>Horários não disponíveis</p>;
-    }
+  const Horarios = (session: Sessions) => {
 
-    const horariosAgrupados = session.hours.reduce(
-      (acc: Record<string, any[]>, item) => {
-        if (!acc[item.hour]) acc[item.hour] = [];
+    if (!session.hours || !Array.isArray(session.hours)) return null;
 
-        acc[item.hour].push({
-          url:
-            item.alternative_link ||
-            item.link_cinemark ||
-            item.link_ingresso ||
-            item.links,
-          source: item.exhibitor,
-        });
+    const hourMap = new Map<string, { url: string; source: string }>();
 
-        return acc;
-      },
-      {}
-    );
+    session.hours.forEach(({ hour, links, link_cinemark }) => {
+      const horaFormatada = formatarHora(hour);
 
-    const horariosOrdenados = Object.entries(horariosAgrupados).sort((a, b) =>
-      a[0].localeCompare(b[0])
+      // Verifica se deve usar link_cinemark em vez de links
+      const finalLink =
+        link_cinemark && !links.includes("www.cinemark.com.br")
+          ? link_cinemark
+          : links;
+
+      const source = finalLink.includes("cinemark")
+        ? "Cinemark"
+        : finalLink.includes("ingresso")
+        ? "Ingresso.com"
+        : "Veloxtickets";
+
+      // Se o horário já existe no mapa, só substitui se for um link melhor (Cinemark)
+      if (!hourMap.has(horaFormatada)) {
+        hourMap.set(horaFormatada, { url: finalLink, source });
+      } else {
+        const currentLink = hourMap.get(horaFormatada)!;
+        // Se o link atual NÃO é do Cinemark e o novo é, substitui
+        if (
+          !currentLink.url.includes("www.cinemark.com.br") &&
+          finalLink.includes("www.cinemark.com.br")
+        ) {
+          hourMap.set(horaFormatada, { url: finalLink, source });
+        }
+      }
+    });
+
+    const horariosOrdenados = Array.from(hourMap.entries()).sort(([a], [b]) =>
+      a.localeCompare(b)
     );
 
     return (
       <ul className={Style.listaHorarios}>
-        {horariosOrdenados.map(([hora, links], i) => (
+        {horariosOrdenados.map(([hora, linkData], i) => (
           <li key={i}>
-            {links.length === 1 ? (
-              <S.LinkHora
-                href={links[0].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                $color={color}
-                onClick={() =>
-                  handleClickBanner(
-                    session as any,
-                    links[0].url,
-                    links[0].source
-                  )
-                }
-              >
-                {formatTime(hora)}
-              </S.LinkHora>
-            ) : (
-              <S.LinkHoraBTN
-                onClick={() => handleOpenModal(session, hora, links)}
-                $color={color}
-              >
-                {formatTime(hora)}
-              </S.LinkHoraBTN>
-            )}
+            <S.LinkHora
+              href={linkData.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              $color={color}
+              // @ts-ignore: Unreachable code error
+              onClick={() => handleClickBanner(session, linkData.url)}
+            >
+              {hora}
+            </S.LinkHora>
           </li>
         ))}
       </ul>
