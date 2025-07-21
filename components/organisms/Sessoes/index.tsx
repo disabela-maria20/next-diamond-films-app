@@ -88,7 +88,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     return hora?.slice(0, 5);
   }
 
-  function handleClickBanner(data: Sessions, link: string) {
+  function handleClickBanner(data: Sessions, link: string, source: string) {
     console.log(data);
 
     dataLayerMovieTicket(
