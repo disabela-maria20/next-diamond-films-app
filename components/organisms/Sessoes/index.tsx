@@ -30,6 +30,7 @@ interface IModalData {
   theaterName: string;
   hour: string;
   links: { url: string; source: string }[];
+  session: Sessions;
 }
 
 const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
@@ -219,11 +220,16 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     getFilmeSessoes();
   }, [locationArea, filme.slug]);
 
-  const handleOpenModal = (theaterName: string, hour: string, links: any) => {
+  const handleOpenModal = (
+    session: Sessions & { hours?: any[] },
+    hour: string,
+    links: { url: string; source: string }[]
+  ) => {
     setModalData({
-      theaterName,
+      theaterName: session.theaterName,
       hour,
       links,
+      session, // salvando a sessão completa
     });
     setShowModal(true);
   };
@@ -284,9 +290,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
               </S.LinkHora>
             ) : (
               <S.LinkHoraBTN
-                onClick={() =>
-                  handleOpenModal(session.theaterName, hora, links)
-                }
+                onClick={() => handleOpenModal(session, hora, links)}
                 $color={color}
               >
                 {formatTime(hora)}
@@ -446,13 +450,11 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className={Style.modalLink}
-                      // style={{ backgroundColor: color }}
                       onClick={() =>
                         handleClickBanner(
                           {
-                            ...filteredSessions[0],
+                            ...modalData.session,
                             theaterName: modalData.theaterName,
-                            address: filteredSessions[0]?.address || "",
                             hour: modalData.hour,
                           },
                           link.url,
