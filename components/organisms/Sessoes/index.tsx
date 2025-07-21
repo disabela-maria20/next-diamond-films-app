@@ -106,7 +106,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
   }
 
   const groupSessoes = (sessao: Sessions[] | undefined) => {
-
     const groupedSessions: {
       [key: string]: Sessions & {
         hours: any[];
@@ -116,23 +115,30 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     } = {};
 
     if (!sessao) return [];
-    debugger
-    sessao?.forEach((sessionsArray) => {
-      // Ensure sessionsArray is always an array before using forEach
+
+    sessao.forEach((sessionsArray) => {
+      if (!sessionsArray) return;
+
       const arrayToIterate = Array.isArray(sessionsArray)
         ? sessionsArray
         : [sessionsArray];
+
       arrayToIterate.forEach(
-        ({
-          theaterName,
-          hour: sessionHour,
-          link: links,
-          link_cinemark,
-          link_ingresso,
-          alternative_link,
-          exhibitor,
-          ...rest
-        }) => {
+        (
+          {
+            theaterName,
+            hour: sessionHour,
+            link: links,
+            link_cinemark,
+            link_ingresso,
+            alternative_link,
+            exhibitor,
+            ...rest
+          } = {} as Sessions
+        ) => {
+          // se theaterName não existir, pula
+          if (!theaterName) return;
+
           const key = `${theaterName}`;
           const distance = calculateDistance(
             Number(rest.lat),
@@ -165,10 +171,6 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
           });
         }
       );
-      if (!arrayToIterate) {
-        return []
-      }
-      debugger
     });
 
     return Object.values(groupedSessions).sort(
@@ -185,11 +187,19 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
       const getDate = sessoes.sessions.find(
         (session) => session?.date === selectedDate
       );
-      if (getDate) {
-        setFilteredSessions(groupSessoes([getDate.sessions]));
+
+      const sessionList = getDate?.sessions;
+
+      if (Array.isArray(sessionList)) {
+        setFilteredSessions(groupSessoes([sessionList]));
       } else {
-        setSelectedDate(sessoes.sessions[0]?.date);
-        setFilteredSessions(groupSessoes([sessoes.sessions[0]?.sessions]));
+        const fallback = sessoes.sessions[0]?.sessions;
+        if (Array.isArray(fallback)) {
+          setSelectedDate(sessoes.sessions[0].date);
+          setFilteredSessions(groupSessoes([fallback]));
+        } else {
+          setFilteredSessions([]);
+        }
       }
     }
   }, [selectedDate, location, sessoes]);
