@@ -232,6 +232,9 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
     setShowModal(false);
     setModalData(null);
   };
+  // Utility function to format time
+  const formatTime = (hora: string) => hora?.slice(0, 5);
+
   const Horarios = (session: Sessions & { hours?: any[] }) => {
     if (!Array.isArray(session.hours)) {
       return <p>Horários não disponíveis</p>;
@@ -277,7 +280,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                   )
                 }
               >
-                {hora.slice(0, 5)}
+                {formatTime(hora)}
               </S.LinkHora>
             ) : (
               <S.LinkHoraBTN
@@ -286,7 +289,7 @@ const Sessoes: React.FC<ISessoesProps> = ({ color, poster, filme }) => {
                 }
                 $color={color}
               >
-                {hora.slice(0, 5)}
+                {formatTime(hora)}
               </S.LinkHoraBTN>
             )}
           </li>
