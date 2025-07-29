@@ -350,7 +350,7 @@ const Filme = (data: IFilmeProps) => {
                     cartão de crédito ou débito.
                   </p>
                   <div className={Style.linkRegulamento}>
-                    <a href="">
+                    <a href="./pdf/Regulamento_0202505530.pdf" target="_blank">
                       Leia o regulamento completo
                     </a>
                   </div>
