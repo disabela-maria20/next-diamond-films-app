@@ -484,12 +484,12 @@
 .areaRegulamento {
   margin-top: 35px;
   margin-bottom: 35px;
-  padding: 0 20px;
   display: grid;
-  grid-template-columns: 1fr 2fr;
   gap: 45px;
   align-items: center;
+
   @include media(lg) {
+    grid-template-columns: 1fr 2fr;
     padding: 0;
     margin-bottom: 90px;
   }
@@ -520,7 +520,13 @@
       color: $primary-lingh-color;
       font-weight: 700;
       font-size: 1.6rem;
+      display: block;
+      text-align: center;
 
+      @include media(sm) {
+        display: inline;
+        text-align: center;
+      }
       &:hover {
         color: darken($primary-lingh-color, 10%);
       }
