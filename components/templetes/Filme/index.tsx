@@ -1,103 +1,103 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-'use client'
-import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
-import { FaYoutube } from 'react-icons/fa'
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+"use client";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { FaYoutube } from "react-icons/fa";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import Style from './Filme.module.scss'
-import { FreeMode, Scrollbar } from 'swiper/modules'
+import Style from "./Filme.module.scss";
+import { FreeMode, Scrollbar } from "swiper/modules";
 
-import { Loading } from '@/components/atoms'
-import { Model, Newsletter, Slide } from '@/components/molecules'
-import { Sessoes } from '@/components/organisms'
-import { useFormatarData } from '@/utils/hooks/useFormatarData/formatarData'
-import useIsMobile from '@/utils/hooks/useIsMobile/isMobile'
-import { useGtag } from '@/utils/lib/gtag'
-import { IFilmeResponse } from '@/utils/server/types'
-import { SwiperOptions } from 'swiper/types'
+import { Loading } from "@/components/atoms";
+import { Model, Newsletter, Slide } from "@/components/molecules";
+import { Sessoes } from "@/components/organisms";
+import { useFormatarData } from "@/utils/hooks/useFormatarData/formatarData";
+import useIsMobile from "@/utils/hooks/useIsMobile/isMobile";
+import { useGtag } from "@/utils/lib/gtag";
+import { IFilmeResponse } from "@/utils/server/types";
+import { SwiperOptions } from "swiper/types";
 
-import 'react-lazy-load-image-component/src/effects/blur.css'
-import useFilmeTextStatus from '@/utils/hooks/useFilmeTextStatus'
+import "react-lazy-load-image-component/src/effects/blur.css";
+import useFilmeTextStatus from "@/utils/hooks/useFilmeTextStatus";
 
 interface IFilmeProps {
   movie: {
-    movie: IFilmeResponse
-  }
+    movie: IFilmeResponse;
+  };
 }
 
 enum EStatus {
-  LANCAMENTO = 'lançamento',
-  STREAMING = 'streaming',
-  INATIVO = 'inativo'
+  LANCAMENTO = "lançamento",
+  STREAMING = "streaming",
+  INATIVO = "inativo",
 }
 
 const classificacoesIndicativas = [
-  { idade: 'Livre', cor: '#048f16' },
-  { idade: '10', cor: '#0281df' },
-  { idade: '12', cor: '#f5d218' },
-  { idade: '14', cor: '#f0850c' },
-  { idade: '16', cor: '#d40011' },
-  { idade: '18', cor: '#161616' }
-]
+  { idade: "Livre", cor: "#048f16" },
+  { idade: "10", cor: "#0281df" },
+  { idade: "12", cor: "#f5d218" },
+  { idade: "14", cor: "#f0850c" },
+  { idade: "16", cor: "#d40011" },
+  { idade: "18", cor: "#161616" },
+];
 
 const swiperOptions: SwiperOptions = {
   slidesPerView: 2,
   spaceBetween: 10,
   freeMode: true,
   pagination: {
-    clickable: true
+    clickable: true,
   },
   scrollbar: { hide: true },
   modules: [FreeMode, Scrollbar],
   breakpoints: {
     640: {
       slidesPerView: 3,
-      spaceBetween: 20
+      spaceBetween: 20,
     },
     768: {
       slidesPerView: 4,
-      spaceBetween: 10
-    }
-  }
-}
+      spaceBetween: 10,
+    },
+  },
+};
 function setDefinirCorClassificacaoIndicativa(idade: string) {
   const classificacao = classificacoesIndicativas.find(
     (classificacao) => classificacao.idade === idade
-  )
-  return classificacao ? classificacao.cor : ''
+  );
+  return classificacao ? classificacao.cor : "";
 }
 
 function converterParaHorasEMinutos(totalMinutos: number) {
-  const horas = Math.floor(totalMinutos / 60)
-  const minutos = totalMinutos % 60
+  const horas = Math.floor(totalMinutos / 60);
+  const minutos = totalMinutos % 60;
 
-  return `${horas}h${minutos}min`
+  return `${horas}h${minutos}min`;
 }
 
 const Filme = (data: IFilmeProps) => {
-  const statusTextData = useFilmeTextStatus()
+  const statusTextData = useFilmeTextStatus();
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
-    useFormatarData()
-  const { formatarData } = useFormatarData()
+    useFormatarData();
+  const { formatarData } = useFormatarData();
   const { dataLayerFichafilme, dataLayerPlayTrailer, dataLayerMovieStream } =
-    useGtag()
+    useGtag();
 
-  const router = useRouter()
-  const filme = data.movie?.movie
-  const isStreaming = filme.status == EStatus.STREAMING
+  const router = useRouter();
+  const filme = data.movie?.movie;
+  const isStreaming = filme.status == EStatus.STREAMING;
   const emExibicao =
     formatMesmaSemana(filme?.releasedate) ||
     formatPassouUmaSemanaDesdeData(filme?.releasedate) ||
-    filme?.hasSession
+    filme?.hasSession;
 
-  const { isMobile, isLoading } = useIsMobile()
-  const [imageIndex, setImageIndex] = useState<number>(0)
-  const [open, setOpen] = useState<boolean>(false)
-  const [iframe, setIframe] = useState<string>()
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [saibaMais, setSaibaMais] = useState<boolean>(filme.hasSession)
+  const { isMobile, isLoading } = useIsMobile();
+  const [imageIndex, setImageIndex] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false);
+  const [iframe, setIframe] = useState<string>();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [saibaMais, setSaibaMais] = useState<boolean>(filme.hasSession);
 
   useEffect(() => {
     dataLayerFichafilme(
@@ -106,43 +106,49 @@ const Filme = (data: IFilmeProps) => {
       filme?.originalTitle,
       filme?.genre,
       Number(filme?.idVibezzMovie)
-    )
-  }, [])
+    );
+  }, []);
+
+
 
   const viewSaibaMais = useCallback(() => {
-    setSaibaMais((prev) => !prev)
-  }, [])
+    setSaibaMais((prev) => !prev);
+  }, []);
 
   const handlePrevImage = () => {
     setImageIndex((prevIndex) =>
       prevIndex === 0 ? filme.images.length - 1 : prevIndex - 1
-    )
-  }
+    );
+  };
 
   const handleNextImage = () => {
     setImageIndex((prevIndex) =>
       prevIndex === filme.images.length - 1 ? 0 : prevIndex + 1
-    )
-  }
+    );
+  };
 
   function handleVerImagem(index: number) {
-    setOpen(true)
-    setImageIndex(index)
+    setOpen(true);
+    setImageIndex(index);
   }
 
   function handleVerVideo(data: string) {
-    setOpenModal(true)
-    setIframe(data)
+    setOpenModal(true);
+    setIframe(data);
   }
 
-  if (isLoading) return <Loading altura={true} />
+  if (isLoading) return <Loading altura={true} />;
 
+
+  
   return (
     <>
       <section
         className={Style.areaBanner}
         style={{
-          backgroundImage: `url(${isMobile ? filme?.bannerMobile : filme?.bannerDesktop})`
+          backgroundImage: `url(${
+            isMobile ? filme?.bannerMobile : filme?.bannerDesktop
+          })`,
         }}
       >
         <div className={Style.bannerFilme}>
@@ -151,22 +157,21 @@ const Filme = (data: IFilmeProps) => {
               <h1 style={{ color: filme.slug }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>
-                  
-                {!filme.hasSession ? (
-                  <span className={Style.data}>
-                    Estreia: {formatarData(filme?.releasedate ?? '')}
-                  </span>
-                ) : (
-                  <span className={Style.data}>{statusTextData(filme)}</span>
-                )}
+                  {!filme.hasSession ? (
+                    <span className={Style.data}>
+                      Estreia: {formatarData(filme?.releasedate ?? "")}
+                    </span>
+                  ) : (
+                    <span className={Style.data}>{statusTextData(filme)}</span>
+                  )}
                 </h2>
                 <div className={Style.areaBtnCompra}>
                   {!isStreaming && emExibicao && !isMobile && (
                     <button
                       onClick={() => {
-                        router.push('#sessao', {
-                          scroll: true
-                        })
+                        router.push("#sessao", {
+                          scroll: true,
+                        });
                       }}
                     >
                       COMPRAR INGRESSOS
@@ -182,13 +187,13 @@ const Filme = (data: IFilmeProps) => {
                           filme.genre,
                           filme.streaming.toString(),
                           Number(filme.idVibezzMovie)
-                        )
-                        window.location.href = ' https://www.primevideo.com/'
+                        );
+                        window.location.href = " https://www.primevideo.com/";
                       }}
                     >
                       ASSISTA AGORA NO
                       <LazyLoadImage
-                        src={`/img/streaming/${'amazonprime'}.png`}
+                        src={`/img/streaming/${"amazonprime"}.png`}
                         // alt={service.toLowerCase()}
                         width="100"
                         effect="blur"
@@ -213,7 +218,7 @@ const Filme = (data: IFilmeProps) => {
         </div>
       </section>
 
-      <div style={{ overflow: 'hidden' }}>
+      <div style={{ overflow: "hidden" }}>
         <div className="container">
           {!filme.hasSession && (
             <div className={Style.areaNewsletter}>
@@ -227,7 +232,7 @@ const Filme = (data: IFilmeProps) => {
           )}
           {emExibicao && isMobile && !isStreaming && (
             <div className={Style.areaBtnCompra}>
-              <button onClick={() => router.push('#sessao', { scroll: true })}>
+              <button onClick={() => router.push("#sessao", { scroll: true })}>
                 COMPRAR INGRESSOS
               </button>
             </div>
@@ -242,12 +247,12 @@ const Filme = (data: IFilmeProps) => {
                   filme.genre,
                   filme.streaming.toString(),
                   Number(filme.idVibezzMovie)
-                )
+                );
               }}
             >
               ASSISTA AGORA NO
               <LazyLoadImage
-                src={`/img/streaming/${'amazonprime'}.png`}
+                src={`/img/streaming/${"amazonprime"}.png`}
                 // alt={service.toLowerCase()}
                 width="100"
                 effect="blur"
@@ -286,7 +291,9 @@ const Filme = (data: IFilmeProps) => {
                       {filme?.age && (
                         <span
                           style={{
-                            background: `${setDefinirCorClassificacaoIndicativa(filme?.age)}`
+                            background: `${setDefinirCorClassificacaoIndicativa(
+                              filme?.age
+                            )}`,
                           }}
                         >
                           {filme?.age}
@@ -324,6 +331,48 @@ const Filme = (data: IFilmeProps) => {
                   </div>
                 </div>
               </div>
+
+              {filme.slug === "juntos" && (
+                <>
+                  <Slide.Title className={Style.slideTitle}>
+                    Regulamento
+                  </Slide.Title>
+                  <section className={Style.areaRegulamento}>
+                    <div>
+                      <img src="./img/arte-promo.png" alt="" />
+                    </div>
+                    <div>
+                      <h2>
+                        Promoção: Compre 1 ingresso e leve 2 ingressos para o
+                        filme Juntos
+                      </h2>
+                      <p>
+                        A promoção é válida para compras realizadas no período
+                        de 01/11/2023 a 30/11/2023, ou enquanto durarem os
+                        estoques. Promoção válida para compras realizadas no
+                        site www.diamondfilms.com.br, e não se aplica a compras
+                        realizadas em cinemas.
+                      </p>
+                      <p>
+                        A promoção é válida para o filme Juntos, e não se aplica
+                        a outros filmes da Diamond Films.
+                      </p>
+                      <p>
+                        A promoção é válida apenas para compras realizadas com
+                        cartão de crédito ou débito.
+                      </p>
+                      <div className={Style.linkRegulamento}>
+                        <a
+                          href="./pdf/Regulamento_0202505530.pdf"
+                          target="_blank"
+                        >
+                          Leia o regulamento completo
+                        </a>
+                      </div>
+                    </div>
+                  </section>
+                </>
+              )}
               <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
               <section className={Style.areaIframeVideoYoutube}>
                 <section className={Style.gridIframeVideoYoutube}>
@@ -337,9 +386,9 @@ const Filme = (data: IFilmeProps) => {
                           filme.slug,
                           filme.originalTitle,
                           filme.genre,
-                          'HUB',
+                          "HUB",
                           Number(filme.idVibezzMovie)
-                        )
+                        );
                       }}
                     >
                       <iframe
@@ -368,7 +417,7 @@ const Filme = (data: IFilmeProps) => {
                       className={Style.SlideImgFilme}
                       src={`${data.url}`}
                       onClick={() => handleVerImagem(i)}
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: "pointer" }}
                       width={300}
                       height={200}
                     />
@@ -444,7 +493,7 @@ const Filme = (data: IFilmeProps) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Filme
+export default Filme;
