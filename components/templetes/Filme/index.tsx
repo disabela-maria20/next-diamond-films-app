@@ -333,9 +333,7 @@ const Filme = (data: IFilmeProps) => {
 
               {filme.slug === "juntos" && (
                 <div id="regulamento" className={Style.regulamento}>
-                  <Slide.Title className={Style.slideTitle}>
-                    Regulamento
-                  </Slide.Title>
+                  
                   <section className={Style.areaRegulamento}>
                     <div>
                       <img src="./img/banner-site_700x900_UM-ANO.jpg" alt="" />
@@ -399,9 +397,7 @@ const Filme = (data: IFilmeProps) => {
                       </div>
                     </div>
                   </section>
-                  <Slide.Title className={Style.slideTitle}>
-                    Promoção
-                  </Slide.Title>
+                  
                   <section className={Style.areaRegulamento}>
                     <div>
                       <img src="./img/banner-site_700x900_2x1.jpg" alt="" />
