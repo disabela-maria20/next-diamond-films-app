@@ -397,7 +397,7 @@ const Filme = (data: IFilmeProps) => {
                       </div>
                     </div>
                   </section>
-                  
+{/*                   
                   <section className={Style.areaRegulamento}>
                     <div>
                       <img src="./img/banner-site_700x900_2x1.jpg" alt="" />
@@ -444,7 +444,7 @@ const Filme = (data: IFilmeProps) => {
                         a de outras pessoas em risco.
                       </p>
                     </div>
-                  </section>
+                  </section> */}
                 </div>
               )}
               <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
