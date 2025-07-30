@@ -333,16 +333,17 @@ const Filme = (data: IFilmeProps) => {
 
               {filme.slug === "juntos" && (
                 <div id="regulamento" className={Style.regulamento}>
-                  
                   <section className={Style.areaRegulamento}>
                     <div>
                       <img src="./img/banner-site_700x900_UM-ANO.jpg" alt="" />
                     </div>
                     <div>
-                      <h3>
-                        REGRAS DA PROMOÇÃO #JUNTOSNOCINEMA PARA CONCORRER A UM
-                        ANO DE CINEMAS GRÁTIS
-                      </h3>
+                      <p>
+                        <strong>
+                          Para concorrer a UM ANO DE CINEMA GRÁTIS você precisa:
+                        </strong>
+                      </p>
+
                       <ul>
                         <li>
                           Seguir o perfil da <strong>Diamond Films</strong> no
@@ -354,7 +355,7 @@ const Filme = (data: IFilmeProps) => {
                           <strong>14 e 20 de agosto</strong>.
                         </li>
                         <li>
-                          Postar no feed do Instagram, marcando a{" "}
+                          Postar no seu feed do Instagram e marcar a{" "}
                           <strong>@diamondfilmsBR</strong> na publicação.
                         </li>
                         <li>
@@ -362,7 +363,7 @@ const Filme = (data: IFilmeProps) => {
                           legenda do post.
                         </li>
                         <li>
-                          Deixar o seu perfil público no Instagram, para validar
+                          Deixar o seu perfil público no Instagram para validar
                           a participação.
                         </li>
                       </ul>
@@ -377,27 +378,24 @@ const Filme = (data: IFilmeProps) => {
                         </em>
                       </p>
                       <p>
+                        <em>
+                          * O anúncio da dupla vencedora será realizado no dia
+                          29 de agosto de 2025.
+                        </em>
+                      </p>
+                      <p>
                         <em>* Promoção Autorizada SPA/MF.</em>
                       </p>
 
                       <p>
-                        <strong>
-                          Use e abuse da criatividade, mas lembre-se:
-                        </strong>{" "}
-                        é só uma brincadeira! Não vale colocar sua segurança ou
-                        a de outras pessoas em risco.
+                        Use e abuse da criatividade, mas lembre-se:{" "}
+                        <strong>é só uma brincadeira!</strong> Não vale colocar
+                        sua segurança ou a de outras pessoas em risco.
                       </p>
-                      <div className={Style.linkRegulamento}>
-                        <a
-                          href="./pdf/Regulamento_0202505530.pdf"
-                          target="_blank"
-                        >
-                          Leia o regulamento completo
-                        </a>
-                      </div>
                     </div>
                   </section>
-{/*                   
+                  {/*                   
+
                   <section className={Style.areaRegulamento}>
                     <div>
                       <img src="./img/banner-site_700x900_2x1.jpg" alt="" />
