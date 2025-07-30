@@ -339,7 +339,7 @@ const Filme = (data: IFilmeProps) => {
               </div>
 
               {filme.slug === "juntos" && (
-                <div  id="regulamento">
+                <div  id="regulamento" className={Style.regulamento}>
                   <Slide.Title className={Style.slideTitle}>
                     Regulamento
                   </Slide.Title>
@@ -377,6 +377,20 @@ const Filme = (data: IFilmeProps) => {
                       </div>
                     </div>
                   </section>
+                  <div>
+                    <Slide.Title className={Style.slideTitle}>Promoção 2 po 1</Slide.Title>
+                    <p>
+                      A promoção é válida para compras realizadas no período de
+                      01/11/2023 a 30/11/2023, ou enquanto durarem os estoques.
+                      Promoção válida para compras realizadas no site
+                      www.diamondfilms.com.br, e não se aplica a compras
+                      realizadas em cinemas.
+                    </p>
+                    <p>
+                      A promoção é válida para o filme Juntos, e não se aplica a
+                      outros filmes da Diamond Films.
+                    </p>
+                  </div>
                 </div>
               )}
               <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
