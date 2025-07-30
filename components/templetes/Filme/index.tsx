@@ -389,7 +389,7 @@ const Filme = (data: IFilmeProps) => {
                       </p>
                       <div className={Style.linkRegulamento}>
                         <a
-                          href="./pdf/banner-site_700x900_UM-ANO.jpg"
+                          href="./pdf/Regulamento_0202505530.pdf"
                           target="_blank"
                         >
                           Leia o regulamento completo
