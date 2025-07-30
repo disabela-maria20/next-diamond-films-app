@@ -109,8 +109,6 @@ const Filme = (data: IFilmeProps) => {
     );
   }, []);
 
-
-
   const viewSaibaMais = useCallback(() => {
     setSaibaMais((prev) => !prev);
   }, []);
@@ -139,8 +137,6 @@ const Filme = (data: IFilmeProps) => {
 
   if (isLoading) return <Loading altura={true} />;
 
-
-  
   return (
     <>
       <section
@@ -201,11 +197,8 @@ const Filme = (data: IFilmeProps) => {
                     </button>
                   )}
                   {filme.slug === "juntos" && (
-                    <a href="#regulamento">
-                      Leia o regulamento
-                    </a>
+                    <a href="#regulamento">Leia o regulamento</a>
                   )}
-                  
                 </div>
               </div>
               <div className={Style.AreaSaibamais}>
@@ -339,37 +332,66 @@ const Filme = (data: IFilmeProps) => {
               </div>
 
               {filme.slug === "juntos" && (
-                <div  id="regulamento" className={Style.regulamento}>
+                <div id="regulamento" className={Style.regulamento}>
                   <Slide.Title className={Style.slideTitle}>
                     Regulamento
                   </Slide.Title>
                   <section className={Style.areaRegulamento}>
                     <div>
-                      <img src="./img/arte-promo.png" alt="" />
+                      <img src="./img/banner-site_700x900_UM-ANO.jpg" alt="" />
                     </div>
                     <div>
-                      <h2>
-                        Promoção: Compre 1 ingresso e leve 2 ingressos para o
-                        filme Juntos
-                      </h2>
+                      <h3>
+                        REGRAS DA PROMOÇÃO #JUNTOSNOCINEMA PARA CONCORRER A UM
+                        ANO DE CINEMAS GRÁTIS
+                      </h3>
+                      <ul>
+                        <li>
+                          Seguir o perfil da <strong>Diamond Films</strong> no
+                          Instagram.
+                        </li>
+                        <li>
+                          Gravar um vídeo ou foto conectado(a) a outra pessoa de
+                          forma criativa e inusitada e postar entre os dias{" "}
+                          <strong>14 e 20 de agosto</strong>.
+                        </li>
+                        <li>
+                          Postar no feed do Instagram, marcando a{" "}
+                          <strong>@diamondfilmsBR</strong> na publicação.
+                        </li>
+                        <li>
+                          Incluir a hashtag <strong>#JuntosNoCinema</strong> na
+                          legenda do post.
+                        </li>
+                        <li>
+                          Deixar o seu perfil público no Instagram, para validar
+                          a participação.
+                        </li>
+                      </ul>
+
                       <p>
-                        A promoção é válida para compras realizadas no período
-                        de 01/11/2023 a 30/11/2023, ou enquanto durarem os
-                        estoques. Promoção válida para compras realizadas no
-                        site www.diamondfilms.com.br, e não se aplica a compras
-                        realizadas em cinemas.
+                        <em>* Confira o regulamento completo no botão.</em>
                       </p>
                       <p>
-                        A promoção é válida para o filme Juntos, e não se aplica
-                        a outros filmes da Diamond Films.
+                        <em>
+                          * Promoção válida durante a semana de estreia do
+                          filme, de 14 a 20 de agosto de 2025.
+                        </em>
                       </p>
                       <p>
-                        A promoção é válida apenas para compras realizadas com
-                        cartão de crédito ou débito.
+                        <em>* Promoção Autorizada SPA/MF.</em>
+                      </p>
+
+                      <p>
+                        <strong>
+                          Use e abuse da criatividade, mas lembre-se:
+                        </strong>{" "}
+                        é só uma brincadeira! Não vale colocar sua segurança ou
+                        a de outras pessoas em risco.
                       </p>
                       <div className={Style.linkRegulamento}>
                         <a
-                          href="./pdf/Regulamento_0202505530.pdf"
+                          href="./pdf/banner-site_700x900_UM-ANO.jpg"
                           target="_blank"
                         >
                           Leia o regulamento completo
@@ -377,20 +399,64 @@ const Filme = (data: IFilmeProps) => {
                       </div>
                     </div>
                   </section>
-                  <div>
-                    <Slide.Title className={Style.slideTitle}>Promoção 2 po 1</Slide.Title>
-                    <p>
-                      A promoção é válida para compras realizadas no período de
-                      01/11/2023 a 30/11/2023, ou enquanto durarem os estoques.
-                      Promoção válida para compras realizadas no site
-                      www.diamondfilms.com.br, e não se aplica a compras
-                      realizadas em cinemas.
-                    </p>
-                    <p>
-                      A promoção é válida para o filme Juntos, e não se aplica a
-                      outros filmes da Diamond Films.
-                    </p>
-                  </div>
+                  <Slide.Title className={Style.slideTitle}>
+                    Promoção
+                  </Slide.Title>
+                  <section className={Style.areaRegulamento}>
+                    <div>
+                      <img src="./img/banner-site_700x900_2x1.jpg" alt="" />
+                    </div>
+                    <div>
+                      <h3>
+                        REGRAS DA PROMOÇÃO “JUNTOS NO CINEMA” PARA GARANTIR
+                        INGRESSOS 2X1
+                      </h3>
+                      <p>
+                        Durante a semana de estreia do filme{" "}
+                        <strong>Juntos</strong>, de{" "}
+                        <strong>14 a 20 de agosto</strong>, vá ao cinema*
+                        “grudado” com sua dupla e leve{" "}
+                        <strong>2 ingressos pelo preço de 1</strong>!
+                      </p>
+
+                      <p>
+                        Para participar, basta ir a um dos cinemas participantes
+                        conectado a outra pessoa de qualquer forma criativa e
+                        ganhar o benefício.
+                      </p>
+
+                      <p>
+                        <strong>Lista de exibidores participantes:</strong> xx,
+                        xx, xx, xx, xx, xx, xx.
+                      </p>
+
+                      <p>
+                        <em>
+                          * Promoção válida durante a semana de estreia do
+                          filme, de 14 a 20 de agosto de 2025.
+                        </em>
+                      </p>
+                      <p>
+                        <em>* Válido somente para o filme JUNTOS.</em>
+                      </p>
+
+                      <p>
+                        <strong>
+                          Use e abuse da criatividade, mas lembre-se:
+                        </strong>
+                        é só uma brincadeira! Não vale colocar sua segurança ou
+                        a de outras pessoas em risco.
+                      </p>
+                      <div className={Style.linkRegulamento}>
+                        <a
+                          href="./pdf/banner-site_700x900_UM-ANO.jpg"
+                          target="_blank"
+                        >
+                          Leia o regulamento completo
+                        </a>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               )}
               <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
