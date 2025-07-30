@@ -197,7 +197,7 @@ const Filme = (data: IFilmeProps) => {
                     </button>
                   )}
                   {filme.slug === "juntos" && (
-                    <a href="#regulamento">Leia o regulamento</a>
+                    <a href="#regulamento">PROMOÇÃO #JUNTOSNOCINEMA</a>
                   )}
                 </div>
               </div>
