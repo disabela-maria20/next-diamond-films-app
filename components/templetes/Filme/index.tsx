@@ -200,9 +200,12 @@ const Filme = (data: IFilmeProps) => {
                       />
                     </button>
                   )}
-                  <a href="#regulamento">
+                  {filme.slug === "juntos" && (
+                    <a href="#regulamento">
                       Leia o regulamento
                     </a>
+                  )}
+                  
                 </div>
               </div>
               <div className={Style.AreaSaibamais}>
