@@ -447,14 +447,6 @@ const Filme = (data: IFilmeProps) => {
                         é só uma brincadeira! Não vale colocar sua segurança ou
                         a de outras pessoas em risco.
                       </p>
-                      <div className={Style.linkRegulamento}>
-                        <a
-                          href="./pdf/banner-site_700x900_UM-ANO.jpg"
-                          target="_blank"
-                        >
-                          Leia o regulamento completo
-                        </a>
-                      </div>
                     </div>
                   </section>
                 </div>
