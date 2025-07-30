@@ -340,7 +340,7 @@ const Filme = (data: IFilmeProps) => {
                     <div>
                       <p>
                         <strong>
-                          Para concorrer a UM ANO DE CINEMA GRÁTIS você precisa:
+REGRAS DA PROMOÇÃO #JUNTOSNOCINEMA PARA CONCORRER A UM ANO DE CINEMAS GRÁTIS  
                         </strong>
                       </p>
 
