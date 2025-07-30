@@ -393,7 +393,16 @@ const Filme = (data: IFilmeProps) => {
                         <strong>é só uma brincadeira!</strong> Não vale colocar
                         sua segurança ou a de outras pessoas em risco.
                       </p>
+                       <div className={Style.linkRegulamento}>
+                        <a
+                          href="./pdf/Regulamento_0202505530.pdf"
+                          target="_blank"
+                        >
+                          Leia o regulamento completo
+                        </a>
+                      </div>
                     </div>
+
                   </section>
                   {/*                   
 
