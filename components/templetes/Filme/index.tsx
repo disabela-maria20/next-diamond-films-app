@@ -200,6 +200,9 @@ const Filme = (data: IFilmeProps) => {
                       />
                     </button>
                   )}
+                  <a href="#regulamento">
+                      Leia o regulamento
+                    </a>
                 </div>
               </div>
               <div className={Style.AreaSaibamais}>
@@ -333,7 +336,7 @@ const Filme = (data: IFilmeProps) => {
               </div>
 
               {filme.slug === "juntos" && (
-                <>
+                <div  id="regulamento">
                   <Slide.Title className={Style.slideTitle}>
                     Regulamento
                   </Slide.Title>
@@ -371,7 +374,7 @@ const Filme = (data: IFilmeProps) => {
                       </div>
                     </div>
                   </section>
-                </>
+                </div>
               )}
               <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
               <section className={Style.areaIframeVideoYoutube}>
