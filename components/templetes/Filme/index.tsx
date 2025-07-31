@@ -338,7 +338,10 @@ const Filme = (data: IFilmeProps) => {
                       <img src="./img/banner-site_700x900_UM-ANO.jpg" alt="" />
                     </div>
                     <div>
-                      <h3>REGRAS DA PROMOÇÃO #JUNTOSNOCINEMA PARA CONCORRER A UM ANO DE CINEMAS GRÁTIS  </h3>
+                      <h3>
+                        REGRAS DA PROMOÇÃO #JUNTOSNOCINEMA PARA CONCORRER A UM
+                        ANO DE CINEMAS GRÁTIS{" "}
+                      </h3>
                       <p>
                         <strong>
                           Para concorrer a UM ANO DE CINEMA GRÁTIS você precisa:
@@ -393,7 +396,7 @@ const Filme = (data: IFilmeProps) => {
                         <strong>é só uma brincadeira!</strong> Não vale colocar
                         sua segurança ou a de outras pessoas em risco.
                       </p>
-                       <div className={Style.linkRegulamento}>
+                      <div className={Style.linkRegulamento}>
                         <a
                           href="./pdf/Regulamento_0202505530.pdf"
                           target="_blank"
@@ -402,57 +405,70 @@ const Filme = (data: IFilmeProps) => {
                         </a>
                       </div>
                     </div>
-
                   </section>
-                  {/*                   
 
                   <section className={Style.areaRegulamento}>
                     <div>
                       <img src="./img/banner-site_700x900_2x1.jpg" alt="" />
                     </div>
-                    <div>
-                      <h3>
-                        REGRAS DA PROMOÇÃO “JUNTOS NO CINEMA” PARA GARANTIR
-                        INGRESSOS 2X1
-                      </h3>
+                    <section>
+                      <h3>“JUNTOS NO CINEMA” - COMO GARANTIR INGRESSOS 2X1</h3>
+
                       <p>
                         Durante a semana de estreia do filme{" "}
                         <strong>Juntos</strong>, de{" "}
-                        <strong>14 a 20 de agosto</strong>, vá ao cinema*
-                        “grudado” com sua dupla e leve{" "}
+                        <strong>14 a 20 de agosto de 2025</strong>, vá ao
+                        cinema* “grudado” com sua dupla e leve{" "}
                         <strong>2 ingressos pelo preço de 1</strong>!
                       </p>
 
                       <p>
                         Para participar, basta ir a um dos cinemas participantes
                         conectado a outra pessoa de qualquer forma criativa e
-                        ganhar o benefício.
+                        ganhar o benefício. Confira os dias válidos da promoção
+                        em seu cinema favorito.
                       </p>
 
                       <p>
-                        <strong>Lista de exibidores participantes:</strong> xx,
-                        xx, xx, xx, xx, xx, xx.
+                        <strong>*Lista de exibidores participantes:</strong>{" "}
+                        Arcoplex, Centerplex, Cine Araújo, Cine X, CineA,
+                        CineMais, Cinemark, Cinépolis, Cinesystem, Circuito
+                        Cinemas, Kinoplex, Moviecom, Multicine, PMC, UCI.
+                      </p>
+
+                      <p>
+                        A ação é válida para as salas de cinema em que o filme
+                        estiver em cartaz, desde que obedeça às regras do
+                        cinema.
+                      </p>
+
+                      <p>
+                        Use e abuse da criatividade, mas lembre-se: é só uma
+                        brincadeira! Não vale colocar sua segurança ou a de
+                        outras pessoas em risco.
                       </p>
 
                       <p>
                         <em>
                           * Promoção válida durante a semana de estreia do
-                          filme, de 14 a 20 de agosto de 2025.
+                          filme, de 14 a 20 de agosto de 2025. Confira os dias
+                          válidos da promoção em seu cinema favorito.
                         </em>
                       </p>
                       <p>
-                        <em>* Válido somente para o filme JUNTOS.</em>
+                        <em>
+                          * Válido somente para o filme <strong>JUNTOS</strong>.
+                        </em>
                       </p>
-
                       <p>
-                        <strong>
-                          Use e abuse da criatividade, mas lembre-se:
-                        </strong>
-                        é só uma brincadeira! Não vale colocar sua segurança ou
-                        a de outras pessoas em risco.
+                        <em>
+                          * Os termos e condições podem variar entre os cinemas
+                          participantes. Consulte os termos e condições
+                          diretamente na rede exibidora.
+                        </em>
                       </p>
-                    </div>
-                  </section> */}
+                    </section>
+                  </section>
                 </div>
               )}
               <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
