@@ -415,23 +415,28 @@ const Filme = (data: IFilmeProps) => {
                       <h3>“JUNTOS NO CINEMA” - COMO GARANTIR INGRESSOS 2X1</h3>
 
                       <p>
-                        Durante a semana de estreia do filme{" "}
-                        <strong>Juntos</strong>, de{" "}
-                        <strong>14 a 20 de agosto de 2025</strong>, vá ao
-                        cinema* “grudado” com sua dupla e leve{" "}
-                        <strong>2 ingressos pelo preço de 1</strong>!
+                        <strong>
+                          Durante a semana de estreia do filme <em>Juntos</em>,
+                          de 14 a 20 de agosto de 2025
+                        </strong>
+                        , vá ao cinema* “grudado” com sua dupla e leve 2
+                        ingressos pelo preço de 1!
                       </p>
 
                       <p>
                         Para participar, basta ir a um dos cinemas participantes
                         conectado a outra pessoa de qualquer forma criativa e
-                        ganhar o benefício. Confira os dias válidos da promoção
-                        em seu cinema favorito.
+                        ganhar o benefício.
                       </p>
 
                       <p>
-                        <strong>*Lista de exibidores participantes:</strong>{" "}
-                        Arcoplex, Centerplex, Cine Araújo, Cine X, CineA,
+                        Confira os dias válidos da promoção em seu cinema
+                        favorito.
+                      </p>
+
+                      <p>
+                        <em>*Lista de exibidores participantes:</em> Arcoplex,
+                        Centerplex, Cineart, Cine Araújo, Cine X, CineA,
                         CineMais, Cinemark, Cinépolis, Cinesystem, Circuito
                         Cinemas, Kinoplex, Moviecom, Multicine, PMC, UCI.
                       </p>
@@ -444,22 +449,28 @@ const Filme = (data: IFilmeProps) => {
 
                       <p>
                         Use e abuse da criatividade, mas lembre-se: é só uma
-                        brincadeira! Não vale colocar sua segurança ou a de
-                        outras pessoas em risco.
+                        brincadeira!{" "}
+                        <strong>
+                          Não vale colocar sua segurança ou a de outras pessoas
+                          em risco.
+                        </strong>
                       </p>
 
                       <p>
                         <em>
                           * Promoção válida durante a semana de estreia do
-                          filme, de 14 a 20 de agosto de 2025. Confira os dias
-                          válidos da promoção em seu cinema favorito.
-                        </em>
+                          filme, de 14 a 20 de agosto de 2025.
+                        </em>{" "}
+                        Confira os dias válidos da promoção em seu cinema
+                        favorito.
                       </p>
+
                       <p>
                         <em>
                           * Válido somente para o filme <strong>JUNTOS</strong>.
                         </em>
                       </p>
+
                       <p>
                         <em>
                           * Os termos e condições podem variar entre os cinemas
