@@ -438,7 +438,7 @@ const Filme = (data: IFilmeProps) => {
                         <em>*Lista de exibidores participantes:</em> Arcoplex,
                         Centerplex, Cineart, Cine Araújo, Cine X, CineA,
                         CineMais, Cinemark, Cinépolis, Cinesystem, Circuito
-                        Cinemas, Kinoplex, Moviecom, Multicine, PMC, UCI.
+                        Cinemas,Estação Net Cinema, Kinoplex, Moviecom, Multicine, PMC, UCI.
                       </p>
 
                       <p>
