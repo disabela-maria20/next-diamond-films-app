@@ -197,7 +197,19 @@ const Filme = (data: IFilmeProps) => {
                     </button>
                   )}
                   {filme.slug === "juntos" && (
-                    <a href="#regulamento">PROMOÇÃO #JUNTOSNOCINEMA</a>
+                    <a
+                      href="#regulamento"
+                      onClick={(e) => {
+                        e.preventDefault(); 
+                        setSaibaMais(false); 
+                        setTimeout(() => {
+                          const el = document.getElementById("regulamento");
+                          if (el) el.scrollIntoView({ behavior: "smooth" });
+                        }, 100);
+                      }}
+                    >
+                      PROMOÇÃO #JUNTOSNOCINEMA
+                    </a>
                   )}
                 </div>
               </div>
@@ -438,7 +450,8 @@ const Filme = (data: IFilmeProps) => {
                         <em>*Lista de exibidores participantes:</em> Arcoplex,
                         Centerplex, Cineart, Cine Araújo, Cine X, CineA,
                         CineMais, Cinemark, Cinépolis, Cinesystem, Circuito
-                        Cinemas,Estação Net Cinema, Kinoplex, Moviecom, Multicine, PMC, UCI.
+                        Cinemas, Estação Net Cinema, Kinoplex, Moviecom,
+                        Multicine, PMC, UCI.
                       </p>
 
                       <p>
