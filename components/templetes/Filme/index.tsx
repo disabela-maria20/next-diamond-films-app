@@ -213,7 +213,7 @@ const Filme = (data: IFilmeProps) => {
                   )}
                 </div>
               </div>
-              <div className={Style.AreaSaibamais}>
+              {/* <div className={Style.AreaSaibamais}>
                 {filme.hasSession && (
                   <button
                     className={Style.btnSaibaMais}
@@ -222,7 +222,7 @@ const Filme = (data: IFilmeProps) => {
                     Saiba +
                   </button>
                 )}
-              </div>
+              </div> */}
             </div>
             {/* {!isMobile && <Links youtube={filme?.trailer} insta="" />} */}
           </div>
@@ -271,8 +271,8 @@ const Filme = (data: IFilmeProps) => {
             </button>
           )}
 
-          {!saibaMais && (
-            <section className={Style.filmeSaibaMais}>
+          {saibaMais && (
+              <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
                 <div className={Style.areaFlexPoster} id="saibamais">
                   <LazyLoadImage
