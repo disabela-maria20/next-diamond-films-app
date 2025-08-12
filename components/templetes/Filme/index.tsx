@@ -451,10 +451,10 @@ const Filme = (data: IFilmeProps) => {
                         Centerplex, Cine + Arte Capão da Canoa, Cine Araújo,
                         Cine Mais Arte, Cine Multiplex Villa Multimall, Cine Sul
                         Medianeira, Cine X, CineA, CineMais, Cineart, Cineflix,
-                        Cinema C.Vale, Cinema Cine Flexx - Telêmaco Borba,
-                        Cinemark, Cinépolis, Cinesystem, Circuito Cinemas,
-                        Estação Net Cinema, GNC, Kinoplex, Mobi Cinemas,
-                        Moviemax, Moviecom, Multicine, PMCCinelaser e UCI
+                        Cinelaser, Cinema C.Vale, Cinema Cine Flexx - Telêmaco
+                        Borba, Cinemark, Cinépolis, Cinesystem, Circuito
+                        Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi
+                        Cinemas, Moviemax, Moviecom, Multicine, PMC, UC
                       </p>
 
                       <p>
@@ -465,7 +465,7 @@ const Filme = (data: IFilmeProps) => {
 
                       <p>
                         Use e abuse da criatividade, mas lembre-se: é só uma
-                        brincadeira!{" "}
+                        brincade ira!{" "}
                         <strong>
                           Não vale colocar sua segurança ou a de outras pessoas
                           em risco.
