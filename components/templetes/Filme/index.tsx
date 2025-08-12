@@ -271,8 +271,7 @@ const Filme = (data: IFilmeProps) => {
             </button>
           )}
 
-          {saibaMais && (
-              <section className={Style.filmeSaibaMais}>
+          <section className={Style.filmeSaibaMais}>
               <div className={Style.areaPoster}>
                 <div className={Style.areaFlexPoster} id="saibamais">
                   <LazyLoadImage
@@ -550,7 +549,6 @@ const Filme = (data: IFilmeProps) => {
                 ))}
               </Slide.Content>
             </section>
-          )}
           {filme.hasSession && (
             <section id="sessao" className={Style.combrarIngresso}>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
