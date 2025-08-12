@@ -200,8 +200,8 @@ const Filme = (data: IFilmeProps) => {
                     <a
                       href="#regulamento"
                       onClick={(e) => {
-                        e.preventDefault(); 
-                        setSaibaMais(false); 
+                        e.preventDefault();
+                        setSaibaMais(false);
                         setTimeout(() => {
                           const el = document.getElementById("regulamento");
                           if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -447,11 +447,14 @@ const Filme = (data: IFilmeProps) => {
                       </p>
 
                       <p>
-                        <em>*Lista de exibidores participantes:</em> Arcoplex,
-                        Centerplex, Cineart, Cine Araújo, Cine X, CineA,
-                        CineMais, Cinemark, Cinépolis, Cinesystem, Circuito
-                        Cinemas, Estação Net Cinema, Kinoplex, Moviecom,
-                        Multicine, PMC, UCI.
+                        <em>*Lista de exibidores participantes: </em> Centerplex,
+                        Cine + Arte Capão da Canoa, Cine Araújo, Cine Mais Arte,
+                        Cine Multiplex Villa Multimall, Cine Sul Medianeira,
+                        Cine X, CineA, CineMais, Cineart, Cineflix, Cinema
+                        C.Vale, Cinema Cine Flexx - Telêmaco Borba, Cinemark,
+                        Cinépolis, Cinesystem, Circuito Cinemas, Estação Net
+                        Cinema, GNC, Kinoplex, Mobi Cinemas, Moviecom,
+                        Multicine, PMC e UCI
                       </p>
 
                       <p>
