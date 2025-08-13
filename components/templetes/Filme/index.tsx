@@ -329,6 +329,12 @@ const Filme = (data: IFilmeProps) => {
                       <strong>Elenco:</strong>
                       {filme?.cast}
                     </li>
+                    {filme.slug === 'zoopocalipseumaaventuraanimal' && (
+                        <li>
+                          <strong>Dublagem:</strong>
+                          Viih Tube e Ed Gama
+                        </li>
+                      )}
                     <li>
                       <strong>Direção:</strong>
                       {filme?.director}
