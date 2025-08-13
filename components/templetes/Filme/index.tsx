@@ -447,13 +447,7 @@ const Filme = (data: IFilmeProps) => {
 
                     <p>
                       <em>*Lista de exibidores participantes: </em> Centerplex,
-                      Cine + Arte Capão da Canoa, Cine Araújo, Cine Mais Arte,
-                      Cine Multiplex Villa Multimall, Cine Ritz São Mateus, Cine
-                      Sul Medianeira, Cine X, CineA, CineMais, Cineart,
-                      Cineflix, Cinelaser, Cinema C.Vale, Cinema Cine Flexx -
-                      Telêmaco Borba, Cinemark, Cinépolis, Cinesystem, Circuito
-                      Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi Cinemas,
-                      Moviemax, Moviecom, Multicine, PMC, UCI
+                      Cine + Arte Capão da Canoa, Cine Araújo, Cine Mais Arte, Cine Multiplex Villa Multimall, Cine Ritz São Mateus, Cine Sul Medianeira, Cine X, CineA, CineMais, Cineart, Cineflix, Cinelaser, Cinema C.Vale, Cinema Cine Flexx - Telêmaco Borba, Cinemark, Cinemas Costa Dourada, Cinemaxx Itaperuna, Cinemaxx Petrópolis, Cinépolis, Cinesystem, Circuito Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi Cinemas, Moviemax, Moviecom, Multicine, PMC, UCI
                     </p>
 
                     <p>
