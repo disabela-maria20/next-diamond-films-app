@@ -346,7 +346,7 @@ const Filme = (data: IFilmeProps) => {
               <div id="regulamento" className={Style.regulamento}>
                 <section className={Style.areaRegulamento}>
                   <div>
-                    <img src="./img/banner-site_700x900_UM-ANO.jpg" alt="" />
+                    <img src="./img/banner-site_700x900.jpg" alt="" />
                   </div>
                   <div>
                     <h3>
