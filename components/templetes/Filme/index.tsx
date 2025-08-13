@@ -453,7 +453,7 @@ const Filme = (data: IFilmeProps) => {
                       Cineflix, Cinelaser, Cinema C.Vale, Cinema Cine Flexx -
                       Telêmaco Borba, Cinemark, Cinépolis, Cinesystem, Circuito
                       Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi Cinemas,
-                      Moviemax, Moviecom, Multicine, PMC, UC
+                      Moviemax, Moviecom, Multicine, PMC, UCI
                     </p>
 
                     <p>
