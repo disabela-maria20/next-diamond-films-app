@@ -16,6 +16,15 @@ const nextConfig = {
     styledComponents: true,
     removeConsole: false
   },
+  async redirects() {
+    return [
+      {
+        source: "/Juntos", 
+        destination: "/juntos", 
+        permanent: true, 
+      },
+    ];
+  },
   reactStrictMode: false,
   output: 'export',
   experimental: {
