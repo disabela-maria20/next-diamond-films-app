@@ -7,7 +7,7 @@ import { Logo } from '@/components/atoms'
 const ModelFooter = () => {
   return (
     <div className={Style.modelFooter}>
-      <Logo logo="logo-BRANCO.png" />
+      <Logo logo="logo-branco.png" />
       <ul>
         <li>
           <Link href="/politica-de-privacidade">Politica de privacidade</Link>

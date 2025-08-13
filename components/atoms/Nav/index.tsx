@@ -31,7 +31,7 @@ const Nav: React.FC<NavProps> = ({ open, setOpen }) => {
           </li> */}
           <NavLink area="menu" setOpen={setOpen} open={open} />
           {/* <li className={Style.logo}>
-            <Logo logo="logo-BRANCO.png" />
+            <Logo logo="logo-branco.png" />
           </li> */}
         </ul>
         <RedesSociais />

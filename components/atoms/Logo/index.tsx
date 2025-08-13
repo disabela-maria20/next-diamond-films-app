@@ -1,6 +1,6 @@
 import Style from './Logo.module.scss'
 
-type TypeLogo = 'logo.webp' | 'logo-BRANCO.png'
+type TypeLogo = 'logo.webp' | 'logo-branco.png'
 
 interface IPropsLogo {
   logo: TypeLogo

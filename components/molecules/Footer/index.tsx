@@ -17,7 +17,7 @@ const Footer = () => {
       <div className="container">
         <div className={Style.areaGridFooter}>
           <div className={Style.areaLogo}>
-            <Logo logo="logo-BRANCO.png" />
+            <Logo logo="logo-branco.png" />
           </div>
           <div className={Style.areaCopy}>
             <h3>© 2024 Diamond Films Brasil Ltda.</h3>
