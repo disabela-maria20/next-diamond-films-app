@@ -272,283 +272,282 @@ const Filme = (data: IFilmeProps) => {
           )}
 
           <section className={Style.filmeSaibaMais}>
-              <div className={Style.areaPoster}>
-                <div className={Style.areaFlexPoster} id="saibamais">
-                  <LazyLoadImage
-                    src={filme?.cover}
-                    alt={filme?.title}
-                    width={270}
-                    height={400}
-                  />
-                  <div>
-                    <h2>Sinopse</h2>
-                    <p>{filme?.shortSynopsis}</p>
-                    <div className={Style.AreaLinksSociais}>
-                      <span
-                        className={Style.areaAssitirTrailer}
-                        onClick={() => handleVerVideo(filme.trailer)}
-                      >
-                        <FaYoutube />
-                        <span>ASSISTA AO TRAILER</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className={Style.areaFlexInformacoes}>
-                  <div>
-                    <h2>Informações</h2>
-                    <div className={Style.areaClassificaçãoIndicativa}>
-                      {filme?.age && (
-                        <span
-                          style={{
-                            background: `${setDefinirCorClassificacaoIndicativa(
-                              filme?.age
-                            )}`,
-                          }}
-                        >
-                          {filme?.age}
-                        </span>
-                      )}
-
-                      <p>{filme?.ageExplain}</p>
-                    </div>
-                    <ul className={Style.areainformacaoFilme}>
-                      <li>
-                        <strong>Título Internacional:</strong>
-                        {filme?.originalTitle}
-                      </li>
-                      <li>
-                        <strong>Duração:</strong>
-                        {converterParaHorasEMinutos(filme?.duration)}
-                      </li>
-                      <li>
-                        <strong>Gênero:</strong>
-                        {filme?.genre}
-                      </li>
-                      <li>
-                        <strong>Elenco:</strong>
-                        {filme?.cast}
-                      </li>
-                      <li>
-                        <strong>Direção:</strong>
-                        {filme?.director}
-                      </li>
-                      <li>
-                        <strong>Data de Estreia:</strong>
-                        {formatarData(filme?.releasedate)}
-                      </li>
-                    </ul>
+            <div className={Style.areaPoster}>
+              <div className={Style.areaFlexPoster} id="saibamais">
+                <LazyLoadImage
+                  src={filme?.cover}
+                  alt={filme?.title}
+                  width={270}
+                  height={400}
+                />
+                <div>
+                  <h2>Sinopse</h2>
+                  <p>{filme?.shortSynopsis}</p>
+                  <div className={Style.AreaLinksSociais}>
+                    <span
+                      className={Style.areaAssitirTrailer}
+                      onClick={() => handleVerVideo(filme.trailer)}
+                    >
+                      <FaYoutube />
+                      <span>ASSISTA AO TRAILER</span>
+                    </span>
                   </div>
                 </div>
               </div>
+              <div className={Style.areaFlexInformacoes}>
+                <div>
+                  <h2>Informações</h2>
+                  <div className={Style.areaClassificaçãoIndicativa}>
+                    {filme?.age && (
+                      <span
+                        style={{
+                          background: `${setDefinirCorClassificacaoIndicativa(
+                            filme?.age
+                          )}`,
+                        }}
+                      >
+                        {filme?.age}
+                      </span>
+                    )}
 
-              {filme.slug === "juntos" && (
-                <div id="regulamento" className={Style.regulamento}>
-                  <section className={Style.areaRegulamento}>
-                    <div>
-                      <img src="./img/banner-site_700x900_UM-ANO.jpg" alt="" />
-                    </div>
-                    <div>
-                      <h3>
-                        REGRAS DA PROMOÇÃO #JUNTOSNOCINEMA PARA CONCORRER A UM
-                        ANO DE CINEMAS GRÁTIS{" "}
-                      </h3>
-                      <p>
-                        <strong>
-                          Para concorrer a UM ANO DE CINEMA GRÁTIS você precisa:
-                        </strong>
-                      </p>
-
-                      <ul>
-                        <li>
-                          Seguir o perfil da <strong>Diamond Films</strong> no
-                          Instagram.
-                        </li>
-                        <li>
-                          Gravar um vídeo ou foto conectado(a) a outra pessoa de
-                          forma criativa e inusitada e postar entre os dias{" "}
-                          <strong>14 e 20 de agosto</strong>.
-                        </li>
-                        <li>
-                          Postar no seu feed do Instagram e marcar a{" "}
-                          <strong>@diamondfilmsBR</strong> na publicação.
-                        </li>
-                        <li>
-                          Incluir a hashtag <strong>#JuntosNoCinema</strong> na
-                          legenda do post.
-                        </li>
-                        <li>
-                          Deixar o seu perfil público no Instagram para validar
-                          a participação.
-                        </li>
-                      </ul>
-
-                      <p>
-                        <em>* Confira o regulamento completo no botão.</em>
-                      </p>
-                      <p>
-                        <em>
-                          * Promoção válida durante a semana de estreia do
-                          filme, de 14 a 20 de agosto de 2025.
-                        </em>
-                      </p>
-                      <p>
-                        <em>
-                          * O anúncio da dupla vencedora será realizado no dia
-                          29 de agosto de 2025.
-                        </em>
-                      </p>
-                      <p>
-                        <em>* Promoção Autorizada SPA/MF.</em>
-                      </p>
-
-                      <p>
-                        Use e abuse da criatividade, mas lembre-se:{" "}
-                        <strong>é só uma brincadeira!</strong> Não vale colocar
-                        sua segurança ou a de outras pessoas em risco.
-                      </p>
-                      <div className={Style.linkRegulamento}>
-                        <a
-                          href="./pdf/Regulamento_0202505530.pdf"
-                          target="_blank"
-                        >
-                          Leia o regulamento completo
-                        </a>
-                      </div>
-                    </div>
-                  </section>
-
-                  <section className={Style.areaRegulamento}>
-                    <div>
-                      <img src="./img/banner-site_700x900_2x1.jpg" alt="" />
-                    </div>
-                    <section>
-                      <h3>“JUNTOS NO CINEMA” - COMO GARANTIR INGRESSOS 2X1</h3>
-
-                      <p>
-                        <strong>
-                          Durante a semana de estreia do filme <em>Juntos</em>,
-                          de 14 a 20 de agosto de 2025
-                        </strong>
-                        , vá ao cinema* “grudado” com sua dupla e leve 2
-                        ingressos pelo preço de 1!
-                      </p>
-
-                      <p>
-                        Para participar, basta ir a um dos cinemas participantes
-                        conectado a outra pessoa de qualquer forma criativa e
-                        ganhar o benefício.
-                      </p>
-
-                      <p>
-                        Confira os dias válidos da promoção em seu cinema
-                        favorito.
-                      </p>
-
-                      <p>
-                        <em>*Lista de exibidores participantes: </em>{" "}
-                        Centerplex, Cine + Arte Capão da Canoa, Cine Araújo,
-                        Cine Mais Arte, Cine Multiplex Villa Multimall, Cine Sul
-                        Medianeira, Cine X, CineA, CineMais, Cineart, Cineflix,
-                        Cinelaser, Cinema C.Vale, Cinema Cine Flexx - Telêmaco
-                        Borba, Cinemark, Cinépolis, Cinesystem, Circuito
-                        Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi
-                        Cinemas, Moviemax, Moviecom, Multicine, PMC, UC
-                      </p>
-
-                      <p>
-                        A ação é válida para as salas de cinema em que o filme
-                        estiver em cartaz, desde que obedeça às regras do
-                        cinema.
-                      </p>
-
-                      <p>
-                        Use e abuse da criatividade, mas lembre-se: é só uma
-                        brincade ira!{" "}
-                        <strong>
-                          Não vale colocar sua segurança ou a de outras pessoas
-                          em risco.
-                        </strong>
-                      </p>
-
-                      <p>
-                        <em>
-                          * Promoção válida durante a semana de estreia do
-                          filme, de 14 a 20 de agosto de 2025.
-                        </em>{" "}
-                        Confira os dias válidos da promoção em seu cinema
-                        favorito.
-                      </p>
-
-                      <p>
-                        <em>
-                          * Válido somente para o filme <strong>JUNTOS</strong>.
-                        </em>
-                      </p>
-
-                      <p>
-                        <em>
-                          * Os termos e condições podem variar entre os cinemas
-                          participantes. Consulte os termos e condições
-                          diretamente na rede exibidora.
-                        </em>
-                      </p>
-                    </section>
-                  </section>
+                    <p>{filme?.ageExplain}</p>
+                  </div>
+                  <ul className={Style.areainformacaoFilme}>
+                    <li>
+                      <strong>Título Internacional:</strong>
+                      {filme?.originalTitle}
+                    </li>
+                    <li>
+                      <strong>Duração:</strong>
+                      {converterParaHorasEMinutos(filme?.duration)}
+                    </li>
+                    <li>
+                      <strong>Gênero:</strong>
+                      {filme?.genre}
+                    </li>
+                    <li>
+                      <strong>Elenco:</strong>
+                      {filme?.cast}
+                    </li>
+                    <li>
+                      <strong>Direção:</strong>
+                      {filme?.director}
+                    </li>
+                    <li>
+                      <strong>Data de Estreia:</strong>
+                      {formatarData(filme?.releasedate)}
+                    </li>
+                  </ul>
                 </div>
-              )}
-              <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
-              <section className={Style.areaIframeVideoYoutube}>
-                <section className={Style.gridIframeVideoYoutube}>
-                  {filme?.videos?.map((data) => (
-                    <div
-                      className={Style.iframeVideoYoutube}
-                      key={data.url}
-                      onClick={() => {
-                        dataLayerPlayTrailer(
-                          filme.title,
-                          filme.slug,
-                          filme.originalTitle,
-                          filme.genre,
-                          "HUB",
-                          Number(filme.idVibezzMovie)
-                        );
-                      }}
-                    >
-                      <iframe
-                        className={Style.embedResponsiveItem}
-                        src={`${data.url}?enablejsapi=1&origin=diamondfilms.com.br`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                  ))}
-                </section>
-              </section>
+              </div>
+            </div>
 
-              <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
-              <Slide.Content
-                swiperOptions={swiperOptions}
-                className={Style.areaSlide}
-              >
-                {filme?.images?.map((data, i) => (
-                  <div key={data.url}>
-                    <LazyLoadImage
-                      effect="blur"
-                      alt="Filme"
-                      className={Style.SlideImgFilme}
-                      src={`${data.url}`}
-                      onClick={() => handleVerImagem(i)}
-                      style={{ cursor: "pointer" }}
-                      width={300}
-                      height={200}
-                    />
+            {filme.slug === "juntos" && (
+              <div id="regulamento" className={Style.regulamento}>
+                <section className={Style.areaRegulamento}>
+                  <div>
+                    <img src="./img/banner-site_700x900_UM-ANO.jpg" alt="" />
+                  </div>
+                  <div>
+                    <h3>
+                      REGRAS DA PROMOÇÃO #JUNTOSNOCINEMA PARA CONCORRER A UM ANO
+                      DE CINEMAS GRÁTIS{" "}
+                    </h3>
+                    <p>
+                      <strong>
+                        Para concorrer a UM ANO DE CINEMA GRÁTIS você precisa:
+                      </strong>
+                    </p>
+
+                    <ul>
+                      <li>
+                        Seguir o perfil da <strong>Diamond Films</strong> no
+                        Instagram.
+                      </li>
+                      <li>
+                        Gravar um vídeo ou foto conectado(a) a outra pessoa de
+                        forma criativa e inusitada e postar entre os dias{" "}
+                        <strong>14 e 20 de agosto</strong>.
+                      </li>
+                      <li>
+                        Postar no seu feed do Instagram e marcar a{" "}
+                        <strong>@diamondfilmsBR</strong> na publicação.
+                      </li>
+                      <li>
+                        Incluir a hashtag <strong>#JuntosNoCinema</strong> na
+                        legenda do post.
+                      </li>
+                      <li>
+                        Deixar o seu perfil público no Instagram para validar a
+                        participação.
+                      </li>
+                    </ul>
+
+                    <p>
+                      <em>* Confira o regulamento completo no botão.</em>
+                    </p>
+                    <p>
+                      <em>
+                        * Promoção válida durante a semana de estreia do filme,
+                        de 14 a 20 de agosto de 2025.
+                      </em>
+                    </p>
+                    <p>
+                      <em>
+                        * O anúncio da dupla vencedora será realizado no dia 29
+                        de agosto de 2025.
+                      </em>
+                    </p>
+                    <p>
+                      <em>* Promoção Autorizada SPA/MF.</em>
+                    </p>
+
+                    <p>
+                      Use e abuse da criatividade, mas lembre-se:{" "}
+                      <strong>é só uma brincadeira!</strong> Não vale colocar
+                      sua segurança ou a de outras pessoas em risco.
+                    </p>
+                    <div className={Style.linkRegulamento}>
+                      <a
+                        href="./pdf/Regulamento_0202505530.pdf"
+                        target="_blank"
+                      >
+                        Leia o regulamento completo
+                      </a>
+                    </div>
+                  </div>
+                </section>
+
+                <section className={Style.areaRegulamento}>
+                  <div>
+                    <img src="./img/banner-site_700x900_2x1.jpg" alt="" />
+                  </div>
+                  <section>
+                    <h3>“JUNTOS NO CINEMA” - COMO GARANTIR INGRESSOS 2X1</h3>
+
+                    <p>
+                      <strong>
+                        Durante a semana de estreia do filme <em>Juntos</em>, de
+                        14 a 20 de agosto de 2025
+                      </strong>
+                      , vá ao cinema* “grudado” com sua dupla e leve 2 ingressos
+                      pelo preço de 1!
+                    </p>
+
+                    <p>
+                      Para participar, basta ir a um dos cinemas participantes
+                      conectado a outra pessoa de qualquer forma criativa e
+                      ganhar o benefício.
+                    </p>
+
+                    <p>
+                      Confira os dias válidos da promoção em seu cinema
+                      favorito.
+                    </p>
+
+                    <p>
+                      <em>*Lista de exibidores participantes: </em> Centerplex,
+                      Cine + Arte Capão da Canoa, Cine Araújo, Cine Mais Arte,
+                      Cine Multiplex Villa Multimall, Cine Ritz São Mateus, Cine
+                      Sul Medianeira, Cine X, CineA, CineMais, Cineart,
+                      Cineflix, Cinelaser, Cinema C.Vale, Cinema Cine Flexx -
+                      Telêmaco Borba, Cinemark, Cinépolis, Cinesystem, Circuito
+                      Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi Cinemas,
+                      Moviemax, Moviecom, Multicine, PMC, UC
+                    </p>
+
+                    <p>
+                      A ação é válida para as salas de cinema em que o filme
+                      estiver em cartaz, desde que obedeça às regras do cinema.
+                    </p>
+
+                    <p>
+                      Use e abuse da criatividade, mas lembre-se: é só uma
+                      brincade ira!{" "}
+                      <strong>
+                        Não vale colocar sua segurança ou a de outras pessoas em
+                        risco.
+                      </strong>
+                    </p>
+
+                    <p>
+                      <em>
+                        * Promoção válida durante a semana de estreia do filme,
+                        de 14 a 20 de agosto de 2025.
+                      </em>{" "}
+                      Confira os dias válidos da promoção em seu cinema
+                      favorito.
+                    </p>
+
+                    <p>
+                      <em>
+                        * Válido somente para o filme <strong>JUNTOS</strong>.
+                      </em>
+                    </p>
+
+                    <p>
+                      <em>
+                        * Os termos e condições podem variar entre os cinemas
+                        participantes. Consulte os termos e condições
+                        diretamente na rede exibidora.
+                      </em>
+                    </p>
+                  </section>
+                </section>
+              </div>
+            )}
+            <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
+            <section className={Style.areaIframeVideoYoutube}>
+              <section className={Style.gridIframeVideoYoutube}>
+                {filme?.videos?.map((data) => (
+                  <div
+                    className={Style.iframeVideoYoutube}
+                    key={data.url}
+                    onClick={() => {
+                      dataLayerPlayTrailer(
+                        filme.title,
+                        filme.slug,
+                        filme.originalTitle,
+                        filme.genre,
+                        "HUB",
+                        Number(filme.idVibezzMovie)
+                      );
+                    }}
+                  >
+                    <iframe
+                      className={Style.embedResponsiveItem}
+                      src={`${data.url}?enablejsapi=1&origin=diamondfilms.com.br`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
                   </div>
                 ))}
-              </Slide.Content>
+              </section>
             </section>
+
+            <Slide.Title className={Style.slideTitle}>Galeria</Slide.Title>
+            <Slide.Content
+              swiperOptions={swiperOptions}
+              className={Style.areaSlide}
+            >
+              {filme?.images?.map((data, i) => (
+                <div key={data.url}>
+                  <LazyLoadImage
+                    effect="blur"
+                    alt="Filme"
+                    className={Style.SlideImgFilme}
+                    src={`${data.url}`}
+                    onClick={() => handleVerImagem(i)}
+                    style={{ cursor: "pointer" }}
+                    width={300}
+                    height={200}
+                  />
+                </div>
+              ))}
+            </Slide.Content>
+          </section>
           {filme.hasSession && (
             <section id="sessao" className={Style.combrarIngresso}>
               <h2 className={Style.slideTitle}>Comprar ingressos</h2>
