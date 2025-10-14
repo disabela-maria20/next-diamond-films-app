@@ -77,6 +77,9 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
+  console.log(data);
+  
+
   const statusTextData = useFilmeTextStatus();
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData();

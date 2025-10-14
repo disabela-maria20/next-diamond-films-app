@@ -63,6 +63,8 @@ export default function RootLayout({
           `
           }}
         />
+        <Script type="text/javascript" async src="https://d335luupugsy2.cloudfront.net/js/loader-scripts/e956e5c2-ec0a-42e8-ac96-65d6cb2593a4-loader.js" ></Script>
+
       </body>
       <Script src="https://www.youtube.com/iframe_api"></Script>
       <GoogleTagManager gtmId="GTM-ND454GP5" />
