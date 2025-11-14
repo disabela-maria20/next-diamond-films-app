@@ -77,9 +77,6 @@ function converterParaHorasEMinutos(totalMinutos: number) {
 }
 
 const Filme = (data: IFilmeProps) => {
-  console.log(data);
-  
-
   const statusTextData = useFilmeTextStatus();
   const { formatMesmaSemana, formatPassouUmaSemanaDesdeData } =
     useFormatarData();
@@ -344,7 +341,9 @@ const Filme = (data: IFilmeProps) => {
                     </li>
                     <li>
                       <strong>Data de Estreia:</strong>
-                      {formatarData(filme?.releasedate)}
+                      {formatarData(filme?.releasedate)}&nbsp;
+                      {filme.slug === 'martysupreme' && '(sessões especiais a partir de 8 de janeiro)'}
+                      
                     </li>
                   </ul>
                 </div>
