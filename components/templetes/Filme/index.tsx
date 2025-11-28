@@ -20,6 +20,7 @@ import { SwiperOptions } from "swiper/types";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
 import useFilmeTextStatus from "@/utils/hooks/useFilmeTextStatus";
+import SlideTitle from "@/components/molecules/Slide/SlideTitle";
 
 interface IFilmeProps {
   movie: {
@@ -228,9 +229,9 @@ const Filme = (data: IFilmeProps) => {
           </div>
         </div>
       </section>
-
       <div style={{ overflow: "hidden" }}>
         <div className="container">
+          {filme.slug === 'martysupreme' && <SlideTitle className={Style.slideTitleCenter}>VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!</SlideTitle>}
           {!filme.hasSession && (
             <div className={Style.areaNewsletter}>
               <Newsletter
