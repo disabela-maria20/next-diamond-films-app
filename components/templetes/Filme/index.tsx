@@ -155,9 +155,17 @@ const Filme = (data: IFilmeProps) => {
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>
                   {!filme.hasSession ? (
-                    <span className={Style.data}>
-                      Estreia: {formatarData(filme?.releasedate ?? "")}
-                    </span>
+                    <div>
+                      <span className={Style.data}>
+                        Estreia: {formatarData(filme?.releasedate ?? "")}&nbsp; - &nbsp;
+                        {filme.slug === "martysupreme" && (
+                          <span className={Style.data}>
+                            VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!
+                          </span>
+                        )}
+                      </span>
+                      
+                    </div>
                   ) : (
                     <span className={Style.data}>{statusTextData(filme)}</span>
                   )}
@@ -231,7 +239,6 @@ const Filme = (data: IFilmeProps) => {
       </section>
       <div style={{ overflow: "hidden" }}>
         <div className="container">
-          {filme.slug === 'martysupreme' && <SlideTitle className={Style.slideTitleCenter}>VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!</SlideTitle>}
           {!filme.hasSession && (
             <div className={Style.areaNewsletter}>
               <Newsletter
@@ -330,12 +337,12 @@ const Filme = (data: IFilmeProps) => {
                       <strong>Elenco:</strong>
                       {filme?.cast}
                     </li>
-                    {filme.slug === 'zoopocalipseumaaventuraanimal' && (
-                        <li>
-                          <strong>Dublagem:</strong>
-                          Viih Tube e Ed Gama
-                        </li>
-                      )}
+                    {filme.slug === "zoopocalipseumaaventuraanimal" && (
+                      <li>
+                        <strong>Dublagem:</strong>
+                        Viih Tube e Ed Gama
+                      </li>
+                    )}
                     <li>
                       <strong>Direção:</strong>
                       {filme?.director}
@@ -343,8 +350,8 @@ const Filme = (data: IFilmeProps) => {
                     <li>
                       <strong>Data de Estreia:</strong>
                       {formatarData(filme?.releasedate)}&nbsp;
-                      {filme.slug === 'martysupreme' && '(sessões especiais a partir de 8 de janeiro)'}
-                      
+                      {filme.slug === "martysupreme" &&
+                        "(sessões especiais a partir de 8 de janeiro)"}
                     </li>
                   </ul>
                 </div>
@@ -456,7 +463,14 @@ const Filme = (data: IFilmeProps) => {
 
                     <p>
                       <em>*Lista de exibidores participantes: </em> Centerplex,
-                      Cine + Arte Capão da Canoa, Cine Araújo, Cine Mais Arte, Cine Multiplex Villa Multimall, Cine Ritz São Mateus, Cine Sul Medianeira, Cine X, CineA, CineMais, Cineart, Cineflix, Cinelaser, Cinema C.Vale, Cinema Cine Flexx - Telêmaco Borba, Cinemark, Cinemas Costa Dourada, Cinemaxx Itaperuna, Cinemaxx Petrópolis, Cinépolis, Cinesystem, Circuito Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi Cinemas, Moviemax, Moviecom, Multicine, PMC, UCI
+                      Cine + Arte Capão da Canoa, Cine Araújo, Cine Mais Arte,
+                      Cine Multiplex Villa Multimall, Cine Ritz São Mateus, Cine
+                      Sul Medianeira, Cine X, CineA, CineMais, Cineart,
+                      Cineflix, Cinelaser, Cinema C.Vale, Cinema Cine Flexx -
+                      Telêmaco Borba, Cinemark, Cinemas Costa Dourada, Cinemaxx
+                      Itaperuna, Cinemaxx Petrópolis, Cinépolis, Cinesystem,
+                      Circuito Cinemas, Estação Net Cinema, GNC, Kinoplex, Mobi
+                      Cinemas, Moviemax, Moviecom, Multicine, PMC, UCI
                     </p>
 
                     <p>
