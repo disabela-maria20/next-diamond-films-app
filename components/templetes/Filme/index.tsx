@@ -157,14 +157,20 @@ const Filme = (data: IFilmeProps) => {
                   {!filme.hasSession ? (
                     <div>
                       <span className={Style.data}>
-                        Estreia: {formatarData(filme?.releasedate ?? "")}&nbsp; - &nbsp;
-                        {filme.slug === "martysupreme" && (
+                        Estreia: {formatarData(filme?.releasedate ?? "")}
+                        
+                         {!isMobile && <>{filme.slug === "martysupreme" && (
                           <span className={Style.data}>
-                            VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!
+                            &nbsp; - &nbsp;VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!
                           </span>
-                        )}
+                        )}</>}
+                        
                       </span>
-                      
+                       {isMobile && <>{filme.slug === "martysupreme" && (
+                          <p className={Style.data} style={{marginTop: 10}}>
+                            VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!
+                          </p>
+                        )}</>}
                     </div>
                   ) : (
                     <span className={Style.data}>{statusTextData(filme)}</span>
