@@ -158,7 +158,6 @@ const Filme = (data: IFilmeProps) => {
                     <div>
                       <span className={Style.data}>
                         Estreia: {formatarData(filme?.releasedate ?? "")}
-                        
                          {!isMobile && <>{filme.slug === "martysupreme" && (
                           <span className={Style.data}>
                             &nbsp; - &nbsp;VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!
