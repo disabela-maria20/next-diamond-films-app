@@ -154,26 +154,7 @@ const Filme = (data: IFilmeProps) => {
               <h1 style={{ color: filme.slug }}>{filme?.title}</h1>
               <div className={Style.subTitle}>
                 <h2 className={Style.emExibicao}>
-                  {!filme.hasSession ? (
-                    <div>
-                      <span className={Style.data}>
-                        Estreia: {formatarData(filme?.releasedate ?? "")}
-                         {!isMobile && <>{filme.slug === "martysupreme" && (
-                          <span className={Style.data}>
-                            &nbsp; - &nbsp;VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!
-                          </span>
-                        )}</>}
-                        
-                      </span>
-                       {isMobile && <>{filme.slug === "martysupreme" && (
-                          <p className={Style.data} style={{marginTop: 10}}>
-                            VEM AÍ: PAINEL ‘MARTY SUPREME’ NA CCXP!
-                          </p>
-                        )}</>}
-                    </div>
-                  ) : (
-                    <span className={Style.data}>{statusTextData(filme)}</span>
-                  )}
+                  <span className={Style.data}>{statusTextData(filme)}</span>
                 </h2>
                 <div className={Style.areaBtnCompra}>
                   {!isStreaming && emExibicao && !isMobile && (
@@ -605,10 +586,10 @@ const Filme = (data: IFilmeProps) => {
                   height={500}
                 />
                 <div className={Style.btnSlideImagem}>
-                  <button onClick={handlePrevImage}>
+                  <button type="button" onClick={handlePrevImage}>
                     <FiChevronLeft />
                   </button>
-                  <button onClick={handleNextImage}>
+                  <button  type="button" onClick={handleNextImage}>
                     <FiChevronRight />
                   </button>
                 </div>
