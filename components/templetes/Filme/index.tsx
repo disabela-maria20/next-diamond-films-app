@@ -110,9 +110,32 @@ const Filme = (data: IFilmeProps) => {
     );
   }, []);
 
-  const viewSaibaMais = useCallback(() => {
-    setSaibaMais((prev) => !prev);
-  }, []);
+  useEffect(() => {
+    if (filme.slug !== "martysupreme") return;
+
+    // evita carregar o script mais de uma vez
+    if (window.RDStationForms) {
+      new window.RDStationForms(
+        "timothee-btg-2360157c71cdaafefa64",
+        "null"
+      ).createForm();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src =
+      "https://d335luupugsy2.cloudfront.net/js/rdstation-forms/stable/rdstation-forms.min.js";
+    script.async = true;
+
+    script.onload = () => {
+      new window.RDStationForms(
+        "timothee-btg-2360157c71cdaafefa64",
+        "null"
+      ).createForm();
+    };
+
+    document.body.appendChild(script);
+  }, [filme.slug]);
 
   const handlePrevImage = () => {
     setImageIndex((prevIndex) =>
@@ -499,6 +522,9 @@ const Filme = (data: IFilmeProps) => {
                 </section>
               </div>
             )}
+            {filme.slug === "martysupreme" && (
+              <div role="main" id="timothee-btg-2360157c71cdaafefa64" />
+            )}
             <Slide.Title className={Style.slideTitle}>Vídeos</Slide.Title>
             <section className={Style.areaIframeVideoYoutube}>
               <section className={Style.gridIframeVideoYoutube}>
@@ -589,7 +615,7 @@ const Filme = (data: IFilmeProps) => {
                   <button type="button" onClick={handlePrevImage}>
                     <FiChevronLeft />
                   </button>
-                  <button  type="button" onClick={handleNextImage}>
+                  <button type="button" onClick={handleNextImage}>
                     <FiChevronRight />
                   </button>
                 </div>
